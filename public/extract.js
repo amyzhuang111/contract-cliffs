@@ -330,128 +330,29 @@ export function extract(lines) {
   return res;
 }
 
-// US federal holidays 2026–2035, observed dates (OPM rule: Saturday -> Friday, Sunday -> Monday). Fixed table.
-export const US_HOLIDAYS = new Map([
-  ['2026-01-01', "New Year's Day"],
-  ['2026-01-19', "Martin Luther King Jr. Day"],
-  ['2026-02-16', "Washington's Birthday"],
-  ['2026-05-25', "Memorial Day"],
-  ['2026-06-19', "Juneteenth"],
-  ['2026-07-03', "Independence Day"],
-  ['2026-09-07', "Labor Day"],
-  ['2026-10-12', "Columbus Day"],
-  ['2026-11-11', "Veterans Day"],
-  ['2026-11-26', "Thanksgiving Day"],
-  ['2026-12-25', "Christmas Day"],
-  ['2027-01-01', "New Year's Day"],
-  ['2027-01-18', "Martin Luther King Jr. Day"],
-  ['2027-02-15', "Washington's Birthday"],
-  ['2027-05-31', "Memorial Day"],
-  ['2027-06-18', "Juneteenth"],
-  ['2027-07-05', "Independence Day"],
-  ['2027-09-06', "Labor Day"],
-  ['2027-10-11', "Columbus Day"],
-  ['2027-11-11', "Veterans Day"],
-  ['2027-11-25', "Thanksgiving Day"],
-  ['2027-12-24', "Christmas Day"],
-  ['2027-12-31', "New Year's Day"],
-  ['2028-01-17', "Martin Luther King Jr. Day"],
-  ['2028-02-21', "Washington's Birthday"],
-  ['2028-05-29', "Memorial Day"],
-  ['2028-06-19', "Juneteenth"],
-  ['2028-07-04', "Independence Day"],
-  ['2028-09-04', "Labor Day"],
-  ['2028-10-09', "Columbus Day"],
-  ['2028-11-10', "Veterans Day"],
-  ['2028-11-23', "Thanksgiving Day"],
-  ['2028-12-25', "Christmas Day"],
-  ['2029-01-01', "New Year's Day"],
-  ['2029-01-15', "Martin Luther King Jr. Day"],
-  ['2029-02-19', "Washington's Birthday"],
-  ['2029-05-28', "Memorial Day"],
-  ['2029-06-19', "Juneteenth"],
-  ['2029-07-04', "Independence Day"],
-  ['2029-09-03', "Labor Day"],
-  ['2029-10-08', "Columbus Day"],
-  ['2029-11-12', "Veterans Day"],
-  ['2029-11-22', "Thanksgiving Day"],
-  ['2029-12-25', "Christmas Day"],
-  ['2030-01-01', "New Year's Day"],
-  ['2030-01-21', "Martin Luther King Jr. Day"],
-  ['2030-02-18', "Washington's Birthday"],
-  ['2030-05-27', "Memorial Day"],
-  ['2030-06-19', "Juneteenth"],
-  ['2030-07-04', "Independence Day"],
-  ['2030-09-02', "Labor Day"],
-  ['2030-10-14', "Columbus Day"],
-  ['2030-11-11', "Veterans Day"],
-  ['2030-11-28', "Thanksgiving Day"],
-  ['2030-12-25', "Christmas Day"],
-  ['2031-01-01', "New Year's Day"],
-  ['2031-01-20', "Martin Luther King Jr. Day"],
-  ['2031-02-17', "Washington's Birthday"],
-  ['2031-05-26', "Memorial Day"],
-  ['2031-06-19', "Juneteenth"],
-  ['2031-07-04', "Independence Day"],
-  ['2031-09-01', "Labor Day"],
-  ['2031-10-13', "Columbus Day"],
-  ['2031-11-11', "Veterans Day"],
-  ['2031-11-27', "Thanksgiving Day"],
-  ['2031-12-25', "Christmas Day"],
-  ['2032-01-01', "New Year's Day"],
-  ['2032-01-19', "Martin Luther King Jr. Day"],
-  ['2032-02-16', "Washington's Birthday"],
-  ['2032-05-31', "Memorial Day"],
-  ['2032-06-18', "Juneteenth"],
-  ['2032-07-05', "Independence Day"],
-  ['2032-09-06', "Labor Day"],
-  ['2032-10-11', "Columbus Day"],
-  ['2032-11-11', "Veterans Day"],
-  ['2032-11-25', "Thanksgiving Day"],
-  ['2032-12-24', "Christmas Day"],
-  ['2032-12-31', "New Year's Day"],
-  ['2033-01-17', "Martin Luther King Jr. Day"],
-  ['2033-02-21', "Washington's Birthday"],
-  ['2033-05-30', "Memorial Day"],
-  ['2033-06-20', "Juneteenth"],
-  ['2033-07-04', "Independence Day"],
-  ['2033-09-05', "Labor Day"],
-  ['2033-10-10', "Columbus Day"],
-  ['2033-11-11', "Veterans Day"],
-  ['2033-11-24', "Thanksgiving Day"],
-  ['2033-12-26', "Christmas Day"],
-  ['2034-01-02', "New Year's Day"],
-  ['2034-01-16', "Martin Luther King Jr. Day"],
-  ['2034-02-20', "Washington's Birthday"],
-  ['2034-05-29', "Memorial Day"],
-  ['2034-06-19', "Juneteenth"],
-  ['2034-07-04', "Independence Day"],
-  ['2034-09-04', "Labor Day"],
-  ['2034-10-09', "Columbus Day"],
-  ['2034-11-10', "Veterans Day"],
-  ['2034-11-23', "Thanksgiving Day"],
-  ['2034-12-25', "Christmas Day"],
-  ['2035-01-01', "New Year's Day"],
-  ['2035-01-15', "Martin Luther King Jr. Day"],
-  ['2035-02-19', "Washington's Birthday"],
-  ['2035-05-28', "Memorial Day"],
-  ['2035-06-19', "Juneteenth"],
-  ['2035-07-04', "Independence Day"],
-  ['2035-09-03', "Labor Day"],
-  ['2035-10-08', "Columbus Day"],
-  ['2035-11-12', "Veterans Day"],
-  ['2035-11-22', "Thanksgiving Day"],
-  ['2035-12-25', "Christmas Day"]
-]);
+// US federal holidays for any year, computed by rule (5 U.S.C. 6103), with observed dates
+// (OPM: a Saturday holiday is observed on Friday, a Sunday holiday on Monday).
+const nthWd = (y, m, wd, n) => { const d = new Date(Date.UTC(y, m - 1, 1)); return 1 + ((wd - d.getUTCDay() + 7) % 7) + 7 * (n - 1); };
+const lastWd = (y, m, wd) => { const d = new Date(Date.UTC(y, m, 0)); return d.getUTCDate() - ((d.getUTCDay() - wd + 7) % 7); };
+const _hol = new Map();
+export function usHolidays(y) {
+  if (_hol.has(y)) return _hol.get(y);
+  const D = (m, d) => new Date(Date.UTC(y, m - 1, d));
+  const obs = d => d.getUTCDay() === 6 ? addDays(d, -1) : d.getUTCDay() === 0 ? addDays(d, 1) : d;
+  const list = [[obs(D(1, 1)), "New Year's Day"], [D(1, nthWd(y, 1, 1, 3)), 'Martin Luther King Jr. Day'], [D(2, nthWd(y, 2, 1, 3)), "Washington's Birthday"], [D(5, lastWd(y, 5, 1)), 'Memorial Day'], [obs(D(6, 19)), 'Juneteenth'], [obs(D(7, 4)), 'Independence Day'], [D(9, nthWd(y, 9, 1, 1)), 'Labor Day'], [D(10, nthWd(y, 10, 1, 2)), 'Columbus Day'], [obs(D(11, 11)), 'Veterans Day'], [D(11, nthWd(y, 11, 4, 4)), 'Thanksgiving Day'], [obs(D(12, 25)), 'Christmas Day']];
+  const m = new Map(list.map(([d, n]) => [ymd(d), n])); _hol.set(y, m); return m;
+}
+// Name of the US federal holiday observed on this day, or ''. Checks the next year too (New Year's Day on a Saturday is observed on 31 Dec).
+export const usHoliday = day => { const y = +day.slice(0, 4); return usHolidays(y).get(day) || usHolidays(y + 1).get(day) || ''; };
 const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 // Last safe business day on or before a contract deadline: steps back over Saturdays, Sundays and US federal holidays.
 // Returns { date, changed, reason } where reason names why the contract date is not a business day.
 export function safeSendBy(day) {
   if (!day) return { date: '', changed: false, reason: '' };
   const wd = new Date(day + 'T00:00:00Z').getUTCDay();
-  const reason = wd === 0 || wd === 6 ? `Falls on a ${WD[wd]}` : US_HOLIDAYS.has(day) ? `Falls on ${US_HOLIDAYS.get(day)} (US federal holiday)` : '';
+  const reason = wd === 0 || wd === 6 ? `Falls on a ${WD[wd]}` : usHoliday(day) ? `Falls on ${usHoliday(day)} (US federal holiday)` : '';
   let d = new Date(day + 'T00:00:00Z');
-  while ([0, 6].includes(d.getUTCDay()) || US_HOLIDAYS.has(ymd(d))) d = addDays(d, -1);
+  while ([0, 6].includes(d.getUTCDay()) || usHoliday(ymd(d))) d = addDays(d, -1);
   return { date: ymd(d), changed: ymd(d) !== day, reason };
 }
 // ---------- schedule: send-notice deadline queue ----------
@@ -562,7 +463,7 @@ export function buildQueue(contracts, asOf) {
     else why = `Expires in ${d} days · no auto-renewal, so plan the replacement`;
     const tag = shortReason(!key && /No end date could be worked out/.test(item?.why || '') && exp ? exp.why : item?.why);
     const sb = act && key && d != null && d >= 0 ? safeSendBy(key) : null;
-    const safe = sb?.changed ? { date: sb.date, reason: sb.reason, note: `${sb.reason} · send by ${fmtW(sb.date)} to be safe` } : null;
+    const safe = sb?.changed ? (sb.date < asOf ? { date: sb.date, reason: sb.reason, passed: true, note: `${sb.reason}. The last business day before it (${fmtW(sb.date)}) has passed. Send today and confirm delivery.` } : { date: sb.date, reason: sb.reason, note: `${sb.reason} · send by ${fmtW(sb.date)} to be safe` }) : null;
     rows.push({ safe, tag, id: c.id, name: c.name, actBy: key, days: d, missed: mw || null, item, section, window: win, lockMonths: lockM, noticeLong, why, label: mw ? 'Next send-notice deadline' : act ? 'Send-notice deadline' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || !!item?.needsReview, confidence: key ? (item?.confidence === 'none' ? 'low' : item?.confidence || 'low') : 'none' });
   }
   const sec = { missed: 0, due: 1, resolve: 2, upcoming: 3, lapsed: 4 };
@@ -582,7 +483,7 @@ export function toCSV(contracts, asOf) {
   const out = [head.join(',')];
   for (const c of contracts) {
     for (const i of [...schedule(c.x, asOf), ...c.x.payments.map(p => ({ type: 'Payment: ' + p.rule, date: nextFixed(p.rule, asOf), who: '', confidence: p.confidence, needsReview: p.needsReview, why: nextFixed(p.rule, asOf) ? 'Next date on or after the as-of date from the fixed schedule in the clause.' : 'Event-driven or recurring; no single calendar date is stated.', source: p.source })), ...c.x.other.map(p => ({ type: 'Termination for convenience: ' + p.rule, date: '', who: p.who || 'Not stated', confidence: p.confidence, needsReview: p.needsReview, why: 'Right, not a deadline.', source: p.source }))]) {
-      out.push([c.name, c.filer || '', c.counterparty || '', i.type, i.who || '', i.date, i.date ? daysBetween(asOf, i.date) : '', asOf, i.actBy && i.date ? safeSendBy(i.date).date : '', sure(i.confidence), i.needsReview ? 'yes' : 'no', i.why, i.source?.location || '', i.source?.quote || '', c.url || ''].map(csvCell).join(','));
+      out.push([c.name, c.filer || '', c.counterparty || '', i.type, i.who || '', i.date, i.date ? daysBetween(asOf, i.date) : '', asOf, i.actBy && i.date ? (sb => sb.changed && sb.date < asOf && i.date >= asOf ? `${sb.date} (passed; send today and confirm delivery)` : sb.date)(safeSendBy(i.date)) : '', sure(i.confidence), i.needsReview ? 'yes' : 'no', i.why, i.source?.location || '', i.source?.quote || '', c.url || ''].map(csvCell).join(','));
     }
   }
   return out.join('\r\n') + '\r\n';
@@ -594,8 +495,8 @@ export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
   for (const c of contracts) for (const i of schedule(c.x, asOf)) {
     if (i.missed) { const r = schedule(c.x, asOf).find(t => t.missedWindow)?.missedWindow; if (r) { const d = r.renews.replace(/-/g, ''); const n = ymd(addDays(new Date(r.renews + 'T00:00:00Z'), 1)).replace(/-/g, ''); L.push('BEGIN:VEVENT', `UID:${c.id}-renews-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`, fold(`SUMMARY:${icsEsc('MISSED: ' + c.name + ' renews today (send-notice deadline missed)')}`), fold(`DESCRIPTION:${icsEsc(i.why)}`), ...(c.url ? [fold(`URL:${c.url}`)] : []), 'END:VEVENT'); } continue; }
     if (!i.actBy || !i.date || i.status === 'past') continue;
-    const sb = safeSendBy(i.date); const d = sb.date.replace(/-/g, ''); const n = ymd(addDays(new Date(sb.date + 'T00:00:00Z'), 1)).replace(/-/g, '');
-    const sbNote = sb.changed ? `Contract date: ${i.date}, which ${sb.reason.replace(/^Falls/, 'falls')}; this event is on the last business day before it (${sb.date}). ` : `Contract date: ${i.date}. `;
+    const sb0 = safeSendBy(i.date); const late = sb0.changed && sb0.date < asOf; const sb = late ? { ...sb0, date: i.date } : sb0; const d = sb.date.replace(/-/g, ''); const n = ymd(addDays(new Date(sb.date + 'T00:00:00Z'), 1)).replace(/-/g, '');
+    const sbNote = late ? `Contract date: ${i.date}, which ${sb0.reason.replace(/^Falls/, 'falls')}. The last business day before it (${sb0.date}) has passed. Send today and confirm delivery. ` : sb.changed ? `Contract date: ${i.date}, which ${sb.reason.replace(/^Falls/, 'falls')}; this event is on the last business day before it (${sb.date}). ` : `Contract date: ${i.date}. `;
     L.push('BEGIN:VEVENT', `UID:${c.id}-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`,
       fold(`SUMMARY:${icsEsc('Send-notice deadline: ' + c.name)}`),
       fold(`DESCRIPTION:${icsEsc(`${sbNote}${i.why}${i.needsReview ? ' NEEDS REVIEW.' : ''} Confidence: ${sure(i.confidence)}. Source ${i.source?.location}: "${i.source?.quote}"`)}`),
@@ -612,5 +513,5 @@ export function toPacket(contracts, asOf) {
     const its = schedule(c.x, asOf);
     return `<section><h2>${h(c.name)}</h2><p class="m">${h(c.title || '')}${c.filer ? ' · filed by ' + h(c.filer) : ''}${c.filed ? ' · filed ' + h(c.filed) : ''}</p>${c.url ? `<p><a href="${h(c.url)}">${h(c.url)}</a></p>` : '<p class="m">Uploaded document (no public source).</p>'}<table>${its.map(i => `<tr><td>${h(i.type)}</td><td>${h(i.date || 'needs review')}</td><td>${h(sure(i.confidence))}${i.needsReview ? ' · needs review' : ''}</td><td><q>${h(i.source?.quote || '')}</q><br><small>${h(i.source?.location || '')}</small></td></tr>`).join('')}</table></section>`;
   }).join('');
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><title>Audit pack · Contract Cliffs · as of ${h(asOf)}</title><style>body{font:14px/1.7 Geist,Arial,sans-serif;color:#000;max-width:960px;margin:48px auto;padding:0 20px}h1{font-weight:500;text-transform:lowercase}h2{font-weight:500;margin-top:48px}.m,small{color:#666}table{border-collapse:collapse;width:100%}td{border-top:.5px solid #4d4d4d;padding:8px 6px;vertical-align:top}</style><h1>contract cliffs</h1><p class="m">Audit pack · ${contracts.length} contracts · as of ${h(asOf)} · generated by deterministic extraction; every date shows its source clause. Blank dates need human review.</p><h2>Send-notice deadlines, most urgent first</h2><table>${rows.map(r => r.missed ? `<tr class="missed"><td>${h(r.name)}</td><td><b>MISSED</b> · send-notice deadline was ${h(r.missed.actBy)}</td><td>Renews ${h(r.missed.renews)}</td><td>in ${daysBetween(asOf, r.missed.renews)} days · next send-notice deadline ${h(r.actBy)}</td></tr>` : `<tr><td>${h(r.name)}</td><td>${h(r.label)}</td><td>${h(r.actBy || 'needs review')}</td><td>${r.days == null ? '' : r.days + ' days'}</td></tr>`).join('')}</table>${(() => { const aff = rows.filter(r => r.safe); return aff.length ? `<h2>Deadlines that fall on a weekend or US federal holiday</h2><ul>${aff.map(r => `<li>${h(r.name)}: contract date ${h(r.actBy)} · ${h(r.safe.reason)} · send by ${h(r.safe.date)} to be safe.</li>`).join('')}</ul><p class="m">Weekends and US federal holidays flagged; local holidays not modelled.</p>` : ''; })()}${body}</html>`;
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><title>Audit pack · Contract Cliffs · as of ${h(asOf)}</title><style>body{font:14px/1.7 Geist,Arial,sans-serif;color:#000;max-width:960px;margin:48px auto;padding:0 20px}h1{font-weight:500;text-transform:lowercase}h2{font-weight:500;margin-top:48px}.m,small{color:#666}table{border-collapse:collapse;width:100%}td{border-top:.5px solid #4d4d4d;padding:8px 6px;vertical-align:top}</style><h1>contract cliffs</h1><p class="m">Audit pack · ${contracts.length} contracts · as of ${h(asOf)} · generated by deterministic extraction; every date shows its source clause. Blank dates need human review.</p><h2>Send-notice deadlines, most urgent first</h2><table>${rows.map(r => r.missed ? `<tr class="missed"><td>${h(r.name)}</td><td><b>MISSED</b> · send-notice deadline was ${h(r.missed.actBy)}</td><td>Renews ${h(r.missed.renews)}</td><td>in ${daysBetween(asOf, r.missed.renews)} days · next send-notice deadline ${h(r.actBy)}</td></tr>` : `<tr><td>${h(r.name)}</td><td>${h(r.label)}</td><td>${h(r.actBy || 'needs review')}</td><td>${r.days == null ? '' : r.days + ' days'}</td></tr>`).join('')}</table>${(() => { const aff = rows.filter(r => r.safe); return aff.length ? `<h2>Deadlines that fall on a weekend or US federal holiday</h2><ul>${aff.map(r => `<li>${h(r.name)}: contract date ${h(r.actBy)} · ${r.safe.passed ? h(r.safe.note) : `${h(r.safe.reason)} · send by ${h(r.safe.date)} to be safe.`}</li>`).join('')}</ul><p class="m">Weekends and US federal holidays flagged; local holidays not modelled.</p>` : ''; })()}${body}</html>`;
 }

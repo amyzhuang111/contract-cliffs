@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { safeSendBy, US_HOLIDAYS, extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, PRIORITY_RULE, toSentences, addMonths, ymd, norm, nextFixed } from '../public/extract.js';
+import { safeSendBy, usHolidays, usHoliday, extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, PRIORITY_RULE, toSentences, addMonths, ymd, norm, nextFixed } from '../public/extract.js';
 
 const D = JSON.parse(fs.readFileSync(new URL('../public/data/edgar.json', import.meta.url)));
 const C = Object.fromEntries(D.map(c => [c.id, { ...c, x: extract(c.lines) }]));
@@ -387,10 +387,25 @@ test('safeSendBy: weekend and federal-holiday deadlines step back to a business 
   assert.equal(q.b5.safe.date, '2027-04-30');
   assert.equal(q.c5.safe, null); assert.deepEqual(safeSendBy('2026-12-16'), { date: '2026-12-16', changed: false, reason: '' });
   assert.equal(safeSendBy('2027-12-25').date, '2027-12-23'); // Christmas on Saturday, observed Fri 24 Dec, so Thu 23
-  assert.equal(US_HOLIDAYS.size, 110);
+  for (let y = 2026; y <= 2035; y++) assert.equal(usHolidays(y).size, 11);
 });
 test('safe send-by in exports: CSV column, .ics on the safe day, audit-pack lines', () => {
   const csv = toCSV([C.c12], AS); assert.match(csv.split('\r\n')[0], /,send_by_business_day,/); assert.match(csv, /Send-notice deadline,[^\n]*,2028-06-10,\d+,2026-10-19,2028-06-09,/);
   const ics = toICS([C.c12], AS); assert.match(ics, /DTSTART;VALUE=DATE:20280609/); assert.doesNotMatch(ics, /DTSTART;VALUE=DATE:20280610/); assert.match(ics.replace(/\r\n /g, ''), /Contract date: 2028-06-10\\, which falls on a Saturday/);
   const p = toPacket(Object.values(C), AS); assert.match(p, /Reborn \/ Mighty Oak: contract date 2028-06-10 · Falls on a Saturday · send by 2028-06-09 to be safe/); assert.equal((p.match(/to be safe\./g) || []).length, 4);
+});
+
+test('holidays by rule for any year: Christmas 2036 (Thursday) and New Year 2039 observed on Fri 31 Dec 2038', () => {
+  assert.equal(usHoliday('2036-12-25'), 'Christmas Day'); assert.equal(safeSendBy('2036-12-25').date, '2036-12-24');
+  assert.equal(usHoliday('2038-12-31'), "New Year's Day"); assert.equal(usHoliday('2036-11-27'), 'Thanksgiving Day');
+  assert.equal(safeSendBy('2041-07-04').date, '2041-07-03');
+});
+test('safe date already passed but contract date not: send today, never "to be safe"', () => {
+  const r = buildQueue([C.c3], '2027-09-18')[0];
+  assert.equal(r.actBy, '2027-09-19'); assert.equal(r.safe.passed, true);
+  assert.equal(r.safe.note, 'Falls on a Sunday. The last business day before it (Fri 17 Sep 2027) has passed. Send today and confirm delivery.');
+  assert.doesNotMatch(r.safe.note, /to be safe/);
+  const csv = toCSV([C.c3], '2027-09-18'); assert.match(csv, /2027-09-17 \(passed; send today and confirm delivery\)/);
+  const ics = toICS([C.c3], '2027-09-18').replace(/\r\n /g, ''); assert.match(ics, /DTSTART;VALUE=DATE:20270919/); assert.match(ics, /has passed. Send today and confirm delivery/); assert.doesNotMatch(ics, /to be safe/);
+  const p = toPacket([C.c3], '2027-09-18'); assert.match(p, /has passed. Send today and confirm delivery/); assert.doesNotMatch(p, /to be safe/);
 });
