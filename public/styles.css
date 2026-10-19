@@ -1,7 +1,8 @@
 @font-face{font-family:"Bodoni Moda";src:url(/fonts/BodoniModa.woff2) format("woff2");font-weight:400 900;font-style:normal;font-display:swap}
 @font-face{font-family:"Source Serif 4";src:url(/fonts/SourceSerif4-400.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+/* Brand tokens: every colour and font lives in :root below, so a palette or typeface swap is a one-file change. */
 @font-face{font-family:"Geist";src:url(/fonts/Geist-Variable.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
-:root{--ink:#0A0A0A;--paper:#FFFFFF;--mute:#6B6B6B;--hair:#E8E8E8;--serif:"Bodoni Moda",Georgia,serif;--text:"Source Serif 4",Georgia,serif;--sans:"Geist",system-ui,sans-serif}
+:root{--ink:#0A0A0A;--paper:#FFFFFF;--mute:#6B6B6B;--hair:#E8E8E8;--scrim:rgba(10,10,10,.18);--serif:"Bodoni Moda",Georgia,serif;--text:"Source Serif 4",Georgia,serif;--sans:"Geist",system-ui,sans-serif}
 *{box-sizing:border-box}
 html,body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--hair);text-underline-offset:3px}
@@ -46,7 +47,7 @@ textarea:focus,input:focus{outline:none;border-bottom-color:var(--ink)}
 .card .t{font-weight:500;font-size:15px}
 .card .m{font-size:13px;color:var(--mute)}
 .card .a{margin-top:8px;font-size:13px}
-.scrim{position:fixed;inset:0;background:rgba(10,10,10,.18);opacity:0;pointer-events:none;transition:opacity .25s;z-index:9}
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;pointer-events:none;transition:opacity .25s;z-index:9}
 .scrim.on{opacity:1;pointer-events:auto}
 .drawer{position:fixed;top:0;right:0;height:100%;width:min(620px,100%);background:var(--paper);transform:translateX(100%);transition:transform .3s ease;z-index:10;overflow-y:auto;padding:48px 44px 80px;visibility:hidden}
 .drawer.on{transform:none;visibility:visible}

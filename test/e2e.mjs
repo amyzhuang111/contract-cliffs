@@ -50,16 +50,17 @@ await page.type('#paste', 'This Agreement is entered into as of January 5, 2026 
 await page.click('#addPaste'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));
 ok((await page.$eval('#drawer', e => e.textContent)).includes('5 Dec 2026'), 'pasted contract: act-by 5 Dec 2026 (term ends 4 Jan 2027 minus 30 days)');
 await page.click('#close'); await new Promise(r => setTimeout(r, 350)); await page.click('#setEdgar');
+const TOK = await page.evaluate(() => { const p = document.createElement('div'); document.body.append(p); const g = v => { p.style.color = `var(${v})`; return getComputedStyle(p).color; }; const o = { ink: g('--ink'), mute: g('--mute') }; p.remove(); return o; }); // brand tokens, so a palette swap doesn't break the checks
 // Taste+Design checks: quotes normalised, review labels, lapsed rows, clause serif
 await page.click('#setEdgar'); await page.waitForSelector('#queue li');
 const quotes = [];
 for (const c of edgar) { await page.click(`#cards .card[data-id="${c.id}"]`); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 350)); quotes.push(...await page.$$eval('#drawer blockquote.clause', qs => qs.map(q => q.textContent))); await page.click('#close'); await new Promise(r => setTimeout(r, 350)); }
 ok(quotes.length > 30 && !quotes.some(q => /“\s|\s”/.test(q)), `no whitespace inside curly quotes across ${quotes.length} quoted clauses`);
 const rvs = await page.$$eval('#queue .rv', els => els.map(e => { const cs = getComputedStyle(e); const nx = e.nextElementSibling; return { t: e.textContent, fs: cs.fontSize, ls: cs.letterSpacing, tt: cs.textTransform, col: cs.color, bg: cs.backgroundColor, bw: cs.borderTopWidth, pad: cs.paddingLeft, rs: nx && nx.classList.contains('rvw') ? nx.textContent : '', rcol: nx ? getComputedStyle(nx).color : '' }; }));
-ok(rvs.length >= 2 && rvs.every(r => r.t === 'Needs review' && r.fs === '11px' && r.ls === '1.54px' && r.tt === 'uppercase' && r.col === 'rgb(10, 10, 10)' && r.bg === 'rgba(0, 0, 0, 0)' && r.bw === '0px' && r.pad === '0px'), `needs-review labels: ink, 11px caps, 0.14em, no fill/border/pill (${rvs.length})`);
-ok(rvs.every(r => /^ · \S/.test(r.rs) && r.rcol === 'rgb(107, 107, 107)'), 'each label is followed by a grey reason: ' + rvs.map(r => r.rs.trim()).join(' | '));
+ok(rvs.length >= 2 && rvs.every(r => r.t === 'Needs review' && r.fs === '11px' && r.ls === '1.54px' && r.tt === 'uppercase' && r.col === TOK.ink && r.bg === 'rgba(0, 0, 0, 0)' && r.bw === '0px' && r.pad === '0px'), `needs-review labels: ink, 11px caps, 0.14em, no fill/border/pill (${rvs.length})`);
+ok(rvs.every(r => /^ · \S/.test(r.rs) && r.rcol === TOK.mute), 'each label is followed by a grey reason: ' + rvs.map(r => r.rs.trim()).join(' | '));
 const nd = await page.$$eval('#queue li .d', ds => ds.filter(d => !/\d{4}/.test(d.textContent)).map(d => ({ t: d.textContent.trim(), c: getComputedStyle(d.querySelector('.nd') || d).color })));
-ok(nd.length === 2 && nd.every(x => x.t === 'No date found' && x.c === 'rgb(107, 107, 107)'), 'undated rows read "No date found" in grey, no dash');
+ok(nd.length === 2 && nd.every(x => x.t === 'No date found' && x.c === TOK.mute), 'undated rows read "No date found" in grey, no dash');
 const c7 = await page.$eval('#queue li[data-id="c7"]', e => e.textContent.replace(/\s+/g, ' ')); ok(/Lapsed/.test(c7) && /31 May 2024/.test(c7) && /Expired \(all renewals used\)/.test(c7) && !/notice/i.test(c7), 'Synacor / Qwest row: Lapsed, Expired 31 May 2024 (all renewals used), no send-notice line');
 await page.click('#cards .card[data-id="c7"]'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 350));
 const c7d = await page.$eval('#drawer', e => e.textContent); ok(/Expired \(all renewals used\)/i.test(c7d) && !/Auto-renewal/i.test(c7d) && !/Non-renewal notice/i.test(c7d), 'Synacor drawer: expired, no auto-renewal or notice rows');
