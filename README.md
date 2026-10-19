@@ -11,3 +11,7 @@ Deterministic extraction of effective dates, terms, auto-renewals, non-renewal n
 - Fonts: Bodoni Moda, Source Serif 4 and Geist (SIL OFL 1.1, licences in public/fonts). pdf.js (Apache-2.0), JSZip (MIT).
 
 Not legal advice.
+
+## Priority rule
+
+The act-by queue is ordered deterministically: missed first (deadline passed), then resolve first (needs review, no date), then upcoming by window (next 30 days, 31–90, 91–365, over a year). Inside a window, a notice period longer than the renewal ranks first, then the longer auto-renewal lock-in, then the earlier date; ties go A–Z by name. Every row has a one-line "Why it’s here". Unit and e2e tests check the order.

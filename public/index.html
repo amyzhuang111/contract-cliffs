@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Contract Cliffs · every obligation, flagged before it’s due</title>
 <meta name="description" content="Deterministic extraction of renewal, notice and expiry dates from contracts, with the source clause quoted for every date.">
-<link rel="preload" href="/fonts/BodoniModa.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/SourceSerif4-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="theme-color" content="#000000">
 <link rel="stylesheet" href="/styles.css">
 <link rel="icon" href="data:,">
 </head>
@@ -14,7 +15,7 @@
 <div class="wrap">
 <header>
   <div class="lab">Operations · Contract lifecycle</div>
-  <h1 class="mark">CONTRACT CLIFFS</h1>
+  <h1 class="mark">contract cliffs</h1>
   <p class="lede">Every obligation and deadline in an agreement, in time order. <span>Each date carries the clause it came from. Where the text is unclear or redacted, the date stays blank and is marked for review.</span></p>
 </header>
 <section class="stats" id="stats" aria-label="Summary"></section>
@@ -53,7 +54,8 @@
 <section class="sec" aria-labelledby="qh">
   <div class="lab">The queue</div>
   <h2 id="qh">Act by</h2>
-  <p class="sub">Soonest decision first. Act-by = end of the current term minus the notice period in the clause. Items that need review sit below the dated ones; dates already past sit last.</p>
+  <p class="sub">Act-by = end of the current term minus the notice period in the clause.</p>
+  <div class="rule"><span class="lab">Priority rule</span><p id="rule"></p></div>
   <div class="row grpby" role="group" aria-label="Group the queue"><span class="lab">Group by</span><button id="g-none" aria-pressed="true">None</button><button id="g-counterparty" aria-pressed="false">Counterparty</button><button id="g-filer" aria-pressed="false">Party (filer)</button></div>
   <ol class="q" id="queue"></ol>
 </section>
@@ -69,7 +71,7 @@
   <p>Extraction is deterministic: regular expressions plus date and duration parsing (“sixty (60) days”, “one hundred and eighty (180) days”, “Eighty-Four (84) months”). No language model and no network call touches your documents; uploads stay in this browser tab. A term of N months “commencing on” a date ends the day before the anniversary; “until N years following” ends on the anniversary. When words and numerals disagree, or a value is redacted, the field is left blank and marked for review.</p>
   <p>Accuracy, stated plainly: tuned on the 10 contracts above (all hand-checked). On a fresh blind set of 10 more EDGAR agreements, run once before any change: 3 act-by dates right, 6 correctly left blank for review, 1 missed, 0 wrong act-by dates, plus one wrong "current term" date that has since been fixed. An earlier set of 14 is now tuning data (first pass there: 2 right, 5 flagged, 6 missed, 1 wrong) (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
   <p>Real contracts are Exhibit 10 material agreements filed with the SEC, fetched from EDGAR with a declared User-Agent under SEC fair-access rules. Dates projected past the initial term assume the agreement was not terminated or amended. Not legal advice.</p>
-  <p>Type: Bodoni Moda (headings and dates), Source Serif 4 (clauses) and Geist, all under the SIL Open Font License (<a href="/fonts/OFL-BodoniModa.txt">Bodoni Moda</a>, <a href="/fonts/OFL-SourceSerif4.txt">Source Serif 4</a>, <a href="/fonts/OFL-Geist.txt">Geist</a>). PDF reading by pdf.js (<a href="/vendor/LICENSE-pdfjs.txt">Apache 2.0</a>), DOCX by JSZip (<a href="/vendor/LICENSE-jszip.txt">MIT</a>). Built by Amy Zhuang · <a href="https://github.com/amyzhuang111/contract-cliffs">source</a>.</p>
+  <p>Type: Geist and Geist Mono, both under the SIL Open Font License (<a href="/fonts/OFL-Geist.txt">Geist</a>, <a href="/fonts/OFL-GeistMono.txt">Geist Mono</a>), self-hosted. Colours follow General Intuition's public site; this is an independent demo, not a General Intuition product. PDF reading by pdf.js (<a href="/vendor/LICENSE-pdfjs.txt">Apache 2.0</a>), DOCX by JSZip (<a href="/vendor/LICENSE-jszip.txt">MIT</a>). Built by Amy Zhuang · <a href="https://github.com/amyzhuang111/contract-cliffs">source</a>.</p>
 </footer>
 </div>
 <div class="scrim" id="scrim"></div>

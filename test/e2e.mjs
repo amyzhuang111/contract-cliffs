@@ -20,12 +20,21 @@ const edgar = await (await fetch(BASE + '/data/edgar.json')).json();
 ok(edgar.length >= 8 && edgar.length <= 12, `real set has ${edgar.length} contracts (8-12)`);
 await page.waitForSelector('#queue li');
 ok(await page.$eval('#setEdgar', b => b.textContent.trim() === 'Real public contracts (SEC EDGAR)' && b.getAttribute('aria-pressed') === 'true'), 'real set is loaded and labelled');
-ok((await page.$$('#queue li')).length === 10, 'queue has 10 rows');
+ok((await page.$$('#queue li[data-id]')).length === 10, 'queue has 10 rows');
 ok((await page.$$('#cards .card')).length === 10, '10 contract cards');
 const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 2 need review/.test(st), 'counts: ' + st);
-const first = await page.$eval('#queue li', e => e.textContent.replace(/\s+/g, ' ')); ok(/16 Dec 2026/.test(first) && /Schwazze/.test(first), 'top of queue is Star Brands / Schwazze, 16 Dec 2026');
-const fonts = await page.evaluate(async () => { await document.fonts.ready; return [document.fonts.check('16px "Bodoni Moda"'), document.fonts.check('16px Geist')]; });
-ok(fonts[0] && fonts[1], 'self-hosted Bodoni Moda and Geist loaded');
+const order = await page.$$eval('#queue li', ls => ls.map(l => l.dataset.id || 'H:' + l.textContent.trim()));
+ok(order.join(',') === 'H:Missed · deadline passed,c7,H:Resolve first · needs review, no date,c13,c8,H:Upcoming · 31–90 days,c5,H:Upcoming · 91–365 days,c1,c6,c3,H:Upcoming · over a year,c4,c12,c2', 'priority order on the page: ' + order.join(','));
+const why5 = await page.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim()); ok(why5 === 'Why it’s here Act in 58 days · missing it locks in 2 more years', 'row reason: ' + why5);
+ok(/Missed first/.test(await page.$eval('#rule', e => e.textContent)) && /Priority rule/i.test(await page.$eval('.rule .lab', e => e.textContent)), 'Priority rule note is shown');
+ok(/two cycles out/.test(await page.$eval('#queue li[data-id="c1"]', e => e.textContent)), 'Cerus reason calls out notice longer than renewal');
+const fonts = await page.evaluate(async () => { await document.fonts.ready; return [document.fonts.check('16px "Geist Mono"'), document.fonts.check('16px Geist'), [...document.fonts].map(f => f.family).join(',')]; });
+ok(fonts[0] && fonts[1] && !/Bodoni|Serif/i.test(fonts[2]), 'self-hosted Geist and Geist Mono loaded; no Bodoni or serif faces');
+const brand = await page.evaluate(() => { const cs = e => getComputedStyle(document.querySelector(e)); return { bg: cs('body').backgroundColor, h1: document.querySelector('h1').textContent, h1w: cs('h1').fontWeight, h1f: cs('h1').fontFamily, lab: cs('.lab').fontFamily, labT: cs('.lab').textTransform, labLs: cs('.lab').letterSpacing, labC: cs('.lab').color, card: cs('.card').backgroundColor, cardB: cs('.card').borderTopWidth, cardR: cs('.card').borderTopLeftRadius, btn: cs('#exCsv').backgroundColor, btnR: cs('#exCsv').borderTopLeftRadius, drawerBg: cs('#drawer').backgroundColor, blur: cs('#drawer').backdropFilter, lede: cs('.lede').backgroundColor }; });
+ok(brand.bg === 'rgb(0, 0, 0)' && brand.h1 === 'contract cliffs' && brand.h1w === '500' && /^"?Geist"?,/.test(brand.h1f), `GI skin: black page, lowercase Geist 500 wordmark (${brand.h1})`);
+ok(/Geist Mono/.test(brand.lab) && brand.labT === 'uppercase' && brand.labLs === 'normal' && brand.labC === 'rgb(136, 136, 136)', 'labels: Geist Mono, uppercase, #888, no tracking');
+ok(brand.card === 'rgba(255, 255, 255, 0.1)' && parseFloat(brand.cardB) <= 1 && parseFloat(brand.cardR) <= 2 && brand.btn === 'rgb(255, 255, 255)' && brand.btnR === '0px', `cards rgba(255,255,255,.1) with hairline border, radius ${brand.cardR}; square white primary buttons`);
+ok(brand.drawerBg === 'rgba(12, 14, 22, 0.95)' && /blur\(20px\)/.test(brand.blur) && brand.lede === 'rgb(255, 255, 255)', 'drawer #0C0E16 with 20px blur; white hero copy box');
 // drawers: every clause link goes to the exact EDGAR filing URL
 for (const c of edgar) {
   await page.click(`#cards .card[data-id="${c.id}"]`); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));
@@ -43,7 +52,7 @@ ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []
 await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Diligence packet') && (pk.match(/<section>/g) || []).length === 10, 'diligence packet export');
 // as-of control
 await page.$eval('#asof', e => { e.value = '2027-01-01'; e.dispatchEvent(new Event('change')); });
-ok(/Cerus/.test(await page.$eval('#queue li', e => e.textContent)), 'as-of 2027-01-01 moves Cerus / Purolite to the top');
+ok(/Cerus/.test(await page.$eval('#queue li[data-id]:not([data-id="c7"]):not([data-id="c13"]):not([data-id="c8"])', e => e.textContent)), 'as-of 2027-01-01 moves Cerus / Purolite to the top of the upcoming rows');
 await page.$eval('#asof', e => { e.value = '2026-10-19'; e.dispatchEvent(new Event('change')); });
 // paste path
 await page.type('#paste', 'This Agreement is entered into as of January 5, 2026 (the "Effective Date"). The Initial Term shall commence on the Effective Date and continue for one (1) year. This Agreement shall automatically renew for successive one (1) year terms unless either party provides written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
@@ -57,11 +66,11 @@ const quotes = [];
 for (const c of edgar) { await page.click(`#cards .card[data-id="${c.id}"]`); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 350)); quotes.push(...await page.$$eval('#drawer blockquote.clause', qs => qs.map(q => q.textContent))); await page.click('#close'); await new Promise(r => setTimeout(r, 350)); }
 ok(quotes.length > 30 && !quotes.some(q => /“\s|\s”/.test(q)), `no whitespace inside curly quotes across ${quotes.length} quoted clauses`);
 const rvs = await page.$$eval('#queue .rv', els => els.map(e => { const cs = getComputedStyle(e); const nx = e.nextElementSibling; return { t: e.textContent, fs: cs.fontSize, ls: cs.letterSpacing, tt: cs.textTransform, col: cs.color, bg: cs.backgroundColor, bw: cs.borderTopWidth, pad: cs.paddingLeft, rs: nx && nx.classList.contains('rvw') ? nx.textContent : '', rcol: nx ? getComputedStyle(nx).color : '' }; }));
-ok(rvs.length >= 2 && rvs.every(r => r.t === 'Needs review' && r.fs === '11px' && r.ls === '1.54px' && r.tt === 'uppercase' && r.col === TOK.ink && r.bg === 'rgba(0, 0, 0, 0)' && r.bw === '0px' && r.pad === '0px'), `needs-review labels: ink, 11px caps, 0.14em, no fill/border/pill (${rvs.length})`);
+ok(rvs.length >= 2 && rvs.every(r => r.t === 'Needs review' && r.fs === '12px' && r.ls === 'normal' && r.tt === 'uppercase' && r.col === TOK.ink && r.bg === 'rgba(0, 0, 0, 0)' && r.bw === '0px' && r.pad === '0px'), `needs-review labels: ink, 11px caps, 0.14em, no fill/border/pill (${rvs.length})`);
 ok(rvs.every(r => /^ · \S/.test(r.rs) && r.rcol === TOK.mute), 'each label is followed by a grey reason: ' + rvs.map(r => r.rs.trim()).join(' | '));
 const nd = await page.$$eval('#queue li .d', ds => ds.filter(d => !/\d{4}/.test(d.textContent)).map(d => ({ t: d.textContent.trim(), c: getComputedStyle(d.querySelector('.nd') || d).color })));
 ok(nd.length === 2 && nd.every(x => x.t === 'No date found' && x.c === TOK.mute), 'undated rows read "No date found" in grey, no dash');
-const c7 = await page.$eval('#queue li[data-id="c7"]', e => e.textContent.replace(/\s+/g, ' ')); ok(/Lapsed/.test(c7) && /31 May 2024/.test(c7) && /Expired \(all renewals used\)/.test(c7) && !/notice/i.test(c7), 'Synacor / Qwest row: Lapsed, Expired 31 May 2024 (all renewals used), no send-notice line');
+const c7 = await page.$eval('#queue li[data-id="c7"]', e => e.textContent.replace(/\s+/g, ' ')); ok(/Lapsed/.test(c7) && /31 May 2024/.test(c7) && /Expired \d+ days ago · all renewals used/.test(c7) && !/send non-renewal/i.test(c7), 'Synacor / Qwest row: Lapsed, Expired 31 May 2024 (all renewals used), no send-notice line');
 await page.click('#cards .card[data-id="c7"]'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 350));
 const c7d = await page.$eval('#drawer', e => e.textContent); ok(/Expired \(all renewals used\)/i.test(c7d) && !/Auto-renewal/i.test(c7d) && !/Non-renewal notice/i.test(c7d), 'Synacor drawer: expired, no auto-renewal or notice rows');
 ok(await page.evaluate(() => document.activeElement?.id === 'close'), 'drawer moves focus to Close');
@@ -70,9 +79,9 @@ ok(await page.evaluate(() => document.querySelector('#drawer').contains(document
 await page.keyboard.press('Escape'); await new Promise(r => setTimeout(r, 350));
 ok(await page.evaluate(() => document.activeElement?.closest('[data-id="c7"]') != null), 'focus returns to the card on close');
 ok((await page.$eval('#cards .card[data-id="c1"] .tile', e => e.textContent)) === 'CP', 'Cerus / Purolite tile reads CP');
-ok(await page.$eval('#queue li .d', e => { const cs = getComputedStyle(e); return cs.fontSize === '22px' && /Bodoni/.test(cs.fontFamily) && /tabular-nums/.test(cs.fontVariantNumeric); }), 'queue dates: Bodoni 22px, tabular figures');
+ok(await page.$eval('#queue li .d', e => { const cs = getComputedStyle(e); return cs.fontSize === '22px' && /Geist/.test(cs.fontFamily) && cs.fontWeight === '500' && /tabular-nums/.test(cs.fontVariantNumeric); }), 'queue dates: Geist 500 22px, tabular figures');
 await page.click('#cards .card[data-id="c2"]'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 350));
-ok(await page.$eval('#drawer blockquote.clause', e => { const cs = getComputedStyle(e); return /Source Serif 4/.test(cs.fontFamily) && cs.fontSize === '15px' && cs.lineHeight === '24px'; }) && await page.evaluate(async () => { await document.fonts.ready; return document.fonts.check('15px "Source Serif 4"'); }), 'clause quotes set in Source Serif 4, 15/24, self-hosted');
+ok(await page.$eval('#drawer blockquote.clause', e => { const cs = getComputedStyle(e); return /Geist/.test(cs.fontFamily) && cs.fontSize === '15px' && cs.lineHeight === '24px'; }), 'clause quotes readable in Geist 15/24');
 await page.click('#close'); await new Promise(r => setTimeout(r, 350));
 // upload paths: generated PDF and DOCX conversions of real EDGAR filings (test/fixtures/README.md)
 const fx = n => new URL('./fixtures/' + n, import.meta.url).pathname;

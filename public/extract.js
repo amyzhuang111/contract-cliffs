@@ -375,6 +375,15 @@ export function nextFixed(rule, asOf) {
 export function daysBetween(a, b) { return Math.round((new Date(b + 'T00:00:00Z') - new Date(a + 'T00:00:00Z')) / 86400000); }
 
 // Ranked act-by queue across contracts: upcoming act-by dates first (soonest), then needs-review, then past.
+// Short plain reason for a needs-review item.
+export const shortReason = (why = '') => /redact/i.test(why) ? 'redacted in the public filing' : /No term clause/i.test(why) ? 'no term found' : /event \(e\.g/i.test(why) ? 'term runs from an event' : /cross-reference|defers the notice/i.test(why) ? 'notice set by another section' : /first Renewal Term/i.test(why) ? 'ambiguous drafting' : /inclusive of the final day/i.test(why) ? 'could land one day later' : /without saying before what/i.test(why) ? 'notice reference point not stated' : /Effective Date that needs review|no Effective Date/i.test(why) ? 'effective date not defined' : /disagree/i.test(why) ? 'words and numerals disagree' : /no non-renewal notice|No notice period/i.test(why) ? 'no notice period found' : /not cross-checked/i.test(why) ? 'stated date, term not found' : /not tied/i.test(why) ? 'term start unclear' : (why.split('.')[0] || 'confirm against the clause').slice(0, 60).toLowerCase();
+
+const durMonths = p => !p ? 0 : p.unit === 'year' ? 12 * p.n : p.unit === 'month' ? p.n : p.unit === 'week' ? p.n / 4.35 : p.n / 30.44;
+const lockText = p => { if (!p) return ''; const m = durMonths(p); return m >= 12 && m % 12 === 0 ? `${m / 12} more year${m / 12 > 1 ? 's' : ''}` : m >= 1 && Number.isInteger(m) ? `${m} more month${m > 1 ? 's' : ''}` : `another ${p.n} ${p.unit}${p.n > 1 ? 's' : ''}`; };
+export const WINDOWS = [[0, 30, 'next 30 days'], [31, 90, '31–90 days'], [91, 365, '91–365 days'], [366, Infinity, 'over a year']];
+export const PRIORITY_RULE = 'Missed first (deadline passed), then resolve first (needs review, no date), then upcoming by window: next 30 days, 31–90, 91–365, over a year. Inside a window, what is worse to miss ranks higher: notice longer than the renewal period, then the longer auto-renewal lock-in, then the earlier date. Ties: name A–Z.';
+
+// Ranked act-by queue with an explicit, deterministic priority rule (PRIORITY_RULE) and a one-line reason per row.
 export function buildQueue(contracts, asOf) {
   const rows = [];
   for (const c of contracts) {
@@ -384,10 +393,23 @@ export function buildQueue(contracts, asOf) {
     const isExp = exp?.type.startsWith('Expired');
     const key = act?.date || (!c.x.renewal || isExp ? exp?.date : '') || '';
     const d = key ? daysBetween(asOf, key) : null;
-    rows.push({ id: c.id, name: c.name, actBy: key, days: d, item: act || exp, label: act ? 'Send non-renewal notice by' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || (act || exp)?.needsReview, confidence: (act || exp)?.confidence || 'none' });
+    const item = act || exp;
+    const rp = c.x.renewal?.period || null;
+    const lockM = durMonths(rp), noticeLong = !!c.x.warnings?.length;
+    const section = d != null && d < 0 ? 'missed' : !key ? 'resolve' : 'upcoming';
+    const win = section === 'upcoming' ? WINDOWS.findIndex(([a, b]) => d >= a && d <= b) : -1;
+    let why;
+    if (section === 'missed') why = isExp ? `Expired ${-d} days ago · all renewals used; confirm a replacement is in place` : act ? `Notice date passed ${-d} days ago · it has renewed or lapsed; check which` : `Expired ${-d} days ago · no auto-renewal`;
+    else if (section === 'resolve') why = `No date found · resolve first: ${shortReason(/No computable expiry/.test(item?.why || '') && exp ? exp.why : item?.why)}`;
+    else if (act) why = `Act ${d === 0 ? 'today' : `in ${d} day${d === 1 ? '' : 's'}`} · missing it locks in ${lockText(rp) || 'another term'}${noticeLong ? ' · notice is longer than the renewal, so this decides two cycles out' : ''}`;
+    else why = `Expires in ${d} days · no auto-renewal, so plan the replacement`;
+    rows.push({ id: c.id, name: c.name, actBy: key, days: d, item, section, window: win, lockMonths: lockM, noticeLong, why, label: act ? 'Send non-renewal notice by' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || item?.needsReview, confidence: item?.confidence || 'none' });
   }
-  const bucket = r => !r.actBy ? 2 : r.days < 0 ? 3 : 0;
-  rows.sort((a, b) => bucket(a) - bucket(b) || (bucket(a) === 3 ? b.days - a.days : (a.days ?? 0) - (b.days ?? 0)) || a.name.localeCompare(b.name));
+  const sec = { missed: 0, resolve: 1, upcoming: 2 };
+  rows.sort((a, b) => sec[a.section] - sec[b.section]
+    || (a.section === 'missed' ? b.days - a.days : 0)
+    || (a.section === 'upcoming' ? (a.window - b.window) || (b.noticeLong - a.noticeLong) || (b.lockMonths - a.lockMonths) || (a.days - b.days) : 0)
+    || a.name.localeCompare(b.name));
   return rows;
 }
 
@@ -426,5 +448,5 @@ export function toPacket(contracts, asOf) {
     const its = schedule(c.x, asOf);
     return `<section><h2>${h(c.name)}</h2><p class="m">${h(c.title || '')}${c.filer ? ' · filed by ' + h(c.filer) : ''}${c.exhibit ? ' · ' + h(c.exhibit) : ''}${c.filed ? ' · ' + h(c.filed) : ''}</p>${c.url ? `<p><a href="${h(c.url)}">${h(c.url)}</a></p>` : '<p class="m">Uploaded document (no public source).</p>'}<table>${its.map(i => `<tr><td>${h(i.type)}</td><td>${h(i.date || 'needs review')}</td><td>${h(i.confidence)}${i.needsReview ? ' · needs review' : ''}</td><td><q>${h(i.source?.quote || '')}</q><br><small>${h(i.source?.location || '')}</small></td></tr>`).join('')}</table></section>`;
   }).join('');
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><title>Diligence packet · Contract Cliffs · as of ${h(asOf)}</title><style>body{font:14px/1.5 system-ui,sans-serif;color:#0A0A0A;max-width:960px;margin:48px auto;padding:0 20px}h1{font-family:Georgia,serif;letter-spacing:.2em;font-weight:400}h2{font-weight:500;margin-top:48px}.m,small{color:#6B6B6B}table{border-collapse:collapse;width:100%}td{border-top:1px solid #E8E8E8;padding:8px 6px;vertical-align:top}q{font-family:Georgia,serif}</style><h1>CONTRACT CLIFFS</h1><p class="m">Diligence packet · ${contracts.length} contracts · as of ${h(asOf)} · generated by deterministic extraction; every date shows its source clause. Blank dates need human review.</p><h2>Act-by queue</h2><table>${rows.map(r => `<tr><td>${h(r.name)}</td><td>${h(r.label)}</td><td>${h(r.actBy || 'needs review')}</td><td>${r.days == null ? '' : r.days + ' days'}</td></tr>`).join('')}</table>${body}</html>`;
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><title>Diligence packet · Contract Cliffs · as of ${h(asOf)}</title><style>body{font:14px/1.7 Geist,Arial,sans-serif;color:#000;max-width:960px;margin:48px auto;padding:0 20px}h1{font-weight:500;text-transform:lowercase}h2{font-weight:500;margin-top:48px}.m,small{color:#666}table{border-collapse:collapse;width:100%}td{border-top:.5px solid #4d4d4d;padding:8px 6px;vertical-align:top}</style><h1>contract cliffs</h1><p class="m">Diligence packet · ${contracts.length} contracts · as of ${h(asOf)} · generated by deterministic extraction; every date shows its source clause. Blank dates need human review.</p><h2>Act-by queue</h2><table>${rows.map(r => `<tr><td>${h(r.name)}</td><td>${h(r.label)}</td><td>${h(r.actBy || 'needs review')}</td><td>${r.days == null ? '' : r.days + ' days'}</td></tr>`).join('')}</table>${body}</html>`;
 }

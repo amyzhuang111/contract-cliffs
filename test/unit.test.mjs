@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, toSentences, addMonths, ymd, norm, nextFixed } from '../public/extract.js';
+import { extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, PRIORITY_RULE, toSentences, addMonths, ymd, norm, nextFixed } from '../public/extract.js';
 
 const D = JSON.parse(fs.readFileSync(new URL('../public/data/edgar.json', import.meta.url)));
 const C = Object.fromEntries(D.map(c => [c.id, { ...c, x: extract(c.lines) }]));
@@ -111,10 +111,10 @@ test('every dated item quotes a clause that exists verbatim at its line range', 
 });
 test('queue order as of 2026-10-19', () => {
   const q = buildQueue(Object.values(C), AS);
-  assert.deepEqual(q.map(r => r.id), ['c5', 'c1', 'c6', 'c3', 'c4', 'c12', 'c2', 'c13', 'c8', 'c7']);
+  assert.deepEqual(q.map(r => r.id), ['c7', 'c13', 'c8', 'c5', 'c1', 'c6', 'c3', 'c4', 'c12', 'c2']);
   assert.equal(q.filter(r => r.actBy).length, 8);
 });
-test('as-of control moves the queue', () => { const q = buildQueue(Object.values(C), '2027-01-01'); assert.equal(q[0].id, 'c1'); });
+test('as-of control moves the queue', () => { const q = buildQueue(Object.values(C), '2027-01-01').filter(r => r.section === 'upcoming'); assert.equal(q[0].id, 'c1'); });
 test('exports', () => {
   const cs = Object.values(C);
   const csv = toCSV(cs, AS); assert.match(csv.split('\r\n')[0], /^contract,filer,counterparty,item,who_acts,date/);
@@ -234,4 +234,33 @@ test('cross-reference to a missing section -> flagged, no date', () => {
   const x = extract(['This Agreement is entered into as of January 1, 2026 (the "Effective Date").', 'The term of this Agreement shall commence on the Effective Date and continue for one (1) year.', 'It shall automatically renew for successive one (1) year terms unless a party gives notice of non-renewal pursuant to Section 12.3.']);
   const a = schedule(x, '2026-02-01').find(i => i.type.startsWith('Non-renewal'));
   assert.equal(a.date, ''); assert.equal(a.needsReview, true); assert.match(a.why, /Section 12\.3/);
+});
+
+// ---- explicit priority rule
+test('priority: sections, windows, reasons', () => {
+  const q = buildQueue(Object.values(C), AS);
+  assert.deepEqual(q.map(r => r.section), ['missed', 'resolve', 'resolve', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming']);
+  const by = Object.fromEntries(q.map(r => [r.id, r]));
+  assert.equal(by.c5.why, 'Act in 58 days · missing it locks in 2 more years');
+  assert.match(by.c1.why, /^Act in 183 days · missing it locks in 1 more year · notice is longer than the renewal/);
+  assert.match(by.c7.why, /^Expired 871 days ago · all renewals used/);
+  assert.equal(by.c8.why, 'No date found · resolve first: redacted in the public filing');
+  assert.equal(by.c13.why, 'No date found · resolve first: redacted in the public filing');
+  assert.match(PRIORITY_RULE, /Missed first/);
+});
+test('priority: inside a window, worse-to-miss beats sooner', () => {
+  const mk = (id, eff, renew, notice) => ({ id, name: id, x: extract([`This Agreement is entered into as of ${eff} (the "Effective Date").`, 'The term of this Agreement shall commence on the Effective Date and continue for one (1) year.', `It shall automatically renew for successive ${renew} periods unless either party gives notice at least ${notice} prior to the end of the then-current term.`]) });
+  // all three act-by dates fall in the 91–365 window as of 2026-10-19
+  const a = mk('A-soon-1yr', 'June 1, 2026', 'one (1) year', 'thirty (30) days');          // act-by 2027-05-01, 1-yr lock
+  const b = mk('B-later-3yr', 'August 1, 2026', 'three (3) year', 'thirty (30) days');      // act-by 2027-07-01, 3-yr lock
+  const q = buildQueue([a, b], '2026-10-19');
+  assert.deepEqual(q.map(r => r.id), ['B-later-3yr', 'A-soon-1yr']);
+  assert.equal(q[0].window, q[1].window);
+  // different windows: the sooner window always wins, whatever the lock-in
+  const d = mk('D-30day-1yr', 'November 20, 2025', 'one (1) year', 'thirty (30) days'); // act-by 2026-10-20 (next 30 days)
+  assert.equal(buildQueue([b, d], '2026-10-19')[0].id, 'D-30day-1yr');
+  // notice longer than renewal outranks a longer lock-in in the same window
+  const e = mk('E-notice-gt-renewal', 'December 1, 2025', 'six (6) month', 'eight (8) months'); // 8 months' notice on 6-month renewals; next act-by 2027-03-30
+  const q2 = buildQueue([b, e], '2026-10-19');
+  assert.equal(q2[0].window, q2[1].window); assert.equal(q2[0].id, 'E-notice-gt-renewal'); assert.equal(q2[0].noticeLong, true);
 });

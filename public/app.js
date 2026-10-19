@@ -1,4 +1,4 @@
-import { extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed } from '/extract.js';
+import { extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -10,12 +10,13 @@ if (params.has('asof')) { if (validDay(params.get('asof'))) asOf = params.get('a
 $('#asof').value = asOf;
 let edgar = [], mine = [], set = 'edgar', groupBy = ['counterparty', 'filer'].includes(params.get('group')) ? params.get('group') : 'none';
 const current = () => set === 'edgar' ? edgar : mine;
+document.getElementById('rule').textContent = PRIORITY_RULE;
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1]} ${y}`; };
 const STOP = /^(the|inc\.?|llc|corp\.?|corporation|company|co\.?|ltd\.?|limited|holdings|of|and|\(.*)$/i;
 const initials0 = name => (name || '?').replace(/\(.*?\)/g, ' ').replace(/[(),.]/g, ' ').split(/\s+/).filter(w => w && !STOP.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('') || '?';
 
 // Short grey reason shown after a NEEDS REVIEW label.
-const reason = (why = '') => /redact/i.test(why) ? 'redacted in the public filing' : /No term clause/i.test(why) ? 'no term found' : /event \(e\.g/i.test(why) ? 'term runs from an event' : /first Renewal Term/i.test(why) ? 'ambiguous drafting' : /inclusive of the final day/i.test(why) ? 'could land one day later' : /without saying before what/i.test(why) ? 'notice reference point not stated' : /Effective Date that needs review|no Effective Date/i.test(why) ? 'effective date not defined' : /disagree/i.test(why) ? 'words and numerals disagree' : /no non-renewal notice|No notice period/i.test(why) ? 'no notice period found' : /not cross-checked/i.test(why) ? 'stated date, term not found' : /not tied/i.test(why) ? 'term start unclear' : (why.split('.')[0] || 'confirm against the clause').slice(0, 60).toLowerCase();
+const reason = shortReason;
 const rv = why => `<span class="rv">Needs review</span><span class="rvw"> · ${esc(reason(why))}</span>`;
 // "Cerus / Purolite" -> "CP"; otherwise first letters of the counterparty name
 const initials = (name, fallback) => /\s\/\s/.test(name || '') ? name.split(/\s\/\s/).slice(0, 2).map(p => initials0(p)[0] || '').join('') : initials0(fallback || name);
@@ -38,11 +39,12 @@ function render() {
     return `<li data-id="${esc(r.id)}" role="button" class="${past ? 'past' : ''}${r.days != null && r.days >= 0 && r.days <= 90 ? ' soon' : ''}" tabindex="0">
     <span class="d">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
     <span class="n">${r.days == null ? '' : past ? `<span class="lapsed">Lapsed</span> · ${-r.days} days ago` : r.days === 0 ? 'today' : `in ${r.days} days`}</span>
-    <span class="c"><b>${esc(r.name)}</b><div>${r.actBy ? esc(past ? r.label.replace(' by', ' was due') : r.label) : 'No act-by date computed'}</div></span>
+    <span class="c"><b>${esc(r.name)}</b><div class="why-here"><span class="wl">Why it’s here</span> ${esc(r.why)}</div></span>
     <span class="s">${r.needsReview ? rv(r.item?.why) + '<br>' : ''}${esc(r.confidence)} confidence</span></li>`; };
   // optional grouping by party: counterparty or filer (the public company)
   ['none', 'counterparty', 'filer'].forEach(g => $('#g-' + g).setAttribute('aria-pressed', groupBy === g));
-  if (groupBy === 'none') $('#queue').innerHTML = rows.map(li).join('');
+  const head = r => r.section === 'missed' ? 'Missed · deadline passed' : r.section === 'resolve' ? 'Resolve first · needs review, no date' : 'Upcoming · ' + WINDOWS[r.window][2];
+  if (groupBy === 'none') { let last = ''; $('#queue').innerHTML = rows.map(r => { const h = head(r); const out = (h !== last ? `<li class="sh" role="presentation"><span class="lab">${esc(h)}</span></li>` : '') + li(r); last = h; return out; }).join(''); }
   else { const key = r => (cs.find(c => c.id === r.id)?.[groupBy] || 'Not stated'); const groups = new Map(); rows.forEach(r => groups.set(key(r), [...(groups.get(key(r)) || []), r]));
     $('#queue').innerHTML = [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([k, rs]) => `<li class="grp" role="presentation"><span class="lab">${groupBy === 'filer' ? 'Party (filer)' : 'Counterparty'}</span> <b>${esc(k)}</b> <span class="gn">${rs.length} ${rs.length === 1 ? 'agreement' : 'agreements'}${rs.some(r => r.actBy && r.days >= 0) ? ' · next act-by ' + esc(fmt(rs.filter(r => r.actBy && r.days >= 0).sort((a, b) => a.days - b.days)[0].actBy)) : ''}</span></li>` + rs.map(li).join('')).join(''); }
   $('#cards').innerHTML = cs.map(c => { const r = rows.find(x => x.id === c.id);
@@ -114,4 +116,5 @@ async function readFile(f) {
 $('#file').onchange = async e => { for (const f of e.target.files) { try { $('#status').textContent = 'Reading ' + f.name + '…'; addDoc(f.name, await readFile(f)); } catch (err) { $('#status').textContent = 'Could not read ' + f.name + ': ' + err.message; } } e.target.value = ''; };
 document.querySelectorAll('[data-sample]').forEach(b => b.onclick = async () => { const name = b.dataset.sample.split('/').pop(); try { $('#status').textContent = 'Reading ' + name + '…'; const blob = await (await fetch(b.dataset.sample)).blob(); addDoc(name, await readFile(new File([blob], name))); } catch (err) { $('#status').textContent = 'Could not read ' + name + ': ' + err.message; } });
 $('#addPaste').onclick = () => { const t = $('#paste').value.trim(); if (!t) { $('#status').textContent = 'Paste some contract text first.'; return; } addDoc('Pasted text ' + (n + 1), t.split(/\r?\n/)); $('#paste').value = ''; };
+new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
