@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, PRIORITY_RULE, toSentences, addMonths, ymd, norm, nextFixed } from '../public/extract.js';
+import { safeSendBy, US_HOLIDAYS, extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, PRIORITY_RULE, toSentences, addMonths, ymd, norm, nextFixed } from '../public/extract.js';
 
 const D = JSON.parse(fs.readFileSync(new URL('../public/data/edgar.json', import.meta.url)));
 const C = Object.fromEntries(D.map(c => [c.id, { ...c, x: extract(c.lines) }]));
@@ -375,4 +375,22 @@ test('review tags: no formulas, no "ambiguous", plain redaction wording, Acadia 
   assert.equal(all.find(r => r.id === 'b8').tag, 'renewal depends on a condition; confirm it holds');
   assert.equal(all.find(r => r.id === 'c8').tag, 'blacked out in the public copy');
   assert.equal(all.find(r => r.id === 'c3').tag, 'unclear which term the notice counts from');
+});
+
+// ---- 41f4d03 review: weekend / US federal holiday deadlines
+test('safeSendBy: weekend and federal-holiday deadlines step back to a business day', () => {
+  const q = Object.fromEntries([...buildQueue(Object.values(C), AS), ...buildQueue(Object.values(TS), AS)].map(r => [r.id, r]));
+  assert.equal(q.c12.safe.date, '2028-06-09'); assert.equal(q.c12.safe.note, 'Falls on a Saturday · send by Fri 9 Jun 2028 to be safe'); assert.equal(q.c12.actBy, '2028-06-10');
+  assert.equal(q.c2.safe.date, '2030-01-25');
+  assert.equal(q.c6.safe.date, '2027-05-28'); assert.match(q.c6.safe.reason, /Memorial Day/);
+  assert.equal(q.c3.safe.date, '2027-09-17'); assert.equal(q.c3.actBy, '2027-09-19');
+  assert.equal(q.b5.safe.date, '2027-04-30');
+  assert.equal(q.c5.safe, null); assert.deepEqual(safeSendBy('2026-12-16'), { date: '2026-12-16', changed: false, reason: '' });
+  assert.equal(safeSendBy('2027-12-25').date, '2027-12-23'); // Christmas on Saturday, observed Fri 24 Dec, so Thu 23
+  assert.equal(US_HOLIDAYS.size, 110);
+});
+test('safe send-by in exports: CSV column, .ics on the safe day, audit-pack lines', () => {
+  const csv = toCSV([C.c12], AS); assert.match(csv.split('\r\n')[0], /,send_by_business_day,/); assert.match(csv, /Send-notice deadline,[^\n]*,2028-06-10,\d+,2026-10-19,2028-06-09,/);
+  const ics = toICS([C.c12], AS); assert.match(ics, /DTSTART;VALUE=DATE:20280609/); assert.doesNotMatch(ics, /DTSTART;VALUE=DATE:20280610/); assert.match(ics.replace(/\r\n /g, ''), /Contract date: 2028-06-10\\, which falls on a Saturday/);
+  const p = toPacket(Object.values(C), AS); assert.match(p, /Reborn \/ Mighty Oak: contract date 2028-06-10 · Falls on a Saturday · send by 2028-06-09 to be safe/); assert.equal((p.match(/to be safe\./g) || []).length, 4);
 });

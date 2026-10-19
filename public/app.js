@@ -52,7 +52,7 @@ function render() {
     return `<li data-id="${esc(r.id)}" role="button" class="${past ? 'past' : ''}${r.section === 'missed' ? ' missed' : ''}${r.days != null && r.days >= 0 && r.days <= 90 ? ' soon' : ''}" tabindex="0">
     <span class="d">${r.missed ? `<span class="rn">Renews</span> ${esc(fmt(r.missed.renews))}` : r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
     <span class="n">${r.days == null ? '' : r.missed ? `in ${daysBetween(asOf, r.missed.renews)} days` : past ? `<span class="lapsed">Expired</span> · ${-r.days} days ago` : r.days === 0 ? 'today' : `in ${r.days} days`}</span>
-    <span class="c"><b>${esc(r.name)}</b><div class="why-here"><span class="wl">Why it’s here</span> ${esc(r.why)}</div></span>
+    <span class="c"><b>${esc(r.name)}</b><div class="why-here"><span class="wl">Why it’s here</span> ${esc(r.why)}</div>${r.safe ? `<div class="safe">${esc(r.safe.note)}</div>` : ''}</span>
     <span class="s">${r.needsReview ? rv(r.tag) + '<br>' : ''}${esc(sure(r.confidence))}</span></li>`; };
   // optional grouping by party: counterparty or filer (the public company)
   ['none', 'counterparty', 'filer'].forEach(g => $('#g-' + g).setAttribute('aria-pressed', groupBy === g));
@@ -65,7 +65,7 @@ function render() {
   $('#cards').innerHTML = cs.map(c => { const r = rows.find(x => x.id === c.id);
     return `<button class="card" data-id="${esc(c.id)}"><div class="tile" aria-hidden="true">${esc(initials(c.name, c.counterparty))}</div>
     <div class="t">${esc(c.name)}</div><div class="m">${esc(c.kind || 'Uploaded')}${c.filed ? ' · filed ' + esc(fmt(c.filed)) : ''}</div>
-    <div class="a">${r?.actBy ? (r.missed ? `Renews ${esc(fmt(r.missed.renews))} · send-notice deadline missed` : `${r.days < 0 ? '<span class="lapsed">Expired</span> · ' : ''}${esc(r.label)} ${esc(fmt(r.actBy))}`) : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.tag)}</div>` : ''}</button>`; }).join('');
+    <div class="a">${r?.actBy ? (r.missed ? `Renews ${esc(fmt(r.missed.renews))} · send-notice deadline missed${r.safe ? `</div><div class="a safe">Next deadline: ${esc(r.safe.note)}` : ''}` : `${r.days < 0 ? '<span class="lapsed">Expired</span> · ' : ''}${esc(r.label)} ${esc(fmt(r.actBy))}${r.safe ? `</div><div class="a safe">${esc(r.safe.note)}` : ''}`) : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.tag)}</div>` : ''}</button>`; }).join('');
   document.querySelectorAll('[data-id]:not(.grp)').forEach(el => { el.onclick = () => openDrawer(el.dataset.id); el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(el.dataset.id); } }; });
 }
 let lastFocus = null;
