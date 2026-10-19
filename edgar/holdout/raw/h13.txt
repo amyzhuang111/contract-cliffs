@@ -1,0 +1,545 @@
+EX-10.9
+4
+xxii-20251231xex10d9.htm
+EX-10.9
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+MASTER SERVICES AGREEMENT
+​
+This Master Services Agreement (hereinafter the "Agreement") is made and entered into as of January 1, 2025 (the "Effective Date"), by and between NASCO PRODUCTS, LLC, a Delaware limited liability company, having its principal place of business at 321 Farmington Road, Mocksville, North Carolina 27028 ("Supplier"); 22ND CENTURY GROUP, INC., a Nevada Corporation (“22nd Century”); and SMOKER FRIENDLY INTERNATIONAL, LLC, a Colorado limited liability company, having its principal place of business at 6790 Winchester Circle, Boulder, Colorado 80301 ("SFI. As used herein, the term "party" shall mean either Supplier or SFI and the term "parties" shall mean Supplier and SFI.
+1.1RECITALS
+​
+A.SFI is the exclusive owner in the United States of America of the trademark (the “SF Trademark”) and certain package designs covering tobacco products as specified on Exhibit A to this Agreement;
+​
+B.Supplier is the manufacturer and supplier of multiple tobacco products including cigarettes, very low nicotine cigarettes and filtered cigars as set forth on Exhibit B (the “Products”)
+​
+C.Supplier is currently developing other tobacco products including moist snuff, premium cut pipe tobacco and heat not burn products;
+​
+D.Supplier is also the owner of cigarette assets consisting of regulatory filings with federal agencies, documentation, components, characteristics (including, without limitation, materials, ingredients, design, and composition and any other features), and tobacco blends that were in commerce in the United States as of February 15, 2007 (each a “Predicate”).
+​
+E.22nd Century is the parent company of Supplier and the exclusive owner in the United States of America of the VLN® trademark (the “VLN Trademark”);
+​
+F.22nd Century is the recipient of (i) a Modified Risk Grant Order (the “MRTP Order”) from the FDA dated December 23, 2021 for the VLN® King and VLN® Menthol King cigarettes (the “VLN Products”), and (ii) a Marketing Granted Order (the “PMTA Order”) from the FDA in connection with a Premarket Tobacco Product Application for the VLN Products which authorizes the marketing and introduction of the VLN Products into interstate commerce. The MRTP Order, the PMTA Order and other proprietary technology and information required to manufacture and market the VLN Products are defined as the “VLN Assets”).
+​
+G.22nd Century has distribution networks setup throughout the United States for tobacco products.
+​
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+H.SFI wishes to engage Supplier as the exclusive supplier in the Territory (as herein defined) of the Products, some or all of which bearing the SF Trademarks, and in certain cases license formulas for the Predicates, or the VLN Assets, and Supplier wishes to accept such engagement, all subject to the terms and conditions of this Agreement, including the Exhibits hereto and Addendums which will be added for each Product or new service type.
+​
+NOW, THEREFORE, in consideration of the mutual premises of this Agreement and for other good and value consideration, the receipt and sufficiency of which are hereby acknowledged, the parties hereto intending to be legally bound do hereby agree as follows:
+​
+1.DEFINITIONS
+Except as otherwise specifically required by the context, the following terms shall have the respective meanings hereinafter set forth in this Section 1.
+"Affiliate" shall mean a person who directly or indirectly owns or controls, is owned or controlled by, or is under common ownership or control with, another person. Solely for purposes of this definition, the terms "owns," "is owned" and "ownership" mean ownership of any equity interest, or the equivalent thereof, of fifty percent (50%) or more, and the term "person" means an individual, partnership, committee, association, corporation or any other organization or group of persons.
+"Designated Wholesaler" shall mean those tobacco wholesalers who are authorized by SFI to purchase the Product from Supplier and are listed on Exhibit C-1, which list may be amended from time to time by SFI.
+"MSA" shall mean the Master Settlement Agreement dated November 23, 1998.
+"SFI Licensees" shall mean tobacco store, convenience store, liquor store, grocery store retailers and any other retail stores, in each case who are licensees of SFI, who are granted the right and license by SFI to use the SF Trademark in connection with the provision of retail services and who are listed on Exhibit C-2 to this Agreement, as the same may be amended from time to time by SFI.
+"Territory" shall mean the geographic territory comprised of the United States of America (including its territories and possessions).
+2.APPOINTMENT; EXCLUSIVITY
+2.1.Appointment. During the Term of this Agreement, SFI appoints Supplier as its exclusive supplier of the Products in the Territory, for distribution and sale in the Territory.
+2.2.SFI Licensees. Supplier understands and acknowledges that each SFI Licensee is an independent entity which is neither owned nor controlled by SFI, except for the
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+Cigarette Store LLC, which has a relationship with SFI as its parent. Supplier further acknowledges that, except as provided in the license agreement between SFI and each SFI Licensee, SFI has no other relationship with, or control over, the SFI Licensees. SFI agrees to use its best efforts to encourage the SFI Licensees to purchase the Products and to actively promote sales of the Products.
+3.SUPPLY OF THE PRODUCT
+3.1.General. During the Term of this Agreement, Supplier shall be the exclusive supplier of the Products, which Products shall be manufactured to specifications according to each applicable Addendum, in a quantity, at a price, and over a period of time as hereinafter set forth.
+3.2.Quality Product. Supplier shall diligently and continuously use its reasonable best efforts to maintain the quality and specifications of each of the Product varieties set forth on applicable Addendums in conformity with the samples previously approved by SFI.
+3.3.Supply. Subject to the terms and conditions hereof, Supplier shall continuously supply the Products during the Term of this Agreement and shall make them available for purchase by the Designated Wholesalers, except to the extent that Supplier is prohibited from doing so by any law, rule, regulation, court order or notice from or other action taken by any governmental agency.
+4.PRODUCT DESCRIPTION AND QUALITY
+4.1.Product Types. The Product shall be the varieties of tobacco Products set forth more specifically on Addendums to the Agreement.
+4.2.Product Specifications. The Product shall at all times be supplied by Supplier in accordance with the specifications as set forth on an addendum specific to each Product type. These Specifications have been furnished in sufficient detail to permit the application of SFI's quality control program to verify that the Product is of a consistent quality. Supplier shall provide SFI with copies of all filings made in connection with MSA registration, if applicable, or any other governmental reports made in connection with or related to the Products.
+4.3.Product Packaging.
+a)SFI shall be responsible for ensuring that the Product's packaging and labeling shall be in conformity with all applicable trademark, copyright and similar intellectual property laws and regulations in effect in the Territory.
+b)Supplier shall be responsible for ensuring that the Product's packaging and labeling shall be in conformity with all other applicable laws and regulations in effect in the Territory, including, but not limited to the Family Smoking Prevention and Tobacco Control Act of 2009. Supplier shall cause the Product to be packaged and labeled in accordance with
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+SFI's written instructions with respect thereto and the specifications for each variety of the Product set forth on each applicable addendum, and such other additional specifications as shall be mutually agreed by Supplier and SFI in writing from time to time.
+5.SF TRADEMARK LICENSE
+5.1.Use of SF Trademark; Unless otherwise specifically stated in an applicable Addendum, all packaging materials used herein shall contain the SF Trademark, which is owned in the Territory by SFI, and SFI hereby grants to Supplier an exclusive right and license to use and reproduce the SF Trademark in connection with Supplier's supply of the Product. SFI hereby represents and warrants to Supplier that no part of the SF Trademark or of the design of the packaging materials shall infringe upon or violate the rights of any other person or entity with respect to any trademark, trade name or design registered as such for use in connection with tobacco products in the Territory. Supplier acknowledges that SFI shall have the right to use the SF Trademark on all other products and items not related to the Products.
+5.2.Term. The non-exclusive SF Trademark license and the right to sublicense hereby granted shall commence and end in accordance with Section 8 (Term), Section 9 (Termination) and Section 10 (Rights and Obligations on Termination) hereof.
+5.3.Trademark Indemnification. SFI agrees to defend, indemnify and hold Supplier harmless of, from and against any charges, suits, damages, costs, expenses (including reasonable attorneys' fees), judgments, penalties, claims, liabilities or losses of any kind or nature whatsoever, which may be sustained or suffered by or secured against Supplier based upon or arising out of any actual or alleged trademark, trade name, design or copyright infringement arising solely out of the use by Supplier of the SF Trademark or the packaging design as authorized in this Agreement.
+5.4.Termination of Rights. The parties agree that, except as contemplated by Section 10.3, immediately following the expiration or termination of this Agreement, all rights of Supplier to use the SF Trademark shall cease and SFI shall be free to use the SF Trademark. Supplier shall not, during the Term hereof or after the expiration of this Agreement pursue any trademark, trade name or copyright registration of the SF Trademark in the Territory without SFI's prior written consent.
+5.5.General. SFI represents and warrants to Supplier that SFI is, and shall be at all times during the Term of this Agreement, the owner in the Territory of all right, title, and interest in and to the SF Trademark.
+5.6.Use for Benefit of SFI. Supplier agrees that any and all uses by Supplier of the SF Trademark under this Agreement shall inure to the benefit of SFI and that neither such uses nor anything contained in this Agreement shall give or assign Supplier any right, title or interest in the SF Trademark, except the right to use the SF Trademark specifically in accordance with the provisions of this Agreement.
+6.OBLIGATIONS OF SFI
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+6.1
+During the Term of this Agreement, SFI:
+​
+(a)(i) shall not purchase or procure Products listed as “Current Products” on Exhibit B from any source other than Supplier for distribution in the Territory, and (ii) shall not authorize and/or permit any other person or entity other than Supplier to make, manufacture, offer and/or sell the Products in the Territory;
+​
+(b)shall maintain the registration with U.S. Customs of the SF Trademark in order to prevent imports of any cigarette products bearing the SF Trademark, and shall bring any action against anyone materially infringing on the SF Trademark and/or importing, offering and/or selling any Products in the Territory bearing the SF Trademark; and
+​
+(c)Agrees to be bound by all provisions of (i) the MSA with regard to any cigarette Products and (ii) this Agreement and all Exhibits hereto.
+6.2The Products shall be sold and distributed only in the Territory unless product is designated to be for export and bears all the markings as required by the Tobacco Tax and Trade Bureau or any other governmental entity having jurisdiction over the Products.
+7.PRICE AND PRICE CHANGES
+7.1.Supplier Price. Except as otherwise provided herein, the Supplier Price which Supplier charges Designated Wholesalers for the Products during each calendar year shall be set forth on the Addendum applicable to each Product.
+a)Notwithstanding the foregoing, Supplier may change the Supplier Price at any time for amounts due or to be due for tax increases, MSA payments, industry wide surcharges any other governmental and/or regulatory amounts which are assessed against Supplier after the date of this Agreement.
+b)The Parties shall meet and confer at least annually to discuss any increases in the prices of raw materials and other manufacturing costs. The Parties will negotiate in good faith any requests by Supplier to increase the Supplier Price due to raw materials and manufacturing costs increases.
+c)Any royalty or similar compensation paid to SFI shall be added to the Supplier Price unless otherwise specifically noted in any applicable Addendum.
+7.2.Invoicing/Payment Terms. All invoices shall be billed by Supplier to the Designated Wholesaler at the Supplier Price in response to purchase orders confirmed and accepted by Supplier from Designated Wholesalers. All invoices are payable in accordance with Supplier's then current standard terms of payment. Any failure to comply with Supplier's then current standard terms shall, with respect to all future shipments, relieve Supplier of its obligation to deliver the Product to a bonded warehouse in response to purchase orders received by Supplier from the non­complying Designated Wholesalers pursuant to Section 3 hereof. Supplier may refuse to sell Products to any Designated Wholesaler that does not comply with the provisions of
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+this Agreement.
+7.3.Shipment and Delivery. All purchase orders shall be submitted directly to Supplier by each Designated Wholesaler and all shipments of the Products shall be direct from Supplier to Designated Wholesalers as agreed to between those parties.
+7.4.Returns. Each Designated Wholesaler shall have the duty to inspect all Products at the time of pickup of such Products from the bonded warehouse designated by Supplier and if any such Products are determined by the Designated Wholesaler and Supplier to be damaged by Supplier prior to shipment of such Products or by the shipping company after the shipping company picked up the Products from Supplier for delivery to the bonded warehouse selected by Supplier, then the Designated Wholesaler must report such matter in writing to Supplier by the next business day immediately following the pickup of such Products from the bonded warehouse designated by Supplier. If the Designated Wholesaler has reported such damage to Supplier in writing in a timely manner, then Supplier shall accept the return of such damaged Products (limited to warehouse or shipment damages only) which are approved in writing in advance by Supplier. Supplier shall provide a credit to the Designated Wholesaler for all pre-approved returns of damaged Product at the lower of: (i) the invoiced Supplier Price; or (ii) the Supplier Price in effect on the date the returned Product is received by Supplier. All amounts due for damaged Product returns to Supplier that have been paid for in full by the Designated Wholesaler to Supplier shall be reflected in a credit memo to the Designated Wholesaler within thirty (30) days of the date such damaged Product is received by Supplier.
+7.5.Breach of Payment Obligation by Designated Wholesaler. The Parties agree that Supplier shall have the right, at the sole option of Supplier, to refuse to sell the Products to any Designated Wholesaler if such Designated Wholesaler fails to pay Supplier in accordance with the provisions of this Agreement and such failure remains unremedied for ten (10) days after it shall have received written notice thereof from Supplier.
+8.TERM
+The initial Term of this Agreement shall commence on the date hereof and shall end on the later of (i) the date which is sixty (60) months after the date of the first shipment of Products to a Designated Wholesaler or (ii) the date on which there are no Addendums currently in effect; and thereafter this Agreement shall automatically renew for additional successive renewal terms of five (5) years each unless notice if given by either party ninety (90) days prior to the end of the Term.
+9.TERMINATION
+This Agreement may be terminated or Supplier may refuse to sell Products to any Designated Wholesaler, as the case may be, prior to the expiration of the initial Term hereof, if and when any of the following events occur:
+9.1.Breach of Agreement by SFI or Supplier. Supplier or SFI may terminate this Agreement upon the occurrence of a material breach of any agreement, covenant, representation, warranty or undertaking contained in this Agreement by the other party, which if
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+the matter remains unremedied for thirty (30) days after the defaulting party shall have received written notice thereof from the aggrieved party.
+9.2.Bankruptcy or Cessation of Business. Supplier shall have the right, but not the obligation, to refuse to sell Products to any Designated Wholesaler upon such Designated Wholesaler's cessation of business, election to dissolve, dissolution, insolvency, failure in business, commission of an act of bankruptcy, general assignment for the benefit of creditors, filing of any petition in bankruptcy or for relief under the provisions of the bankruptcy laws, or in the event of non-payment in full in a timely manner of any amounts owed to Supplier by any such Designated Wholesaler. Supplier also shall have the right, but not the obligation, to terminate this Agreement in the event of SFI's cessation of business, election to dissolve, dissolution, insolvency, failure in business, commission of an act of bankruptcy, general assignment for the benefit of creditors, filing of any petition in bankruptcy or for relief under the provisions of the bankruptcy laws, or in the event of non-payment of any amounts owed to Supplier by SFI, any Affiliate of SFI and/or any Designated Wholesaler; provided, however, that SFI shall not be deemed to be in breach of this Section 9.2 in the event SFI elects to dissolve or actually dissolves after SFI has completed any assignment of this Agreement as permitted under Section 22.
+9.3.Termination for Convenience. Either Party may terminate this Agreement upon one hundred eighty (180) days prior written notice.
+10.RIGHTS AND OBLIGATIONS ON TERMINATION
+10.1.Non-Liability of Supplier. Upon termination of this Agreement, the parties agree that Supplier shall not be liable for any damages of any kind, type, amount and/or nature, including but not limited to consequential damages of any kind, whether as a result of a loss by SFI, an SFI Licensee or a Designated Wholesaler of present or prospective profits, anticipated sales, expenditures, investments, commitments made in connection with this Agreement, or on account of any other reason or cause whatsoever.
+10.2.Reversion of Right. Except as contemplated by Section 10.3 hereof, immediately upon the effective date of termination of this Agreement, for whatever reason, all the trademark rights granted to Supplier hereunder shall cease and revert to SFI. Supplier will be deemed to have automatically assigned to SFI, all trademark rights, goodwill, and other rights in or to the SF Trademark. Supplier shall upon the termination of this Agreement execute any instruments reasonably requested by SFI to accomplish or confirm the foregoing. Any such assignment shall be only for the consideration of the mutual covenants and considerations of this Agreement. In addition, upon and after such termination of this Agreement for whatever reason, Supplier will forthwith refrain from further use of the SF Trademark or of any name which is confusingly similar to the SF Trademark.
+10.3.Windup Obligations. During the six-month period immediately following the effective date of the termination of this Agreement, or such additional period to which Supplier and SFI shall agree in writing (hereinafter the "Windup Period"), the parties shall
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+observe the following:
+(a)Supplier shall not be required to perform any further production of the Product, except that Supplier agrees that it shall turn all work-in­ process into finished Product and to complete any unfinished production runs as long as Supplier receives payment guarantees in advance from all applicable Designated Wholesalers or SFI for all such Products that will result from such work-in-progress and unfinished production runs;
+​
+(b)As soon as practicable following the effective date of termination, Supplier shall provide to SFI a schedule of all Product in its inventory (whether on hand or in transit) broken down by variety, which inventory schedule shall include all Product to be finished pursuant to Section 10.3(a) above;
+(c)SFI shall use its best efforts during the Windup Period to cause the Designated Wholesalers to purchase, at the then current Supplier Price, all inventory of the Product set forth on Supplier's aforementioned inventory schedule, with Supplier having no obligation to complete any work-in-progress and/or finish and unfinished production runs unless and until Supplier receives payment guarantees in advance from all applicable Designated Wholesalers or SFI for all such Products that will result from such work-in-progress and unfinished production runs; and
+(d)All purchases of the Product during the Windup Period shall be effected in accordance with the applicable provisions of this Agreement, including, without limitation, Section 7 hereof.
+​
+10.4.Payments by SFI. Within thirty (30) days following SFI's receipt of Supplier's invoice, which invoice shall be sent following the end of the Windup Period, SFI shall (except as set forth below) pay Supplier for the following:
+(a)All inventory of Product at the then current Supplier Price less all inventory sold during the Windup Period (and following receipt of payment Supplier shall ship all such Product in accordance with SFI's written instructions); and
+​
+(b)Any remaining raw materials or packaging materials unique to the Product at Supplier's out of pocket cost, as the case may be, (and following receipt of payment Supplier shall ship, or cause to be shipped, all such materials to SFI).
+​
+If SFI fails to pay Supplier's invoice within such thirty (30) day period, then as Supplier's sole remedy, Supplier shall be entitled to sell and dispose of all such inventory and packaging materials to any person at such prices and terms as Supplier in its sole discretion shall determine, with Supplier having the continued right to use the SF Trademarks during such period of time until all such items with any SF Trademarks have been sold by Supplier under this provision of this Agreement.
+​
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+11.INSURANCE
+​
+11.1.Scope and Limits. Supplier will procure and maintain insurance coverage according to the requirements detailed below throughout the term of this Agreement:
+​
+a)Workers' compensation insurance in accordance with applicable state and federal laws and employers' liability insurance that covers all employees involved with the delivery or Product under this Agreement with limits of at least $1,000,000, endorsed to provide coverage for an alternate employer
+​
+b)Commercial general liability insurance with limits of at least $1,000,000 for each occurrence for bodily injury or property damage and with annual general aggregates of at least $2,000,000 for products-completed operations and for general aggregate;
+​
+c)Comprehensive automobile liability insurance, including contractual liability to cover all owned, hired, and non-owned automobiles, with a combined single limit of not less than $1,000,000 for each occurrence for bodily injury or property damage;
+​
+d)Excess or umbrella liability insurance with a combined single limit of not less than $10,000,000 for each occurrence and $10,000,000 in the aggregate for bodily injury or property damage covering excess of the required employers’ liability, commercial general liability, and comprehensive automobile liability insurance.
+​
+e)Upon request, Supplier shall provide SFI with certificates of insurance that establish that Supplier has insurance coverage that satisfies the requirements of this agreement. Supplier’s insurance coverage required under this agreement will: (i) for commercial general liability and upon request, name SFI as an additional insured and (ii) for commercial general liability, waive all rights of subrogation against SFI.
+12.INDEMNIFICATION
+12.1.Supplier. Supplier will indemnify SFI, its directors, officers, agents, employees, and Affiliates and hold them harmless from and against any and all claims, actions, damages, liability, and expense, including reasonable attorney’s fees, in connection with: (i) loss of life, personal injury, or damage to any property arising from or in connection with this Agreement (including the services and Products provided under this Agreement), occasioned wholly or in part by any act or omission of Supplier, or its agents, employees, subcontractors, or Supplier; (ii) a violation or alleged violation of law by Supplier, its agents, employees, subcontractors; (iii) any breach of warranty or failure to satisfy any obligation by Supplier set forth in this Agreement; and (iv) any claims alleging design defect or other products liability claim not arising from the actions of SFI.
+12.2.SFI. SFI will indemnify Supplier, its directors, officers, agents, employees, and Affiliates and hold them harmless from and against any and all claims, actions, damages, liability, and expense, including reasonable attorney’s fees, in connection with: (i) loss of life, personal injury, or damage to any property arising from or in connection with this Agreement occasioned wholly or in part by any act or omission of SFI, or its agents, employees, or
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+subcontractors; (ii) a violation or alleged violation of law by SFI, its agents, employees, or subcontractors; and (iii) any breach of warranty or failure to satisfy any obligation by SFI set forth in this Agreement; and (iv) any claims alleging design defect or other products liability claim not arising from the actions of Supplier.
+12.3.Conditions. Each Party’s indemnity obligation under Section 12.1 and 14.2 of this Agreement is conditioned upon: (i) the indemnified Party promptly notifying the indemnifying Party in writing of any actual or threatened claim; (ii) the indemnified Party giving the indemnifying Party sole control of the defense of any actual or threatened claim and any related settlement negotiations; and (iii) the indemnified Party cooperating and, at the indemnifying Party’s request and expense, assisting in the defense of any actual or threatened claim. The indemnifying Party will not enter into a settlement agreement that obligates in any way the indemnified Party or that has a material adverse effect on the indemnified Party without the indemnified Party’s express written consent.
+13.MANUFACTURER WARRANTY
+Supplier expressly represents and warrants to SFI that the Product when picked up by the transportation company for delivery to the designated bonded warehouses selected by Supplier in the Territory, shall be of merchantable quality and free from imperfection and defects in and of the Product, and shall fully comply at all times with the Product specifications described in Section 4.2. Except as provided in this Agreement. MANUFACTURER MAKES NO ADDITIONAL REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED BY LAW, AND ANY SUCH REPRESENTATIONS OR WARRANTIES ARE HEREWITH EXCLUDED AND DISCLAIMED. UNDER NO CIRCUMSTANCES SHALL MANUFACTURER BE LIABLE FOR ANY LOSS OF PROFIT OR FOR ANY INDIRECT, SPECIAL OR CONSEQUENTIAL DAMAGES SUFFERED BY SFI, ANY OF THE DESIGNATED WHOLESALERS, ANY OF THE SFI LICENSEES AND/OR ANY END USERS. The aforementioned representations and warranties shall apply only within the Territory.
+14.COMPLIANCE WITH REGULATIONS, CONSENT ORDERS
+Supplier and SFI do expressly represent and warrant that in connection with the storage, shipment, packaging, labeling, marketing, advertising, promotion and sale of the Product, it shall comply with all applicable U.S. municipal, county, state and federal laws, rules, regulations and applicable taxes in the Territory, and with any applicable consent orders and voluntary programs of the U.S. cigarette industry, including, but not limited to the FDCA. Supplier shall be responsible for the payments under the MSA with respect to the Products and shall pay the taxes specified in subsection II (2) of the MSA on the Products. Supplier shall be responsible for full compliance with FDCA with respect to manufacturing, reporting, labeling, and packaging of the Products. Supplier shall indemnify, defend and hold SFI harmless from and against any and all fines, costs penalties and suits arising out of Supplier's breach of this paragraph 16; provided, however, that Supplier shall not be obligated to indemnify, defend and/or hold SFI harmless from and against any and all fines, costs penalties and suits arising out of Supplier's breach of this paragraph 14 if such breach by Supplier was caused by the delay or failure
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+of SFI and/or any third-party, including but not limited to any Designated Wholesaler, to provide Supplier with any required information and/or payments. SFI agrees to use its best efforts to cause each Designated Wholesaler to promptly provide Supplier with all information requested by Supplier to enable Supplier to fully and timely comply with all provisions of the MSA and any and all MSA related compliance statutes and regulations in effect within the Territory.
+15.CONFIDENTIAL AND PROPRIETARY INFORMATION
+Each party agrees that information concerning the other party's business (including that of all Affiliates) is Confidential and Proprietary Information and each party agrees that it will not permit the duplication or disclosure of any Confidential and Proprietary Information to any person (other than employees of the other party who must have such information for the performance of its obligations hereunder) unless such duplication, use or disclosure is specifically authorized by the other party in writing. The term "Confidential and Proprietary Information" is not meant to include: (i) any information which is in the public domain other than as a consequence of the receiving party's breach; (ii) information that was known or otherwise available to the receiving party prior to the disclosure by the disclosing party; (iii) information disclosed by a third party to the receiving party after the disclosure by disclosing party, if such third party's disclosure does not violate any obligation of the third party to disclosing party; or (iv) information which disclosing party authorizes in writing for release. Notwithstanding the foregoing, either party may disclose Confidential and Proprietary Information as may be required by compulsory order of a court, or other administrative body or governmental body having appropriate jurisdiction.
+​
+16.NON CIRCUMVENTION.
+2.SFI agrees that during the term of this Agreement and for a period of two (2) years following the termination or expiration of this Agreement, SFI shall not, directly or indirectly, engage in any business relationship, transaction, or contract with any third-party supplier, manufacturing facility, distributor or retailer listed on Exhibit D, including any of their affiliated entities ("Nasco Suppliers") for the production or distribution of SFI’s products under this Agreement and any applicable Addendum, without the prior written consent of Supplier; provided that, this section shall not apply to any third-party that currently engages with SFI to produce products not listed on Exhibit B.
+17.RIGHT OF FIRST REFUSAL
+In the event that SFI receives a bona fide offer from any third party to purchase all or substantially all of SFI’s business, assets, or equity interests or a portion that includes the cigarette brands subject to this Agreement (a "Third-Party Offer"), SFI shall promptly provide Supplier with written notice of such Third-Party Offer, including all material terms and conditions (the "Offer Notice"). Upon receipt of the Offer Notice, Supplier shall have a period of thirty (30) days (the "ROFR Period") to notify SFI in writing of its intention to match the terms of the Third-Party Offer.
+If Supplier elects to exercise its right of first refusal within the ROFR Period, SFI shall proceed to negotiate in good faith and execute a binding agreement for the sale of SFI’s
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+business to Supplier on terms no less favorable than those offered in the Third-Party Offer. Should Supplier decline the offer or fail to respond within the ROFR Period, SFI shall be free to proceed with the third-party sale, provided that such sale is concluded on terms no more favorable to the third party than those specified in the Offer Notice. If SFI agrees to terms with the third party that are materially more favorable than those specified in the original Offer Notice, SFI must reoffer the revised terms to Supplier under this Right of First Refusal.
+18.CHANGE OF CONTROL.
+3.In the event of a Change of Control of SFI, including any merger, acquisition, sale, or transfer of a controlling interest in SFI or its assets (the “Change of Control Event”), SFI shall provide Supplier with prior written notice of the Change of Control Event no less than thirty (30) days before its effective date. Upon such Change of Control Event, SFI shall ensure that this Agreement, and all obligations and rights herein, are assigned to and assumed by the acquiring party or successor entity as a condition of the transaction. In the alternative, SFI and Supplier shall enter into an agreement whereby Supplier licenses the SFI brands for tobacco products.
+​
+19.INDEPENDENT CONTRACTOR
+For all purposes under this Agreement, Supplier, and SFI shall be and act as independent contractors, and under no circumstances shall the contractual relationship between the parties be deemed or construed as one of agency, partnership, joint venture, employment or otherwise than the relationship of independent contractors as stated above, nor does either party have any authority whatsoever or in any event to act on behalf of or bind or commit the other in any manner whatsoever, except as hereinbefore provided. Each party hereto shall be solely responsible for the conduct of its employees in connection with such employees' performance of each party's obligations hereunder.
+​
+20.FORCE MAJEURE
+No party hereto shall be liable for any failure to comply with any of the terms or provisions of this Agreement to the extent any such failure is caused directly or indirectly by Acts of God, fire, flood, strike, union or other labor problems, war (whether or not declared), riots, insurrection, sabotage, changes in applicable law, government restrictions imposed subsequent to the date hereof or other acts or causes beyond the control of or without fault on the part of such party; provided, however, that the provisions of this Section 20 shall not apply to the payment of money in a timely manner. Upon the occurrence of any event of the type referred to in this Section 20, the party affected thereby shall give prompt written notice thereof to the other party hereto, together with a description of such event and the duration for which such party expects its ability to comply with the provisions of this Agreement to be affected thereby. The party affected shall thereafter devote its reasonable best efforts to remedy, to the extent possible, the conditions (except in the case of strikes or other labor problems) giving rise to such event and to resume performance of its obligations hereunder as promptly as possible.
+​
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+21.SURVIVING PROVISIONS
+The provisions of Sections 5.4, 10, 11, 12, 13, 14, 15, 17, 21 and 23 hereof shall survive the expiration or termination of this Agreement by either party for any reason.
+​
+22.ASSIGNMENT
+This Agreement and the rights granted hereunder are personal to the respective parties and shall not in any manner whatsoever be assigned, sublicensed (except in the case of Supplier, which may assign any and all of its rights and obligations under this Agreement to any other Affiliate of Supplier that is qualified to manufacture the Products), subcontracted, or divided by any party without the prior written consent of the other parties, which consent shall not be unreasonably withheld or delayed; provided, however, that (i) Supplier shall have the right to assign this Agreement to any person or entity that purchases or otherwise acquires all or substantially all of its assets or voting securities without the prior written consent of any other party and (ii) SFI shall have the right to assign this Agreement to any person or entity that purchases or otherwise acquires all or substantially all of its assets or voting securities without the prior written consent of Supplier. This Agreement and the provisions hereof shall be binding at all times upon and enure to the benefit of the parties hereto and their respective successors and permitted assigns. There are no third-party beneficiaries under this Agreement.
+​
+23.MISCELLANEOUS
+23.1.Notices. Any notice required or desired to be given hereunder for any reason, including but not limited to a notice which relates to the termination of this Agreement, a breach of this Agreement or to a claim for indemnification, in all cases shall be in writing and sent by certified mail, return receipt requested, postage pre-paid, or by personal delivery, facsimile with electronic confirmed receipt, or overnight courier service, addressed to the parties as follows:
+​
+NASCO Products, LLC
+[REDACTED]
+​
+With a copy to:
+[REDACTED]
+​
+SMOKER FRIENDY INTERNAIONAL, LLC
+[REDACTED]
+​
+With a copy to:
+[REDACTED]
+.
+23.2.Entire Agreement. This Agreement and the Exhibits hereto constitutes the entire agreement and understanding of the parties with respect to the subject matter hereof,
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+superseding any prior written or oral agreements among them. No warranties, representations, understandings, inducements, promises, guarantees, agreements or conditions, express or implied, not expressly contained herein, have been made or shall be enforceable by either party concerning the subject matter hereof or any relationship between the parties. No provision of this Agreement may be changed or modified, in part or in whole, except by written agreement signed by Supplier and SFI.
+23.3.Governing Law. Venue. This Agreement is made in the State of Colorado, and all matters pertaining to its execution. interpretation and performance shall be governed by the laws of the State of Colorado. without regard to its principles of conflict of law. Supplier irrevocably submits to the personal jurisdiction of the Colorado State District Courts for the Twentieth Judicial District and the Colorado State Appellate Courts for any judicial actions in connection with this Agreement and waives any objection it may have to either the jurisdiction of or venue in such courts.
+23.4.Severability. The invalidity of any portion of this Agreement shall not affect the validity of the remainder of this Agreement, provided, however, that such invalidity docs not frustrate the purposes of this Agreement.
+23.5.Counterparts.​ ​This Agreement may be executed by the parties hereto in separate counterparts which together shall constitute one and the same instrument.
+​
+​
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+IN WITNESS WHEREOF, the parties have caused this Agreement to be executed and do each hereby warrant and represent that their respective signatory whose signature appears below has been and is on the date of this Agreement duly authorized by all necessary and appropriate corporate action to execute this Agreement.
+​
+​
+​
+​
+NASCO Products, LLC
+​
+By:_______________________________
+Name: Scott Marion
+Title: Manager
+​
+​
+22nd century group, inc.
+​
+By:_______________________________
+Name: Lawrence Firestone
+Title: Chief Executive Officer
+​
+​
+SMOKER FRIENDLY INTERNATIONAL, LLC
+​
+By:_______________________________
+Name:
+Title:
+​
+​
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+SCHEDULE OF EXHIBITS
+​
+ExhibitDescription
+​
+ASchedule of SFI Trademarks
+​
+BSchedule of Products
+​
+C-1Schedule of SFI Licensees
+​
+C-2Schedule of Designated Wholesalers
+​
+DNasco Suppliers
+​
+​
+​
+​
+16
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+Addendum #1 to Master Services Agreement
+CIGARETTES
+This Addendum #1 to the Master Services Agreement ("Addendum #1") dated January 1, 2025, (the “Effective Date”) supplements the Master Service Agreement dated January 1, 2025 (the “Agreement”) by and between NASCO PRODUCTS, LLC, a Delaware limited liability company ("Supplier"); 22ND CENTURY GROUP, INC., a Nevada corporation (“22nd Century”), SMOKER FRIENDLY INTERNATIONAL, LLC, a Colorado limited liability company ("SFI” and together with Supplier and 22nd Century, the "Parties").
+Recitals
+A.The Parties wish to modify and supplement the terms of the Agreement as set forth herein. Addendum #1 does not otherwise modify or supersede the provisions of the Agreement.
+B.SFI wishes to engage Supplier as the exclusive manufacturer of the cigarette products as set forth specifically on Exhibit A (the “Cigarette Products”) using the SF Trademark, and certain Predicates licensed by Supplier, subject to the terms of the Agreement and this Addendum #1.
+C.Unless otherwise specified, capitalized terms in this Addendum #1 have the same meaning as defined in the Agreement, and those definitions are incorporated by reference.
+NOW, THEREFORE, in consideration of the mutual promises and agreements set forth in this Addendum #1 and the Agreement, the Parties agree as follows:
+​
+1.MASTER SERVICES AGREEMENT.
+The terms of the Agreement, which are incorporated by reference into this Addendum #1 as though set forth in full, remain in full force and effect.
+2.APPOINTMENT.
+SFI appoints Supplier as its exclusive supplier of the Cigarette Products in the United States.
+3.PRODUCTS.
+a.Product Types and Specifications. The Cigarette Products subject to this Addendum #1 are set forth on Exhibit A along with the applicable specifications. Each Product shall be manufactured using a Predicate mutually agreed between the Parties.
+b.Packaging. Packaging shall include individual packages containing twenty (20) cigarettes, individual cartons containing ten (10) packages and shipping cases containing thirty (30) cartons ("6M Cases"). All artwork and mechanicals necessary to print the packaging labels and cartons for the Cigarette Product shall be approved by SFI and provided by SFI to Supplier.
+4.LIST PRICE.
+Except as otherwise provided herein, the price which Supplier charges Designated Wholesalers for the Cigarette Product during each calendar year (the “List Price”) shall be initially set as shown on Exhibit B, subject to annual adjustments, with each of Supplier and SFI agreeing to act in good faith in all such matters including observing tobacco industry norms in the applicable markets pertaining to price increases. Notwithstanding the foregoing, Supplier may change the List Price at any time for amounts due or to be due for tax increases, MSA payments, any other governmental and/or regulatory amounts which are assessed against Supplier after the date of this Agreement. Nasco and SFI shall meet and confer at least annually to discuss any increases in the prices of raw materials and other manufacturing costs. Nasco and SFI will negotiate in good faith regarding increases to the Supplier Price based on raw material and manufacturing cost increases. Nasco and SFI agree there shall be no price increases related to raw materials and other manufacturing costs during the first year of Addendum #1.
+5.SFI COMPENSATION.
+SFI shall be paid a royalty per carton of Cigarette Products (the “SF Royalty”) sold to the Designated Wholesalers as set forth on Exhibit B. The SF Royalty shall be included in the List Price, and paid to SFI within [REDACTED] following the end of each calendar month during the Term.
+17
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+6.TERM.
+The Term of the Addendum #1 shall commence on the Effective Date and end (i) five (5) years from the Effective Date, provided that the Term will be automatically extended by five (5) year terms on such anniversary and each anniversary thereafter unless written notice is given by either Party at least ninety (90) days period to the end of such applicable anniversary, or (ii) if this Agreement is terminated earlier pursuant to the termination provisions in the Agreement.
+7.REPRESENTATIONS AND WARRANTIES.
+a.Supplier. Supplier represents and warrants that Predicates provided by Supplier for the manufacturing of the Cigarette Products hold “grandfathered status” and are exempt from premarket review from the Food and Drug Administration.
+8.MISCELLANEOUS.
+a.Governing Law. This Addendum #1 shall be governed by, and construed in accordance with, the laws of the State of Colorado.
+b.Counterparts. This Addendum #1 may be executed in any number of counterparts, all of which shall constitute one and the same agreement, and any party hereto may execute this Amendment by signing and delivering one or more counterparts.
+​
+​​
+[SIGNATURE PAGE FOLLOWS]
+18
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+The Parties have executed this Addendum #1 as of the Effective Date.
+​
+NASCO Products, LLC
+​
+By: _______________________________
+Name: Scott Marion
+Title: Manager
+​
+​
+22nd century group, inc.
+​
+By: _______________________________
+Name: Lawrence Firestone
+Title: Chief Executive Officer
+​
+​
+SMOKER FRIENDLY INTERNATIONAL, LLC
+​
+By: _______________________________
+Name:
+Title:
+19
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+SCHEDULE OF EXHIBITS
+​
+ExhibitDescription
+​
+ASF Product Cigarette Styles
+​
+BList Price
+​
+​
+20
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+Addendum #2 to Supply Agreement
+PINNACLE VLN
+This Addendum #2 to the Master Services Agreement ("Addendum") dated ____, (the “Effective Date”) supplements the Master Service Agreement dated January 1, 2025 (the “Agreement”) by and between NASCO PRODUCTS, LLC, a Delaware limited liability company ("Supplier"); 22nd CENTURY GROUP, INC., a Nevada corporation (“22nd Century”), SMOKER FRIENDLY INTERNATIONAL, LLC, a Colorado limited liability company ("SFI” and together with Supplier and 22nd Century, the "Parties").
+Recitals
+D.The Parties wish to modify and supplement the terms of the Agreement as set forth herein. The Addendum does not otherwise modify or supersede the provisions of the Agreement.
+E.Unless otherwise specified, capitalized terms in this Addendum have the same meaning as defined in the Agreement, and those definitions are incorporated by reference.
+F.22nd Century is the recipient of a Modified Risk Grant Order (the “MRTP Order”) from the FDA dated December 23, 2021 for the VLN® King and VLN® Menthol King cigarettes (the “VLN Products”).
+G.22nd Century is also the recipient of a Marketing Granted Order (the “PMTA Order”) from the FDA in connection with a Premarket Tobacco Product Application for the VLN Products (previously identified as Moonlight but now authorized under the VLN brand name) which authorizes the marketing and introduction of the VLN Products into interstate commerce.
+H.22nd Century has ongoing reporting obligations to the FDA required by the PMTA Order and MRTP Order.
+I.22nd Century is the owner of the VLN® trademark (together with the MRTP Order, the PMTA Order and other proprietary technology and information required to manufacture and market the VLN Products, the “VLN Assets”).
+J.SFI wishes to license the VLN Assets on a non-exclusive basis and engage Supplier as the exclusive manufacturer of a VLN cigarette based on the VLN Assets and using the SF Trademark (the “SF VLN Products”) subject to the terms of the Agreement and this Addendum.
+NOW, THEREFORE, in consideration of the mutual promises and agreements set forth in this Addendum and the Agreement, the Parties agree as follows:
+​
+9.MASTER SERVICES AGREEMENT. The terms of the Agreement, which are incorporated by reference into this Addendum as though set forth in full, remain in full force and effect.
+10.APPOINTMENT. SFI appoints Supplier as its exclusive supplier of the SF VLN Products in the United States.
+11.SF VLN PRODUCTS.
+a.Product Styles. The SF VLN Products subject to this Addendum are set forth on Exhibit A.
+b.Specifications. The SF VLN Products shall at all times be supplied by Supplier in accordance with specifications mutually agreed by the Parties and consistent with the PMTA Order and MRTP Order. All artwork necessary to print the packaging, labels and cartons for the SF VLN Products shall be created by Supplier and approved by SFI. Supplier and 22nd Century shall consult with SFI regarding certain mandatory packaging requirements under the MRTP Order.
+c.Packaging. Packaging shall include individual packages containing twenty (20) cigarettes, individual cartons containing ten (10) packages and shipping cases containing thirty (30) cartons.
+12.LIST PRICE. Except as otherwise provided herein, the price which Supplier charges Designated Wholesalers for the Cigarette Product during each calendar year (the “List Price”) shall be initially set as shown on Exhibit B, subject to annual
+21
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+adjustments, with each of Supplier and SFI agreeing to act in good faith in all such matters including observing tobacco industry norms in the applicable markets pertaining to price increases. Notwithstanding the foregoing, Supplier may change the List Price at any time for amounts due or to be due for tax increases, MSA payments, any other governmental and/or regulatory amounts which are assessed against Supplier after the date of this Agreement. Nasco and SFI shall meet and confer at least annually to discuss any increases in the prices of raw materials and other manufacturing costs. Nasco and SFI will negotiate in good faith regarding increases to the Supplier Price based on raw material and manufacturing cost increases.
+13.SFI COMPENSATION. SFI shall be paid a royalty per carton of SF VLN Products (the “SF Royalty”) sold to the Designated Wholesalers as set forth on Exhibit B. The SF Royalty shall be included in the List Price, and paid to SFI within thirty (30) days following the end of each calendar month during the Term.
+14.
+MARKETING AND ADVERTISING
+a.Marketing Plan. 22nd Century shall propose a marketing plan on an annual basis for the in-store advertising and digital marketing related to the SF VLN Products, subject to approval by SFI (the “Marketing Plan”). The Parties shall confer periodically throughout each year to discuss mutually agreeable changes to the Marketing Plan.
+b.Funding. The Marketing Plan shall be funded by the amounts set forth in Exhibit B (the “Marketing Support”). Any portion of the Marketing Support not spent shall be retained by 22nd Century.
+15.LICENSE OF VLN ASSETS
+a.Grant of License. Subject to the terms and conditions of this Agreement, 22nd Century hereby grants to SFI a non-exclusive, non-transferable, non-sublicenseable royalty-free license to use the VLN Assets, solely for the purpose of manufacturing, marketing, distributing, and selling the SF VLN Products within the United States.
+b.Licensed Rights. The license granted herein includes the following rights:
+i.
+VLN® Trademark. The right to use the VLN® trademark in connection with the SF VLN Products, subject to the conditions set forth in Section 7(c) (Trademark Usage Requirements).
+ii.
+Proprietary Blend and Specifications. The right to access and use the proprietary blend, formulations, and product specifications of the VLN branded cigarettes necessary to manufacture the SF VLN Products.
+iii.
+Other VLN Assets. The right to utilize any other proprietary technology, know-how, data, and information included in the VLN Assets that is reasonably necessary to manufacture, market, and distribute the SF VLN Products in compliance with applicable regulatory requirements.
+c.
+Trademark Usage Requirements
+i.
+SFI shall comply with all quality control standards, branding guidelines, and marketing requirements provided by 22nd Century in connection with the VLN® trademark.
+ii.
+SFI shall not modify or alter the VLN® trademark or use it in a manner inconsistent with the MRTP Order, PMTA Order, or this Agreement.
+iii.
+All uses of the VLN® trademark by SFI shall inure to the benefit of 22nd Century.
+d.
+Ownership and Reservation of Rights. SFI acknowledges that 22nd Century retains all right, title, and interest in and to the VLN Assets, including the VLN® trademark, and that nothing in this Agreement shall be construed as transferring ownership of the VLN Assets to SFI. 22nd Century reserves the right to grant additional licenses to the VLN Assets to third parties at its sole discretion, including within the same territories in which SFI operates.
+e.
+Restrictions on Use
+i.
+SFI shall not use the VLN Assets for any purpose other than as expressly permitted under this Agreement.
+ii.
+SFI shall not sublicense, assign, or otherwise transfer any rights granted under this Section without the prior written consent of 22nd Century.
+iii.
+SFI shall not reverse-engineer, decompile, or otherwise attempt to replicate or derive the proprietary blend, formulations, or technology associated with the VLN Assets, except as necessary for manufacturing the SF VLN Products under this Agreement.
+f.
+Termination of License. The license granted herein shall automatically terminate upon the termination or expiration of this Agreement. Upon termination, SFI shall immediately cease all use of the VLN Assets, including the VLN® trademark, and shall return or destroy all materials and information related to the VLN Assets as directed by 22nd Century.
+g.
+Regulatory Compliance. SFI acknowledges that its use of the VLN Assets is subject to compliance with all applicable laws, regulations, and regulatory orders, including the PMTA Order and MRTP Order. SFI shall cooperate with 22nd Century in providing any data, reports, or information necessary for regulatory filings or compliance related to the VLN Assets including but limited to reporting information set forth in Exhibit C.
+22
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+16.LICENSE OF SFI TRADEMARK. In addition to the license granted by SF to Supplier in the Master Services Agreement to use and reproduce the SF Trademark in connection with Supplier’s supply of the Product, SFI hereby further grants Supplier and 22nd Century a non-exclusive, non-transferable, non-sublicenseable royalty-free license to use the SF Trademark in connection with the marketing and promotion of SF VLN Products and in the course of complying with any related regulatory or financial reporting obligations.
+17.TERM. The Term of the Addendum shall commence on the Effective Date and end five (5) years from the Effective Date, provided that the Term will be automatically extended by five (5) year terms on such anniversary and each anniversary thereafter unless written notice is given by either Party at least ninety (90) days period to the end of such applicable anniversary, or (ii) if this Agreement is terminated earlier pursuant to the termination provisions in the Agreement.
+18.CUSTOMIZATION COSTS. Any costs incurred to modify the specification of the SF VLN Products pursuant to a request from SFI shall be borne by SFI.
+19.[INTENTIONALLY OMITTED]
+20.SFI COVENANTS AND OTHER AGREEMENTS. SFI agrees to comply with the rules and reporting obligations as they relate to the manufacturing, marketing, distribution, and sale of the SF VLN Products under the PMTA Order, MRTP Order any renewal applications as more particularly described on Exhibit C.
+21.REPRESENTATIONS AND WARRANTIES. Each Party represents and warrants to the others as follows:
+a.
+Authority and Capacity. Each party represents and warrants that it has full power and authority to enter into this Addendum #2 and to carry out its obligations hereunder. The execution, delivery, and performance of this Agreement have been duly authorized by all necessary corporate or organizational action of such party.
+b.
+Corporate Ownership of Assets. Each party represents and warrants that it has good, valid, and marketable title to, or a valid license or right to use, all assets, intellectual property, technology, facilities, and equipment necessary to perform its obligations under this Addendum, free and clear of any liens, claims, or encumbrances that would impair its ability to perform. Each party further represents and warrants that the execution, delivery, and performance of this Addendum do not and will not violate or result in the breach of any agreement, obligation, or restriction related to such assets. In the case of intellectual property, each party represents and warrants that it has all necessary rights, registrations, or approvals required for the use, licensing, and commercialization of such assets in accordance with this Addendum.
+c.
+Compliance with Laws. Each Party represents and warrants that it shall comply with all applicable federal, state, and local laws, rules, and regulations, including but not limited to the Family Smoking Prevention and Tobacco Control Act and all orders and requirements imposed by the FDA, including the PMTA Order and MRTP Order governing the VLN Products.
+d.
+FDA Orders. Each Party acknowledges that it has received copies of the MRTP Order and PMTA Order, has reviewed them, and understands the regulatory requirements therein. Each Party agrees to abide by and cooperate in fulfilling the obligations set forth in these orders as applicable to its respective role under this Addendum.
+e.
+Product Compliance. Supplier represents and warrants that all SF VLN Products manufactured pursuant to this Addendum #2 will be produced in compliance with the specifications provided by SFI and in accordance with applicable FDA regulations and industry standards.
+f.
+Marketing and Advertising Compliance. SFI represents and warrants that it shall only use marketing claims explicitly authorized by the MRTP Order and that it shall not engage in any advertising or promotional activities that violate FDA rules or applicable laws regarding the VLN Products.
+22.MISCELLANEOUS.
+a.
+Governing Law. This Addendum shall be governed by, and construed in accordance with, the laws of the State of Colorado.
+b.
+Counterparts. This Addendum may be executed in any number of counterparts, all of which shall constitute one and the same agreement, and any party hereto may execute this Amendment by signing and delivering one or more counterparts.
+23
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+The parties have executed this Addendum as of the Effective Date.
+​
+NASCO Products, LLC
+​
+By:_______________________________
+Name: Scott Marion
+Title: Manager
+​
+​
+​
+22nd century group, inc.
+​
+By:_______________________________
+Name: Lawrence Firestone
+Title: Chief Executive Officer
+​
+​
+​
+SMOKER FRIENDLY INTERNATIONAL, LLC
+​
+By:_______________________________
+Name: ___________________________
+Title:____________________________
+​
+24
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+Addendum #3 to Master Services Agreement
+Sales Agent
+This Addendum #3 to the Master Services Agreement ("Addendum") dated ____, (the “Effective Date”) supplements the Master Service Agreement dated January 1, 2025 (the “Agreement”) by and between NASCO PRODUCTS, LLC, a Delaware limited liability company ("Nasco"); 22ND CENTURY GROUP, INC., a Nevada corporation (“22nd Century”), SMOKER FRIENDLY INTERNATIONAL, LLC, a Colorado limited liability company ("SFI” and together with Nasco and 22nd Century, the "Parties").
+Recitals
+K.The Parties wish to modify and supplement the terms of the Agreement as set forth herein. The Addendum does not otherwise modify or supersede the provisions of the Agreement.
+L.Unless otherwise specified, capitalized terms in this Addendum have the same meaning as defined in the Agreement, and those definitions are incorporated by reference.
+M.WHEREAS, the Parties have previously entered into Addendum #1, which appoints Nasco as the exclusive manufacturer of certain cigarette brands for SFI;
+N.WHEREAS, the Parties have also entered into Addendum #2, which provides for the manufacture and licensing of SF VLN® reduced nicotine content cigarettes;
+O.WHEREAS, SFI licenses the sale of SFI-branded tobacco products to retail stores throughout the United States (“SFI Authorized Dealers”) and seeks to expand distribution and sales of its products to non-SFI authorized dealers in the United States;
+P.WHEREAS, SFI wishes to appoint 22nd Century as the exclusive sales agent for the sale of SFI-branded tobacco products at non-SFI authorized dealers;
+NOW, THEREFORE, in consideration of the mutual promises and agreements set forth in this Addendum and the Agreement, the Parties agree as follows:
+​
+23.MASTER SERVICES AGREEMENT. The terms of the Agreement, which are incorporated by reference into this Addendum as though set forth in full, remain in full force and effect.
+24.APPOINTMENT. SFI appoints 22nd Century as the exclusive sales agent for the sale and promotion of SFI-branded tobacco products at retail locations other than SFI Authorized Dealers within the United States. 22nd Century accepts such appointment subject to the terms and conditions set forth in this Addendum #3.
+25.SFI PRODUCTS. The SFI-branded tobacco products subject to this Addendum #3 are set forth in Exhibit A (the “Covered Products”).
+26.SCOPE OF SERVICES. 22nd Century shall perform the sales and marketing services for SFI as set forth in Exhibit B (the “Services”).
+27.LIST PRICE. Except as otherwise provided herein, the price which 22nd Century charges wholesalers, including Designated Wholesalers for the Covered Products during each calendar year (the “List Price”) shall be initially set as shown on Exhibit C.
+28.SFI COMPENSATION. SFI shall be paid a royalty per carton on Covered Products (the “SF Royalty”) sold to the wholesalers including Designated Wholesalers as set forth on Exhibit C. The SF Royalty shall be included in the List Price, and paid to SFI within [REDACTED] following the end of each calendar month during the Term.
+29.
+MARKETING AND ADVERTISING
+a.Marketing Plan. 22nd Century shall propose a marketing plan on an annual basis for the in-store advertising and digital marketing related to the Covered Products, except for any Covered Product that is incorporated into another marketing plan between the Parties (the “Marketing Plan”). The Parties shall confer periodically throughout each year to discuss mutually agreeable changes to the Marketing Plan.
+25
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+b.Funding. The Marketing Plan shall be funded by the amounts set forth in Exhibit C (the “Marketing Support”). Any portion of the Marketing Support not spent shall be retained by 22nd Century.
+30.TERM. The Term of the Addendum shall commence on the Effective Date and end five (5) years from the Effective Date, provided that the Term will be automatically extended by five (5) year terms on such anniversary and each anniversary thereafter unless written notice is given by either Party at least ninety (90) days period to the end of such applicable anniversary, or (ii) if this Agreement is terminated earlier pursuant to the termination provisions in the Agreement.
+31.TAIL PERIOD. If this Addendum #3 is terminated for any reason, and SFI continues to sell Covered Products at any retail locations other than SFI Authorized Dealers, then for a period of 24 months following termination, SFI shall continue to pay 22nd Century a distribution and sales commission equal to $2 per carton of product sold.
+32.REPRESENTATIONS AND WARRANTIES. Each Party represents and warrants to the others as follows:
+a.
+Authority and Capacity. Each party represents and warrants that it has full power and authority to enter into this Addendum #3 and to carry out its obligations hereunder. The execution, delivery, and performance of this Agreement have been duly authorized by all necessary corporate or organizational action of such party.
+b.
+Corporate Ownership of Assets. Each party represents and warrants that it has good, valid, and marketable title to, or a valid license or right to use, all assets, intellectual property, technology, facilities, and equipment necessary to perform its obligations under this Addendum, free and clear of any liens, claims, or encumbrances that would impair its ability to perform. Each party further represents and warrants that the execution, delivery, and performance of this Addendum do not and will not violate or result in the breach of any agreement, obligation, or restriction related to such assets. In the case of intellectual property, each party represents and warrants that it has all necessary rights, registrations, or approvals required for the use, licensing, and commercialization of such assets in accordance with this Addendum.
+c.
+Compliance with Laws. Each Party represents and warrants that it shall comply with all applicable federal, state, and local laws, rules, and regulations, including but not limited to the Family Smoking Prevention and Tobacco Control Act.
+33.MISCELLANEOUS.
+a.
+Governing Law. This Addendum shall be governed by, and construed in accordance with, the laws of the State of Colorado.
+b.
+Counterparts. This Addendum may be executed in any number of counterparts, all of which shall constitute one and the same agreement, and any party hereto may execute this Amendment by signing and delivering one or more counterparts.
+26
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+The parties have executed this Addendum as of the Effective Date.
+​
+NASCO Products, LLC
+​
+By:_______________________________
+Name: Scott Marion
+Title: Manager
+​
+​
+​
+22nd century group, inc.
+​
+By:_______________________________
+Name: Lawrence Firestone
+Title: Chief Executive Officer
+​
+​
+​
+SMOKER FRIENDLY INTERNATIONAL, LLC
+​
+By:_______________________________
+Name: ___________________________
+Title:____________________________
+​
+27
+[REDACTED] = Pursuant to Item 601(b)(10) of Regulation S-K, portions of this exhibit have been omitted as the registrant has determined certain confidential information contained in this document, marked by brackets, is (i) not material and (ii) would be competitively harmful if publicly disclosed.
+​
+SCHEDULE OF EXHIBITS
+​
+ExhibitDescription
+​
+ASF Products
+​
+BScope of Services
+​
+CPricing Per Carton
+28

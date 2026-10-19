@@ -1,0 +1,894 @@
+EX-10.3
+2
+ex10-3.htm
+EXHIBIT
+10.3
+Certain
+identified information (shown as “Omitted”) in this exhibit has been excluded from this exhibit pursuant to Item
+601(b)(10) of Regulation S-K since the excluded information is not material and would
+likely cause competitive harm to the Company if publicly disclosed.
+MANUFACTURING
+SERVICES AND SUPPLY AGREEMENT
+This
+Manufacturing Services and Supply Agreement (this “Agreement”), dated as of January 7, 2025 (the “Effective
+Date”), is entered into by and between Nanochem Solutions, Inc., a Nevada corporation, having its principal place of business
+at 5350 Donlar Avenue, Peru, Illinois 61354 (“Nanochem”), and (Omitted) and together with Nanochem, the “Parties”,
+and each, a “Party”).
+WHEREAS,
+(Omitted) is in the business of marketing, distributing and selling (Omitted)
+WHEREAS,
+in connection with the foregoing, (Omitted)desires that Nanochem manufacture certain Products (as defined below) for purchase by (Omitted)
+on a non-exclusive basis; and
+WHEREAS,
+Nanochem desires to manufacture and sell the Products to (Omitted).
+NOW,
+THEREFORE, in consideration of the mutual covenants, terms, and conditions set forth herein, and for other good and valuable consideration,
+the receipt and sufficiency of which are hereby acknowledged, the Parties agree as follows:
+1. Certain
+Definitions. Capitalized terms used and not
+defined herein have the meanings set forth or referred to in this Section 1.
+“Affiliate”
+of a Person means any other Person that directly or indirectly, through one or more intermediaries, Controls, is Controlled by, or is
+under common Control with, such Person.
+“Business
+Day” means any day except Saturday, Sunday, or federal legal holiday.
+“Claim”
+means any claim, action, cause of action, demand, lawsuit, arbitration, inquiry, audit, notice of violation, proceeding, litigation,
+citation, summons, subpoena or investigation of any nature, civil, criminal, administrative, regulatory, or other, whether at law, in
+equity or otherwise brought against a Person entitled to indemnification under Section 9.
+“Control”
+(and with correlative meanings, the terms “Controlled by” and “under common Control with”) means, with respect
+to any Person, the possession, directly or indirectly, of the power to direct or cause the direction of the management or policies of
+another Person, whether through the ownership or voting securities, by contract, or otherwise.
+“Defective
+Products” means products shipped by Nanochem to (Omitted) pursuant to this Agreement that do not conform to the Product Warranty.
+“Delivery
+Location” means Nanochem’s manufacturing facility located at 5350 Donlar Avenue, Peru, Illinois.
+“Exclusive
+Product Category” means (Omitted).
+1
+“Intellectual
+Property” means (a) patents; (b) trademarks; (c) internet domain names, whether or not trademarks, registered by any authorized
+private registrar or governmental authority, web addresses, web pages, website, and URLs; (d) brand names, product names, business names,
+trade dress, inventions, works of authorship, expressions, design rights, designs and design registrations, whether or not copyrightable,
+including copyrights and copyrightable works, software and firmware, data, data files, and databases and other specifications and documentation;
+(e) trade secrets or confidential information; (f) tooling, know-how, technical information or expertise; and (g) all industrial and
+other intellectual property, in each case whether registered or unregistered and including all registrations and applications for, and
+renewals or extensions of, such rights or forms of protection pursuant to the Laws of any jurisdiction throughout in any part of the
+world, and any other intellectual or industrial property rights of any nature whatsoever in any part of the world, whether or not registered,
+registrable or patentable.
+“Law”
+means any statute, law, ordinance, regulation, rule, code, constitution, treaty, common law, governmental order, or other requirement
+or rule of law of any governmental authority.
+“Nanochem
+Overhead Costs” means Nanochem’s overhead costs in its Peru, Illinois location, as evidenced by quarterly spreadsheets
+supplied by Nanochem and any other supporting documentation as may be reasonably requested by (Omitted).
+“Nonconforming
+Products” means any goods received by (Omitted) from Nanochem that: (a) do not fully conform to the specifications for the
+Products provided by (Omitted) or the Product Warranty or (b) exceed the quantity of Products ordered by (Omitted) pursuant to this Agreement
+or any Purchase Order. Where the context requires, Nonconforming Products are deemed to be Products for purposes of this Agreement.
+“Person”
+means any individual, partnership, corporation, trust, limited liability entity, unincorporated organization, association, governmental
+authority, or any other entity.
+“Products”
+means the goods identified on Schedule 1 and described in the Specifications, as the same may be updated from time to time by
+mutual written consent of the parties.
+“Representatives”
+means a Party’s Affiliates and each of their respective personnel, officers, directors, partners, shareholders, attorneys, third-party
+advisors, successors, and permitted assigns.
+“Specifications”
+means the specifications for the Products attached hereto as Exhibit B or as otherwise specified in any Purchase Order.
+“Taxes”
+means any and all present and future sales, income, stamp, and other taxes, levies, imposts, duties, deductions, charges, fees or withholdings
+imposed, levied, withheld, or assessed by any governmental authority, together with any interest or penalties imposed thereon.
+“Territory”
+means the United States of America, and its territories and possessions and any other territory as may be agreed by the Parties hereto.
+2
+2. Products
+and Specifications. (Omitted) shall purchase from Nanochem on a non-exclusive basis, and Nanochem shall manufacture and sell
+to (Omitted), the Products specified in Schedule 1 pursuant to (i) the terms and conditions set out in this Agreement, (ii) subject
+to the pricing, quantity, delivery scheduling and other business terms set out in Exhibit A; and (iii) in accordance with the
+Specifications set forth in Exhibit B. Any Product Revision (as defined below) shall be subject to the provisions of Section
+11.5 hereof. A “Product Revision” shall mean any change to the Specifications and/or of a Product’s formulation,
+pack size or configuration or package construction or design. (Omitted) will pay for any obsolete packaging or ingredients resulting
+from a Product Revision or any changes to the label or artwork used on a Product to the extent provided in Section 11.5.
+3. No
+Right to Manufacture and Sell Similar Products in Exclusive Product Category. During the Term (as defined below), Nanochem shall
+not manufacture or sell to any Person other than (Omitted), or enter into any agreement with any Person other than (Omitted) related
+to the manufacture or sale of, the Products or other goods or products that are within the Exclusive Product Category of (Omitted). Nanochem
+shall not, at any time, use any Intellectual Property owned by or licensed to (Omitted) (including any of (Omitted) Intellectual Property
+used in the design, production, and manufacturing of the Products) or any (Omitted) Equipment (as defined below) to manufacture or sell
+Products or other goods or products that are similar to or competitive with the Exclusive Product Category. This Section will survive
+the expiration or termination of this Agreement.
+4. Product
+Inputs.
+4.1
+(Omitted) Equipment. (Omitted) shall, at its sole cost, provide and install, or shall cause (Omitted) third party to provide
+and install, at the Delivery Location certain specialized equipment necessary to manufacture the Products, which specialized
+equipment is initially specified on Schedule 4.1 (as updated by (Omitted) from time to time, the (“ “) (Omitted).
+Only (Omitted) has any right, title or interest in and to the (Omitted) Equipment, except for Nanochem’s limited right,
+subject to (Omitted) sole discretion, to use (Omitted) Equipment solely to produce Products hereunder in accordance with the terms
+of this Agreement. Nanochem shall not use the (Omitted) Equipment for any other purpose. Nanochem will allocate sufficient space to
+store a supply of (Omitted) Equipment adequate to meet Nanochem’s production obligations to (Omitted). Nanochem shall not
+commingle (Omitted) Equipment with the property of Nanochem or with that of a Person other than (Omitted) or Nanochem and shall not
+move any (Omitted) Equipment from Nanochem’s premises without the prior written approval by (Omitted). All (Omitted) Equipment
+is and will at all times remain property of (Omitted) and will be held by Nanochem on a bailment at-will basis. (Omitted) may, at
+any time, for any reason and without payment of any kind, retake possession of any (Omitted) Equipment without the necessity of
+payment or notice to Nanochem, or a hearing or a court order, which rights, if any, are waived by Nanochem. Upon (Omitted) request,
+(Omitted) Equipment will be immediately released to (Omitted) or delivered to (Omitted) by Nanochem. Nanochem’s continued
+holding of (Omitted) after demand has been made by (Omitted) for delivery will substantially impair the value thereof, and,
+accordingly, (Omitted) will be entitled to a court order of possession without any need of proving damages or posting of a bond. To
+the fullest extent permitted by law, Nanochem shall not allow any encumbrance to be imposed on or attach to the (Omitted) Equipment
+through Nanochem or as a result of Nanochem’s action or inaction, and Nanochem hereby waives any encumbrance that it may have
+or acquire in the (Omitted) Equipment. Nanochem acknowledges and agrees that (a) (Omitted) is neither the manufacturer of the
+(Omitted) Equipment nor the manufacturer’s agent, (b) (Omitted) is bailing (Omitted) Equipment to Nanochem for
+Nanochem’s benefit, (c) Nanochem has inspected the (Omitted) Equipment and is satisfied that the (Omitted) Equipment are
+suitable and fit for their intended purposes, of which Nanochem is aware, and (d) (Omitted) HAS NOT MADE AND DOES NOT MAKE ANY
+REPRESENTATION OR WARRANTY WHATSOEVER, EITHER EXPRESS OR IMPLIED, AS TO THE FITNESS, CONDITION, MERCHANTABILITY, DESIGN OR OPERATION
+OF THE (Omitted) EQUIPMENT OR ITS FITNESS FOR ANY PARTICULAR PURPOSE. Notwithstanding the foregoing, if the bailment relationship
+described in this Section is deemed to be a secured financing transaction, Nanochem grants to (Omitted) (Omitted) a continuing
+security interest in any rights or interests it may have in the (Omitted) Equipment. Nanochem shall bear all risk of loss of and
+damage to the (Omitted) Equipment. Nanochem shall, at its own expense, for the benefit of (Omitted), insure all (Omitted) Equipment
+with full and extended coverage for all losses, for its full replacement value, in accordance with Section 22 of this
+Agreement. For no additional consideration, Nanochem will prevent the (Omitted) Equipment from deteriorating (except for any
+reasonable, ordinary course wear and tear) and conduct preventative maintenance and repair of (Omitted) Equipment with the same
+level of diligence and care as it conducts for the Nanochem Equipment, which shall be no less than a reasonable degree of diligence
+and care. Nanochem shall absorb any labor costs associated with repairs and maintenance beyond reasonable and ordinary maintenance
+and routine as part of Nanochem’s Overhead Costs (except to the extent such repairs are needed as a result of Nanochem’s
+gross negligence, in which case Nanochem shall be solely responsible for such costs), provided, that Nanochem shall promptly provide
+(Omitted) written notice of such repair or maintenance, including a good faith estimate of the time, disruption to operations and
+cost associated therewith and, if applicable a recommended third party vendor to perform such repair or maintenance. (Omitted)
+shall, within five (5) days (or fewer if the situation requires) of receipt of such notice, notify Nanochem as to whether such
+maintenance or repair is approved (and whether (Omitted) would prefer to conduct such repair using a different third party). If
+(Omitted) elects for (a) Nanochem to conduct such maintenance or repair, and Nanochem is willing to undertake the repair, Nanochem
+shall perform such maintenance or repairs in a manner materially consistent with the policies and practices applicable to repairs
+and maintenance for the (Omitted) Equipment, and (Omitted) shall reimburse Nanochem for a reasonable amount intended to reflect
+Nanochem’s actual cost incurred in performing such maintenance or repair, or (b) Nanochem’s proposed third party to
+perform the repair or maintenance, Nanochem shall negotiate and enter into an agreement with such third party vendors to perform the
+repairs or maintenance on the terms included in the notice provided to (Omitted) and (Omitted) shall reimburse Nanochem for its
+out-of-pocket expenses paid to such third party. If (Omitted) desires to perform any such maintenance or repairs itself or using a
+third party provider to conduct such repairs or maintenance, Nanochem shall grant such parties access to conduct such repairs or
+maintenance and shall provide reasonable assistance in connection therewith; provided, that, with respect to any such third
+party providers, Nanochem or (Omitted) can require that they are subject to restrictions on its use and disclosure of Confidential
+Information at least as restrictive as those set forth in this Agreement. All replacements of the (Omitted) Equipment shall become
+property of (Omitted) and will be deemed for all purposes under this Agreement to be (Omitted) Equipment. Nanochem will maintain a
+written inventory of all (Omitted) Equipment that sets forth a description and the location of all (Omitted) Equipment, and provide
+a copy of this inventory to (Omitted) upon request. Nanochem shall mark all (Omitted) Equipment permanently and conspicuously to
+identify it as the property of (Omitted), and indicate (Omitted) name and address. Nanochem shall immediately sign any documents
+reasonably requested by (Omitted) to evidence all of (Omitted) rights to and interests in (Omitted) Equipment. Nanochem grants to
+(Omitted) a limited and irrevocable power of attorney, coupled with an interest, to execute and record on Nanochem’s behalf
+any documents with respect to (Omitted) Equipment that (Omitted) determines are reasonably necessary to reflect (Omitted) interest
+in the (Omitted) Equipment.
+3
+4.2
+(Omitted)
+4.3 Nanochem
+Equipment. From time to time, as and when mutually determined by the Parties, Nanochem will acquire, install and maintain its own
+equipment (the “Nanochem Equipment”) for Nanochem to use to perform its production obligations to (Omitted) in accordance
+with this Agreement, which shall be purchased, maintained and operated by Nanochem and shall not include any (Omitted) Equipment, except
+as otherwise agreed in writing between the Parties.
+4.4 Nanochem’s
+Materials. Nanochem will provide all remaining materials components for the Products in accordance with the Specifications, including
+without limitation: (i) the finished Products themselves, (ii) Nanochem’s products, if applicable, (iii) raw materials identified
+on Schedule 1 (“Raw Materials”), (iv) labeling in accordance with Section 7, and (v) packaging in accordance
+with Section 7 ((i)-(iv) collectively, “Nanochem Materials”). Nanochem will timely obtain a sufficient supply of all
+Nanochem Materials necessary to produce the Products as required herein at the lowest cost for the quality required to meet the Specifications.
+Upon (Omitted) request, Nanochem shall promptly provide to (Omitted), in such form and detail as (Omitted) requests, a list of all Nanochem
+Materials incorporated in the Products, the amount of such Nanochem Materials, and information concerning any changes in or additions
+to such Nanochem Materials.
+5. Orders;
+Forecasts; Delivery; Warehousing.
+5.1
+Orders. (Omitted) purchase
+of Products hereunder shall be made pursuant to purchase orders which comply with all the terms and conditions set forth in this Agreement
+and which are in a form reasonably acceptable to both parties (a “Purchase
+Order”). (Omitted)
+shall submit Purchase Orders to Nanochem pursuant to such procedures as may
+be mutually and reasonably agreed upon in writing by the parties, including procedures to be utilized for canceling or modifying any
+such Purchase Orders after submittal. For the avoidance of doubt, (Omitted) shall
+only be obligated to purchase from Nanochem, and Nanochem shall be obligated to sell to (Omitted),
+the quantities of Products specified in a Purchase Order. Nanochem shall confirm to (Omitted) the
+receipt of each Purchase Order issued hereunder within five (5) Business Days following Nanochem’s receipt thereof. If Nanochem
+fails to issue such confirmation within such time or otherwise commences performance under such Purchase Order, Nanochem will be deemed
+to have accepted the Purchase Order. Any acceptance or deemed acceptance of a Purchase Order by (Omitted) constitutes
+a determination by Nanochem that (Omitted) has met all of its obligations
+with respect thereto. (Omitted) may withdraw any Purchase Order prior
+to Nanochem’s acceptance thereof. Nanochem may only reject a Purchase Order if (a) Nanochem has terminated the Agreement in accordance
+with its terms or (b) the applicable Purchase Order includes terms and conditions that supplement those contained in this Agreement,
+which Nanochem is unwilling to accept, or (c) if (Omitted) has undisputed
+outstanding and invoices due and owing to Nanochem for more than thirty (30) days and such failure has not been cured within thirty
+(30) days of (Omitted) receiving written notice from Nanochem of such late payment.
+If (Omitted) cancels or modifies a previously submitted Purchase Order,
+then (Omitted) shall be obligated to purchase at the time of such
+cancellation or modification any and all Products so ordered which Nanochem has commenced to manufacture, or for which Nanochem can demonstrate
+to (Omitted) in good faith that Nanochem has acquired ingredients,
+materials or packaging which may not otherwise be reasonably used in the normal course of Nanochem’s operations, provided, that
+(Omitted) shall not be required to purchase such Products in the event
+that Nanochem does not comply with its delivery obligations under Section 5.3. All Purchase Orders shall clearly indicate the amount
+of product ordered, the total price, and the desired delivery or ship date. Nanochem may not cancel any previously accepted Purchase
+Order hereunder.
+4
+5.2 Rolling
+Forecasts. The parties shall cooperate in good faith to develop rolling six (6) month non-binding order forecasts of
+(Omitted) needs for Products. Forecasts shall not be binding on (Omitted) so as to create an obligation to purchase, and shall not constitute
+orders of Products or commitment of any kind by (Omitted) to purchase Products.
+5.3 Delivery;
+Transfer of Title to Products. Time, quantity, and delivery to the Delivery Location are of the essence under this Agreement. Nanochem
+shall procure materials for, fabricate, assemble, pack, mark, and ship Products strictly in the quantities, by the methods, and by the
+delivery dates specified in an applicable Purchase Order. Nanochem shall deliver all Products to (Omitted) at the Delivery Location,
+on an EXW basis (as defined in Incoterms 2010). Delivery times will be measured to the time that Products are actually received at the
+Delivery Location. Title and risk of loss shall pass to (Omitted) upon tender of possession to (Omitted) (or its authorized representative)
+and (Omitted) acceptance of the Products. Notwithstanding any agreement between (Omitted) and Nanochem concerning transfer of title or
+responsibility for shipping costs, risk of loss to Products shipped under any Purchase Order passes to (Omitted) upon receipt and acceptance
+by (Omitted) (or its authorized representative) at the Delivery Location, and Nanochem will bear all risk of loss or damage with respect
+to Products until (Omitted) receipt and acceptance of such Products in accordance with the terms hereof. If Nanochem does not comply
+with any of its delivery obligations under this Section, (Omitted) may, in (Omitted) sole discretion and at Nanochem’s sole cost
+and expense, (a) approve a revised delivery date, (b) require expedited or premium shipment, or (c) cancel the applicable Purchase Order
+and obtain similar goods from other sources. Unless otherwise expressly agreed to by the Parties in writing, Nanochem may not make partial
+shipments of Products to (Omitted).
+5.4 Shipment.
+Nanochem shall properly pack, mark, and ship Products as instructed by (Omitted) and otherwise in accordance with applicable Law and
+industry standards and shall provide (Omitted) with reasonably detailed shipment documentation with respect thereto.
+5.5 Warehousing.
+Nanochem will warehouse the Products as necessary to fulfill (Omitted) Purchase Orders as provided herein. The parties shall negotiate
+in good faith with respect to any Products that are warehoused for more than ninety (90) days. (Omitted) will not be charged for the
+Products warehoused by Nanochem without its prior written consent and upon mutually agreed terms.
+6.
+Prices; Price Adjustments; Payment Terms.
+6.1
+(Omitted)
+6.2
+Ongoing Price Adjustments.
+(a)
+(Omitted)
+(b)
+(Omitted)
+(c)
+(Omitted)
+5
+6.3 Payment
+Terms. Nanochem will issue invoices to (Omitted) for all Products purchased hereunder, and (Omitted) shall pay all
+invoices received from Nanochem pursuant to this Agreement in full within thirty (30) days from the date of invoice. (Omitted) shall
+not take any deductions or set-offs from invoices unless specifically authorized to do so in writing by Nanochem. (Omitted) reserves
+the right to return and withhold payment due to any invoices or related documents that are inaccurate or incorrectly submitted to (Omitted).
+The Parties shall seek to resolve any invoice disputes expeditiously and in good faith in accordance with the dispute resolution provisions
+set forth in Section 23.16. Any payment by (Omitted) of an invoice is not an acceptance of any Products, nonconforming element
+or terms on such invoice or the related Products nor will such payment be deemed to waive (Omitted) right to inspect.
+6.4 Non-Payment.
+Except for any amounts disputed by (Omitted) in good faith, and in addition to any other rights and remedies Nanochem may have with respect
+to (Omitted) failure to fully and timely pay any amounts due hereunder, any amounts not paid when due shall be subject to an interest
+charge of 1 percent (1%) per month computed from the applicable due date. (Omitted) shall make all payments by check, wire transfer,
+or automated clearing house in accordance with instructions provided by Nanochem in writing. Except for any amounts disputed by (Omitted)
+in good faith, (Omitted) may be required by Nanochem to pay interest on all late payments at a rate of 1.0% per month.
+7. Labeling
+Elements; License. Subject in all cases to the terms of Section 7.4 hereof:
+7.1 All
+labels utilized in connection with the Products, including but not limited to the design, content, wording, artwork, label features and
+Marks (as defined below) (as such may be changed from time to time, “Labeling Elements”) shall be determined by (Omitted),
+and (Omitted) shall be solely responsible therefor, including but not limited to their compliance with all applicable federal, state
+and local laws, rules and regulations. (Omitted) represents and warrants to Nanochem that, to (Omitted) knowledge, at all times during
+the Term (i) all Labeling Elements do and will comply with all applicable federal, state and local laws, rules and regulations, and (ii)
+(Omitted) is and will be the owner of, or will have the enforceable license or right to use, any and all designs, logos, trademarks (registered
+or unregistered), service marks, trade names and trade dress (collectively, the “Marks”) included within the Labeling
+Elements. (Omitted) further represents and warrants to Nanochem that, to (Omitted) knowledge, at all times during the Term, (Omitted)
+has and shall have all requisite right, power and authority to grant the license described in Section 7.3, and such license, and
+Nanochem’s use of the Labeling Elements pursuant hereto, shall not violate or infringe upon any copyright, proprietary right or
+other right of any third party;
+7.2
+(Omitted) shall provide Nanochem with all drawings and other artwork necessary for manufacturing and packaging the Products in accordance
+with all mutually agreed upon Specifications, all of which will be the sole property of (Omitted) and will be returned to (Omitted) by
+Nanochem upon the expiration or termination of this Agreement;
+7.3 During
+the Term, (Omitted) grants to Nanochem a non-exclusive, royalty-free license to use all applicable Labeling Elements (including the Marks
+contained therein), patents, Specifications and formulas in connection with manufacturing, packaging and selling Products to (Omitted)
+in strict accordance with the terms of this Agreement; and
+7.4 Notwithstanding
+anything to the contrary contained herein, and for the avoidance of doubt, Nanochem’s procurement of all components necessary to
+deliver the Products to (Omitted) (including, without limitation, any Nanochem Materials, Nanochem Equipment, Labeling Elements and Specifications)
+are included in the Prices set forth on Schedule 1 hereto (as may be adjusted from time to time in accordance with Section
+6.2) which Prices shall not subject to increase other than pursuant to the express terms of this Agreement.
+6
+8. Inspection.
+8.1 From
+time to time during normal business hours and upon no less than five (5) days’ prior notice (except in case of an emergency affecting
+the quality of Products, in which case (Omitted) shall provide as much notice as reasonably practicable), (Omitted) shall have the right
+to inspect Nanochem’s plant and to review Nanochem’s records pertaining to the Products (including Materials) and the services
+provided hereunder to the extent necessary to protect (Omitted) rights under this Agreement, to inspect the portions of Nanochem’s
+facilities that produce or handle Products, and to inspect the Products prior to delivery.
+8.2 If
+such inspection and/or review reveals that the processes, procedures, or equipment used by Nanochem in performing its obligations hereunder
+fail to conform to the requirements of this Agreement or any applicable Project Agreement, Nanochem shall immediately take appropriate
+corrective actions (which may include suspension of Nanochem’s services hereunder or under any Project Agreement), at (Omitted)
+direction, until Nanochem can show to (Omitted) satisfaction that Nanochem’s non-conformities have been corrected.
+8.3 (Omitted)
+shall not be obligated to undertake any inspection or review and, whether or not (Omitted) inspects the Products or Nanochem’s
+facilities, none of Nanochem’s obligations with respect to the Products, including representations and warranties, shall be affected
+or released by (Omitted) inspection or acceptance of the Products.
+8.4 Products
+are subject to (Omitted) inspection and approval or rejection notwithstanding (Omitted) prior receipt of or payment for the Products.
+(Omitted) shall have thirty (30) days following delivery of the Products to the Delivery Location, to inspect all Products received and
+to inform Nanochem, in writing, of (Omitted) rejection of any Nonconforming Products. (Omitted) may return to Nanochem any or all units
+of rejected Products that constitute Nonconforming Products because they exceed the quantity stated in this Agreement or any Purchase
+Order. If (Omitted) rejects any other Nonconforming Products, (Omitted) may elect to (a) require Nanochem, at Nanochem’s sole cost,
+to repair or replace the rejected Products at Nanochem’s location, (b) purchase similar goods from another source, (c) produce
+similar goods itself, (d) repair the Products itself or have a third party repair the Products, or (e) retain the rejected Products;
+in each case without limiting the exercise by (Omitted) of any other rights available to (Omitted) under this Agreement or pursuant to
+applicable Law. All returns of Nonconforming Products to Nanochem are at Nanochem’s sole risk and expense. (Omitted) acceptance
+of any Products will not be deemed to be a waiver or limitation of Nanochem’s obligations pursuant to this Agreement (or any breach
+thereof), including those obligations with respect to Nanochem’s Product Warranty and Nanochem’s duty to indemnify (Omitted).
+9. Term.
+This agreement shall
+have a five-year term beginning on the Effective Date and will automatically
+renew for up to five (5) additional successive five (5) year terms unless either Party provides written notice of non-renewal at least
+180 days prior to the end of the then-current term (each, a “Renewal Term” and together with the Initial Term, the
+“Term”), unless any Renewal Term is earlier terminated pursuant to the terms of this Agreement or applicable Law.
+If the Initial Term or any Renewal Term is renewed for any Renewal Term(s) pursuant to this Section, the terms and conditions of this
+Agreement during each such Renewal Term will be the same as the terms in effect immediately prior to such renewal. In the event either
+Party provides timely notice of its intent not to renew this Agreement, then, unless earlier terminated in accordance with its terms,
+this Agreement terminates on the expiration of the Initial Term or then-current Renewal Term, as applicable.
+7
+10. Termination
+Rights.
+10.1 Termination
+Due to Breach. Without prejudice and in addition to all other lawful rights and remedies, each Party shall have the right to terminate
+this Agreement upon written notice to the other party if such other Party materially breaches any of its representations, warranties,
+covenants or obligations set forth in this Agreement, and such failure has not been cured within thirty (30) days of receiving written
+notice from the non-defaulting Party reasonably describing such breach.
+10.2 Termination
+Due to Financial Condition. Without prejudice and in addition to all other lawful rights and remedies, each Party shall have the
+right to terminate this Agreement upon written notice to the other Party in any of the following events, each of which constitutes good
+cause for termination (i) such other party files a petition for bankruptcy or is otherwise adjudicated bankrupt, (ii) a petition for
+bankruptcy is filed against such other Party and such petition is not dismissed within ninety (90) days, and/or (iii) such other Party
+becomes insolvent, discontinues its business or voluntarily submits to, or is ordered by any federal bankruptcy court to undergo, liquidation
+pursuant to any applicable bankruptcy laws.
+10.3 Termination
+By Mutual Written Consent. Without prejudice and in addition to all other lawful rights and remedies, the parties hereto may terminate
+this Agreement at any time for any reason by mutual written consent.
+10.4 Effect
+of Expiration or Termination.
+(a) Immediately
+upon the termination of this Agreement, Nanochem shall, unless otherwise directed by (Omitted), and subject to Nanochem’s obligation
+to provide resourcing cooperation under Section 10.4(e):
+(i)
+promptly terminate all performance under this Agreement and under any outstanding Purchase Orders;
+(ii)
+transfer title and deliver to (Omitted) all
+Products completed prior to effectiveness of the notice of termination, subject to Nanochem’s receipt of full payment for said
+Products; and
+(iii)
+return to (Omitted) all
+(Omitted) Equipment and any other property furnished by or belonging
+to (Omitted) or any of (Omitted) customers,
+or dispose of such (Omitted) Equipment or other property in accordance
+with (Omitted) instructions (provided that (Omitted) will
+reimburse Nanochem for the actual, reasonable costs associated with such disposal).
+8
+(b)
+Expiration or termination of the Term will not affect any rights or obligations of the Parties that:
+(i)
+come into effect upon or after termination or expiration of this Agreement; or
+(ii)
+otherwise survive the expiration or earlier termination of this Agreement pursuant to Section 23.4 and were incurred by the Parties
+prior to such expiration or earlier termination.
+(c) Upon
+the expiration or earlier termination of this Agreement, each Party shall:
+(i)
+return to the other Party or destroy all documents and tangible materials (and any copies) containing, reflecting, incorporating, or
+based on the other Party’s Confidential Information;
+(ii)
+permanently erase all of the other Party’s Confidential Information from its computer systems; and
+(iii)
+upon the other Party’s written request, certify in writing to such other Party that it has complied with the requirements of this
+Section 10.4.
+(d) Except
+as set forth in Section 10.4(e), the Party or Parties terminating this Agreement in accordance with Sections 10.1, 10.2
+or 10.3, or in the case of the expiration of this Agreement pursuant to Section 9, neither Party will be liable to
+the other Party for any damage of any kind (whether direct or indirect) incurred by the other Party by reason of such termination or
+expiration. Termination of this Agreement will not constitute a waiver of either Party’s rights, remedies or defenses under this
+Agreement, at law, in equity or otherwise.
+(e) Resourcing
+Cooperation. Upon the expiration or earlier termination of this Agreement for any reason, to the extent requested by (Omitted)
+in writing, Nanochem will take such actions as may be reasonably requested by (Omitted) to transition production of the Products from
+Nanochem to an alternative manufacturer without production disruptions, including, without limitation, by manufacturing, delivering,
+and selling to (Omitted) its requested inventory bank of the Products to ensure that the transition will proceed smoothly and without
+interruption or delay to (Omitted) receipt of the Products, with pricing equivalent as in effect immediately before expiration or termination.
+11.
+Covenants.
+11.1
+Specifications.
+(a) Nanochem
+shall meet (Omitted) specifications for the Products as defined in Exhibit B, together with any such amendments may be agreed
+upon by the Parties in writing from time to time, or otherwise specified in any Purchase Order and agreed to by Nanochem. At (Omitted)
+request, Nanochem shall furnish to (Omitted) test samples of Products as reasonably required by (Omitted) to determine if their manufacture
+is in accordance with the specifications furnished by (Omitted). Nanochem shall perform quality inspections of Products before delivery
+and shall certify inspection results in the manner requested by (Omitted).
+9
+(b) Nanochem
+shall provide reasonable support as requested by (Omitted) to address and correct quality concerns. Nanochem shall, on a continuous
+basis, collaborate with (Omitted) requests to identify ways to improve the quality, service, performance standards, and technology for
+the Products, including through participation in (Omitted) quality improvement initiatives. In the event Nanochem fails to provide such
+reasonable support, in addition to its other rights and remedies, (Omitted) may hold Nanochem responsible for costs associated with quality-issue
+investigation and containment if (Omitted) reasonably determines that such costs arose as a direct or indirect result of Nanochem’s
+acts or omissions or its failure to cooperate with (Omitted).
+11.2
+Quantity. Nanochem shall:
+(a) establish
+and maintain sufficient manufacturing capacity to produce the Products in quantities sufficient to fulfill all Purchase Orders, but subject
+to any volume limitations of (1) the installed equipment base of the (Omitted) Equipment and (2) the Nanochem Equipment, provided that
+such volume limitations have been communicated in advance to (Omitted) in writing;
+(b) use
+its best efforts to maintain a sufficient level of inventory to fulfill all Purchase Orders; and
+(c)
+buy and maintain inventory levels of all raw material
+to manufacture such quantities of the Products as are required to fulfill all Purchase Orders.
+11.3
+Best Efforts to Prevent Supply Interruptions.
+In the event of any foreseeable or anticipated event or circumstance that could interrupt or delay Nanochem’s performance under
+this Agreement, including any labor disruption (and whether or not such occurrence constitutes a Force Majeure Event hereunder), Nanochem
+shall, at Nanochem’s sole cost and expense, take such actions as are necessary or appropriate to ensure the uninterrupted supply
+of the Products to (Omitted).
+11.4
+Duty to Advise. Nanochem shall promptly provide
+written notice to (Omitted) of any of the following events or occurrences, or any facts or circumstances reasonably likely to give rise
+to any of the following events or occurrences: (a) any failure by Nanochem to perform any of its obligations under this Agreement; (b)
+any delay in delivery of Products; (c) any defects or quality problems relating to Products; (d) any change in Control of Nanochem; (e)
+any deficiency in (Omitted) specifications, samples, prototypes or test results relating to this Agreement; or (f) any failure by Nanochem,
+or its subcontractors or common carriers, to comply with Law.
+11.5 Productive
+Revisions. Nanochem shall promptly make any Product Revisions (Omitted) directs in writing with respect to the Products, which
+may include changes in the design, drawings, specifications, processing, inspection, testing, quality control, methods of packing and
+shipping, or the date.
+11.6 Compliance
+with Laws. Nanochem shall at all times comply
+with all Laws applicable to this Agreement, Nanochem’s operation of its business and the exercise of its rights and performance
+of its obligations hereunder, including Laws related to (Omitted) or any other regulatory category applicable to the Products. Without
+limitation of the foregoing, (a) Nanochem shall ensure the Products and any related packaging, conform fully to any applicable Law and
+(b) in accordance with applicable Law, Nanochem shall promptly execute and deliver to (Omitted) a copy of the Quality Agreement, to be
+entered into by and between Nanochem and (Omitted), in the form provided by (Omitted).
+10
+11.7 Permits,
+Licenses, and Authorizations. Nanochem shall obtain and maintain all permits necessary for the exercise of its rights and
+performance of Nanochem’s obligations under this Agreement, including any permits required for the import of Products or any raw
+materials and other manufacturing parts used in the production and manufacture of the Products, and the shipment of hazardous materials,
+as applicable.
+11.8 Relationship
+Manager. During the Term, Nanochem shall use its best efforts to cause George Murray to remain as the relationship manager between
+(Omitted) and Nanochem.
+12. Representations
+and Warranties; Product Warranty.
+12.1 Nanochem’s
+Representations and Warranties. Nanochem represents
+and warrants to (Omitted) that:
+(a) it
+is a corporation, duly organized, validly existing, and in good standing under the laws of Nevada;
+(b) it
+is duly qualified to do business and is in good standing in every jurisdiction in which such qualification is required for purposes of
+this Agreement;
+(c) it
+has the full right, power and authority to enter into this Agreement and to perform its obligations hereunder;
+(d) the
+execution of this Agreement by its Representative whose signature is set forth at the end of this Agreement, and the delivery of this
+Agreement by Nanochem, have been duly authorized by all necessary action on the part of Nanochem;
+(e) the
+execution, delivery, and performance of this Agreement by Nanochem will not violate, conflict with, require consent under or result in
+any breach or default under (i) any of Nanochem’s organizational documents, (ii) any applicable Law or (iii) with or without notice
+or lapse of time or both, the provisions of any material contract;
+(f) this
+Agreement has been executed and delivered by Nanochem and (assuming due authorization, execution, and delivery by (Omitted)) constitutes
+the legal, valid, and binding obligation of Nanochem, enforceable against Nanochem in accordance with its terms, except as may be limited
+by any applicable bankruptcy, insolvency, reorganization, moratorium, or similar laws and equitable principles related to or affecting
+creditors’ rights generally or the effect of general principles of equity;
+(g) to
+its knowledge, it is in compliance with applicable Law, the Products and the operation of its business;
+(h) it
+has obtained all licenses, authorizations, approvals, consents, or permits required by applicable Laws to conduct its business generally
+and to perform its obligations under this Agreement; and
+(i) it
+is not insolvent and is paying all of its debts as they become due.
+11
+12.2
+(Omitted) Representations
+and Warranties. (Omitted) represents and warrants to Nanochem that:
+(a) it
+is a corporation, duly organized, validly existing, and in good standing under the laws of Delaware;
+(b) it
+is duly qualified to do business and is in good standing in every jurisdiction in which such qualification is required for purposes of
+this Agreement;
+(c) it
+has the full right, power and authority to enter into this Agreement and to perform its obligations hereunder;
+(d) the
+execution of this Agreement by its Representative whose signature is set forth at the end of this Agreement, and the delivery of this
+Agreement by (Omitted), have been duly authorized by all necessary action on the part of (Omitted);
+(e) the
+execution, delivery, and performance of this Agreement by (Omitted) will not violate, conflict with, require consent under or result
+in any breach or default under (i) any of (Omitted) organizational documents, (ii) any applicable Law or (iii) with or without notice
+or lapse of time or both, the provisions of any material contract; and
+(f) this
+Agreement has been executed and delivered by (Omitted) and (assuming due authorization, execution, and delivery by Nanochem) constitutes
+the legal, valid, and binding obligation of (Omitted), enforceable against (Omitted) in accordance with its terms, except as may be limited
+by any applicable bankruptcy, insolvency, reorganization, moratorium, or similar laws and equitable principles related to or affecting
+creditors’ rights generally or the effect of general principles of equity.
+(g) it
+is in compliance with all applicable Laws, the Products and the operation of its business;
+(h) it
+has obtained all licenses, authorizations, approvals, consents, or permits required by applicable Laws to conduct its business generally
+and to perform its obligations under this Agreement; and
+(i) it
+is not insolvent and is paying all of its debts as they become due.
+13.
+Product Warranty. Nanochem warrants to (Omitted)
+that the “Product Warranty”):
+(a) Upon
+delivery to (Omitted) in accordance with the terms of this Agreement, the Products will:
+(i)
+conform, in all respects, to the specifications, standards, drawings, samples, descriptions, quality requirements, performance requirements,
+statements of work, and fit, form and function requirements furnished, specified or approved by (Omitted)
+for the Products;
+(ii)
+be merchantable and free from defects, latent or otherwise, in design, materials, and workmanship;
+12
+(iii)
+not infringe upon, violate or misappropriate the Intellectual Property of any Person;
+(iv)
+be fit and sufficient for the particular purpose intended by (Omitted)
+and its customers, of which the Nanochem is aware (and Nanochem acknowledges
+that it knows of (Omitted)intended use of the Products and that such
+Products have been selected, manufactured, or assembled by Nanochem based upon (Omitted) stated
+use and will be fit and sufficient for the particular purposes intended by (Omitted));
+and
+(v)
+comply with all applicable Laws.
+(b) Each
+of the Products will be new and conveyed by Nanochem to (Omitted) with good title, free and clear of all encumbrances.
+14. Additional
+Terms. The Product Warranty (a) is in addition to all other warranties, express, implied, statutory and common law, (b) does
+not extend to damages caused to the Products by (Omitted) storage, maintenance or transport of the Products after (Omitted) acceptance
+of the Products, or any use of the Products other than the their intended use, (c) survives Nanochem’s delivery of the Products,
+(Omitted) receipt, inspection, acceptance, use of the Products and payment for the Products, and the termination or expiration of this
+Agreement, but only to the extent any breach of the Product Warranty was in existence as of the date of delivery of the Products to (Omitted)
+or resulted from acts or omissions by or on behalf of Nanochem, (d) inures to the benefit of (Omitted) and its successors and assigns,
+and (e) may not be limited or disclaimed by Nanochem except as set forth herein. (Omitted) approval of Nanochem’s designs, materials,
+processes, drawings, specifications or similar requirements will not be construed to relieve Nanochem of any warranties. If (Omitted)
+determines a breach of warranty exists and requests in writing, Nanochem shall transfer and assign to (Omitted) all of its rights (but
+not any obligations) under all warranties from equipment or material manufacturers or suppliers, permitted subcontractors, or other third
+parties to the extent such rights relate to the Products subject to (Omitted) claim of a breach of warranty. Any applicable statute of
+limitations on (Omitted) claims for breach of warranty will commence no earlier than the date on which (Omitted) discovers the breach.
+15. Withdrawal
+or Recall of Products. If (Omitted), any of (Omitted) customers or any governmental authority determines that any Products
+sold to (Omitted) are Defective Products, Nanochem shall pay all reasonable expenses associated with determining whether a recall campaign
+is necessary, and (Omitted) will have the right to implement such recall campaign and return Defective Products to Nanochem or destroy
+such Products, as determined by (Omitted) in its reasonable discretion. If (Omitted) reasonably determines a recall campaign or destruction
+of Products is necessary, then Nanochem shall promptly replace any Defective Products and provide such replacement Products to (Omitted)
+or (Omitted) designee, at Nanochem’s sole cost and risk, and Nanochem will be liable for all of (Omitted) costs associated with
+such recall campaign or destruction, except to the extent it is determined by mutual written agreement of the Parties or through arbitration
+pursuant to Section 23.18 of this Agreement that the Defective Products were not caused, directly or indirectly, by any breach of the
+Product Warranty or other action or omission by or on behalf of Nanochem or its employees, contractors or agents.
+13
+16. Indemnification.
+16.1 Indemnification.
+Subject to the terms and conditions of this Agreement, each Party (in such capacity, “Indemnifying Party”) shall indemnify,
+defend and hold harmless the other Party and its officers, directors, employees, agents, Affiliates, successors, and permitted assigns
+(collectively, Indemnified Parties”) against any and all losses, damages, liabilities, deficiencies, claims, actions, judgments,
+settlements, interest, awards, penalties, fines, costs, or expenses of whatever kind, including reasonable attorneys’ fees, fees
+and the costs of enforcing any right to indemnification under this Agreement and the cost of pursuing any insurance providers, incurred
+by any Indemnified Party (collectively, “Losses”), relating to/arising out or resulting from any third-party Claim
+alleging:
+(a) a
+breach or non-fulfillment of any of Indemnifying Party’s representations, warranties, or covenants set forth in this Agreement;
+(b) any
+grossly negligent or more culpable act or omission of Indemnifying Party or any of its Representatives (including any recklessness or
+willful misconduct) in connection with Indemnifying Party’s performance under this Agreement;
+(c) any
+bodily injury, death of any Person or damage to real or tangible personal property caused by the acts or omissions of Indemnifying Party
+or any of its Representatives;
+(d) any
+failure by Indemnifying Party or its Representatives to comply with any applicable Laws; or
+(e) that
+any of Indemnifying Party’s Intellectual Property used in the design or production of the Products, or that is embodied in the
+Products, infringes any Intellectual Property of a third party.
+16.2 Exceptions
+and Limitations on Indemnification. Notwithstanding
+anything to the contrary in this Agreement, Indemnifying Party is not obligated to indemnify or defend any Indemnified Party against
+any Claim or corresponding Losses resulting from Indemnified Party’s:
+(a) gross
+negligence or more culpable act or omission (including recklessness or willful misconduct); or
+(b) bad
+faith failure to materially comply with any of its obligations set forth in this Agreement.
+17. NO
+LIABILITY FOR CONSEQUENTIAL OR INDIRECT DAMAGES.
+EXCEPT FOR LIABILITY FOR INTENTIONAL BREACH, INDEMNIFICATION, BREACH OF CONFIDENTIALITY, OR INFRINGEMENT OR MISAPPROPRIATION OF INTELLECTUAL
+PROPERTY, IN NO EVENT SHALL EITHER PARTY BE LIABLE FOR CONSEQUENTIAL, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE OR ENHANCED
+DAMAGES, LOST PROFITS OR REVENUES OR DIMINUTION IN VALUE, ARISING OUT OF OR RELATING TO ANY BREACH OF THIS AGREEMENT, REGARDLESS OF (A)
+WHETHER SUCH DAMAGES WERE FORESEEABLE, (B) WHETHER OR NOT SUCH PARTY WAS ADVISED OF THE POSSIBILITY OF SUCH DAMAGES AND (C) THE LEGAL
+OR EQUITABLE THEORY (CONTRACT, TORT OR OTHERWISE) UPON WHICH THE CLAIM IS BASED, AND NOTWITHSTANDING THE FAILURE OF ANY AGREED OR OTHER
+REMEDY OF ITS ESSENTIAL PURPOSE.
+14
+18. Intellectual
+Property.
+18.1 Ownership.
+Each of the Parties acknowledges and agrees that:
+(a) each
+Party retains exclusive ownership of its Intellectual Property;
+(b) (Omitted)
+does not transfer to Nanochem any of its Intellectual Property, and Nanochem may not use any of (Omitted) Intellectual Property other
+than to produce and supply Products to (Omitted) hereunder;
+(c) Nanochem
+does not transfer to (Omitted) any of Nanochem’s Intellectual Property;
+(d)
+any and all of the Intellectual Property developed by (Omitted) during the performance of its obligations hereunder, and any Intellectual
+Property related to the Exclusive Product Category, whether developed by or on behalf of (Omitted) or Nanochem individually or jointly
+with others (collectively, “Omitted”), will be owned by (Omitted), and Nanochem assigns to (Omitted) all of Nanochem’s
+right, title, and interest in and to all such (Omitted) Developments, and, to the extent that any such (Omitted) Developments are copyrightable
+works or works of authorship, the Parties agree that such works are “works made for hire” for (Omitted) under the US Copyright
+Act; and Nanochem shall only use such (Omitted) Developments to produce and supply Products to (Omitted); and
+(e) except
+for (Omitted) Developments, any Intellectual Property developed by Nanochem during the performance of its obligations hereunder (each,
+a “Nanochem Development”) will be owned by Nanochem, provided, however, that Nanochem hereby grants
+to (Omitted) an ongoing, perpetual, worldwide, royalty-free license to use and exploit any Nanochem Development used in connection with
+the sale of the Products, which license shall survive any termination or expiration of this Agreement, except for a termination by Nanochem
+due to (Omitted) material breach pursuant to Section 10.1.
+19. Prohibited
+Acts. Each of the Parties shall not:
+(a) take
+any action that interferes with the other Party’s Intellectual Property, including such other Party’s ownership or exercise
+thereof;
+(b) challenge
+any right, title or interest of the other Party in such other Party’s Intellectual Property;
+(c) make
+any claim or take any action adverse to such other Party’s ownership of its Intellectual Property;
+(d) register
+or apply for registrations, anywhere in the world, the other Party’s trademarks or any other trademark that is similar to such
+other Party’s trademarks or that incorporates such trademarks in whole or in confusingly similar part;
+15
+(e) use
+any mark, anywhere, that is confusingly similar to the other Party’s trademarks;
+(f) misappropriate
+any of the other Party’s trademarks for use as a domain name without such other Party’s prior written consent; or
+(g) alter,
+obscure, or remove any of the other Party’s trademarks or trademark or copyright notices or any other proprietary rights notices
+placed on the products purchased under this Agreement (including Products), marketing materials, or other materials.
+20.
+Confidentiality.
+20.1
+Scope of Confidential Information. From time
+to time during the Term, either Party (as the “Disclosing Party”) may disclose or make available to the other Party
+(as the “Receiving Party”) information about its business affairs, goods and services (including any forecasts), confidential
+information and materials comprising or relating to Intellectual Property, trade secrets, third-party confidential information, and other
+sensitive or proprietary information. Such information, as well as the terms of this Agreement, whether orally or in written, electronic
+or other form or media, and whether or not marked, designated or otherwise identified as “confidential” constitutes “Confidential
+Information” hereunder. Confidential Information does not include information that at the time of disclosure:
+(a) is
+or becomes generally available to and known by the public other than as a result of, directly or indirectly, any breach of this Section
+by the Receiving Party or any of its Representatives;
+(b) is
+or becomes available to the Receiving Party on a non-confidential basis from a third-party source, provided that such third party is
+not and was not prohibited from disclosing such Confidential Information;
+(c) was
+known by or in the possession of the Receiving Party or its Representatives prior to being disclosed by or on behalf of the Disclosing
+Party;
+(d) was
+or is independently developed by the Receiving Party without reference to or use of, in whole or in part, any of the Disclosing Party’s
+Confidential Information; or
+(e) is
+required to be disclosed pursuant to applicable Law.
+20.2 Protection
+of Confidential Information. The Receiving Party
+shall:
+(a) protect
+and safeguard the confidentiality of the Disclosing Party’s Confidential Information with at least the same degree of care as the
+Receiving Party would protect its own Confidential Information, but in no event with less than a commercially reasonable degree of care;
+(b) not
+use the Disclosing Party’s Confidential Information, or permit it to be accessed or used, for any purpose other than to exercise
+its rights or perform its obligations under this Agreement; and
+16
+(c) not
+disclose any such Confidential Information to any Person, except to the Receiving Party’s Representatives who need to know the
+Confidential Information to assist the Receiving Party, or act on its behalf, to exercise its rights or perform its obligations under
+this Agreement.
+20.3 No
+Public Announcements or Trademark Use. Unless expressly
+permitted under this Agreement, Nanochem shall not:
+(a) make
+any statement (whether oral or in writing) in any press release, external advertising, marketing, or promotion materials regarding the
+subject matter of this Agreement, (Omitted) or its business unless:
+(i)
+it has received the express written consent of (Omitted),
+or
+(ii)
+it is required to do so by Law.
+(b) use
+any of (Omitted) trademarks without the prior written consent of (Omitted).
+20.4 The
+Receiving Party shall be responsible for any breach of this Section caused by any of its Representatives.
+21. Inspection
+and Audit Rights. Nanochem hereby grants
+to (Omitted) and its authorized Representatives, access to Nanochem’s premises (including Nanochem’s manufacturing operations
+used in production of the Products) and all pertinent documents and other information, whether stored in tangible or intangible form,
+including any books, records, and accounts, in any way related to Nanochem’s performance under this Agreement (including Nanochems’
+processes and procedures), Products, property or any payment or other transaction occurring in connection with this Agreement, for the
+purpose of auditing Nanochem’s compliance with the terms of this Agreement. The number of audits shall be limited to two (2) per
+year. Nanochem agrees to cooperate fully with (Omitted) in connection with any such audit or inspection. Nanochem shall maintain, during
+the Term and for a period of five (5) years after the Term, complete and accurate books and records. Nanochem shall segregate its records
+and otherwise cooperate with (Omitted) so as to facilitate any audit by (Omitted). Each Party shall reimburse the other Party for all
+amounts associated with errors in favor of such first Party discovered during an audit. In addition, Nanochem shall reimburse (Omitted)
+for the amount of (Omitted) reasonable costs and expenses incurred in conducting the audit.
+22. Insurance.
+During the Term, Nanochem shall, at its own expense, maintain and carry in full force and effect, subject to appropriate levels of self-insurance,
+commercial general liability insurance (including product liability) in a sum no less than (Omitted) in the aggregate and of no less
+than (Omitted) for each occurrence with financially sound and reputable insurers. Upon (Omitted) reasonable request, Nanochem shall provide
+(Omitted) with a certificate of insurance evidencing the insurance coverage specified in this Section. The insurance policies shall provide
+that the insurance company shall notify such additional insured Party in writing at least thirty (30) days in advance if the primary
+coverage Party’s insurance coverage is to be canceled or materially altered so as not to comply with the requirements of this Section.
+17
+23. Miscellaneous.
+23.1 Further
+Assurances. Upon a Party’s reasonable request,
+the other Party shall execute and deliver all such further documents and instruments, and take all such further acts, necessary to give
+full effect to this Agreement.
+23.2 Relationship
+of the Parties. The relationship between Nanochem
+and (Omitted) is solely that of independent contracting parties. Nothing in this Agreement creates any agency, joint venture, partnership,
+or other form of joint enterprise, employment, or fiduciary relationship between the Parties. Neither Party has any express or implied
+right or authority to assume or create any obligations on behalf of or in the name of the other Party or to bind the other Party to any
+contract, agreement, or undertaking with any third party.
+23.3 Entire
+Agreement. This Agreement, including and together
+with any related exhibits, schedules, specifications, and the applicable terms of any Purchase Orders, constitutes the sole and entire
+agreement of the Parties with respect to the subject matter contained herein and therein and supersedes all prior and contemporaneous
+understandings, agreements, representations and warranties, both written and oral, with respect to such subject matter.
+23.4 Survival.
+Subject to the limitations and other provisions of this Agreement: (a) the representations and warranties of the Parties contained herein
+will survive the expiration or earlier termination of this Agreement; and (b) Sections 10.4, 13, 14, 15,
+16-20 and 23 of this Agreement, as well as any other provision that, in order to give proper effect to its intent, should
+survive such expiration or termination, will survive the expiration or earlier termination of this Agreement.
+23.5 Notices.
+All notices, requests, consents, claims, demands, waivers, and other communications under this Agreement must be in writing and addressed
+to the other Party at its address set forth below (or to such other address that the receiving Party may designate from time to time
+in accordance with this Section). Notice may be sent by email to an email address of the other party previously provided by that party
+or used during the negotiation or administration of this Agreement.
+23.6 Interpretation.
+For purposes of this Agreement: (a) the words “include,” “includes” and “including” are deemed to
+be followed by the words “without limitation”; (b) the word “or” is not exclusive; (c) the words “herein,”
+“hereof,” “hereby,” “hereto” and “hereunder” refer to this Agreement as a whole; (d)
+words denoting the singular have a comparable meaning when used in the plural, and vice-versa; and (e) words denoting any gender include
+all genders. Unless the context otherwise requires, references in this Agreement: (x) to sections, exhibits, schedules, attachments,
+and appendices mean the sections of, and exhibits, schedules, attachments and appendices attached to, this Agreement; (y) to an agreement,
+instrument or other document means such agreement, instrument or other document as amended, supplemented and modified from time to time
+to the extent permitted by the provisions thereof; and (z) to a statute means such statute as amended from time to time and includes
+any successor legislation thereto and any regulations promulgated thereunder. The Parties drafted this Agreement without regard to any
+presumption or rule requiring construction or interpretation against the Party drafting an instrument or causing any instrument to be
+drafted. The exhibits, schedules, attachments, and appendices referred to herein are an integral part of this Agreement to the same extent
+as if they were set forth verbatim herein.
+18
+23.7 Headings.
+The headings in this Agreement are for reference only and do not affect the interpretation of this Agreement.
+23.8 Severability.
+If any term or provision of this Agreement is invalid, illegal, or unenforceable in any jurisdiction, such invalidity, illegality or
+unenforceability does not affect any other term or provision of this Agreement or invalidate or render unenforceable such term or provision
+in any other jurisdiction. Upon a determination that any term or provision is invalid, illegal or unenforceable, the court may modify
+this Agreement to effect the original intent of the Parties as closely as possible in order that the transactions contemplated hereby
+be consummated as originally contemplated to the greatest extent possible.
+23.9 Amendment
+and Modification. No amendment to or rescission,
+termination or discharge of this Agreement is effective unless it is in writing and signed by an authorized Representative of each Party.
+23.10 Waiver.
+(a) No
+waiver under this Agreement is effective unless it is in writing and signed by an authorized representative of the Party waiving its
+right.
+(b) Any
+waiver authorized on one occasion is effective only in that instance and only for the purpose stated, and does not operate as a waiver
+on any future occasion.
+(c) None
+of the following constitutes a waiver or estoppel of any right, remedy, power, privilege, or condition arising from this Agreement:
+(i)
+any failure or delay in exercising any right, remedy, power or privilege or in enforcing any condition under this Agreement; or
+(ii)
+any act, omission, or course of dealing between the Parties.
+23.11 Cumulative
+Remedies. All rights and remedies provided in this
+Agreement are cumulative and not exclusive, and the exercise by either Party of any right or remedy does not preclude the exercise of
+any other rights or remedies that may now or subsequently be available at law, in equity, by statute, in any other agreement between
+the Parties or otherwise.
+23.12 Equitable
+Remedies. Each Party acknowledges and agrees that
+(a) a breach or threatened breach by such Party of any of its obligations under Section 20 would give rise to irreparable harm
+to the other Party for which monetary damages would not be an adequate remedy and (b) in the event of a breach or a threatened breach
+by such Party of any such obligations, the other Party shall, in addition to any and all other rights and remedies that may be available
+to such Party at law, at equity or otherwise in respect of such breach, be entitled to equitable relief, including a temporary restraining
+order, an injunction, specific performance and any other relief that may be available from a court of competent jurisdiction, without
+any requirement to post a bond or other security, and without any requirement to prove actual damages or that monetary damages will not
+afford an adequate remedy. Each Party agrees that such Party will not oppose or otherwise challenge the appropriateness of equitable
+relief or the entry by a court of competent jurisdiction of an order granting equitable relief, in either case, consistent with the terms
+of this Section.
+19
+23.13 Assignment.
+Except in the case of a Permitted Transaction, no Party may assign any of its rights or delegate any of its obligations under this Agreement
+without the prior written consent of the other Party, such consent not to be unreasonably withheld, conditioned or delayed. For purposes
+of this Section, a “Permitted Transaction” means a merger, consolidation, reorganization or other change of control
+transaction where the surviving entity has acquired all or substantially all of a Party’s assets and is at least as credit-worthy
+as the original Party. Any purported assignment or delegation in violation of this Section is null and void. No assignment or delegation
+relieves the assigning or delegating Party of any of its obligations under this Agreement.
+23.14 Successors
+and Assigns. This Agreement is binding on and inures
+to the benefit of the Parties and their respective permitted successors and permitted assigns.
+23.15 No
+Third-Party Beneficiaries. Except as expressly set
+forth herein, this Agreement benefits solely the parties to this Agreement and their respective permitted successors and permitted assigns,
+and nothing in this Agreement, express or implied, confers on any other Person any legal or equitable right, benefit or remedy of any
+nature whatsoever under or by reason of this Agreement. The Parties hereby designate each Indemnified Party as a third-party beneficiary
+of Section 16.1, having the right to enforce such Sections.
+23.16 Dispute
+Resolution. Any dispute, controversy, or claim arising
+out of or relating to this Agreement, or the breach, termination or invalidity hereof, shall be submitted for negotiation and resolution
+by delivery of written notice from either of the Parties to the other Party. Such persons shall negotiate in good faith to resolve the
+dispute. If the Parties are unable to resolve any dispute within thirty (30) days after delivery of the applicable dispute notice, the
+Parties may submit such dispute to binding arbitration in accordance with the provisions of Section 23.18.
+23.17 Governing
+Law. This Agreement, including all exhibits, schedules,
+attachments and appendices attached hereto and thereto, and all matters arising out of or relating to this Agreement, are governed by
+and construed in accordance with, the Laws of the State of New York, United States of America, without regard to the conflict of laws
+provisions thereof.
+23.18 Choice
+of Forum. If, the Parties are unable to resolve
+any dispute related to this Agreement in accordance with Section 23.16 hereof, then either Party may, by written notice to the
+other Party (an “Arbitration Notice”), demand that the parties submit such dispute to binding arbitration in New York
+City with one arbitrator mutually agreed upon by the Parties from among a list of names of potential arbitrators proposed by the American
+Arbitration Association (the “AAA”) upon written notice to the AAA by one of the parties. If no such agreement as
+to the arbitrator is reached by the parties within thirty (30) days after the names of potential arbitrators have been proposed by the
+AAA, then either Party may request that the AAA select an arbitrator having expertise in the subject matter of the dispute, and such
+selection by the AAA shall be binding on the parties. The arbitration shall take place in New York City in accordance with the AAA’s
+Commercial Arbitration Rules using the Expedited Procedures thereunder, and judgment upon any award rendered in such arbitration will
+be binding on such parties and may be entered in any court having jurisdiction thereof. The arbitrator shall be required to provide in
+writing to the parties the basis for the award or order of such arbitrator. In any arbitration hereunder, the Parties shall share the
+arbitrator’s fee and any filing fees equally, but each Party shall pay its own attorney, consultant and expert witness fees and
+other costs or expenses.
+20
+23.19 Waiver
+of Jury Trial. Each Party acknowledges and agrees
+that any controversy that may arise under this Agreement, including any exhibits, schedules, attachments, and appendices attached to
+this Agreement, is likely to involve complicated and difficult issues and, therefore, each such Party irrevocably and unconditionally
+waives any right it may have to a trial by jury in respect of any legal action arising out of or relating to this Agreement, including
+any exhibits, schedules, attachments, and appendices attached to this Agreement, or the transactions contemplated hereby.
+23.20 Counterparts.
+This Agreement may be executed in counterparts, each of which is deemed an original, but all of which together are deemed to be one and
+the same agreement. A signed copy of this Agreement delivered by facsimile, e-mail, or other means of electronic transmission is deemed
+to have the same legal effect as delivery of an original signed copy of this Agreement. Counterparts may be delivered via facsimile,
+electronic mail (including pdf or any electronic signature complying with the U.S. federal ESIGN Act of 2000, e.g., www.docusign.com)
+or other transmission method and any counterpart so delivered shall be deemed to have been duly and validly delivered and be valid and
+effective for all purposes.
+23.21 Force
+Majeure. No Party shall be liable or responsible
+to the other Party, or be deemed to have defaulted under or breached this Agreement, for any failure or delay in fulfilling or performing
+any term of this Agreement, when and to the extent such party’s failure or delay is caused by or results from the following force
+majeure events (“Force Majeure Event(s)”): (a) acts of God; (b) flood, fire, earthquake, epidemics, or explosion;
+(c) war, invasion, hostilities (whether war is declared or not), terrorist threats or acts, riot or other civil unrest; (d) government
+order, law, or action; (e) embargoes or blockades in effect on or after the date of this Agreement; and (f) national or regional emergency;
+(g) strikes, labor stoppages or slowdowns, or other industrial disturbances; (h) telecommunication breakdowns, power outages or shortages,
+lack of warehouse or storage space, inadequate transportation services, or inability or delay in obtaining supplies of adequate or suitable
+materials; and (i) other similar events beyond the reasonable control of the affected Party. The affected Party shall give prompt notice
+of the Force Majeure Event to the other Party, stating the period of time the occurrence is expected to continue. The affected Party
+shall use diligent efforts to end the failure or delay and ensure the effects of such Force Majeure Event are minimized. The affected
+Party shall resume the performance of its obligations as soon as reasonably practicable after the removal of the cause. In the event
+that the affected Party’s failure or delay remains uncured for a period of sixty (60) days following written notice given by it
+under this Section, the other Party may thereafter terminate this Agreement upon within ten (10) Business Days’ written notice
+without liability to the affected Party; provided that payment for Products sold prior to the date of termination shall be remitted in
+accordance with the terms and conditions of this Agreement.
+[Remainder
+of page intentionally left blank]
+21
+IN
+WITNESS WHEREOF, the Parties hereto have executed this Agreement as of the date first set forth above.
+NANOCHEM
+SOLUTIONS, INC.
+By
+/s/ Daniel
+B. O’Brien
+Name:
+Daniel B. O’Brien
+Title:
+Chief Executive Officer
+(Omitted)
+By
+Name:
+Title:
+22

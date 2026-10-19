@@ -1,0 +1,322 @@
+EX-10.4
+6
+ex10-4.htm
+EX-10.4
+Exhibit 10.4
+EXECUTION
+VERSION
+MASTER
+SERVICES AGREEMENT
+(FACTORY
+SETUP · ENGINEERING DISPATCH · TRAINING)
+by
+and between
+SDR
+DRONE INC.
+(formerly
+Hallmark Venture Group, Inc.)
+and
+SUNDORI
+DRONE CO., LTD.
+Framework
+Agreement — Engagement-Specific Fees per Statement of Work
+Dated
+as of June 9, 2026
+This
+MASTER SERVICES AGREEMENT (this “Agreement”) is made and entered into as of June 9, 2026 (the “Effective Date”),
+by and between:
+(a)
+SDR Drone Inc. (formerly known as Hallmark Venture Group, Inc.), a corporation duly organized and existing under the laws of the State
+of Florida, United States of America, with its principal office at 1800 N Town Center Drive, Suite 100, Las Vegas, Nevada 89144 (the
+“Customer” or “SDR USA”); and
+(b)
+Sundori Drone Co., Ltd., a corporation duly organized and existing under the laws of the Republic of Korea, with its registered office
+at 947 Hanam-daero, Hanam-si, Gyeonggido, Republic of Korea (the “Service Provider” or “SDR Korea”).
+Customer
+and Service Provider are each referred to herein as a “Party” and collectively as the “Parties.”
+RECITALS
+WHEREAS,
+simultaneously herewith, Service Provider has assigned, or has agreed to assign (subject to applicable Transfer Restrictions and the
+Fallback License mechanism), the Subject IP to Customer pursuant to the Patent Assignment and Technology Transfer Agreement of even date
+herewith (the “IP Transfer Agreement”);
+WHEREAS,
+Service Provider has unique expertise, personnel, and proprietary know-how relating to the Subject IP, and Customer wishes to engage
+Service Provider on an arm’s-length, fee-for-service basis to provide engineering, factory-setup, training, and ongoing technical
+support services for the global commercialization of the Subject IP, including the establishment of foreign joint-venture manufacturing
+facilities in the Licensed Territories;
+WHEREAS,
+the Parties intend that the services provided hereunder be documented, performed, and paid for separately from the consideration for
+the IP assignment under the IP Transfer Agreement, in order to comply with Korean Corporate Income Tax Act §52 (Denial of Wrongful
+Calculation), the Korean International Tax Adjustment Act (transfer pricing), and U.S. Internal Revenue Code §482 (transfer pricing);
+WHEREAS,
+the Parties intend that this Agreement operate as a master framework agreement, under which the specific service fees, hourly or
+daily rates, scope, deliverables, timelines, and payment milestones applicable to any particular engagement shall be separately
+negotiated and agreed in good faith on a JV-by-JV (or engagement-by-engagement) basis through individual Statements of Work, taking
+into account the specific country, regulatory environment, joint-venture partner contributions, project scope, and the
+then-prevailing market rates for comparable engineering and consulting services, and supported by contemporaneous Korean and
+U.S. transfer-pricing documentation prepared by an independent accounting firm;
+NOW,
+THEREFORE, in consideration of the mutual promises and covenants contained herein, and for other good and valuable consideration the
+receipt and sufficiency of which are hereby acknowledged, the Parties agree as follows:
+ARTICLE
+1
+SCOPE
+OF SERVICES
+1.1
+Service Categories. During the Term, and upon the issuance of Statements of Work pursuant to Section 1.5, Service Provider shall provide
+to Customer (or, at Customer’s direction, to any of its designated affiliates or joint ventures) the categories of services described
+in subsections (a) through (f) below (collectively, the “Services”). The specific scope, deliverables, and personnel allocated
+to any engagement shall be set forth in the relevant Statement of Work.
+(a)
+Foreign Factory Setup Services. Site selection support and feasibility studies; manufacturing process know-how transfer (including surface-mount
+technology line setup, flight-controller board test and burn-in, composite lay-up and cure scheduling, tether-winch assembly process,
+and Markforged / Stratasys composite three-dimensional print parameter sets); bill-of-materials and supplier qualification methodology
+transfer (Chinafree, NDAA §848 / Blue UAS compliant); test fixtures, environmental chambers, IP54/IP55 verification, and temperature-cycling
+protocols; first-article inspection and acceptance test procedures; and ISO 9001 / 14001 implementation playbook deployment.
+(b)
+Engineer Dispatch Package. On a per-engagement basis, dispatch of one or more Service Provider engineers to Customer or joint-venture
+sites for production-line setup, training, first-article qualification, sustained engineering support, and surge support for major customer
+engagements or production scale-up. The number of engineers, duration of dispatch, and specific deliverables for any engagement shall
+be set forth in the applicable Statement of Work, with all travel, lodging, and per-diem costs reimbursed by Customer and engineer time
+billed at the arm’s-length rates determined for that engagement.
+(c)
+Training Programs. Foundational training of Customer or joint-venture personnel at Service Provider’s Hanam facility (Phase
+A); on-site practical training at the joint-venture facility (Phase B); and recurring annual refresher and new-product training
+(Phase C). Training coverage includes operations, maintenance, repair, software, MFS Swarm Operating System, FANET mesh
+networking, mission planning, and regulatory compliance.
+(d)
+Documentation Package. Operating manuals (English and local language), maintenance and repair guides, parts catalogs, software user guides,
+test and acceptance procedures, and ISO-aligned quality manuals.
+(e)
+Per-Jurisdiction Specific Adaptations. Country- and joint-venture-specific adaptations as itemized in any applicable Statement of Work,
+including without limitation heat / desert qualification, cold-weather qualification, maritime / mountainous-terrain qualification, regional
+language-localization, regional regulatory and procurement certification, and integration with regional defense procurement frameworks.
+(f)
+Regulatory and Certification Support. Korean wind / dust / water resistance certification methodology; pilot training equipment certification;
+NDAA §848 / Blue UAS / FedRAMP / NATO STANAG 4586/4703 compliance documentation; and similar regulatory and certification support
+as the Parties may agree from time to time.
+1.2
+Excluded Services. The Services do not include (a) the actual manufacturing of products (which is performed by joint ventures or by Service
+Provider in Korea under separate purchase orders); (b) any service that requires personnel to act outside the scope of their professional
+capacity; or (c) any service that would, in the reasonable opinion of either Party, violate applicable law or export-control regulations.
+1.3
+Standard of Performance. Service Provider shall perform the Services with the same degree of care, skill, and diligence as exercised
+by a leading Korean drone-engineering firm. Service Provider shall ensure that all dispatched engineers are appropriately qualified and
+trained, and shall be responsible for the conduct of its personnel.
+1.4
+Independent Contractor. Service Provider is an independent contractor. Nothing in this Agreement shall create an employment, partnership,
+joint venture, or agency relationship between the Parties. Service Provider shall be solely responsible for the employment terms, taxes,
+and statutory benefits of its personnel.
+1.5
+Statements of Work. The detailed scope of any specific engagement (including, by way of example, the setup of a particular foreign joint-venture
+factory or the conduct of a particular training program) shall be documented in a written Statement of Work signed by both Parties, referencing
+this Agreement and specifying: (a) deliverables; (b) timeline; (c) acceptance criteria;
+(d)
+personnel and rates; (e) payment milestones; and (f) any specific terms supplementing this Agreement. Statements of Work may be executed
+by Customer or, at Customer’s direction, by any of its affiliates, with Customer guaranteeing the performance and payment of any
+such affiliate.
+ARTICLE
+2
+FEES
+AND PAYMENT
+2.1
+Arm’s-Length Rates Determined Per Statement of Work. This Agreement establishes the master framework for the engagement of Service
+Provider by Customer. The specific service fees, hourly or daily rates, scope, deliverables, timelines, milestones, and payment terms
+applicable to any particular engagement shall be separately negotiated and agreed in good faith by the Parties on a JV-by-JV (or engagement-by-engagement)
+basis through individual Statements of Work executed pursuant to Section 1.5. No fees, rates, or budgets are fixed by this Agreement
+itself. All fees and rates set forth in any Statement of Work shall be determined on an arm’s-length basis with reference to (i)
+the then-prevailing market rates for comparable engineering and consulting services in the Korean defense and aerospace technical services
+market, (ii) the country-specific cost environment, regulatory burden, and joint-venture partner contribution profile for the engagement
+in question, and (iii) such other commercial factors as the Parties may reasonably consider, in each case supported by contemporaneous
+transfer-pricing documentation maintained as required by Section 7.3.
+2.2
+Schedule A — Rate Methodology Template. To support consistent transfer-pricing documentation and Statement-of-Work-level negotiation,
+the Parties shall maintain Schedule A as a rate methodology template, setting out the categories of personnel, the bases on which rates
+are computed (hourly, daily, or lump-sum), the methodology for arm’s-length benchmarking, and standard cost-recovery components.
+Schedule A is intended as a framework reference only and shall not be construed as fixing the rates applicable to any specific engagement;
+specific rates shall be agreed in the applicable Statement of Work. Schedule A may be reviewed and updated by mutual written agreement
+of the Parties from time to time.
+2.3
+Per-Engagement Budgeting. Each joint-venture factory-setup engagement, training program, surge-support deployment,
+regulatory-certification project, or other service engagement contemplated hereunder shall be the subject of a dedicated Statement
+of Work specifying the agreed scope and budget for that engagement. The Parties acknowledge that engagement budgets will vary
+materially across jurisdictions and joint-venture partners — reflecting differences in country-specific labor and travel
+costs, technical complexity, training intensity, regulatory burden, joint-venture-partner contributions, and timeline — and
+that no single “standard package” budget is appropriate to all engagements. The good-faith development of each
+engagement budget shall be informed by the methodology in Schedule A and supported by transfer-pricing documentation.
+2.4
+Reimbursable Expenses. In addition to the rates determined in each Statement of Work, Customer shall reimburse Service Provider for reasonable
+and documented out-of-pocket expenses (including travel, lodging, per diem, visa, and in-country logistics) incurred in connection with
+the Services, in accordance with the expense policy attached as Schedule C. Reimbursement claims shall be submitted with original receipts
+within thirty (30) days of incurrence.
+2.5
+Invoicing and Payment. Service Provider shall invoice monthly, in U.S. dollars, with line items by Statement of Work, personnel, hours,
+and reimbursable expenses, accompanied by supporting time sheets. Payment shall be due net thirty (30) days from receipt of a correct
+invoice. Late payments shall accrue interest at the lesser of (i) one percent (1%) per month or (ii) the maximum rate permitted by applicable
+law. Customer shall pay all applicable taxes other than taxes on Service Provider’s income; any Korean withholding tax on cross-border
+service fees shall be handled in accordance with the Korea–United States Income Tax Convention and applicable Korean tax regulations.
+2.6
+Payment Milestones (Lump-Sum SOWs). For Statements of Work that adopt a lump-sum fee structure, payment milestones shall be specified
+in the relevant Statement of Work; by convention and unless otherwise agreed, lump-sum milestones shall be structured as (a) twentyfive
+percent (25%) upon execution of the Statement of Work (Mobilization); (b) fifty percent (50%) upon achievement of the first-article qualification
+or equivalent technical milestone; and (c) the remaining twenty-five percent (25%) upon final acceptance of the deliverables.
+ARTICLE
+3
+INTELLECTUAL
+PROPERTY AND CONFIDENTIALITY
+3.1
+Ownership of Services-Generated IP. Any intellectual property generated by Service Provider in the course of performing the Services
+and that constitutes an improvement, modification, derivative work, or new invention with respect to the Subject IP shall be owned by
+Customer (which holds the Subject IP), subject to the grant-back provisions of the License Back as to the Korea Territory.
+3.2
+Background IP. Service Provider retains ownership of its background intellectual property (that is, intellectual property existing
+prior to the Effective Date and not constituting part of the Subject IP) used in providing the Services. To the extent any
+background intellectual property of Service Provider is necessarily incorporated into the deliverables, Service Provider hereby
+grants Customer a non-exclusive, royalty-free, worldwide, perpetual license to use such background intellectual property in
+connection with the deliverables.
+3.3
+Confidentiality. Each Party shall maintain in confidence all non-public information of the other Party received in connection with this
+Agreement (the “Confidential Information”), using a degree of care no less than that used to protect its own confidential
+information of like importance, and at all times at least a reasonable degree of care. Confidential Information shall not be used or
+disclosed except for the purposes of this Agreement. Standard exceptions apply for information that is or becomes publicly known through
+no breach of this Agreement, was already known to the receiving Party, is rightfully received from a third party without confidentiality
+obligation, or is independently developed without use of or reference to the Confidential Information.
+3.4
+Export Control Compliance. Each Party shall comply with all applicable export-control laws, including (a) the U.S. Export Administration
+Regulations, (b) the U.S. International Traffic in Arms Regulations, (c) U.S. Office of Foreign Assets Control sanctions, and (d) the
+Korean Foreign Trade Act strategic-items regulations. The Parties shall conduct, and update from time to time, a technology classification
+analysis for each Statement of Work, identifying any controlled commodity or technology and the corresponding licensing requirements
+(including deemedexport rules for foreign nationals).
+3.5
+Source-Code and Know-How Escrow. Upon Closing under the Change of Control Agreement of even date herewith, the Parties shall deposit
+into a third-party source-code escrow, on terms protecting confidentiality and value, copies of (a) all source code, firmware, and software
+used in products embodying the Subject IP; (b) bills of materials, supplier qualification records, and manufacturing process documentation;
+(c) test fixtures and acceptance procedures; and (d) certification documentation. The escrow is intended to provide Customer with continuity
+of supply in the event of Service Provider’s inability to perform.
+ARTICLE
+4
+QUALITY,
+ACCEPTANCE, AND WARRANTIES
+4.1
+Acceptance Criteria. Each Statement of Work shall specify objective acceptance criteria for the deliverables. Upon notice of completion,
+Customer shall have thirty (30) days to test and accept (or reject with specific written reasons). Failure to respond within such period
+shall constitute deemed acceptance.
+4.2
+Warranty. Service Provider warrants that the Services will be performed in a professional and workmanlike manner consistent with industry
+standards. For a period of ninety (90) days following acceptance of a given deliverable, Service Provider shall, at no additional charge,
+correct any defect attributable to its performance, or refund the corresponding portion of the fee, at its option.
+4.3
+Disclaimer. EXCEPT FOR THE EXPRESS WARRANTY IN SECTION 4.2, SERVICE PROVIDER DISCLAIMS ALL OTHER WARRANTIES, EXPRESS OR IMPLIED, INCLUDING
+WITHOUT LIMITATION ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+ARTICLE
+5
+TERM
+AND TERMINATION
+5.1
+Term. The term of this Agreement shall commence on the Effective Date and shall continue for an initial term of five (5) years, and shall
+thereafter automatically renew for successive oneyear periods unless terminated by either Party on at least one hundred eighty (180)
+days’ prior written notice before the end of the then-current term.
+5.2
+Termination for Cause. Either Party may terminate this Agreement (or any specific Statement of Work) for cause upon material breach by
+the other Party that is not cured within sixty (60) days of written notice. Service Provider may terminate this Agreement for non-payment
+that is not cured within thirty (30) days of written notice.
+5.3
+Effect of Termination. Upon termination: (a) Service Provider shall complete or transition any work-in-progress as instructed by Customer;
+(b) Service Provider shall return all Customer Confidential Information; (c) Customer shall pay for all Services performed through the
+effective date of termination; and (d) any provision that by its nature is intended to survive termination shall survive, including provisions
+relating to confidentiality, intellectual property, indemnification, transfer-pricing cooperation, and dispute resolution.
+ARTICLE
+6
+INDEMNIFICATION
+AND LIMITATION OF LIABILITY
+6.1
+Indemnification by Service Provider. Service Provider shall indemnify, defend, and hold harmless Customer and its affiliates from any
+third-party claim arising from (a) Service Provider’s breach of this Agreement; (b) personal injury, death, or property damage
+caused by Service Provider’s personnel in the performance of the Services; or (c) any third-party intellectual-property infringement
+claim arising from Service Provider’s use of its own background intellectual property in the deliverables.
+6.2
+Indemnification by Customer. Customer shall indemnify, defend, and hold harmless Service Provider and its affiliates from any third-party
+claim arising from (a) Customer’s breach of this Agreement; (b) Customer’s use of the deliverables beyond the scope of the
+Services; or (c) any third-party intellectual-property infringement claim arising from Customer-provided specifications, materials, or
+directions.
+6.3
+Limitation of Liability. EXCEPT FOR FRAUD, BREACH OF CONFIDENTIALITY, BREACH OF EXPORT-CONTROL OBLIGATIONS, AND INDEMNIFICATION OBLIGATIONS
+HEREUNDER, NEITHER PARTY’S AGGREGATE LIABILITY SHALL EXCEED THE FEES PAID OR PAYABLE UNDER THE STATEMENT OF WORK GIVING RISE TO
+THE CLAIM IN THE TWELVE (12) MONTHS PRIOR TO THE CLAIM. IN NO EVENT SHALL EITHER PARTY BE LIABLE FOR INDIRECT, CONSEQUENTIAL, SPECIAL,
+PUNITIVE, OR INCIDENTAL DAMAGES (INCLUDING LOST PROFITS), EVEN IF ADVISED OF THE POSSIBILITY THEREOF.
+ARTICLE
+7
+MISCELLANEOUS
+7.1
+Governing Law. This Agreement shall be governed by and construed in accordance with the laws of the State of Delaware, without regard
+to its conflict-of-laws principles.
+7.2
+Dispute Resolution. Any dispute, controversy, or claim arising out of or relating to this Agreement, or the breach, termination, or validity
+thereof, shall be finally resolved by binding arbitration administered by the Korean Commercial Arbitration Board under the UNCITRAL
+Arbitration Rules, with seat in Seoul, in English with Korean translation as required, before three arbitrators.
+7.3
+Transfer-Pricing Cooperation. The Parties acknowledge that this Agreement is part of an integrated cross-border transaction subject
+to Korean and U.S. transfer-pricing rules. Each Party shall (a) cooperate in the preparation of contemporaneous transfer-pricing
+documentation for each Statement of Work; (b) maintain consistent positions in tax filings; (c) cooperate in any tax audit,
+including under any mutual agreement procedure under the Korea–United States Tax Convention; and (d) promptly notify the other
+Party of any tax-authority inquiry.
+7.4
+No Recharacterization. The Parties expressly agree that the Services are arm’s-length, fee-for-service services, and that the consideration
+therefor is solely the cash service fees set forth in the Statements of Work. The Services are not consideration (in whole or in part)
+for the intellectual-property assignment under the IP Transfer Agreement. Neither Party shall assert a contrary position in any tax,
+accounting, or financial-reporting context.
+7.5
+Notices. All notices required hereunder shall be in writing and shall be delivered to the Parties at the addresses set forth on the signature
+page or to such other address as a Party may designate by written notice.
+7.6
+Entire Agreement; Amendment. This Agreement, together with the Statements of Work and Schedules executed hereunder, constitutes the entire
+agreement between the Parties with respect to the subject matter hereof. This Agreement may be amended only by a written instrument signed
+by both Parties.
+7.7
+Counterparts; Electronic Signatures. This Agreement may be executed in counterparts (including by PDF or electronic signature), each
+of which shall be deemed an original and all of which together shall constitute one and the same instrument.
+SIGNATURE
+PAGE
+IN
+WITNESS WHEREOF, the Parties have executed this Agreement as of the Effective Date.
+CUSTOMER:
+SDR DRONE INC. (formerly
+known as Hallmark Venture Group, Inc.) a Florida corporation
+By:
+Name:
+[Officer Name]
+Title:
+[Title]
+Date:
+Address:
+1800
+N Town Center Drive, Suite 100
+Las
+Vegas, Nevada 89144
+SERVICE PROVIDER:
+SUNDORI DRONE CO.,
+LTD. a corporation of the Republic of Korea
+By:
+Name:
+Cho
+Soon-sik
+Title:
+Chief
+Executive Officer
+Date:
+Address:
+947
+Hanam-daero, Hanam-si, Gyeonggi-do, Republic of Korea
+SCHEDULES
+The
+following Schedules are to be completed and attached by the Parties from time to time. The absence of any Schedule shall not affect the
+validity or enforceability of this Agreement, provided that the relevant Statement of Work specifies the agreed terms in lieu thereof.
+Schedule A Rate Methodology Template — categories of personnel, basis of charge (hourly, daily, lump-sum), arm’s-length benchmarking
+methodology, and standard cost-recovery components. Actual rates to be determined per Statement of Work. Schedule B Per-Jurisdiction
+Specific Adaptations — country-specific environmental, regulatory, language, and integration requirements identified from time
+to time (including for the UAE, Poland, Turkey, the United States, Cambodia, Mongolia, Bangladesh, Japan, India, Thailand, and other
+Licensed Territories). Schedule C Expense Policy — per diem, lodging caps, class of travel, visa, and in-country logistics reimbursement
+standards. Schedule D Form of Statement of Work — template specifying deliverables, timeline, acceptance criteria, personnel and
+rates, payment milestones, and engagement-specific supplemental terms. Schedule E Source-Code and Know-How Escrow Terms — escrow
+agent, deposit composition, release triggers, and beneficiary rights. Schedule F Export-Control Classification Matrix — U.S. EAR
+/ ITAR and Korean Foreign Trade Act classification methodology and per-engagement determinations.

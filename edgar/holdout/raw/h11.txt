@@ -1,0 +1,429 @@
+EX-10.1
+2
+ex_997518.htm
+EXHIBIT 10.1
+ex_997518.htm
+Exhibit 10.1
+CERTAIN INFORMATION CONTAINED IN THIS EXHIBIT, MARKED BY [***], HAS BEEN EXCLUDED BECAUSE THE REGISTRANT HAS DETERMINED THE INFORMATION IS BOTH NOT MATERIAL AND IS THE TYPE THAT THE REGISTRANT TREATS AS PRIVATE OR CONFIDENTIAL.
+SUPPLY AGREEMENT
+(the “Agreement”)
+entered into on this 1st day of January, 2026
+between
+TAPI NL B.V.
+a company incorporated under the laws of the Netherlands
+whose registered office is at Piet Heinkade 55, 1019 GM Amsterdam, The Netherlands
+(“TAPI”)
+and
+UroGen Pharma Ltd.
+A company incorporated under the laws of Israel
+with registered office at 9 HaTaasia St., Ra’anana 4365007, Israel
+(“Purchaser”)
+1.
+INTERPRETATION AND DEFINITIONS
+2
+2.
+SALES AND PURCHASE OF ACTIVE MATERIAL
+4
+3.
+ORDERS, QUANTITIES, LEAD TIME AND DELIVERY
+5
+4.
+PRICE AND PAYMENT
+8
+5.
+QUALITY INSPECTION OF PRODUCT and REGULATORY INSPECTIONS
+9
+6.
+WARRANTIES
+11
+7.
+CLAIMS FOR PATENT INFRINGEMENT
+12
+8.
+INDEMNIFICATION
+13
+9.
+TERM
+14
+10.
+BREACH AND TERMINATION
+14
+11.
+CONFIDENTIALITY
+15
+12.
+GOVERNING LAW AND DISPUTE RESOLUTION
+17
+13.
+FORCE MAJEURE
+17
+14.
+COMPLIANCE WITH TRADE SANCTION LAWS
+18
+15.
+GENERAL PROVISIONS
+20
+16.
+NOTICES
+23
+WHEREAS, TAPI is a supplier of active pharmaceutical ingredients manufactured by or for TAPI at the TAPI Facility, as defined below; and
+WHEREAS, Purchaser is a pharmaceutical company, with activities focusing on research, development, production, licensing, manufacturing and marketing of pharmaceutical products; and
+WHEREAS, TAPI wishes to supply the Active Material, as defined below, to Purchaser under the terms and conditions set out below; and Purchaser wishes to acquire the Active Material from TAPI under such terms and conditions.
+THEREFORE, in consideration of the premises and of the mutual covenants and agreements set forth in this Agreement, and other good and valuable consideration the adequacy and sufficiency of which is acknowledged, the Parties, intending to be legally bound, agree as follows:
+1.
+INTERPRETATION AND DEFINITIONS
+1.1.
+The preamble to this Agreement forms an integral part hereof.
+1.2.
+Clause headings in this Agreement are intended solely for convenience of reference and shall be given no effect in the interpretation of this Agreement.
+1.3.
+All signed appendices to this Agreement, if any, whether attached at the time of signature hereof or at any time thereafter, shall be construed as an integral part of this Agreement. In case of any inconsistency between the appendices and the body of the Agreement, the body of the Agreement shall take precedence and prevail over the appendices to the extent of any such inconsistency.
+1.4.
+In this Agreement, the following expressions shall bear the meanings assigned to them below and cognate expressions shall bear corresponding meanings.
+1.4.1.
+“Active Material” – the active pharmaceutical ingredients detailed in Appendix A.
+1.4.2.
+“Affiliates” – with regard to either Party, any person, corporation, company, partnership, joint venture or other entity controlling, controlled by or under common control with such Party. For such purpose the term “control” means the holding, either directly or through one or more other controlled entities, of more than fifty percent (50%) of the common voting stock or ordinary shares in, or the right to appoint more than fifty percent (50%) of the directors of, or the right to share more than fifty percent (50%) of the profits of, the said corporation, company, partnership, joint venture or entity.
+1.4.3.
+“Alternative Material” – active material equivalent to the Active Material, which is manufactured by a Third Party holding a drug master file for such active material, of a quality which is not intended to be inferior to the Active Material manufactured by TAPI, the supply of which will not infringe the intellectual property rights of TAPI.
+1.4.4.
+“Commercial Quantities” – the quantities of Active Material for manufacture of the Finished Product for commercial use in the Territory;
+2
+1.4.5.
+“Commercial Requirements” – with respect to a Contract Year, Purchaser's and/or of its Affiliates’ and/or its and its Affiliates’ Licensees' needs of the Commercial Quantities for such Contract Year.
+1.4.6.
+“Contract Year” – for the first Contract Year, the period beginning on January 1, 2026 and ending on 31 December, 2026; and for each Contract Year thereafter, each twelve (12)-month period thereafter.
+1.4.7.
+“Effective Date” - the date at the head of this Agreement, provided that the Agreement has been duly executed by both Parties;
+1.4.8.
+“Finished Product” - the finished form of pharmaceutical product to be manufactured by Purchaser and/or its designee(s), using the Active Material as the active ingredient.
+1.4.9.
+“cGMP" – current good manufacturing practices in accordance with (i) International Conference on Harmonization (ICH); Guidance for Industry: Q7A Good Manufacturing Practice Guide for Active Pharmaceutical Ingredients, and (ii) EudraLex Volume 4 – Part II.
+1.4.10.
+“Launch" - shall mean the first commercial sale of Finished Product by or on behalf of Purchaser to an independent Third Party in any part of the Territory and “Launch Date” means the date of that sale.
+1.4.11.
+“Manufacture” or “Manufacturing” means, with respect to the Active Material, any and all processes and activities directed to producing, manufacturing, processing, sourcing of materials, packaging, labeling, inspecting, quality assurance testing and release, shipping (subject to the applicable Incoterm) and/or storage of such Active Material (at TAPI’s premises) or any components of or raw materials or packaging materials with respect thereto, or any intermediate of any of the foregoing.
+1.4.12.
+“Nominated Contract Manufacturer(s)” means, third party manufacturer as may be confirmed by Purchaser to TAPI in writing from time to time as being appointed by Purchaser and/or its Affiliates to manufacture Finished Product on behalf of Purchaser and to whom supplies of Active Material may be made by TAPI for this purpose pursuant to this Agreement".
+1.4.13.
+“Marketing Authorizations” – the required authorizations and approvals to be granted by any of the Regulatory Authorities in their respective country or countries in the Territory, for the marketing, use, sale or distribution of the Finished Product in the Territory.
+1.4.14.
+“Party” – TAPI or Purchaser as the context requires, and “Parties” collectively TAPI and Purchaser.
+1.4.15.
+“Quarter” – a three-month consecutive period with the first three month period commencing on the first of either January 1, April 1, July 1 or October 1 at least six (6) months prior to the Launch Date, and each subsequent 3 month calendar period commencing on the day immediately following the last day of the then immediately preceding period.
+3
+1.4.16.
+“Regulatory Authorities” - any and all governmental bodies and/or organizations competent for regulating the importation, distribution, use or sale of the Active Material or Finished Product in any of the countries in the Territory.
+1.4.17.
+“Re-Test Date”- for each batch of Active Material supplied by TAPI under this Agreement, the required re-test date as specified in the CoA for such batch.
+1.4.18.
+“Re-Test Period” – for each batch of Active Material supplied by TAPI under this Agreement, the total period of time from release of such batch until the Re-Test Date, which period shall not be shorter than the shelf life of the Active Material approved by the FDA (i.e., [***] as of the Effective Date).
+1.4.19.
+“Specifications” – the technical specifications of the Active Material set out in Appendix B.
+1.4.20.
+“TAPI’s Facility” - the manufacturing facility of each Active Material specified in Appendix A, and as referenced in the applicable drug master file (or application thereof) as an approved facility to manufacture the Active Material, including but not limited to subcontractors to be retained by such facility for purposes of manufacture of the Active Material pursuant to this Agreement, in accordance with the applicable drug master file. Change of the manufacturing facility for manufacturing the Active Material shall be informed to Purchaser at least [***] in advance, during which period Purchaser shall have the right to continue ordering the relevant Active Material from the current facility until such change becomes effective.
+1.4.21.
+“Territory” – world-wide, subject to Section 14.
+1.4.22.
+“Third Party” – any person or entity other than Purchaser, TAPI or any Affiliate of Purchaser or TAPI.
+2.
+SALES AND PURCHASE OF ACTIVE MATERIAL
+2.1.
+With effect from the Effective Date, TAPI hereby agrees on a non-exclusive basis to sell and supply the Active Materials to Purchaser and/or Purchaser’s Nominated Contract Manufacturer solely for the manufacture by Purchaser and/or its designee(s) of the Finished Products in the Territory or the development and/or commercialization thereof solely in the Territory, and Purchaser hereby agrees to purchase on a non-exclusive basis the Active Materials supplied by TAPI on the terms and conditions set out in this Agreement solely for the said purposes.
+2.2.
+In the event of transfer of Marketing Authorizations to a third party ("Licensee"), Purchaser shall: (i) for the sole purpose of registration of the Finished Product and on a confidentiality basis, inform TAPI in writing of the identity (including contact details) of Licensee prior to any such transfer; (ii) inform the Licensee with all notifications and/or information received from TAPI which relates to significant changes in the method of manufacture of the Active Material and/or Specifications likely to affect the quality and safety of the Active Material. TAPI shall provide the Licensee (or the applicable Regulatory Authorities) with a “Letter of Access”. In such case, Purchaser shall remain primarily liable for the performance of all its obligations pursuant to this Agreement unless and until this Agreement is assigned to a Third Party pursuant to Section 15.1. TAPI shall not contact directly or indirectly the Licensee without Purchaser’s prior written consent.
+4
+2.3.
+TAPI shall (a) maintain, at its own expense, the TAPI’s Facility required for the Manufacture of Active Material in a state of repair and operating efficiency consistent with the requirements of cGMP and all applicable laws and regulations, (b) be responsible for obtaining, at its expense, any licenses or permits required for the operations of TAPI’s Facility and other licenses or permits, as well as any regulatory and government approvals necessary for the Manufacture the Active Material under this Agreement (other than any regulatory approvals specific to the Active Material), and (c) provide personnel having the appropriate skills, qualification, training and experience necessary to Manufacture the Active Material.
+3.
+ORDERS, QUANTITIES, LEAD TIME AND DELIVERY
+3.1.
+Development Supply. Subject to the terms and conditions of this Agreement, Purchaser agrees to purchase certain quantities of the Active Material from TAPI and TAPI agrees to supply Purchaser with Active Material for development purposes related to the Finished Product, including securing the Marketing Authorizations of the Finished Product in the Territory (the "Development Quantities"). With regard to the Developmental Quantities, Purchaser will use commercially reasonable efforts to provide TAPI with its projected requirements (including delivery dates) from time to time during the Term; provided that Purchaser shall have no obligation to purchase any, or any minimums of, Development Quantities. If Purchaser desires to purchase Development Quantities from TAPI, Purchaser shall provide TAPI with purchase orders and such orders shall be subject to TAPI's written confirmation. No order of Development Quantities shall be binding upon TAPI or Purchaser unless and until accepted by TAPI in writing; provided that TAPI will use commercially reasonable efforts to accept any purchase order submitted by Purchaser.
+3.2.
+The provisions of this Section 3 shall apply, with any necessary changes, to order and supply of Development Quantities of Active Material purchased hereunder.
+3.3.
+Commercial Supply. For each of the first [***] Contract Years during the Term, subject to Sections 3.7 and 3.8. Purchaser shall order from TAPI with respect to each Active Material, at least, the percentage of the Commercial Requirements corresponding to such Contract Year, as specified in Appendix A (such commitment, the “Purchase Order Commitment”). [***].
+3.4.
+Purchaser, its Affiliates, and/or Nominated Contract Manufacturers, shall use the Active Material supplied by TAPI under this Agreement only for the manufacture of Finished Products or development and/or commercialization thereof in the Territory. Purchaser, its Affiliates and/or Nominated Contract Manufacturers are prohibited from reselling or otherwise transferring all or any portion of Active Material supplied by TAPI under this Agreement that is not used in the manufacture of Finished Products for sale in the Territory to any other person or entity, either directly or indirectly, including through its contract manufacturers or other third parties, without written permission of TAPI.
+5
+3.5.
+Forecasts. By the [***] (or on such other date or frequency as the Parties may agree in writing) during the Term (as defined below), Purchaser shall provide TAPI in writing, with a good faith rolling forecast of the Commercial Quantities of Active Material it expects to be delivered by TAPI, including quantities required by any Nominated Contract Manufacturer (if any), in the [***] shall be considered binding (the "Binding Forecasted Quarter") on both Purchaser and TAPI, provided the Forecast was approved by TAPI as provided below. The quantities of Active Material detailed in each of the [***] will be non-binding.
+Each Forecast shall be subject to TAPI’s written approval. TAPI shall confirm or reject any Forecast within [***] Failure to respond within such period shall not constitute acceptance; in such case, Purchaser shall promptly follow up in writing, and TAPI shall provide confirmation or rejection within [***]. TAPI shall not unreasonably withhold confirmation, provided that acceptance is subject to, without limitation, availability of manufacturing capacity, compliance with applicable regulatory requirements and fulfillment of all obligations under this Agreement. Upon written confirmation by TAPI, the Forecast shall become a “Confirmed Forecast” and shall be binding on both Parties. Any modification or cancellation of a Confirmed Forecast shall require prior written consent of TAPI.
+3.6.
+Orders. Purchaser and/or any Nominated Contract Manufacturer (if any), acting on Purchaser’s behalf, shall be committed to place firm purchase orders for the quantities specified in the Binding Forecasted Quarter ("Purchase Orders"). Purchase Orders shall reference this Agreement and specify the Active Material, quantities, prices, delivery destination and required delivery dates, which shall be at least [***] from the date of placing the Purchase Order, except as otherwise specifically and expressly agreed to in writing by TAPI ("Lead Time"). Purchase Orders shall be subject to confirmation and acceptance by TAPI, not to be commercially unreasonably withheld. Notwithstanding the foregoing, TAPI shall be obligated to confirm and accept the Purchase Orders that contain quantities consistent with the Confirmed Forecasts and that contain delivery dates that meet the Lead Time (each such confirmed and accepted Purchase Order, the “Confirmed Purchase Order”), and TAPI may reject Purchase Orders: (i) to the extent the quantities exceed the Binding Forecasted Quantities (and only with respect to such excess quantities) or (ii) that do not meet the Lead Time, or (iii) in the event of Force Majeure (as defined below) or for other reasons beyond TAPI’s reasonable control. TAPI’s said confirmation and acceptance shall be provided within [***].
+3.7.
+For the avoidance of doubt, Purchaser shall remain fully responsible for the performance of all obligations under this Agreement, irrespective of whether any Purchase Orders are submitted by a Nominated Contract Manufacturer on Purchaser’s behalf. TAPI shall supply the quantities set forth in each Confirmed Purchase Order by the delivery dates set forth therein (provided that such delivery dates are consistent (at least) with the Lead Time). TAPI shall promptly advise Purchaser if, for any reason, including without limitation force majeure as defined in Section 13 hereof, it believes that it will be unable to supply Purchaser (a) with the requisite quantities of Active Material specified in a Confirmed Purchase Order, or (b) by the date of delivery specified in any Confirmed Purchase Order.
+6
+3.8.
+In the event that TAPI (i) fails to confirm a Purchase Order within the timelines set forth in Section 3.6, or (ii) fails to deliver a Confirmed Purchase Orders or part thereof by more than [***] beyond the delivery dates specified in the Confirmed Purchase Orders, then, notwithstanding Section 3.3, for so long as TAPI’s inability persists, Purchaser may, as its sole and exclusive remedy, purchase the Alternative Material, solely to the extent of the shortfall in TAPI’s supply of the Active Material, only until such time as TAPI is able to and successfully does resume timely supply to Purchaser of the Active Material Purchaser's right pursuant to this section shall not apply to the quantities specified in the Purchase Order which exceed [***] of the quantities set forth in the Binding Forecasted Quarter. The Parties agree that in the event specified under this clause, the Purchase Order Commitment will be reduced proportionately, solely during such time of delay, to reflect the quantities that were not delivered.
+3.9.
+In addition to and without limiting Purchaser’s rights and remedies under Section 3.7, it is hereby clarified that failure to deliver the full quantity of the Active Material (i) on time, or (ii) in quality (due to the same quality route cause), on [***], will entitle Purchaser to procure the Alternative Material from any alternative qualified supplier solely for the quantities required to cover the shortfall and until TAPI implements a corrective action and resumes timely supply of conforming Active Material.
+3.10.
+Delivery. The Active Material shall be delivered [***] (as per Incoterms 2020) Purchaser’s or its designee’s site as specified in the Confirmed Purchase Order or any other location as may be mutually agreed upon in writing by the Parties.
+3.11.
+Risk of Loss and Title. Risk of loss and/or damage to the Active Material ordered by Purchaser, and title therein, will pass to Purchaser upon [***].
+3.12.
+At the time of the delivery, the Active Material shall conform to the Specifications. TAPI undertakes to provide a certificate of analysis ("COA") confirming the Specifications with every shipment of the Active Material. Purchaser shall be informed prior to the implementation of any changes in the method of manufacture of the Active Material and/or Specifications reasonably to affect the quality and safety of the Active Material and TAPI will make such changes subject to the change control procedure specified in the Quality Agreement. At the time of the delivery, the Active Material shall have a remaining Re-Test Period not less than [***] of the Re-Test Period. If any Active Material does not have such remaining Re-Test Period at the time of delivery, TAPI will replace such Active Material at no cost to Purchaser, unless otherwise agreed in writing by the Parties.
+3.13.
+Packaging. The Active Material shall be delivered to Purchaser in the standard packaging used at TAPI’s Facility for active pharmaceutical ingredients; provided that such standard packaging shall be in compliance with the applicable drug master file and all applicable laws, rules and regulations.
+7
+4.
+PRICE AND PAYMENT
+4.1.
+The price for the Active Material will be fixed as specified in Appendix A (the "Price"), but subject at all times to this Section 4:
+At the [***], subject to the rest of this Section 4.1, TAPI shall be entitled to modify the Price [***]. TAPI shall notify Purchaser in writing of any price increase by no later than [***] and any such price adjustment shall become effective [***].
+4.2.
+All prices and deliveries provided for herein are on a [***] basis, as described in Section 3.10 herein.
+4.3.
+TAPI shall issue and dispatch invoices with each delivery (or partial delivery) of the Active Material delivered by it together with such certificates and documentation as may be required for the purposes of customs clearance of the Active Material including without limitation a signed certificate of analysis.
+4.4.
+All payments shall be made in US Dollars (US$) within [***] after Purchaser’s receipt of the applicable invoices, which TAPI shall issue [***] the delivery of the applicable batches of Active Material. Prices do not include any VAT and sales tax, which shall be payable by Purchaser if applicable. Payments shall be made by wire transfer to TAPI’s designated bank account as notified to Purchaser by TAPI. Amounts not paid when due shall accrue interest calculated at the LIBOR rate per annum plus [***] (but in no event greater than the maximum rate permitted by law), calculated on a daily basis. No deductions of any kind from any payment becoming due to TAPI may be made in the absence of an official credit memorandum from TAPI authorizing the deduction, except in accordance with credit given pursuant to Section 5.3.2.
+4.5.
+Taxes. Purchaser shall be responsible for the payment of any and all currently applicable or hereinafter imposed taxes, duties, levies, fees and other charges that are imposed by any local, national, public or quasi-public government entity that arise out of this Agreement and/or the purchase and importation of the Active Material.
+To the extent withholding taxes are imposed on any payment due to TAPI, the amount paid by Purchaser to TAPI shall be increased by an amount sufficient to result in a net payment to TAPI, after withholding taxes, equal to the total price set out in the applicable purchase order. The Parties agree to reasonably cooperate with each other in order not to withhold taxes or to withhold taxes at a reduced rate or to claim exemption from withholding.
+Notwithstanding the delivery terms specified in Section 3.9 of this Agreement, the Parties agree that any tariffs levied by any governmental authority for the import or export of an Active Material shall be paid [***].
+8
+4.6.
+Purchaser shall keep full and true books of account and other records in accordance with generally accepted accounting practice in the Territory so that details of sales of Finished Product, and Purchaser’s purchase obligations pursuant to this Agreement may be properly ascertained.
+4.7.
+Purchaser agrees, on not less than thirty (30) days written notice from TAPI, to permit an independent, certified third party accounting firm reasonably acceptable to Purchaser, on behalf of TAPI, to have access, at a time convenient to Purchaser, to such books of account and other pertinent records as may be necessary to verify, and solely for the purpose of verifying, compliance of Purchaser’s Purchase Order Commitment pursuant to this Agreement with respect to completed periods only. Such records shall include, but not be limited to Purchaser’s [***]. TAPI shall not have the right to access such records more than [***]. All records made available pursuant to this Section 4.7 shall be the Confidential Information of Purchaser and subject to the provisions of Section 11 hereof. The independent, certified third party accounting firm (a) shall be required to execute a confidentiality agreement with Purchaser, (b) shall only disclose to TAPI whether Purchaser complied with its purchase obligations pursuant to this Agreement, and (c) shall not provide any other information to TAPI without the prior consent of Purchaser.
+5.
+QUALITY INSPECTION OF PRODUCT and REGULATORY INSPECTIONS
+5.1.
+Purchaser or its designee shall inspect each shipment upon its receipt of Active Material for shortage, damage and for conformance with the Specifications. Any Active Material not rejected within [***] of delivery to Purchaser or its contract manufacturer (other than Active Materials with Latent Defects) shall be deemed to have been accepted by Purchaser (for clarity, under [***], “delivery” shall be deemed to occur when the goods [***]). Any latent defects in Active Material that are not reasonably discoverable during such [***] period by means of the inspection specified in this Section (“Latent Defect”) shall be notified by Purchaser to TAPI within [***] after discovery thereof and in any event no later than the date of expiration of the Re-Test Period for the relevant Active Material.
+5.2.
+In the event that Purchaser alleges that any Active Material delivered to it or its designee does not meet the Specifications, Purchaser shall notify TAPI setting out full details of the alleged defect. Purchaser shall, on request by TAPI, provide TAPI with a sample of the allegedly non-conforming Active Material, which shall be examined by TAPI as soon as reasonably practicable but in any event within [***] of receipt thereof by TAPI.
+5.3.
+In the event that TAPI is in agreement with the contentions as to non-conformance (i.e., the Active Material delivered does not meet the Specifications raised by Purchaser or if an independent laboratory pursuant to Section 5.4 decides against TAPI:
+5.3.1.
+Purchaser shall, as instructed by TAPI, either return to TAPI any Active Material that is nonconforming, or otherwise dispose of such Active Material, [***], and in accordance with instructions provided by TAPI. If TAPI does not so direct, within [***] following Purchaser's notification of non-conformity, Purchaser may dispose of such Active Material as Purchaser may deem reasonably appropriate, provided that any such disposal complies with environmentally acceptable standards, and [***] the costs of such disposal.
+9
+5.3.2.
+Upon receipt of the non-conforming Active Material or confirmation of disposal, as the case may be, TAPI shall at its sole discretion either: (1) credit Purchaser the amount paid or invoiced for such Active Material or (2) dispatch to Purchaser replacement Active Material at no cost to Purchaser as soon as is reasonably practicable but in any event within [***] following Purchaser's notification of non-conformance (in which case all directly related documented costs, including the costs of Manufacture and shipment of the replacement batch, [***]);
+5.3.3.
+WITHOUT LIMITING PURCHASER’S RIGHT UNDER SECTION 3.9, TAPI’S LIABILITY IN DELIVERY OF ACTIVE MATERIAL THAT DOES NOT MEET THE SPECIFICATIONS OR ANY OTHER WARRANTY SET FORTH IN SECTION 6.1.1 OR 6.1.2 REMAINS STRICTLY LIMITED ONLY TO REPLACEMENT OF OR CREDIT FOR THE ACTIVE MATERIAL.
+5.4.
+In the event that TAPI is not in agreement with the contentions as to non-conformance raised by Purchaser, representative samples of the allegedly non-conforming Active Material, together with details of Purchaser’s contentions as to non-conformance, shall be submitted to a mutually acceptable independent laboratory which shall examine such samples in a method specified by the Parties as part of a mutually agreed testing procedure. The Parties shall endeavor to procure that within [***], the said laboratory issues its finding as to whether the Active Material conforms to the specifications. The results of the said laboratory shall be final and binding on the Parties, and not subject to appeal or review, and the costs associated with such submission and determination shall be borne by the Party against which the laboratory decides. Notwithstanding the above, if it is determined that the non-conformance is due to damage to the Active Material caused by Purchaser or its agents, TAPI will have no liability to Purchaser with respect to such non-conformance and the cost of any testing and evaluation by the independent laboratory will be borne solely by Purchaser.
+5.5.
+TAPI shall, upon receiving a written request from Purchaser, supply directly to the applicable Regulatory Authority technical information on the Active Material and methods of manufacture to the extent that such information is required or requested by any Regulatory Authority located within the Territory to enable Purchaser to obtain and maintain the Marketing Authorizations. Upon TAPI receiving at least [***] advance notice in writing from Purchaser (or less if required by Regulatory Authority or other governmental agency), and not more than [***] (or more often if required or requested by Regulatory Authority or governmental agency or in the case of “for cause” audits), TAPI shall permit Purchaser, by prior arrangement with and at a time reasonably acceptable to TAPI and during business hours, to inspect those areas of TAPI’s Facilities where Active Material is Manufactured for Purchaser, and audit its records (in the presence of a representative of TAPI) relating to the manufacturing and quality control of the Active Material to the extent reasonably necessary to enable Purchaser to verify TAPI’s compliance with the Quality Agreement and applicable laws, rules and regulations, including any regulatory requirements to which TAPI or Purchaser is subject and which are applicable to the Manufacture, importation, and marketing of the Active Material. Purchaser acknowledges that all information supplied by TAPI or acquired by Purchaser by virtue of the provisions of this Section 5.5 shall be strictly confidential and subject to the provisions of Section 11 hereof.
+10
+5.6.
+Purchaser undertakes to be solely responsible for any recall of the Finished Products at any time, and to accept any liability arising in respect of the Finished Products.
+5.7.
+The Parties hereby acknowledge and agree that the API quality agreement, dated [***], by and between Purchaser and [***] (such agreement, as may be amended from time to time, the “Quality Agreement”) sets forth the quality assurance arrangements and procedures with respect to the manufacture and supply of the Active Material under this Agreement. To the extent that the terms of this Agreement and those of the Quality Agreement are in conflict, the terms of this Agreement shall control except with respect to quality assurance system issues, which shall be governed by the Quality Agreement.
+5.8.
+Purchaser and its Affiliates and their designees shall have the right to reference any drug master file owned or controlled by TAPI applicable to the Active Material and TAPI will provide authorization to Regulatory Authorities to access such drug master file on behalf of Purchaser, its Affiliates and their designees, in each case, to the extent pertaining to the Active Material or any Finished Product.
+6.
+WARRANTIES
+6.1.
+TAPI hereby represents and warrants to the Purchaser that:
+6.1.1.
+The Active Material upon delivery shall conform to the Specifications and be Manufactured with good workmanship in accordance with industry standards and shall not be adulterated or misbranded;
+6.1.2.
+the Active Material to be supplied hereunder shall be manufactured, stored and packaged for shipment in accordance with cGMP at a TAPI Facility, and in compliance with the Quality Agreement, drug master file, and all other applicable laws, rules and regulations;
+6.1.3.
+all Active Materials supplied hereunder shall be free and clear of all security interests, liens, or other encumbrances of any kind or character; and
+6.2.
+In addition to and without limiting Purchaser’s rights under Section 3.9, the replacement of non-conforming Active Material shall be Purchaser’s sole remedy for claims that any shipment of Active Material failed to comply with the warranties set forth in Section 6.1.1. or 6.1.2.
+6.3.
+THE WARRANTIES SET OUT IN THIS AGREEMENT ARE THE ONLY WARRANTIES GIVEN BY TAPI AND ARE MADE IN LIEU OF ALL OTHER WARRANTIES, EXPRESSED OR IMPLIED. ANY EXPRESS, IMPLIED, STATUTORY OR OTHER WARRANTIES, INCLUDING, BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT AND FITNESS FOR A PARTICULAR PURPOSE AS APPLICABLE TO THE ACTIVE MATERIAL ARE HEREBY EXCLUDED.
+11
+6.4.
+TAPI warrants and represents that it is not debarred under the Generic Drug Enforcement Act of 1992, 21 U.S.C. 335[a] (the “Generic Drug Enforcement Act”), and that it has not been convicted of a crime for which it could be debarred under the Generic Drug Enforcement Act. In connection with the Active Material, TAPI further warrants and represents, in that it shall not use in any capacity the services of any person debarred under the Generic Drug Enforcement Act, or convicted of a crime for which a person can be debarred under the Generic Drug Enforcement Act.
+6.5.
+TAPI makes no warranty as to the patentability of any of the Active Materials or as to immunity from any action for infringement of Third Party intellectual property rights including but not limited to registered patents or patent applications arising out of the regulatory approvals, importation into the territory, distribution, marketing, sale and/or use of the Active Material.
+6.6.
+Purchaser hereby agrees, on behalf of itself and its Affiliates, that TAPI does not make hereunder, nor has it made prior to entering into this Agreement, any representation whatsoever as to whether Purchaser should commercialize the Active Material and any and all use by Purchaser and its Affiliates of the Active Material is and shall be Purchaser’s responsibility and at its sole discretion.
+6.7.
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT WILL A PARTY BE LIABLE TO THE OTHER PARTY, OR TO ANY THIRD PARTY, FOR ANY INDIRECT, SPECIAL, INCIDENTAL, CONSEQUENTIAL, PUNITIVE OR EXEMPLARY DAMAGES, SUFFERED BY THE OTHER PARTY AND ARISING OUT OF OR IN ANY WAY RELATING TO THIS AGREEMENT, INCLUDING, WITHOUT LIMITATION, DAMAGES FOR ANY LOSS OR DAMAGE TO BUSINESS EARNINGS, ANTICIPATED SALES, ANTICIPATED OR LOST PROFITS OR GOODWILL, OR WORK STOPPAGE OR ANY AND ALL OTHER COMMERCIAL DAMAGES OR LOSSES, EVEN IF SUCH PARTY IS ADVISED OR SHOULD HAVE KNOWN OF THE POSSIBILITY OF SUCH DAMAGES, AND REGARDLESS OF THE LEGAL OR EQUITABLE THEORY (WHETHER CONTRACT, TORT (INCLUDING NEGLIGENCE) OR OTHERWISE) UPON WHICH THE CLAIM IS BASED. THE LIMITATIONS IN THIS SECTION 6.7 SHALL NOT APPLY TO (I) DAMAGES RESULTING FROM BREACHES BY A PARTY OF ITS CONFIDENTIALITY AND NON-USE OBLIGATIONS UNDER SECTION 11 OR FROM A PARTY’S FRAUD, GROSS NEGLIGENCE OR WILLFUL MISCONDUCT, OR (II) THIRD PARTY CLAIMS OR DAMAGES THAT ARE INDEMNIFIABLE UNDER SECTION 8.
+6.8.
+If any limitation of liability shall be deemed invalid by any applicable law, then each Party’s liability shall be within the limitation permitted by that law.
+7.
+CLAIMS FOR PATENT INFRINGEMENT
+7.1.
+In the event a warning, demand or claim for patent infringement is brought against either Party on account of TAPI’s supply of Active Material to Purchaser and use thereof in the manufacture, use, marketing or sale of the Finished Product, or either Party has reason to believe that any such claim might be brought against any Party, such Party shall inform the other Party, immediately, both orally and in writing of the particulars of the claim as soon as possible.
+12
+7.2.
+In the event that the warning, demand or claim for patent infringement is brought against the Purchaser on account of TAPI’s supply of Active Material to Purchaser and use thereof in the manufacture, use, marketing or sale of the Finished Product, or Purchaser has reason to believe that any such claim might be brought against it, Purchaser will: (i) consult with TAPI with respect to the conduct of any litigation arising from the claim, including strategy, tactics, choice of counsel, selection of expert witnesses and the like, and (ii) submit to the other Party or its designated counsel drafts of any pleadings, briefs, witness statements or the like at least [***] before they are provided to any opposing party or submitted to any tribunal. TAPI may provide comments on such drafts to Purchaser, which shall be considered in good faith if presented in a timely manner prior to the applicable deadline for submission to any opposing party or any tribunal.
+7.3.
+The provisions of this Section 7 shall survive the expiration or termination of this Agreement for any reason.
+8.
+INDEMNIFICATION
+8.1.
+Purchaser shall defend, indemnify and hold harmless TAPI, its Affiliates and each of their respective officers, directors, agents, employees and shareholders (collectively, “TAPI Indemnitees”) from and against any and all claims, damages, loss and expense suffered by TAPI arising from claims by third parties in connection with or resulting from any of the following: (a) the storage, handling, manufacture, license, use, marketing, advertising, promotion, distribution or sale of the Finished Product containing the Active Material supplied by TAPI under this Agreement by Purchaser or its Affiliates, Nominated Contract Manufacturers, sublicensees, distributors or agents or the conduct of business by Purchaser or its Affiliates, sublicensees, distributors or agents in the Territory, including, but not limited to, liabilities for product liability and returned goods; (b) the breach of any representation, warranty or covenant by Purchaser under this Agreement; (c) negligence or willful misconduct by the Purchaser or its Affiliates and/or Nominated Contract Manufacturers and each of their respective officers, directors, agents, employees in connection with the implementation of this Agreement; (d) violation of any applicable law by Purchaser or any of its Affiliates and/or Nominated Contract Manufacturers and each of their respective officers, directors, agents, employees; (e) any bodily injury, illness or death of any person caused or alleged to be caused by the use, distribution or sale of the Finished Product containing the Active Material supplied by TAPI under this Agreement; and (f) any actual or alleged infringement (whether direct, contributory or induced) or violation of any patent, trade secret or proprietary rights of any Third Party, arising out of Purchaser's or its Affiliates and each of their respective officers, directors, agents and employees manufacturing, importing, registering, storing, distributing, marketing or selling the Active Material and/or Finished Product containing the Active Material supplied by TAPI under this Agreement. It is hereby clarified that Purchaser will not be liable to indemnify TAPI for any third party claims if related to Active Material not supplied to Purchaser.
+8.2.
+Subject to and without derogating from the limitations of TAPI's liabilities as set forth in this Agreement, TAPI shall defend, indemnify and hold harmless the Purchaser, its Affiliates and each of their respective officers, directors, agents, employees and shareholders (collectively, “Purchaser Indemnitees”) from and against any and all damages, loss or expense suffered by Purchaser arising from claims by third parties in connection with or resulting from gross negligence or willful misconduct by TAPI or any of its Affiliates and each of their respective officers, directors, agents, employees in connection with the implementation of this Agreement.
+13
+8.3.
+Each of Purchaser and TAPI (“the Indemnitee”) undertakes in favor of the other of them (“the Indemnifier”):
+8.3.1.
+to promptly notify the Indemnifier of the bringing or threat of any claim or legal proceeding against the Indemnitee and for which the Indemnitee seeks to be indemnified by the Indemnifier;
+8.3.2.
+to provide such reasonable assistance as the Indemnifier may request, at the Indemnifier’s expense, concerning the conduct of such claim, or the defence of such proceeding and at the Indemnifier’s request to permit the Indemnifier to assume and control the defence of such claim; provided that the Indemnitee may participate in and monitor such defence with counsel of its own choosing at its own expense. If the Indemnifier does not assume the defence of the claim, then the Indemnitee may defend the claim, but will have no obligation to do so.
+8.3.3.
+not to make, without the Indemnifier’s express written authorization, any admission of liability to a claimant or plaintiff or his or her legal representative or insurer in respect of such claim or such proceedings or threatened proceedings and,
+8.3.4.
+not to make, without the Indemnifier’s express written authorization, any settlement or compromise of such claim or threatened claim or such proceedings or threatened proceedings.
+8.4.
+The provisions of this Section 8 shall survive the expiration or termination of this Agreement for any reason.
+9.
+TERM
+This Agreement shall commence on the Effective Date and shall remain in force for a term of ten (10) years after Launch Date (the “Initial Term”), unless earlier terminated in accordance with this Agreement. In addition, after the expiration of the Initial Term, this Agreement will automatically renew for consecutive two (2) year terms (each, a “Renewal Period”) unless either of the Parties terminates this Agreement at the end of the applicable Initial Term or any applicable Renewal Period by providing the other Party with written notice at least twelve (12) months prior to the end of the applicable Initial Term or Renewal Period. The Initial Term and all Renewal Periods shall be collectively referred to herein as the “Term”.
+10.
+BREACH AND TERMINATION
+10.1.
+Either of TAPI or Purchaser may terminate this Agreement prior to its expiration at any time by sending a written notification to the other Party in the event that:
+10.1.1.
+the other Party fails to perform any material obligation hereunder or the other Party materially violates any representation or warranty made herein and such failure or violation continues unremedied for a period of thirty (30) days following written notice by the terminating Party; or
+10.1.2.
+the other party admits to being or is declared insolvent or voluntary or involuntary proceedings are instituted by or against it in bankruptcy, or receivership, or for a winding-up or for the dissolution or re-organization of its assets, and such proceedings are not dismissed within sixty (60) days; or
+14
+10.1.3.
+either Party is of the good faith opinion (supported by an opinion of an independent patent counsel) that the supply of the Active Material or sales of the Finished Product, as the case may be, would result in a significant risk of damages for infringement of Third Party patent or other intellectual property rights, and that Party, and its Affiliates, fully ceases to manufacture, sell, offer for sale or import the Active Material or any and all Finished Product incorporating the Active Material (as applicable) in the Territory, that Party shall have the right to terminate this Agreement. Any cessation by TAPI of manufacture or supply of Active Material for reasons set forth in this Section and any cessation by Purchaser of providing Forecasts or Purchase Orders or purchasing Active Material hereunder for reasons set forth in this Section shall not be deemed a breach of this Agreement and/or failure to supply as per Section 3 above.
+10.2.
+In addition to the foregoing termination rights, if TAPI and its Affiliates discontinue all manufacturing of the Active Material, TAPI may terminate this Agreement upon [***] prior written notice to Purchaser if more than [***] otherwise remain before expiration of this Agreement.
+10.3.
+Unless agreed otherwise between the Parties, Purchaser will be required to purchase, and TAPI shall be required to supply the Active Material in respect of which Purchase Orders have been placed and confirmed prior to expiration or termination of the Agreement, but not yet supplied on the date of termination.
+10.4.
+Upon termination of this Agreement, all rights and obligations will cease to exist except as stated in section 10.3 and for (a) the payment of unpaid invoices due, (b) the confidentiality and Indemnification rights and obligations of the Parties, which shall survive the expiration or termination of this Agreement for a period of ten (10) years..
+11.
+CONFIDENTIALITY
+11.1.
+In carrying out the terms of this Agreement it may be necessary, from time to time, for a Party, its Affiliates and/or its Nominated Contract Manufacturers to disclose (the “Disclosing Party”) to the other Party its Affiliates and/or its Nominated Contract Manufacturers (the “Recipient”) certain information which is considered by the Disclosing Party to be proprietary and of confidential nature (the “Confidential Information”). Confidential Information shall include but shall not be limited to, any and all information, know-how and data, technical or non-technical, concerning any finished drug product or active pharmaceutical ingredient, its manufacture, marketing and sale, plans, processes, compositions, formulations, specifications, samples, systems, techniques, analyses, production and quality control data, testing data, marketing and financial data, and such other information or data relating to any finished drug product or active pharmaceutical ingredient, whether disclosed in written, oral, visual, graphic, electronic, or other form.
+15
+11.2.
+The Recipient of any Confidential Information shall not use it for any purpose other than for the purposes of fulfilling its obligations or exercising its rights under this Agreement (including, with respect to Purchaser, for the purposes of obtaining and maintaining Marketing Authorizations and developing, manufacturing and commercializing Finished Product). The Recipient shall disclose Confidential Information only to those of its officers, directors, employees, contractors, advisors and Affiliates and Nominated Contract Manufacturers (and such Affiliates' and/or Nominated Contract Manufacturers’ officers, directors, employees, contractors and advisors) requiring knowledge thereof in connection with their duties directly related to the implementation of or exercise of rights under this Agreement, and said officers, directors, employees, contractors, advisors and Affiliates (and such Affiliates' and Nominated Contract Manufacturers’ officers, directors, employees and advisors) shall be required to hold the information in confidence pursuant to obligations of confidentiality at least as stringent as this Agreement. The Recipient agrees that it will exercise the same degree of care and protection to preserve the proprietary and confidential nature of the Confidential Information disclosed by the Disclosing Party, as Recipient would exercise to preserve its own proprietary and confidential information, and in any case no less than a reasonable degree of care. Confidential Information shall not be deemed to include:
+11.2.1.
+Information in the public domain or which was known to or in the possession of the Recipient (as evidenced by way of documentation) prior to the disclosure by the Disclosing Party;
+11.2.2.
+Information which is independently developed by Recipient or its Affiliates without use of or reference to Confidential Information and which can be evidenced by way of documentation;
+11.2.3.
+Information that becomes available to Recipient on a non-confidential basis, whether directly or indirectly, from a source other than a Party, which source, to the best of Recipient’s knowledge, did not acquire this information on a confidential basis.
+11.3.
+If the Recipient is requested or required by law, regulation, or other applicable judicial or governmental order (“Law”) to disclose any Confidential Information, the Recipient will provide, to the extent permitted by such Law, the Disclosing Party with immediate written notice of such requirement or obligation (together with a copy of any relevant court order) to enable the Disclosing Party to seek appropriate protective relief and/or to take steps to resist or narrow the scope of any required disclosure. The Recipient will cooperate with the Disclosing Party with respect to such matters and will in any event disclose only such Confidential Information that it is legally compelled to disclose and will ensure that all such Confidential Information so disclosed is accorded confidential treatment in terms of this Agreement. The Recipient will notify the Disclosing Party in writing of the means, content and timing of such disclosure prior to such disclosure being made. If prior notification is precluded by law or regulation or where enforcement action by the applicable authority precludes prior notification, the Recipient will notify the Disclosing Party as soon as reasonably practicable. Any mandatory disclosure hereunder will be limited to the extent necessary by the legal requirement.
+11.4.
+Upon expiration or earlier termination of this Agreement, the Recipient of any Confidential Information shall, as the Disclosing Party may direct in writing, either destroy or return to the Disclosing Party all Confidential Information disclosed together with all copies thereof, provided, however, the Recipient may retain one archival copy thereof for the purpose of determining any continuing obligations of confidentiality.
+11.5.
+The provisions relating to confidentiality in this section shall remain in effect following termination of this Agreement for a period of [***].
+11.6.
+All publicity, press releases and other announcements relating to this Agreement or the transactions contemplated hereby shall be reviewed in advance by, and shall be subject to the written approval of, both Parties. Each Party responding to a request for such approval shall respond to the requesting Party in writing within five (5) days of such request.
+16
+11.7.
+Without prejudice to any other rights and remedies the Disclosing Party may have, the Recipient acknowledges and agrees that damages alone may not be an adequate remedy for any breach of the provisions of this Section 11 by the Recipient or its Affiliates and accordingly, the Recipient agrees that the Disclosing Party may be entitled, in addition to all legal remedies, without proof of special damage, to seek the remedies of injunction, specific performance and other equitable relief that may be available against a threatened or continuing breach, with the requirement of the placement of a bond waived by the Recipient.
+12.
+GOVERNING LAW AND DISPUTE RESOLUTION
+This Agreement and any dispute to be determined in terms hereof, is construed, governed and ruled by the laws of the State of New York, the United States, without regard to the conflicts of law principles thereof. All disputes, controversies and claims arising out of or in connection with this Agreement, including the validity, breach or termination hereof, shall be finally settled by arbitration administered by the American Arbitration Association (AAA) in accordance with its Commercial Arbitration Rules ("Rules") in force on the date when the Notice of Arbitration is submitted in accordance with such Rules. The seat of the arbitration shall be in New York, New York, the United States. The arbitral proceedings shall be conducted in English by a single arbitrator. Notwithstanding the foregoing, in the event of an actual or threatened breach of this Agreement or in the event of potential irreparable harm, the aggrieved Party may, without waiving any remedy under this Agreement, seek provisional equitable relief (including restraining orders, specific performance, or other injunctive relief) from any court having jurisdiction over the Parties and the subject matter of the issue, without first submitting to arbitration hereunder. In addition, any claim for injunction, specific performance or other equitable relief pursuant to Section 11.7 shall not be subject to arbitration and, instead, the aggrieved Party may initiate litigation in any court of competent jurisdiction.
+13.
+FORCE MAJEURE
+13.1.
+"Force Majeure" shall mean any event beyond the reasonable control of TAPI or Purchaser, as the case may be and shall include the following to the extent beyond the reasonable control of the affected Party:
+13.1.1.
+Pandemic, epidemic, war, strike, lockout, import restriction, port closure, lack of usual means of public transportation and communication, earthquake, landslide, volcanic activity, fire, flood or inundation, tidal wave, typhoon or cyclone, hurricane, lightning or other natural or physical disaster either at the TAPI's Facility or along the transportation route that deems the site and shipment of Active Material inoperable.
+13.1.2.
+Shortage of labor, materials or utilities where caused by circumstances that are themselves Force Majeure.
+13.2.
+Except for the obligation of a Party to make payments to the other pursuant to this Agreement (that will not be deferred or extended for any reason), neither Party shall be liable for any non-performance or delay in performance due to any event of Force Majeure.
+13.3.
+In the event of either Party being so hindered or prevented, such Party shall give notice of suspension as soon as reasonably possible to the other Party stating the date and extent of such suspension and the cause thereof.
+17
+13.4.
+Any Party whose obligations have been suspended as aforesaid shall nevertheless make every endeavor to carry out its obligations under this Agreement, even if in a partial or compromised manner, and shall resume the performance of such obligations as soon as commercially reasonable after the removal of the cause and shall so notify the other Party.
+13.5.
+In the event that such cause continues for more than [***] either Party may terminate this Agreement on [***] written notice to the other Party, and in such event neither Party shall have any claim against the other arising from such termination.
+14.
+COMPLIANCE WITH TRADE SANCTIONS LAWS
+14.1.
+Definitions:
+“Trade Sanction Laws” shall mean all customs, export and import control, economic sanctions, embargo, anti-boycott or similar laws and regulations of any country or intergovernmental or supranational organization including but not limited to the United Nations, the United States of America, Israel, the United Kingdom, Canada and the European Union that are applicable to the performance of activities under this Agreement. In the event of a conflict between TAPI’s obligations herein and any applicable Trade Sanction Laws, the applicable Trade Sanction Laws shall prevail.
+“Sanctioned Country” or "Sanctioned Countries" shall mean any country or territory subject to comprehensive territorial sanctions regimes including but not limited to those administered by the United States of America, Israel, the United Kingdom, Canada and the European Union (at present, applicable for Iran, Syria, Lebanon, North Korea, Cuba, the Crimea region and Sevastopol, the Donetsk, the Luhansk, the Kherson and the Zaporizhzhia regions).
+“Sanctioned Governments” shall mean any government, including its agencies and instrumentalities, that are targeted by sanctions regimes including but not limited to those administered by the United States of America, Israel, the United Kingdom, Canada and the European Union (at present, applicable to the government of Venezuela in addition to the governments of Sanctioned Countries).
+"Restricted Party Lists" shall mean lists of designated parties created and maintained in line with Trade Sanction Laws by any country or intergovernmental or supranational organization including but not limited to the United Nations, the United States of America, Israel, the United Kingdom, Canada and the European Union.
+14.2.
+Purchaser represents and warrants that Purchaser, any subsidiary Affiliate of Purchaser, or any of its sub-distributors or agents of the Finished Products that contain the Active Materials provided by TAPI under this Agreement:
+(a)
+does not engage in any transactions or dealings which are related to the Finished Products, whether directly or indirectly through third parties, with (i) Sanctioned Governments; (ii) individuals or entities designated on the Restricted Party Lists; or (iii) entities owned (at 50% or more) or controlled, directly or indirectly, individually or in the aggregate by Sanctioned Governments or by individuals or entities designated on the Restricted Party Lists;
+18
+(b)
+are not (i) Sanctioned Governments; (ii) individuals or entities designated on Restricted Party Lists; and/or (iii) owned (at 50% or more) or controlled, directly or indirectly, individually or in the aggregate by Sanctioned Governments or by individuals or entities designated on Restricted Party Lists; or (iv) otherwise targeted by applicable Trade Sanction Laws. Purchaser shall immediately notify TAPI if Purchaser, any subsidiary or Affiliate of Purchaser or, any of its sub-distributors or agents of the Finished Products that contain the Active Materials provided by TAPI under this Agreement (x) becomes designated on any Restricted Party Lists, or (y) becomes owned (at 50% or more) or controlled, directly or indirectly, individually or in the aggregate by Sanctioned Governments or by individuals or entities designated on Restricted Party Lists, or (z) if Purchaser, any Affiliate of Purchaser or any of its sub-distributors or agents of the Finished Products (containing the Active Materials provided by TAPI), has its export privileges otherwise denied, suspended or revoked in whole or in part by any government entity or agency; and
+(c)
+unless specifically authorized by TAPI under this Agreement and in compliance with applicable Trade Sanction Laws, will not (directly or indirectly through third parties or third countries) sell, export, re-export, re-transfer, or divert Finished Products that contain Active Materials provided by TAPI under this Agreement (including samples and also including finished or semi-finished goods manufactured by using Active Materials provided by TAPI under this Agreement as raw materials), directly or indirectly through third parties or otherwise, to any individual or entity designated on Restricted Party Lists or located in or a resident of any Sanctioned Country or to any Sanctioned Governments (irrespective of the location of delivery).
+14.3.
+TAPI represents and warrants that TAPI, any subsidiary of TAPI or, or any subcontractor to whom TAPI subcontracts or delegates any of its obligations under this Agreement:
+(a)
+does not engage in any transactions or dealings which are related to the Active Materials, whether directly or indirectly through third parties, with (i) Sanctioned Governments; (ii) individuals or entities designated on the Restricted Party Lists; or (iii) entities owned (at 50% or more) or controlled, directly or indirectly, individually or in the aggregate by Sanctioned Governments or by individuals or entities designated on the Restricted Party Lists; and
+(b)
+are not (i) Sanctioned Governments; (ii) individuals or entities designated on Restricted Party Lists; and/or (iii) owned (at 50% or more) or controlled, directly or indirectly, individually or in the aggregate by Sanctioned Governments or by individuals or entities designated on Restricted Party Lists; or (iv) otherwise targeted by applicable Trade Sanction Laws. TAPI shall immediately notify Purchaser if TAPI, any subsidiary of TAPI or, any subcontractor to whom TAPI subcontracts or delegates any of its obligations under this Agreement (i) becomes designated on any Restricted Party Lists, or (ii) becomes owned (at 50% or more) or controlled, directly or indirectly, individually or in the aggregate by Sanctioned Governments or by individuals or entities designated on Restricted Party Lists, or (iii) has its export privileges otherwise denied, suspended or revoked in whole or in part by any government entity or agency.
+19
+14.4.
+During the term of this Agreement and within [***] after its expiration or termination, TAPI shall have the right to perform a review of Purchaser’s relevant records for compliance with all applicable Trade Sanction Laws and with the terms of this Section 14 in connection with this Agreement. To enable such review, TAPI shall be given reasonable access, upon giving at least a 15 (fifteen) calendar day notice, to Purchaser’s facilities, records and/or personnel related to, or otherwise involved with, the Purchaser’s performance of activities under this Agreement. As part of such review, (a) in the event TAPI is the reviewing Party, TAPI shall have the right to receive information about the [***]. Such information may be provided to the reviewing Party electronically or through other remote means, including electronic mail or telephone and video conferences.
+14.5.
+Neither TAPI nor Purchaser shall use any banks or other financial institutions (including payment processors) that are designated on Restricted Party Lists or otherwise targeted by applicable Trade Sanction Laws as part of any transaction contemplated by this Agreement.
+14.6.
+Notwithstanding any other provision of this Agreement, TAPI and Purchaser agree to comply fully with all applicable Trade Sanction Laws in the performance of this Agreement and the parties will not cause each other to be in violation of applicable Trade Sanction Laws. Neither TAPI nor Purchaser shall be required to take, or to refrain from taking, any action or obligation under this Agreement, where to do so would be inconsistent with or potentially violate or incur a penalty under applicable Trade Sanction Laws. Moreover, it shall be at the sole discretion of TAPI to refrain from being directly or indirectly involved in the provision of Finished Products that may be prohibited by applicable Trade Sanction Laws.
+14.7.
+If, in connection with this Agreement, Purchaser breaches its obligations under any of the provisions of this Section 14, becomes designated or otherwise sanctioned under applicable Trade Sanction Laws, or admits to a violation or is determined by a governmental authority to have violated applicable Trade Sanction Laws, then TAPI shall be entitled to immediately terminate this Agreement upon written notice to Purchaser. Purchaser shall indemnify and hold harmless TAPI from and against the judicial and financial consequences which may be suffered by TAPI as a result of a breach of the contractual obligations under this Section 14. The obligations under this Section 14.7 shall survive the expiration or termination of the Agreement for any reason whatsoever.
+15.
+GENERAL PROVISIONS
+15.1.
+Non-assignability: This Agreement may not be assigned in whole or in part by either of the Parties hereto without the prior written consent of the non-assigning Party. Such consent (except to a successor in interest) may be conditioned upon the agreement of the assigning Party to remain primarily liable for performance of all obligations of the assignee. Notwithstanding the above, each Party (a) may assign this Agreement, together with all of its rights and obligations, without such consent to a successor in interest in connection with the transfer or sale of all or substantially all of its business or assets to which this Agreement relates, or in the event of its merger or consolidation, reorganization or similar transaction; and (b) shall be entitled to assign, delegate, and/or subcontract its rights and obligations under this Agreement, in whole or in part, to one or more of its Affiliates on prior written notice to the other Party, provided that with respect to any assignment, delegation or subcontract to an Affiliate, the assigning Party shall remain responsible for the performance by such Affiliate of the rights and obligations hereunder. TAPI shall also be entitled to assign, at any time, to any person or entity, any rights to receivables payable by the Purchaser in connection with this Agreement, or any agreement or order incorporating this Agreement to the extent Purchaser’s rights and TAPI’s obligations under this Agreement or any such agreement or order, as applicable, are not diminished or affected in any respect, and the Purchaser gives its irrevocable consent to such assignment. Any assignment in violation of this Section 15.1 shall be null and void.
+20
+15.2.
+Power and representation: Each Party has full power and authority to execute, deliver and perform this Agreement and to incur the obligations provided herein under their respective laws. The entering into of this Agreement has been duly authorized by all proper and necessary action, corporate or otherwise, of each of the Parties. No consent or approval of shareholders or of any other person, other than those which have been obtained by each Party and remain in effect, is required as a condition to the validity, implementation or enforceability of this Agreement.
+15.3.
+No intellectual property rights: Nothing in this Agreement shall be deemed to give either Party any right, title, license or other interest in or to any trade name, trade mark, patent, copyright, design, packaging, set-up or other intellectual property right of the other of them or any of its Affiliates retaining such right at the date of signature of this Agreement or at any time thereafter.
+15.4.
+UN Convention: To the extent that it may otherwise be applicable, the Parties hereby expressly agree to exclude from the operation of this Agreement, the United Nations Convention on Contracts for the International Sale of Goods, concluded at Vienna, on 11 April 1980, as amended and as may be amended further from time to time.
+15.5.
+Entire Agreement: This Agreement constitutes the entire understanding between the Parties with regard to the subject matter hereof, and supersedes all prior written and oral understandings and agreements. This Agreement may be amended only by a written instrument duly signed by the Parties.
+15.6.
+Insurance: Both Parties shall at their individual expense (and TAPI either through the purchase of commercial insurance or through a program of self-insurance, or a combination of both), maintain in full force and effect during the term of this Agreement, the following minimum required insurance coverage: [***]. Subject to the foregoing, this minimum required insurance coverage shall be kept in full force at all times during the entire Term. If any required insurance is written on a claims made basis, the policy holder/named insured shall ensure continuity of coverage for any claims arising after the policy expiry date. Both Parties agree to provide at least 60 days prior written notice to the other before any material change, non-renewal or cancellation of insurance. Failure to maintain minimum required insurance may be deemed a breach of this Agreement. Upon request, both Parties will provide to the other evidence of required insurance, and with respect to each Party’s product liability insurance, the other Party shall be listed as “additional insured”.
+The insurance policies shall contain an explicit clause declaring that the policy is primary, preliminary and non-contributory to any other insurance maintained by the other party, and the insurance company shall waive any claim or demand as to participation in any such other insurance policy under which the other company is covered, and will not participate as a co-insurer in any cases of loss or damage.
+21
+15.7.
+Conflict with other documents: In the event of any conflict between the terms and conditions of this Agreement and the terms and conditions set forth in any standard or other purchase order documentation or any document evidencing acceptance thereof or setting out terms of delivery and/or payment, the terms and conditions of this Agreement shall prevail unless such other document records expressly state that it prevails over this Agreement and is signed by duly authorized representatives of both Parties.
+15.8.
+No Agency: TAPI and Purchaser will act at all times as independent parties. This Agreement does not make one Party an agent or legal representative of the other Party for any purpose whatsoever. Neither Party is granted any right or authority to assume or to create any obligation or responsibility, express or implied, on behalf of or in the name of the other Party, with regard to any manner or thing whatsoever, unless otherwise specifically agreed upon in writing.
+15.9.
+Either Party's failure to terminate or seek redress for a breach of, or to insist upon strict performance of any term, covenant, condition or provision contained in this Agreement will not prevent a similar subsequent act from constituting a breach of this Agreement.
+15.10.
+If any portion of this Agreement is determined to be illegal or otherwise unenforceable by an arbitrator, by a court of competent jurisdiction or by an administrative agency of competent jurisdiction, that section, to the extent permitted by law, shall be treated as deleted from this Agreement and the remaining portions of this Agreement will continue to be in full force and effect according to the terms hereof.
+15.11.
+This Agreement may be executed in one or more counterparts, each of which shall constitute an original and all of which, when taken together, shall constitute one agreement. Counterparts may be delivered via electronic mail, including Adobe™ Portable Document Format (PDF) or any electronic signature complying with the U.S. Federal ESIGN Act of 2000 or similar law or regulation outside the U.S., and any counterpart so delivered will be deemed to be original signatures, will be valid and binding upon the Parties, and, upon delivery, will constitute due execution of this Agreement.
+15.12.
+Either Party will have the right to perform any or all of its obligations and exercise any or all of its rights under this Agreement through any of its Affiliates. Each Party hereby guarantees the performance by its Affiliates of such Party’s obligations under this Agreement, and will cause its Affiliates to comply with the provisions of this Agreement in connection with such performance. Notwithstanding the foregoing, TAPI shall not allow any Third Party to Manufacture any Active Materials unless such Third Party is designated in the applicable drug master file and/or TAPI has disclosed in writing to Purchaser TAPI’s use of any Third Party and in what capacity such Third Party is used. If TAPI engages any Third Party to perform any or part of the Manufacturing of Active Material that is supplied to Purchaser, TAPI shall assure that such Third Party has been fully qualified via TAPI’s third party qualification process prior to performing such activity(ies). TAPI shall, however, retain all obligations under this Agreement whether or not a Third Party Manufactures Active Materials. TAPI hereby guarantees the performance by any such Third Party of TAPI’s obligations under this Agreement, and will cause such Third Party to comply with the provisions of this Agreement in connection with such performance.
+22
+15.13.
+It is hereby acknowledged that the manufacturer of the Active Material (provided such manufacturer is an Affiliate of TAPI) is intended to be a third party beneficiary hereunder such that all representations and covenants of Purchaser and its Affiliates contained in this Agreement shall also inure to the benefit of such manufacturer of Active Material.
+15.14.
+Data Privacy: The administration of this Agreement may include the collection of personal information by either Party, such as the name and contact details of the other party and its personnel, representatives and contractors. This personal information may be used for managing the provision and receipt of the Active Material's under this Agreement. Both Parties will comply with data protection laws applicable to such collection and use of the data. For more information on how TAPI processes personal data in general, please visit https://www.tevapharm.com/our-company/corporate-governance/data-privacy/.
+To the extent (if any) that either Party processes, receives or provides Personal Data (as defined in applicable data protection legislation) in the course of performing this Agreement, the Parties agree that they will comply applicable data protection laws, and each party shall be responsible for providing, obtaining and maintaining any notices, consents or approvals necessary to make such Personal Data available to the other Party for processing and use. Should either Party deem that an additional data processing agreement is necessary, the Parties shall discuss and conclude such agreement in good faith.
+16.
+NOTICES
+Any payment’s notice, or other written communication required or permitted to be made or given hereunder may be made or given by either Party by facsimile; by first-class mail, postage prepaid; or by courier to the mailing address or facsimile numbers set as below:
+If to TAPI:
+mailing address set in the heading of this Agreement
+to the attention of: [***] [***]
+If to Purchaser:
+mailing address set in the heading of this Agreement to the attention of UroGen Pharma Ltd.
+email: [***]
+or to such other addresses or emails a Party shall designate by notice, similarly given, to the other Party. Notices or written communications shall be deemed to have been sufficiently made or given: (i) if mailed, five (5) business days after being dispatched by mail, postage prepaid; (ii) if by internationally recognized air courier, two (2) business days after delivery to the air courier company; or (iii) if by email, upon receiving a read receipt confirming that the email was opened. An additional copy of all notices issued by a Party to the other relating to breach, validity, or termination of this Agreement shall be sent, in the case of notices by TAPI to Purchaser - to e-mail [***] in the case of notices by Purchaser, to TAPI’s Legal Department, at email [***]
+- signature page follows -
+23
+IN WITNESS WHEREOF, the undersigned authorized representatives of the respective Parties hereto have entered into and executed this Agreement as of the date set forth above in the heading of this Agreement.
+TAPI NL B.V.
+UroGen Pharma Ltd.
+signature: /s/ [***]
+signature: /s/ Chris Degnan
+name: [***]
+name: Chris Degnan
+designation: Head of TAPI Sales EU
+designation: Chief Financial Officer
+Date: 4/22/2026 IDT
+Date: 4/21/2026 EDT
+signature: /s/ [***]
+name: [***]
+Sr Director Global Logistics & Commercial Supply Chain
+designation:
+Date: 4/21/2026 CEST
+Approved by TAPI Legal
+[***], April 21, 2026

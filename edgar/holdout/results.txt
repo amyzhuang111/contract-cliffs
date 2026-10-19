@@ -1,0 +1,85 @@
+## h1
+  Effective date | 2026-07-06 | high  | lines 7–14 | This Exclusive License Agreement (this “Agreement”) is entered into as of July 6, 2026 (the “Effective Date”), by and between: Argent Biopha
+  Initial term ends | 2046-07-05 | high  | lines 579–581 | This Agreement commences on the Effective Date and continues for an initial term of twenty (20) years (the “Initial Term”), unless earlier t
+  Auto-renewal | 2046-07-06 | high  | lines 581–582 | Following the Initial Term, this Agreement shall automatically renew for successive five (5) year periods unless either Party provides writt
+  Non-renewal notice: act by | 2045-07-05 | high  | lines 581–582 | Following the Initial Term, this Agreement shall automatically renew for successive five (5) year periods unless either Party provides writt
+  pay within 30 days | lines 256–259
+  pay within 60 days | lines 586–592
+  tfc 180 days' notice | lines 583–584 SBEV may terminate this Agreement for convenience upon one hundred eighty (180) days’ prior written notice to RGT, subje
+## h2
+  Effective date | 2025-01-07 | high  | lines 12–16 | This Manufacturing Services and Supply Agreement (this “Agreement”), dated as of January 7, 2025 (the “Effective Date”), is entered into by 
+  Initial term ends | 2030-01-06 | high  | lines 320–324 | This agreement shall have a five-year term beginning on the Effective Date and will automatically renew for up to five (5) additional succes
+  Auto-renewal | 2030-01-07 | high  | lines 320–324 | This agreement shall have a five-year term beginning on the Effective Date and will automatically renew for up to five (5) additional succes
+  Non-renewal notice: act by | 2029-07-10 | high  | lines 320–324 | This agreement shall have a five-year term beginning on the Effective Date and will automatically renew for up to five (5) additional succes
+  pay within 30 days | lines 196–200
+  pay within 30 days of invoice | lines 250–251
+  pay within 10 days | lines 871–875
+## h3
+  Effective date | 2026-01-01 | medium REVIEW | lines 9–10 | Between Elevance Health and American Well Corporation This Fifth Amendment (“Amendment”) dated and effective as of January 01, 2026 (“Amendm
+  Initial term ends | 2029-01-01 | high  | line 53 | The term of this Agreement shall begin on January 1, 2026 and shall end January 1, 2029 unless earlier terminated in accordance with this Ag
+  Auto-renewal | 2029-01-02 | high  | line 53 | Upon expiration of the Initial Term, this Agreement will automatically renew for successive one (1) year terms (each an “Extension Term”, an
+  Non-renewal notice: act by | - | none REVIEW | line 53 | Upon expiration of the Initial Term, this Agreement will automatically renew for successive one (1) year terms (each an “Extension Term”, an
+  tfc 365 days' notice | line 56 Elevance Health may terminate this Agreement or any one or all Statements of Work issued hereunder, in whole or in part,
+## h4
+  Effective date | 2020-08-01 | medium REVIEW | lines 13–15 | WHEREAS, WAVELO and DISH (each individually a “Party”, and collectively, the “Parties”) entered into the Mobile Virtual Network Enabler (“MV
+  Term / expiry | - | none REVIEW |  | 
+## h5
+  Effective date | 2023-11-08 | high  | line 9 | This Manufacturing Supply Agreement (the “Agreement”), dated as of November 8, 2023 (the “Effective Date”), is entered into by and between A
+  Term / expiry | - | none REVIEW | line 169 | The term of this Agreement commences on the Effective Date and continues for a period of [***] ([***]) years, unless it is earlier terminate
+  Non-renewal notice: act by | - | none REVIEW | line 170 | Upon expiration of the Initial Term, the term of this Agreement will automatically renew for additional successive [***] ([***]) year terms 
+## h6
+  Effective date | 2026-06-09 | high  | lines 25–28 | This MASTER SERVICES AGREEMENT (this “Agreement”) is made and entered into as of June 9, 2026 (the “Effective Date”), by and between: (a)
+  Initial term ends | 2031-06-08 | high  | lines 216–218 | The term of this Agreement shall commence on the Effective Date and shall continue for an initial term of five (5) years, and shall thereaft
+  Auto-renewal | 2031-06-09 | high  | lines 216–218 | The term of this Agreement shall commence on the Effective Date and shall continue for an initial term of five (5) years, and shall thereaft
+  Non-renewal notice: act by | 2030-12-10 | high  | lines 216–218 | The term of this Agreement shall commence on the Effective Date and shall continue for an initial term of five (5) years, and shall thereaft
+  pay within 30 days | lines 221–222
+## h7
+  Effective date | 2026-04-13 | medium REVIEW | lines 4–5 | AGREEMENT DATED APRIL 13, 2026 BETWEEN THE PIPELINE GROUP, INC. AND AUTHID INC Exhibit 10.55
+  Term / expiry | - | none REVIEW |  | 
+  Non-renewal notice: act by | 2027-04-06 | medium REVIEW | lines 258–260 | The Term will automatically renew for successive renewal terms equal in length to the original Term (each, a “Renewal Term”) unless either P
+  pay within 10 days of acceptance | lines 287–290
+  pay within 10 days | lines 291–294
+  pay within 15 days | lines 299–301
+## h8
+  Effective date | 2025-02-20 | high  | lines 7–11 | THIS EXCLUSIVE SUPPLY AGREEMENT (the “Agreement”) is made and entered into as of this 20th day of February 2025 (the “Effective Date”), by a
+  Initial term ends | 2030-02-19 | high  | lines 29–31 | This Agreement will commence on the Effective Date and continue thereafter for an initial five (5) years (“Initial Term”) unless terminated 
+  Auto-renewal | 2030-02-20 | high  | lines 31–34 | Upon the Initial Term’s expiration, this Agreement will automatically renew for an additional successive three terms of three (3) years unle
+  Non-renewal notice: act by | 2029-08-23 | high  | lines 31–34 | Upon the Initial Term’s expiration, this Agreement will automatically renew for an additional successive three terms of three (3) years unle
+  pay within 30 days of invoice | lines 256–257
+  pay within 21 days of receipt of invoice | lines 286–288
+  pay within 21 days of receipt of invoice | lines 289–290
+  pay within 5 days | lines 367–368
+  tfc 60 days' notice | lines 29–31 This Agreement will commence on the Effective Date and continue thereafter for an initial five (5) years (“Initial Term”
+## h9
+  Effective date | 2025-03-20 | high  | lines 8–13 | This License and Supply Agreement (“Agreement”), dated and effective as of March 20, 2025 (the “Effective Date”), is by and between Evofem B
+  Initial term ends | 2028-03-19 | high  | lines 685–686 | The term of this Agreement commences on the Effective Date and continues for a period of three (3) years unless earlier terminated in accord
+  Auto-renewal | 2028-03-20 | high  | lines 686–689 | Thereafter, this Agreement shall be automatically renewed for successive two (2) year periods unless either Party provides 180 days’ notice 
+  Non-renewal notice: act by | 2027-09-21 | medium REVIEW | lines 686–689 | Thereafter, this Agreement shall be automatically renewed for successive two (2) year periods unless either Party provides 180 days’ notice 
+  pay within 30 days | lines 187–188
+  pay within 30 days | lines 231–233
+## h10
+  Effective date | 2026-07-31 | high  | lines 9–13 | Agreement (this “Agreement”) is entered into as of July 31, 2026 (the “Effective Date”), by and between Splash Beverage Group, Inc., a corpo
+  Initial term ends | 2031-07-30 | medium REVIEW | lines 558–560 | Unless terminated sooner pursuant to this Article 10, this Agreement shall commence on the Effective Date and shall expire five (5) years fr
+  Auto-renewal | 2031-07-31 | high  | lines 565–568 | Following the Initial Term (including any automatic extension pursuant to Section 10.1), this Agreement shall automatically renew for additi
+  Non-renewal notice: act by | 2031-05-01 | medium REVIEW | lines 565–568 | Following the Initial Term (including any automatic extension pursuant to Section 10.1), this Agreement shall automatically renew for additi
+  pay within 30 days | lines 247–248
+  pay within 30 days | lines 273–276
+  pay within 90 days | lines 305–308
+  pay within 30 days of calendar quarter | lines 313–315
+  pay within 10 days | lines 318–319
+  pay within 30 days | lines 572–574
+## h11
+  Term / expiry | - | none REVIEW |  | 
+## h12
+  Effective date | 2026-06-30 | high  | lines 45–46 | LICENSE, COLLABORATION AND DEVELOPMENT AGREEMENT THIS LICENSE, COLLABORATION AND DEVELOPMENT AGREEMENT (this “Agreement”), effective as of J
+  Term / expiry | - | low REVIEW | line 974 | This Agreement will commence on the Effective Date and will continue in force and effect for ten (10) years from the date Regulatory Approva
+  Non-renewal notice: act by | - | none REVIEW | line 974 | Thereafter, this Agreement shall automatically renew for additional five (5)-year periods (each, a “Renewal Period” and, together with the I
+## h13
+  Effective date | 2025-01-01 | high  | line 10 | This Master Services Agreement (hereinafter the "Agreement") is made and entered into as of January 1, 2025 (the "Effective Date"), by and b
+  Term / expiry | - | none REVIEW |  | 
+  pay within 30 days | lines 127–129
+## h14
+  Effective date | 2024-10-03 | high  | lines 11–13 | (this “Agreement”) is made on October 3, 2024 (the “Effective Date”), by and between Lifeward, Inc., a Delaware corporation having a princip
+  Initial term ends | 2029-10-03 | high  | lines 16–17 | The initial term of this Agreement shall commence on the Effective Date and shall continue through the fifth anniversary of the Effective Da
+  Auto-renewal | 2029-10-04 | high  | lines 17–18 | The term of this Agreement shall automatically renew for successive periods of one (1) year each (each, a “Renewal Term”) unless a Party not
+  Non-renewal notice: act by | 2028-10-03 | high  | lines 17–18 | The term of this Agreement shall automatically renew for successive periods of one (1) year each (each, a “Renewal Term”) unless a Party not

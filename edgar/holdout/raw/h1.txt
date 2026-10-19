@@ -1,0 +1,780 @@
+EX-10.1
+3
+e7760_ex10-1.htm
+EXHIBIT 10.1
+EXHIBIT 10.1
+EXCLUSIVE LICENSE AGREEMENT
+This Exclusive License Agreement (this “Agreement”)
+is entered into as of July 6, 2026 (the “Effective Date”), by and between:
+Argent Biopharma Limited (ACN 637 530 498),
+a company organized and existing under the laws of the Commonwealth of Australia, listed on the Australian Securities Exchange (ASX: RGT),
+with its principal office at ___________ (“Licensor” or “RGT”); and
+Splash Beverage Group, Inc., a corporation
+duly organized and existing under the laws of the State of Nevada, listed on NYSEA (NYSE American: SBEV), with its principal office at
+___________ (“Licensee” or “SBEV”).
+RGT and SBEV are each referred to herein individually
+as a “Party” and collectively as the “Parties.”
+RECITALS
+A. RGT
+is a clinical-stage biopharmaceutical company engaged in the research, development, and commercialization of nano-engineered therapeutics
+targeting immune dysregulation in drug-resistant epilepsy and cytokine-driven inflammatory disorders.
+B. RGT
+has developed CannEpil®, a proprietary pharmaceutical-grade compounded isolated cannabinoid formulation comprising two isolated cannabinoids-cannabidiol
+(“CBD”) and tetrahydrocannabinol (“THC”) - each dissolved in a liquid solution and
+manufactured by RGT under European Union Good Manufacturing Practice (“EU-GMP”) standards. CannEpil® is
+intended as an adjunctive therapy for drug-resistant epilepsy (also known as refractory epilepsy), a condition that affects approximately
+thirty percent (30%) of all epilepsy patients and represents a major unmet medical need.
+C. CannEpil®
+is currently accessible for prescription in Ireland, the United Kingdom, Germany, and other markets worldwide. In 2024, CannEpil®
+was assigned an Investigational New Drug (“IND”) number by the U.S. Food and Drug Administration (“FDA”),
+positioning CannEpil® for potential entry into the U.S. market.
+D. RGT
+desires to grant SBEV an exclusive license to develop, commercialize, distribute, and sell the Licensed Product (as defined below) in
+the Territory (as defined below), and SBEV desires to obtain such license, on the terms and conditions set forth herein.
+E. As
+part of the consideration for this Agreement, Mercer Street Global Opportunity Fund, LLC (“Mercer Street”),
+RGT’s senior secured creditor, will forgive $5,521,432 of RGT-issued convertible notes held by Mercer Street, and in exchange therefor,
+SBEV will issue to Mercer Street preferred equity (series to be designated in accordance with applicable securities laws and NYSEA listing
+requirements) with an aggregate stated value equal to $5,500,000 (the “Debt Exchange”).
+F. In
+further consideration of the license granted herein, RGT will receive a royalty as set forth in Article 4 herein.
+G. As
+part of the transactions contemplated herein, C/M Capital Partners, LP (“C/M Capital”) or an affiliate thereof
+will invest a minimum of One Million U.S. Dollars ($1,000,000) into SBEV to support the commercialization of the Licensed Product.
+NOW, THEREFORE, in consideration of the mutual
+covenants, agreements, representations, and warranties set forth herein, and for other good and valuable consideration, the receipt and
+sufficiency of which are hereby acknowledged, the Parties agree as follows:
+1
+ARTICLE 1 - DEFINITIONS
+As used in this Agreement, the following capitalized
+terms shall have the meanings ascribed to them below. Capitalized terms used but not defined in this Article 1 shall have the meanings
+ascribed to them elsewhere in this Agreement.
+1.1. “Affiliate” means,
+with respect to a Party, any entity that directly or indirectly controls, is controlled by, or is under common control with such Party.
+For purposes of this definition, “control” means the direct or indirect ownership of fifty percent (50%) or more of the outstanding
+voting securities of an entity, or the power to direct or cause the direction of the management and policies of such entity, whether through
+ownership of securities, by contract, or otherwise.
+1.2. “Applicable Laws” means
+all applicable federal, state, local, and foreign laws, statutes, ordinances, rules, regulations, guidance documents, orders, judgments,
+decrees, and directives of any Governmental Authority, including without limitation the Federal Food, Drug, and Cosmetic Act (21 U.S.C.
+§ 301 et seq.), the Controlled Substances Act (21 U.S.C. § 801 et seq.), the Securities Act of 1933, the Securities Exchange
+Act of 1934, and all rules and regulations promulgated thereunder.
+1.3. “cGMP” means the current
+Good Manufacturing Practice regulations as promulgated by the FDA under 21 C.F.R. Parts 210 and 211, as amended from time to time, and
+the equivalent thereof in other jurisdictions within the Territory, including EU-GMP.
+1.4. “Change of Control”
+means, with respect to a Party: (a) the acquisition by any Person or group of Persons (as such term is used in Section 13(d)(3) of the
+Securities Exchange Act of 1934) of beneficial ownership (as defined in Rule 13d-3 under the Securities Exchange Act of 1934) of more
+than fifty percent (50%) of the outstanding voting securities of such Party; (b) the consummation of a merger, consolidation, reorganization,
+or similar transaction involving such Party, unless the holders of the voting securities of such Party immediately prior to such transaction
+hold more than fifty percent (50%) of the voting securities of the surviving or resulting entity immediately following such transaction;
+or (c) the sale, transfer, or other disposition of all or substantially all of the assets of such Party to a third party.
+1.5. “Commercially Reasonable Efforts”
+means, with respect to a Party’s obligation to develop, obtain Regulatory Approval for, or commercialize the Licensed Product, the
+level of effort and resources that a similarly situated pharmaceutical or biopharmaceutical company would devote to a product at a similar
+stage of development or commercialization and with similar market potential, taking into account all relevant factors, including: (a)
+the product’s proprietary position and patent coverage; (b) the regulatory environment and status; (c) the competitive landscape;
+(d) the anticipated profitability and return on investment; (e) technical, scientific, and medical factors; and (f) the safety and efficacy
+profile.
+1.6. “Competing Product”
+means any pharmaceutical product (other than the Licensed Product) containing one or more cannabinoid active ingredients and indicated
+for the treatment, prevention, management, or amelioration of drug-resistant epilepsy, refractory epilepsy, seizure disorders, or related
+neurological conditions in humans that fall within the Field.
+1.7. “Confidential Information”
+means all non-public, proprietary, or confidential information disclosed by or on behalf of one Party (the “Disclosing Party”)
+to the other Party (the “Receiving Party”) in connection with this Agreement, whether disclosed orally, in writing,
+electronically, or by any other means, including without limitation: (a) technical data, trade secrets, know-how, formulations, compositions,
+processes, and manufacturing information; (b) research, development, clinical, and preclinical data, including, without limitation, all
+information contained in or derived from the Data Package; (c) business plans, strategies, financial information, pricing, customer lists,
+and marketing plans; (d) the terms and conditions of this Agreement; (e) all regulatory submissions, correspondence, approvals, INDs,
+NDAs, and related filings, whether prepared by or on behalf of either Party; (f) all information disclosed to SBEV by any sublicensee
+in connection with the exercise of the licensed rights; and (g) any other information that is marked as “confidential” or
+“proprietary” at the time of disclosure, or that a reasonable person would understand to be confidential given the nature
+of the information and the circumstances of disclosure. For the avoidance of doubt: (i) information that constitutes a trade secret under
+applicable law shall be protected as such indefinitely for so long as such information is considered a trade secret under applicable law
+and shall not be subject to any time-limited confidentiality obligation; (ii) the Receiving Party shall not use any Confidential Information
+of the Disclosing Party retained in the unaided memory of the Receiving Party’s personnel for any purpose that would otherwise constitute
+a breach of this Agreement; and (iii) each Receiving Party shall maintain and protect all Confidential Information of the Disclosing Party
+using no less than industry-standard technical and organizational security measures (including access controls, encryption, and audit
+logging), and in no event less than the same degree of care used to protect its own most sensitive confidential information.
+2
+1.8. “Data Package” means
+all preclinical data, clinical data, toxicology data, pharmacokinetic data, manufacturing data, stability data, regulatory correspondence,
+and other scientific and technical information in RGT’s possession or control relating to the Licensed Product as of the Effective
+Date.
+1.9. “Field” means the treatment,
+prevention, management, or amelioration of drug-resistant epilepsy, refractory epilepsy, seizure disorders, and all related neurological
+conditions in humans, including as an adjunctive or add-on therapy.
+1.10. “First Commercial Sale”
+means the first bona fide, arm’s-length sale of the Licensed Product by SBEV, any of its Affiliates, or any of its or their sublicensees
+to a third party in any country within the Territory following receipt of the applicable Regulatory Approval in such country.
+1.11. “Force Majeure Event”
+means any event beyond a Party’s reasonable control, including natural disasters, war, terrorism, government actions, labor disputes,
+pandemics, or supply chain disruptions.
+1.12. “Governmental Authority”
+means any federal, state, local, or foreign government or political subdivision thereof, or any agency, authority, bureau, commission,
+department, official, or instrumentality of any such government or political subdivision, or any court, tribunal, or arbitrator of competent
+jurisdiction, or any self-regulatory organization.
+1.13. “IND” means an Investigational
+New Drug application filed with the FDA under 21 C.F.R. Part 312, including any supplements or amendments thereto, or the foreign equivalent
+thereof in any country within the Territory.
+1.14. “Intellectual Property”
+means, collectively: (a) all Patents; (b) all Trademarks; (c) all Know-How; (d) all copyrights, mask works, and design rights; (e) all
+regulatory filings, submissions, and approvals; and (f) all other intellectual property and proprietary rights of any kind or nature,
+in each case, that are owned by or licensed to RGT and that relate to, cover, or are used or useful in connection with the Licensed Product,
+whether now existing or hereafter created or acquired during the Term.
+1.15. “Know-How” means all
+trade secrets, unpatented inventions, data (including preclinical data, clinical data, pharmacological data, toxicological data, pharmacokinetic
+data, and chemical and manufacturing data), formulas, compositions, processes, techniques, methods, protocols, specifications, information,
+and results, whether or not patentable, that are owned or controlled by RGT and that relate to the Licensed Product.
+1.16. “Licensed Product”
+means the pharmaceutical product marketed under the brand name CannEpil®, comprising RGT’s proprietary compounded isolated cannabinoid
+formulation of CBD and THC isolates in a liquid solution, manufactured by RGT or its designee under EU-GMP standards as described in the
+Recitals, together with: (a) any improvements, line extensions, dosage form modifications, or reformulations thereof developed by or on
+behalf of RGT during the Term; and (b) any next-generation formulations incorporating RGT’s proprietary nano-engineered delivery
+technologies, in each case for use in the Field.
+1.17. “Major Market” means
+each of the United States, Canada, the European Union, Japan, Australia, and China.
+1.18. “NDA” means a New
+Drug Application submitted to the FDA pursuant to 21 U.S.C. § 355 and 21 C.F.R. Part 314, or any equivalent application for Regulatory
+Approval submitted to a Governmental Authority in any jurisdiction within the Territory.
+1.19. “NYSEA” means NYSE
+American LLC, the national securities exchange operated by NYSE Group, Inc.
+3
+1.20. “Net Revenue” means
+the gross amounts actually received by SBEV, its Affiliates, or their respective sublicensees for sales of the Licensed Product in the
+Territory to unaffiliated third parties in bona fide, arm’s-length transactions, less the following deductions to the extent actually
+incurred, allowed, accrued, or specifically allocated to the Licensed Product in accordance with Generally Accepted Accounting Principles
+as used in the United States (“GAAP”) consistently applied: (a) normal and customary trade, cash, and quantity
+discounts; (b) government-mandated and managed care rebates, chargebacks, and retroactive price reductions; (c) credits, allowances, and
+refunds for rejected, returned, damaged, or recalled product; (d) freight, shipping, insurance, and distribution charges separately stated
+on invoices; (e) customs duties and governmental import/export charges; (f) sales, use, excise, and value-added taxes directly imposed
+on the sale and not recovered; and (g) amounts written off as uncollectible in accordance with GAAP after commercially reasonable collection
+efforts. For clarity, deductions shall not be duplicated, and no single item shall be deducted under more than one category. Transfer
+prices between SBEV and its Affiliates shall not be included in Net Revenue; only the end sale to an unaffiliated third party shall be
+counted.
+1.21. “Patents” means all
+patents and patent applications (including provisional applications, continuations, continuations-in-part, divisionals, reissues, re-examinations,
+inter partes reviews, and extensions) that are owned or controlled by RGT and that claim or cover the composition of matter, formulation,
+method of manufacture, or method of use of the Licensed Product.
+1.22. “Person” means any
+individual, corporation, partnership, limited liability company, joint venture, trust, association, unincorporated organization, Governmental
+Authority, or other entity.
+1.23. “Regulatory Approval”
+means any and all approvals, authorizations, registrations, licenses, clearances, and permits granted by any Governmental Authority in
+any country within the Territory that are necessary or required for the development, manufacture, use, storage, importation, exportation,
+transport, marketing, promotion, distribution, offer for sale, sale, or commercialization of the Licensed Product in such country, including
+any pricing or reimbursement approvals.
+1.24. “Regulatory Authority”
+means the FDA, the U.S. Drug Enforcement Administration (the “DEA”), and any other Governmental Authority in
+any country within the Territory that is responsible for granting Regulatory Approvals for the Licensed Product.
+1.25. “Representatives”
+means, with respect to a Party, such Party’s directors, officers, employees, agents, consultants, advisors, accountants, and legal
+counsel.
+1.26. “Sell-Off Period”
+means the one hundred eighty (180) day period following termination of this Agreement during which SBEV may sell existing finished inventory
+of the Licensed Product pursuant to Section 9.7(f).
+1.27. “Specifications” means
+the detailed specifications for the Licensed Product, including all quality control standards, analytical methods, stability requirements,
+packaging requirements, and labeling requirements, as set forth in Schedule A attached hereto, as may be amended from time to time
+by mutual written agreement of the Parties.
+1.28. “Term” means the period
+commencing on the Effective Date and continuing until this Agreement is terminated in accordance with Article 9.
+1.29. “Territory” means
+all countries and jurisdictions worldwide.
+1.30. “Trademarks” means
+the registered and unregistered trademarks, trade names, service marks, logos, and trade dress owned by RGT and used in connection with
+the Licensed Product, including without limitation the CannEpil® mark and all associated goodwill.
+4
+1.31. “Royalty” means the
+running royalty payment calculated as a percentage of Net Revenue, payable by SBEV to RGT pursuant to Section 4.2. For the avoidance of
+doubt, the Royalty shall be calculated solely on Net Revenue from sales of the Licensed Product to unaffiliated third parties, and shall
+not include or be calculated on (a) any sublicensing fees, milestone payments, or non-sales-based income received by SBEV from sublicensees,
+(b) revenue from services ancillary to the Licensed Product, or (c) any amounts attributable to combination products that are not the
+Licensed Product, unless otherwise expressly agreed in writing.
+ARTICLE 2 - GRANT OF LICENSE
+2.1. Exclusive License Grant. Subject to the
+terms and conditions of this Agreement, RGT hereby grants to SBEV an exclusive (even as to RGT within the Territory), royalty-bearing
+license, with the right to sublicense in accordance with Section 2.3, under the Intellectual Property to develop, have developed, use,
+reproduce, prepare derivative works based upon, display, import, export, market, promote, distribute, offer for sale, sell, and otherwise
+commercialize the Licensed Product in the Field in the Territory during the Term.
+2.2. Scope of Exclusivity. During the Term,
+RGT shall not, and shall cause its Affiliates not to, directly or indirectly: (a) market, distribute, sell, or otherwise commercialize
+the Licensed Product in the Field in the Territory (other than manufacturing pursuant to Section 5.9); or (b) grant any other Person a
+license or other rights to the Intellectual Property for the marketing, distribution, or sale of the Licensed Product in the Field in
+the Territory.
+2.3. Sublicensing. SBEV may grant sublicenses
+under Section 2.1 to its Affiliates without RGT’s prior consent. SBEV may grant sublicenses to third parties with RGT’s prior
+written consent, which shall not be unreasonably withheld, conditioned, or delayed. Each sublicense shall be in writing and consistent
+with this Agreement, SBEV shall provide RGT with a copy of each executed sublicense within thirty (30) days of execution, and SBEV shall
+remain primarily responsible for all obligations under this Agreement. No sublicense shall relieve SBEV of any obligations hereunder.
+2.4. Retained Rights. RGT retains: (a) all
+rights to the Licensed Product outside the Field worldwide, provided that RGT shall not exercise such rights in any manner that competes
+with, diminishes, or materially interferes with SBEV’s exercise of the licensed rights in the Field; (b) the right to practice the
+Intellectual Property solely for internal research and development purposes unrelated to commercialization; and (c) the right to manufacture
+the Licensed Product in accordance with Section 5.9. For the avoidance of doubt, the retained rights in this Section 2.4 do not include
+any right to market, distribute, sell, promote, or otherwise commercialize the Licensed Product in the Field in the Territory, and RGT
+shall not grant any third party rights that would conflict with or diminish the exclusivity of the license granted to SBEV hereunder.
+2.5. Non-Compete. (a) During the Term, SBEV
+shall not, and shall cause its Affiliates not to, directly or indirectly develop, manufacture, market, distribute, sell, or otherwise
+commercialize any Competing Product in the Territory without RGT’s prior written consent; provided, however, that SBEV may acquire
+an entity that markets a Competing Product if such Competing Product accounts for less than fifteen percent (15%) of the acquired entity’s
+annual revenue, so long as SBEV divests or discontinues such Competing Product within twelve (12) months of closing. (b) During the Term,
+RGT shall not, and shall cause its Affiliates not to, directly or indirectly develop (other than pursuant to Section 2.4(b)), market,
+distribute, sell, license to any third party, or otherwise commercialize any Competing Product in the Territory. (c) For the avoidance
+of doubt, nothing in this Section 2.5 shall restrict either Party from engaging in any business activities outside the Field, including
+research, development, or commercialization of products that are not Competing Products.
+ARTICLE 3 - CONDITIONS PRECEDENT AND POST-SIGNING
+COVENANT
+3.1. Conditions to Effectiveness. The license
+granted in Section 2.1 is conditioned upon satisfaction or waiver of each of the following on or prior to the Effective Date:
+5
+(a) Debt Exchange. The Debt Exchange shall
+have been consummated, with Mercer Street forgiving $5,521,432 of RGT-issued convertible notes, which amount constitutes all outstanding
+obligations of RGT under the Convertible Securities Agreement dated 8 September 2020, the Convertible Securities Agreement dated 28 July
+2022, and the General Security Deeds entered into in connection therewith, each between RGT (or its predecessor, MGC Pharmaceuticals Ltd)
+and Mercer Street (collectively, the “Mercer Street Financing Documents”), and upon consummation of the Debt
+Exchange, RGT shall be fully and unconditionally released from all obligations under the Mercer Street Financing Documents, and SBEV issuing
+to Mercer Street preferred equity with an aggregate stated value of $5,500,000.
+(b) Board Approvals. Each Party shall have
+obtained all necessary board and stockholder approvals.
+(c) No Material Adverse Effect. No material
+adverse effect shall have occurred with respect to either Party.
+3.2. C/M Capital Investment Covenant. As soon
+as reasonably practicable, and in any event within 60 days of the Effective Date, C/M Capital shall invest, or shall cause an affiliate
+to invest, at least One Million U.S. Dollars ($1,000,000) into SBEV to support commercialization of the Licensed Product, which investment
+shall be in the form and have such terms as are negotiated in good faith and mutually agreed between C/M Capital and SBEV.
+ARTICLE 4 - CONSIDERATION AND PAYMENT
+4.1. Debt Exchange Consideration. The Parties
+acknowledge and agree that the Debt Exchange described in Section 3.1(a) constitutes a material component of the consideration for the
+license granted by RGT to SBEV under this Agreement.
+4.2. Running Royalty. SBEV shall pay to RGT
+a royalty equal to fifteen percent (15%) of Net Revenue (the “Royalty”), for so long as SBEV or any Affiliate
+or sublicensee sells the Licensed Product in the Territory and the longer of: (a) ten (10) years following the First Commercial Sale in
+each country; or (b) the expiration of the last-to-expire Patent claiming the Licensed Product in each country. For sales by sublicensees,
+the Royalty shall be calculated on the Net Revenue received by SBEV from such sublicensee.
+4.3. Sales Bonus Payment. Upon SBEV achieving
+Five Million U.S. Dollars ($5,000,000) in cumulative Net Revenue, SBEV shall pay to C/M Capital a sales bonus of One Million U.S. Dollars
+($1,000,000) in preferred equity, cash, or a combination thereof, as mutually agreed in good faith between C/M Capital and SBEV, within
+thirty (30) days of such achievement.
+4.4. Royalty Payment Terms.
+(a) Calculation and Payment. Royalties shall
+be calculated quarterly and paid within thirty (30) days following each quarter-end, together with a written report certified by an authorized
+officer of SBEV setting forth gross revenues, deductions, Net Revenue, Royalty due, and exchange rates used.
+(b) Currency. All payments shall be in U.S.
+Dollars, with foreign currency converted using Wall Street Journal closing rates for the last business day of each month in the quarter.
+(c) Method of Payment. All payments shall be
+made by wire transfer in immediately available funds to the account(s) designated in writing by RGT from time to time. RGT shall provide
+SBEV with written wire transfer instructions no later than five (5) business days prior to the first payment due date, and shall provide
+at least ten (10) business days’ prior written notice of any change to such instructions. SBEV shall not be liable for any misdirected
+payment made in good-faith reliance on wire instructions provided by RGT in accordance with this Section. Payments directed to Mercer
+Street shall apply solely to the extent expressly required by Section 3.1(a). Upon request, RGT shall promptly confirm receipt of any
+wire transfer.
+(d) Late Payments. Unpaid amounts shall accrue
+interest at one and half percent (1.5%) per month or the maximum rate permitted by law, whichever is less.
+6
+4.5. Records and Audit Rights. SBEV shall maintain
+complete and accurate books and records sufficient to verify Net Revenue for three (3) years following the end of the calendar year to
+which they relate. Upon thirty (30) days’ prior written notice, and no more than once per calendar year, RGT may engage an independent
+certified public accounting firm of recognized national standing (reasonably acceptable to SBEV) to examine SBEV’s relevant records
+for the preceding two (2) fiscal years during normal business hours. Prior to any such audit: (i) the auditor shall execute a confidentiality
+agreement in form and substance reasonably satisfactory to SBEV, containing non-disclosure and non-use obligations at least as restrictive
+as those in Article 8; (ii) the auditor shall comply with SBEV’s reasonable security policies and site access procedures; and (iii)
+RGT shall be responsible for any breach of confidentiality or security by the auditor. Audit costs shall be borne by RGT unless an audit
+reveals an underpayment of ten percent (10%) or more for any annual period, in which case SBEV shall pay the deficiency with interest
+and reimburse RGT’s reasonable , documented audit costs proportionate to the verified underpayment. All audit information shall
+be Confidential Information of SBEV and may only be used to verify royalty compliance.
+4.6. Taxes. Each Party is responsible for its
+own taxes. Payments to RGT shall be made without deduction except as required by law, in which case SBEV shall deduct and withhold such
+taxes, remit them to the appropriate authority, and provide RGT with evidence of payment. RGT shall be entitled to seek refunds or credits
+for such withheld taxes in its own name.
+ARTICLE 5 - DEVELOPMENT AND COMMERCIALIZATION
+5.1. Development Diligence. SBEV shall use
+Commercially Reasonable Efforts to develop and obtain Regulatory Approvals for the Licensed Product, prioritizing the United States. SBEV
+shall use Commercially Reasonable Efforts to: (a) initiate a Phase I clinical trial within twenty-four (24) months following the Effective
+Date; (b) initiate a Phase II clinical trial within forty-eight (48) months following the Effective Date; and (c) file an NDA with the
+FDA within a commercially reasonable time following successful clinical trials. The foregoing timelines shall be extended on a day-for-day
+basis for any delays caused by Force Majeure Events, actions or omissions of RGT, regulatory requirements imposed by the FDA or other
+Governmental Authority, or delays in the delivery of the Data Package beyond the sixty (60) day period specified in Section 5.6(a). The
+Development Plan prepared pursuant to Section 5.2 may include updated timelines based on scientific, regulatory, or commercial developments,
+and RGT shall give good-faith consideration to such updated timelines before exercising any termination right under Section 9.4.
+5.2. Development Plan. Within ninety (90) days
+following the Effective Date, SBEV shall deliver to RGT a development plan (the “Development Plan”) setting
+forth activities, timelines, milestones, and budgets for the Licensed Product. The Development Plan shall be updated annually for RGT’s
+review and comment (provided that the Development Plan shall not require RGT’s approval). SBEV shall provide quarterly written progress
+reports.
+5.3. Commercialization. Following receipt of
+Regulatory Approval in any country, SBEV shall use Commercially Reasonable Efforts to commercialize the Licensed Product, including launching
+within twelve (12) months of approval and maintaining an active commercial presence thereafter.
+5.4. Commercialization Plan. No later than
+twelve (12) months prior to anticipated First Commercial Sale in any Major Market (U.S., Canada, EU, Japan, Australia, China), SBEV shall
+deliver to RGT a commercialization plan (the “Commercialization Plan”) setting forth commercial strategy, pricing,
+distribution, and projected sales. Commercialization Plans shall be updated annually for RGT’s review and comment (provided that
+the Commercialization Plan shall not require RGT’s approval).
+5.5. Regulatory Compliance. SBEV shall be solely
+responsible for, and bear all costs of, obtaining and maintaining all Regulatory Approvals necessary for commercialization of the Licensed
+Product in the Territory, and shall comply with all applicable laws. SBEV shall keep RGT reasonably informed of material regulatory submissions
+and approvals.
+5.6. Technical Assistance and Technology Transfer.
+(a) Data Package. Within sixty (60) days following
+the Effective Date, RGT shall deliver to SBEV the Data Package comprising preclinical, clinical, toxicology, manufacturing, and regulatory
+data relating to the Licensed Product.
+7
+(b) Ongoing Technical Support. RGT shall provide
+reasonable technical assistance to support SBEV’s development and commercialization efforts at no additional charge for personnel
+time. SBEV shall reimburse RGT for reasonable out-of-pocket costs (including travel expenses) that are pre-approved in writing by SBEV’s
+designated representative. RGT shall submit written requests for approval at least ten (10) business days prior to incurring any such
+expense, describing the proposed activity, estimated cost, and business purpose. SBEV shall respond within five (5) business days, and
+failure to respond shall not constitute approval. No individual expense exceeding Five Thousand U.S. Dollars ($5,000) shall be incurred
+without a separate written approval. SBEV shall have no obligation to reimburse unapproved expenses, except that RGT may seek retroactive
+approval for emergency expenditures within two (2) business days of incurrence. RGT shall submit quarterly reimbursement requests with
+supporting documentation within thirty (30) days following each quarter-end.
+5.7. Pharmacovigilance. (a) Interim Obligations.
+Pending execution of the Safety Data Exchange Agreement (the “SDEA”), the Parties shall comply with the interim
+pharmacovigilance obligations set forth in this Section 5.7, including, without limitation, prompt exchange of adverse event information,
+cooperation in regulatory reporting and safety matters, and allocation of manufacturing-related reporting responsibilities to RGT as set
+forth herein. The Parties shall negotiate in good faith and execute a detailed SDEA within ninety (90) days after the Effective Date,
+provided that failure to execute the SDEA within such period shall not relieve either Party of its safety and compliance obligations under
+this Agreement or under Applicable Laws. (b) Safety Data Exchange Agreement. The SDEA shall be consistent with this Section
+5.7 and shall govern the collection, investigation, reporting, and exchange of safety information relating to the Licensed Product, including
+Individual Case Safety Reports (ICSRs), Periodic Safety Update Reports (PSURs), and Risk Management Plans
+(“RMPs”). In the event of any conflict between the SDEA and this Agreement, this Agreement shall control. (c)
+SBEV Reporting Obligations. SBEV, as the marketing authorization holder in the Territory, shall be responsible for all regulatory
+safety reporting obligations to applicable Regulatory Authorities in the Territory, to the extent based on safety data provided to SBEV
+by RGT in accordance with subsection (d) below. SBEV’s reporting obligations are expressly conditioned on RGT’s timely and
+complete discharge of its obligations under subsection (d), and SBEV shall not be liable for any regulatory non-compliance arising solely
+from RGT’s failure to timely provide required safety data. (d) RGT Manufacturer Reporting Obligations. RGT, as manufacturer,
+shall be responsible for promptly reporting to SBEV any adverse events, quality complaints, or safety signals arising from manufacturing,
+quality control testing, or stability studies, within the timelines specified in the SDEA (but in no event more than twenty-four (24)
+hours for serious adverse events and seventy-two (72) hours for non-serious adverse events). If RGT fails to meet any such reporting timeline,
+RGT shall: (i) indemnify SBEV for any regulatory fines, penalties, or enforcement actions attributable to such failure; (ii) bear all
+reasonable costs incurred by SBEV in remedying any resulting regulatory non-compliance; and (iii) be deemed in material breach of this
+Agreement if such failure is not cured within the applicable cure period under Section 9.2. (e) Global Safety Database.
+The Parties shall maintain a single global safety database, which shall be owned and maintained by SBEV. RGT shall provide all safety
+data to SBEV in a format compatible with SBEV’s pharmacovigilance systems, at RGT’s cost. RGT shall not retain or separately
+maintain any safety database relating to the Licensed Product in the Territory without SBEV’s prior written consent. (f) No
+Duplicative Reporting. Neither Party shall establish a duplicative regulatory reporting system for the Licensed Product without
+the other Party’s prior written consent.
+5.8. Recalls. SBEV shall be responsible for
+implementing any recall or withdrawal of the Licensed Product in the Territory at its cost; provided that if such action is caused in
+whole or in part by a manufacturing defect attributable to RGT, RGT shall bear the reasonable costs to the extent such recall or withdrawal
+is attributable to RGT’s manufacturing defect.
+5.9. Manufacturing. (a) Primary Manufacturing
+Right. Subject to subsection (b) below, RGT shall have the right to manufacture, or have manufactured through its designees (each
+of which shall be subject to SBEV’s prior written approval, not to be unreasonably withheld, conditioned, or delayed), all Licensed
+Product for distribution by SBEV in the Territory. The Parties shall negotiate in good faith and execute a detailed supply agreement and
+quality agreement within ninety (90) days following the Effective Date, which agreements shall address, among other things, lead times,
+minimum and maximum order quantities, batch documentation, certificates of analysis, change control procedures, shipping terms, risk of
+loss, and storage conditions. Pending execution of such agreements, the terms of this Section 5.9 shall govern. RGT warrants that all
+Licensed Product supplied hereunder shall (I) conform to the Specifications, (II) be manufactured in compliance with cGMP, EU-GMP, and
+all Applicable Laws, (III) be free from defects in materials and workmanship,
+8
+and (IV) have no less than seventy-five percent (75%) of
+its labeled shelf life remaining at the time of delivery. SBEV shall have the right to inspect all delivered Licensed Product and to reject
+any non-conforming product by written notice within thirty (30) days of delivery, in which case RGT shall, at SBEV’s election, promptly
+replace such product or issue a full credit. SBEV shall purchase all Licensed Product from RGT or RGT’s designees at prices to be
+agreed, which prices shall be competitive with prevailing market rates charged by comparable contract manufacturing organizations for
+similar pharmaceutical products manufactured under EU-GMP standards and shall not exceed RGT’s fully-burdened cost of goods plus
+a reasonable margin (not to exceed twenty percent (20%)); for the avoidance of doubt, such fully-burdened cost of goods shall include
+direct production costs (including raw materials, packaging, batch release analysis, and filling), quality assurance, and manufacturing
+overhead directly attributable to production of the Licensed Product; no labor costs, or other indirect costs shall be included in calculating
+such margin.. RGT shall maintain adequate manufacturing capacity to fulfill SBEV’s requirements and shall provide reasonable forecasts
+and delivery schedules. RGT shall maintain at all times a safety stock of Licensed Product equal to at least ninety (90) days of SBEV’s
+most recent quarterly demand forecast, or such other amount as the Parties may agree in writing. SBEV shall provide RGT with rolling twelve
+(12) month demand forecasts, updated quarterly, and RGT shall provide delivery schedules and order acknowledgments within ten (10) business
+days of receipt of each purchase order. SBEV shall submit purchase orders in accordance with minimum order quantities (“MOQs”)
+to be specified in the supply agreement; provided that such MOQs shall be commercially reasonable and shall not exceed quantities reasonably
+calculated based on SBEV’s most recent quarterly demand forecast. If SBEV exercises any alternative manufacturing right under this
+Section 5.9, RGT shall not be obligated to maintain safety stock or manufacturing capacity in excess of the quantities reflected in SBEV’s
+most recent binding purchase orders placed with RGT, and RGT may adjust future MOQs accordingly upon thirty (30) days’ written notice
+to SBEV.
+(b) Alternative Manufacturing Rights.
+Notwithstanding subsection (a), SBEV shall have the right, at its sole discretion, to manufacture the Licensed Product itself or through
+one or more third-party contract manufacturers (each, an “Alternative Manufacturer”) upon the occurrence of
+any of the following events:
+(i) RGT fails to supply conforming product within
+fifteen (15) days of a confirmed purchase order (or thirty (30) days if RGT provides written notice of the delay and a reasonable remediation
+plan within five (5) business days of the confirmed purchase order);
+(ii) RGT’s manufacturing facility loses its
+regulatory approvals or cGMP/EU-GMP certification;
+(iii) RGT experiences repeated quality failures (defined
+as two (2) or more batches failing to meet Specifications in any twelve (12) month period);
+(iv) RGT is unable to fulfill at least eighty percent
+(80%) of SBEV’s forecasted demand for two (2) consecutive quarters;
+(v) RGT’s pricing exceeds the pricing cap set
+forth in subsection (a) and RGT fails to cure such excess within thirty (30) days of written notice from SBEV; or
+(vi) RGT undergoes a Change of Control or becomes
+subject to insolvency proceedings.
+(b-1) Right of First Refusal. In addition
+to the rights set forth in subsection (b), if SBEV identifies an Alternative Manufacturer that is able to supply the Licensed Product
+at a lower fully-burdened cost than RGT’s then-current pricing under subsection (a), SBEV shall provide RGT with written notice
+thereof, including reasonable documentation of the Alternative Manufacturer’s proposed pricing and terms (a “Competitive
+Offer Notice”). RGT shall have thirty (30) days from receipt of the Competitive Offer Notice to notify SBEV in writing whether
+RGT elects to match such pricing and terms. If RGT timely elects to match and thereafter supplies the Licensed Product at or below the
+pricing and on terms no less favorable than those set forth in the Competitive Offer Notice, SBEV shall continue to purchase the Licensed
+Product from RGT in accordance with subsection (a) and the applicable MOQs. If RGT fails to deliver a timely matching election, or if
+RGT delivers a matching election but thereafter fails to supply the Licensed Product at or below the matched pricing or on the matched
+terms, SBEV may engage the applicable Alternative Manufacturer without being subject to the conditions set forth in subsection (b).
+9
+(c) Secondary Manufacturer Qualification.
+SBEV shall have the right, at any time and at its own cost, to qualify one or more secondary manufacturers as back-up supply sources.
+RGT shall not unreasonably withhold, condition, or delay its approval of any proposed Alternative Manufacturer, provided that such manufacturer
+(i) maintains cGMP and/or EU-GMP certification as applicable, (ii) agrees in writing to comply with the Specifications and quality standards
+set forth in this Agreement, and (iii) executes a confidentiality agreement protecting RGT’s Confidential Information on terms no
+less restrictive than those set forth in Article 8. RGT’s approval shall be deemed granted if RGT fails to respond within thirty
+(30) days of receiving SBEV’s written request identifying the proposed Alternative Manufacturer and providing evidence of the foregoing
+qualifications.
+(d) Technology Transfer for Alternative Manufacturing.
+Upon SBEV’s exercise of any alternative manufacturing right under this Section 5.9, RGT shall, within sixty (60) days of SBEV’s
+written request: (i) provide SBEV and/or the applicable Alternative Manufacturer with all Know-How, technical information, manufacturing
+processes, analytical methods, and other information reasonably necessary to manufacture the Licensed Product in accordance with the Specifications;
+(ii) make RGT’s qualified manufacturing personnel available for consultation and training at reasonable times, at SBEV’s expense
+for out-of-pocket travel costs; and (iii) grant SBEV and the Alternative Manufacturer access to any third-party contracts, licenses, or
+supply agreements necessary to manufacture the Licensed Product, or, if such contracts are not assignable, use commercially reasonable
+efforts to assist SBEV in obtaining equivalent arrangements. RGT shall not charge any technology transfer fee for such assistance, but
+SBEV shall reimburse RGT’s reasonable, documented out-of-pocket costs incurred in connection with such technology transfer. Notwithstanding
+SBEV’s exercise of any alternative manufacturing right, RGT shall continue to supply Licensed Product to SBEV in accordance with
+this Section 5.9 to the extent RGT is able to do so, until such time as SBEV notifies RGT in writing that the Alternative Manufacturer
+is qualified and operational.
+(e) Quality Standards. All Licensed
+Product manufactured by SBEV or any Alternative Manufacturer shall comply with the Specifications, cGMP, EU-GMP (as applicable), and all
+Applicable Laws. SBEV shall be responsible for ensuring that any Alternative Manufacturer maintains appropriate quality systems and permits
+RGT to conduct quality audits of such Alternative Manufacturer’s facilities upon reasonable advance notice (not more than once per
+calendar year absent cause), at RGT’s expense. SBEV shall have the reciprocal right to conduct quality audits of RGT’s manufacturing
+facilities (and those of RGT’s designees) upon reasonable advance notice (not more than twice per calendar year absent cause), at
+SBEV’s expense, and RGT shall cooperate fully with any such audit and promptly remediate any deficiencies identified.
+(f) Non-Exclusivity of RGT’s Manufacturing
+Right. For the avoidance of doubt, RGT’s manufacturing right under this Section 5.9 is non-exclusive, and SBEV’s exercise
+of any alternative manufacturing right shall not terminate or diminish RGT’s right to continue manufacturing the Licensed Product
+for SBEV, subject to SBEV’s right to allocate orders among qualified manufacturers in its sole discretion.
+ARTICLE 6 - INTELLECTUAL PROPERTY
+6.1. Ownership. All Intellectual Property relating
+to the Licensed Product existing as of the Effective Date is and shall remain the sole property of RGT. Nothing herein transfers any ownership
+interest to SBEV in RGT’s pre-existing Intellectual Property.
+6.2. Improvements.
+(a) RGT Improvements. Any improvements relating
+to the Licensed Product developed solely by RGT shall be RGT’s property and automatically included in the license granted under
+Section 2.1.
+(b) SBEV Improvements. Any improvements relating
+to the Licensed Product developed solely by SBEV shall be the exclusive property of SBEV, and shall be automatically licensed to RGT on
+a non-exclusive, royalty-free basis for use outside the Field only, and only following expiration or termination of this Agreement. Any
+improvements developed jointly by the Parties shall be jointly owned, with each Party having the right to exploit such joint improvements
+without accounting to the other, subject to the exclusive license granted to SBEV in Section 2.1 within the Field during the Term. All
+improvements owned or jointly owned by SBEV shall automatically be included in the license granted under Section 2.1.
+10
+(b-1) Automatic Inclusion. For the avoidance
+of doubt, all improvements, whether developed by RGT, SBEV, or jointly, that relate to the Licensed Product in the Field shall be automatically
+included in the exclusive license granted to SBEV under Section 2.1 without additional consideration. RGT shall not retain or exploit
+any such improvement (whether owned by RGT or jointly owned) within the Field in the Territory in a manner that competes with or diminishes
+SBEV’s rights hereunder.
+(c) Invention Disclosure. Each Party shall
+promptly disclose to the other Party any improvements, inventions, or discoveries relating to the Licensed Product made by such Party
+or its Affiliates, employees, contractors, or agents, and shall cooperate in the preparation and prosecution of any patent applications
+relating thereto.
+6.3. Patent Prosecution. (a) RGT shall have
+the primary right and responsibility to file, prosecute, maintain, and defend all Patents within the Intellectual Property worldwide at
+its expense, prioritizing filings in the United States and thereafter in each Major Market. RGT shall consult with SBEV prior to making
+any material prosecution decisions (including claim scope, office action responses, and abandonment) and shall give due consideration
+to SBEV’s reasonable comments, provided that RGT shall retain final decision-making authority with respect to Patents it solely
+owns. (b) RGT shall provide SBEV with copies of all material correspondence with patent offices in the Territory at least fifteen (15)
+days prior to any applicable deadline. (c) If RGT elects not to prosecute, maintain, or defend any Patent in any country within the Territory,
+RGT shall provide SBEV at least ninety (90) days’ prior written notice, and SBEV may assume prosecution, maintenance, or defense
+of such Patent at its own expense, in RGT’s name or SBEV’s name as appropriate. Any Patent so assumed shall remain subject
+to the license granted hereunder. (d) The Parties shall cooperate in developing a patent strategy that prioritizes registration in the
+United States first, followed by expansion to each Major Market and other commercially significant jurisdictions identified by SBEV.
+6.4. Enforcement. Each Party shall promptly
+notify the other of any known or suspected infringement of the Intellectual Property in the Territory. SBEV shall have the first right,
+but not obligation, to enforce against infringement in the Field in the Territory at its expense, keeping RGT informed and obtaining RGT’s
+consent (not unreasonably withheld or delayed) before settling any claim that would affect RGT’s ownership of the Intellectual Property.
+If SBEV elects not to enforce within ninety (90) days of becoming aware of such infringement, RGT may enforce at its expense after consulting
+with SBEV. Recoveries from any enforcement action shall first reimburse the enforcing Party’s reasonable costs and expenses (including
+attorneys’ fees), and the remainder shall be allocated seventy percent (70%) to SBEV and thirty percent (30%) to RGT. RGT shall
+provide reasonable cooperation and assistance (including joining as a party where legally required) at the enforcing Party’s expense.
+6.5. Third-Party Infringement Claims. Each
+Party shall promptly notify the other of any third-party claim that the Licensed Product infringes such party’s intellectual property.
+RGT shall defend such claims at its expense (as provided in Section 10.2), keeping SBEV informed and obtaining SBEV’s consent before
+settling any claim that imposes obligations on SBEV, affects SBEV’s rights under this Agreement, or includes any admission of liability
+or wrongdoing by SBEV.
+6.5A. Costs of Third-Party Claims. If a third-party
+infringement claim results in a judgment, settlement, or licensing obligation requiring payment, RGT shall bear such costs to the extent
+the claim relates to the Intellectual Property as it existed on the Effective Date. To the extent a claim relates solely to an SBEV Improvement,
+SBEV shall bear such costs. Joint improvements shall be allocated equitably between the Parties based on relative contribution and benefit.
+In no event shall SBEV be obligated to cease commercialization of the Licensed Product or pay any damages or royalties to a third party
+as a result of infringement by RGT’s pre-existing Intellectual Property without RGT’s prior indemnification of such amounts.
+6.6. Trademarks. SBEV shall market and sell
+the Licensed Product under the CannEpil® trademark, comply with RGT’s usage guidelines, maintain quality consistent with the
+Specifications and CannEpil® brand reputation, and not alter or use confusingly similar marks without RGT’s consent. All goodwill
+arising from SBEV’s use of the Trademarks shall inure to RGT’s benefit.
+11
+6.7. IP Schedules. All Patents, Trademarks,
+copyrights, and regulatory registrations included in the Intellectual Property as of the Effective Date are set forth in Schedules C,
+D, and E, respectively. RGT represents and warrants that such Schedules are complete and accurate in all material respects as of the Effective
+Date. RGT shall update such Schedules promptly (and in no event later than thirty (30) days) upon any new filing, issuance, registration,
+abandonment, or expiration and shall provide updated Schedules to SBEV no less than annually. Any Intellectual Property owned or controlled
+by RGT that is used in, or reasonably necessary for, the development, manufacture, commercialization, or exploitation of the Licensed
+Product in the Field in the Territory shall be deemed automatically included in the license granted under Section 2.1, regardless of whether
+such Intellectual Property is listed in Schedules C, D, or E. If RGT fails to update the Schedules within thirty (30) days of a triggering
+event, any Intellectual Property subject to such triggering event shall, for the avoidance of doubt, be deemed included in the license
+granted under Section 2.1 and SBEV shall have no liability arising from its use of such Intellectual Property prior to the date of the
+Schedule update.
+ARTICLE 7 - REPRESENTATIONS AND WARRANTIES
+7.1. Mutual Representations and Warranties.
+Each Party represents and warrants that: (a) it is duly organized and in good standing; (b) it has full authority to execute and perform
+this Agreement; (c) this Agreement is enforceable against it; (d) execution does not conflict with its organizational documents, applicable
+laws, or material agreements; and (e) it has not violated any anti-corruption laws in connection with this Agreement.
+7.2. RGT Representations and Warranties. RGT
+further represents and warrants that: (a) RGT owns or has valid licenses to all Intellectual Property necessary to grant the license herein,
+free and clear of any liens, encumbrances, or rights of third parties that would materially interfere with SBEV’s exercise of the
+licensed rights; (b) to RGT’s knowledge after reasonable inquiry, the Licensed Product does not infringe third-party intellectual
+property rights; (c) there is no pending or, to RGT’s knowledge, threatened litigation relating to the Intellectual Property or
+Licensed Product that would materially affect SBEV’s rights; (d) to RGT’s knowledge after reasonable inquiry, issued Patents
+are valid and enforceable; (e) RGT has disclosed all material information in its possession or control relating to the Licensed Product’s
+safety, efficacy, regulatory status, and commercial potential; (f) the Pre-IND submission (No. 170471) filed with the FDA on February
+7, 2024 remains on file; (g) RGT’s manufacturing facility is EU-GMP compliant and capable of manufacturing the Licensed Product
+in accordance with the Specifications; (h) all data in the Data Package is materially accurate and complete in all material respects;
+(i) neither RGT nor its personnel have been debarred under FDA regulations; and (j) the Licensed Product has not been subject to any regulatory
+action, recall, market withdrawal, or safety alert in any jurisdiction.
+7.2A. Representations Regarding Third Parties.
+RGT further represents and warrants that: (a) except as disclosed in Schedule B, no third party (meaning any Person other than RGT, SBEV,
+or their respective Affiliates) has any right, title, or interest in or to any Intellectual Property that would materially impair or conflict
+with the license rights granted to SBEV hereunder; (b) there are no outstanding royalty, milestone, or other payment obligations to any
+third party that would affect SBEV’s rights or increase SBEV’s costs under this Agreement; and (c) the consummation of the
+transactions contemplated hereby will not result in any breach or default under any agreement to which RGT is a party that would adversely
+affect the rights granted to SBEV hereunder.
+7.3. SBEV Representations and Warranties. SBEV
+further represents and warrants that: (a) SBEV is in compliance with all NYSE listing standards; (b) SBEV has timely filed all required
+SEC reports; (c) SBEV has authority to issue the securities contemplated herein; (d) as of the Effective Date, SBEV has sufficient financial
+resources to perform its initial obligations under this Agreement for the twelve (12) month period following the Effective Date; (e) there
+has been no material adverse change in SBEV’s business since its most recent Form 10-K; and (f) this Agreement does not conflict
+with any material SBEV contract or debt instrument.
+7.4. DISCLAIMER. EXCEPT AS EXPRESSLY SET FORTH
+IN THIS ARTICLE 7, NEITHER PARTY MAKES ANY REPRESENTATION OR WARRANTY, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING ANY IMPLIED WARRANTY
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT. RGT DOES NOT WARRANT THAT THE LICENSED PRODUCT WILL RECEIVE
+REGULATORY APPROVAL, ACHIEVE ANY SAFETY OR EFFICACY LEVEL, OR BE COMMERCIALLY SUCCESSFUL.
+12
+ARTICLE 8 - CONFIDENTIALITY
+8.1. Confidentiality Obligations. During the
+Term and for seven (7) years thereafter (or indefinitely for trade secrets), each Receiving Party shall hold the Disclosing Party’s
+Confidential Information in strict confidence, not disclose it to third parties without consent except as permitted herein, use it solely
+to exercise rights and perform obligations under this Agreement, and protect it with at least the same care used for its own confidential
+information.
+8.2. Permitted Disclosures. The Receiving Party
+may disclose Confidential Information: (a) to Affiliates and Representatives with a need to know, bound by confidentiality obligations;
+(b) to potential sublicensees, investors, or acquirers subject to confidentiality agreements; (c) to Regulatory Authorities as necessary;
+and (d) as required by law, regulation, or stock exchange rules, after providing the Disclosing Party reasonable advance notice where
+legally permitted.
+8.3. Exceptions. Confidentiality obligations
+do not apply to information that: (a) is or becomes public through no fault of the Receiving Party; (b) was known to the Receiving Party
+prior to disclosure; (c) is independently developed without use of Confidential Information; or (d) is received from a third party not
+in breach of confidentiality obligations.
+8.4. Return of Information. Upon termination
+or request, each Receiving Party shall promptly return or destroy all Confidential Information and certify compliance, except that one
+copy may be retained in legal archives for compliance purposes.
+8.5. Equitable Relief. Each Party acknowledges
+that unauthorized disclosure may cause irreparable harm, entitling the Disclosing Party to injunctive relief without posting bond.
+8.6. Publicity. Neither Party shall issue press
+releases or public announcements regarding this Agreement without the other Party’s consent, except as required by law or stock
+exchange rules (with reasonable advance notice). The Parties shall cooperate on an initial joint press release.
+ARTICLE 9 - TERM AND TERMINATION
+9.1. Term. This Agreement commences on the
+Effective Date and continues for an initial term of twenty (20) years (the “Initial Term”), unless earlier terminated
+in accordance with this Article 9. Following the Initial Term, this Agreement shall automatically renew for successive five (5) year periods
+unless either Party provides written notice of non-renewal at least twelve (12) months prior to the expiration of the then-current term.
+SBEV may terminate this Agreement for convenience upon one hundred eighty (180) days’ prior written notice to RGT, subject to payment
+of all accrued Royalties and other amounts owed through the effective date of termination.
+9.2. Termination for Material Breach. Either
+Party may terminate upon written notice if:
+(a) the other Party commits a material breach and
+fails to cure within sixty (60) days after written notice specifying the breach in reasonable detail (or, if such breach cannot reasonably
+be cured within sixty days, fails to commence cure within such period and diligently pursue cure to completion within ninety (90) days);
+or
+(b) the other Party fails to make any undisputed payment
+within fifteen (15) days after written notice that such payment is overdue.
+9.3. Termination for Insolvency. Either Party
+may terminate immediately upon notice if the other Party: (a) becomes insolvent or admits inability to pay debts; (b) makes a general
+assignment for creditors; (c) files or has filed against it a bankruptcy petition (not dismissed within sixty (60) days); (d) has a receiver
+appointed; or (e) is dissolved.
+9.4. Termination for Development Failure. RGT
+may terminate upon written notice if SBEV fails to achieve any development milestone in Section 5.1 (as extended pursuant to Section 5.1)
+and SBEV fails to provide a reasonable remediation plan within sixty (60) days of receiving written notice from RGT specifying the failure.
+If SBEV provides a remediation plan and uses Commercially Reasonable Efforts to implement such plan, RGT shall not terminate this Agreement
+solely on account of such milestone failure, provided that SBEV achieves the applicable milestone within one hundred eighty (180) days
+following delivery of the remediation plan.
+13
+9.5. Termination upon Change of Control. (a)
+If SBEV undergoes a Change of Control involving an acquirer deriving more than twenty-five percent (25%) of annual revenues from a Competing
+Product, RGT may terminate upon ninety (90) days’ notice, delivered within sixty (60) days after notice of such Change of Control.
+(b) If RGT undergoes a Change of Control involving an acquirer that directly or indirectly markets or distributes a Competing Product,
+SBEV may terminate upon ninety (90) days’ notice, delivered within sixty (60) days after notice of such Change of Control, and in
+the event of such termination by SBEV, the license granted hereunder shall convert to a fully paid-up, perpetual, irrevocable license
+for the remainder of the then-current Term.
+9.6. Termination for Regulatory Failure. If
+SBEV fails to obtain Regulatory Approval in the United States within five (5) years following the Effective Date (subject to extension
+for any Force Majeure Event or delays attributable to RGT or FDA), RGT may terminate upon one hundred eighty (180) days’ notice.
+9.7. Effects of Termination. Upon termination:
+(a) all licenses to SBEV terminate and revert to RGT,
+and SBEV shall immediately cease all activities with the Licensed Product except during any Sell-Off Period;
+(b) SBEV shall pay all accrued Royalties and other
+amounts within thirty (30) days with a final report;
+(c) each Party shall return or destroy the other’s
+Confidential Information;
+(d) at RGT’s request and expense, SBEV shall
+assign to RGT all Regulatory Approvals, INDs, NDAs, and related data; provided, however, that if this Agreement is terminated by SBEV
+pursuant to Section 9.2 (Termination for Material Breach by RGT) or Section 9.3 (Termination for RGT Insolvency), SBEV shall have no obligation
+to assign such Regulatory Approvals, INDs, NDAs, or related data, and SBEV shall retain a non-exclusive, royalty-free license to use such
+regulatory assets for a period of twenty-four (24) months following termination to transition to an alternative product;
+(e) at RGT’s request and expense, SBEV shall
+provide RGT with a written list of all third-party contracts relating exclusively to the Licensed Product within thirty (30) days of termination,
+and RGT shall be responsible for obtaining the assignment of such contracts from the applicable third parties;
+(f) SBEV may sell existing finished inventory for
+one hundred eighty (180) days following termination subject to Royalty payment, after which remaining inventory shall be destroyed or
+delivered to RGT; and
+(g) all sublicenses shall automatically terminate,
+except that non-breaching sublicensees in good standing shall be entitled to a direct license from RGT on terms no less favorable than
+the terms of their sublicense, which RGT shall grant within thirty (30) days of request.
+9.8. Survival. The following provisions shall
+survive expiration or termination of this Agreement for any reason: Article 1 (Definitions); Sections 4.2 through 4.6 (with respect to
+sales occurring prior to termination and during any Sell-Off Period, and with respect to SBEV’s record-keeping obligations under
+Section 4.5 for the period specified therein); Section 5.7 (solely with respect to adverse events, safety signals, and pharmacovigilance
+reporting obligations arising from activities occurring prior to the effective date of termination); Section 5.9 (solely as to supply
+obligations during the Sell-Off Period); Section 6.1 (Ownership); Sections 6.2(a), 6.2(b), 6.2(b-1), and 6.2(c) (Improvements and Invention
+Disclosure); Section 6.5A (Costs of Third-Party Claims, with respect to claims relating to pre-termination activities); Section 6.6 (Trademarks,
+until expiration of the Sell-Off Period); Section 6.7 (IP Schedules, with respect to RGT’s update and maintenance obligations through
+the effective date of termination); Article 7 (Representations and Warranties, including Section 7.2A, solely with respect to claims arising
+from acts or omissions prior to termination); Article 8 (Confidentiality); Sections 9.7 through 9.9; Article 10 (Indemnification); Article
+11 (Limitation of Liability); and Article 12 (General Provisions).
+9.9. Rights Cumulative. Termination does not
+prejudice accrued rights or claims for breach.
+14
+ARTICLE 10 - INDEMNIFICATION
+10.1. Indemnification by SBEV. SBEV shall indemnify,
+defend, and hold harmless RGT and its Affiliates and their respective directors, officers, employees, agents, successors, and assigns
+from any damages, losses, liabilities, costs, and expenses (including reasonable attorneys’ fees) arising from: (a) the commercialization,
+marketing, promotion, distribution, or sale of the Licensed Product by or on behalf of SBEV in the Territory (excluding claims arising
+from manufacturing defects or RGT’s breach); (b) any breach by SBEV of this Agreement; (c) any violation of Applicable Laws by SBEV
+in the performance of its commercialization obligations; (d) SBEV’s negligence, gross negligence, willful misconduct, or fraud;
+or (e) any claims arising from SBEV’s securities issuances; in each case, except to the extent arising from RGT’s negligence,
+willful misconduct, material breach of this Agreement, or manufacturing-related obligations.
+10.2. Indemnification by RGT. RGT shall indemnify,
+defend, and hold harmless SBEV and its Affiliates and their respective directors, officers, employees, agents, successors, and assigns
+from any damages, losses, liabilities, costs, and expenses (including reasonable attorneys’ fees) arising from: (a) any breach by
+RGT of this Agreement, including any breach of RGT’s representations and warranties; (b) RGT’s negligence, gross negligence,
+willful misconduct, or fraud; (c) third-party claims that the Licensed Product or the Intellectual Property infringes such third party’s
+intellectual property rights (except to the extent arising from SBEV’s unauthorized modification of the Licensed Product, unauthorized
+combinations with non-RGT products, or use outside the Field); (d) any product defect, contamination, or adulteration arising from the
+manufacturing process for the Licensed Product; (e) any failure by RGT to manufacture the Licensed Product in compliance with cGMP, EU-GMP,
+or applicable Specifications; (f) any regulatory non-compliance, warning letter, consent decree, or enforcement action attributable to
+RGT’s manufacturing operations; and (g) any personal injury or property damage claims arising from defects in the Licensed Product
+attributable to RGT’s manufacturing; in each case, except to the extent arising from SBEV’s negligence, willful misconduct,
+or material breach of this Agreement.
+10.3. Indemnification Procedures. The Party
+seeking indemnification shall promptly notify the other Party in writing (provided that failure to provide timely notice shall not relieve
+the indemnifying Party of its obligations except to the extent actually and materially prejudiced by such delay), and the indemnifying
+Party may assume control of the defense. Settlement requires the indemnified Party’s consent if it imposes obligations on such Party
+or includes any admission of liability.
+10.4. Insurance. Each Party shall maintain
+during the Term and for five (5) years thereafter: (a) commercial general liability insurance of at least $5,000,000 per occurrence and
+$10,000,000 aggregate; and (b) products liability insurance of at least $10,000,000 per occurrence and $20,000,000 aggregate (which products
+liability insurance may be obtained no later than ninety (90) days prior to the anticipated First Commercial Sale in any country), from
+insurers rated A- or better by A.M. Best. Each Party shall name the other Party as an additional insured on all liability policies. Each
+Party shall provide evidence of insurance within thirty (30) days of the Effective Date and upon request thereafter.
+ARTICLE 11 - LIMITATION OF LIABILITY
+11.1. Exclusion of Certain Damages. EXCEPT
+FOR INDEMNIFICATION OBLIGATIONS, BREACH OF CONFIDENTIALITY, BREACH OF THE NON-COMPETE, PAYMENT OBLIGATIONS, IP INFRINGEMENT OR MISAPPROPRIATION,
+OR A PARTY’S FRAUD, GROSS NEGLIGENCE, OR WILLFUL MISCONDUCT, NEITHER PARTY SHALL BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
+CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, INCLUDING LOSS OF PROFITS OR REVENUE.
+11.2. Cap on Liability. EXCEPT FOR INDEMNIFICATION
+OBLIGATIONS, BREACH OF CONFIDENTIALITY, BREACH OF THE NON-COMPETE, PAYMENT OBLIGATIONS, IP INFRINGEMENT OR MISAPPROPRIATION, OR A PARTY’S
+FRAUD, GROSS NEGLIGENCE, OR WILLFUL MISCONDUCT, NEITHER PARTY’S AGGREGATE LIABILITY SHALL EXCEED THE GREATER OF (I) FIVE MILLION
+U.S. DOLLARS ($5,000,000) AND (II) THE TOTAL ROYALTIES PAID OR PAYABLE DURING THE THIRTY-SIX (36) MONTHS PRECEDING THE CLAIM.
+15
+ARTICLE 12 - GENERAL PROVISIONS
+12.1. Governing Law. This Agreement is governed
+by Delaware law, without regard to conflict of laws principles. The UN Convention on Contracts for the International Sale of Goods does
+not apply.
+12.2. Dispute Resolution.
+(a) Escalation. Any dispute shall first be
+referred to each Party’s Chief Executive Officer for attempted resolution through good-faith negotiation for thirty (30) days following
+written notice.
+(b) Arbitration. Unresolved disputes shall
+be finally resolved by binding arbitration administered by the AAA under its Commercial Arbitration Rules. The seat shall be Wilmington,
+Delaware; three arbitrators with pharmaceutical licensing experience shall preside; the language shall be English; Delaware law shall
+apply; and the award shall be final, binding, and enforceable in any court. Each Party bears its own costs, with AAA fees shared equally,
+unless the arbitrators award fees to the prevailing Party.
+(c) Provisional Remedies. Either Party may
+seek injunctive relief from Delaware state or federal courts to prevent irreparable harm or enforce confidentiality or IP provisions.
+Each Party submits to such jurisdiction and waives venue objections.
+(d) Jury Waiver. EACH PARTY WAIVES ANY RIGHT
+TO JURY TRIAL.
+12.3. Notices. All notices shall be in writing
+and deemed given when: (a) delivered by hand; (b) sent by email with confirmation and courier copy within one business day; or (c) one
+business day after deposit with overnight courier. Notices to RGT: Argent Biopharma Limited, ___________, Attn: CEO. Notices to SBEV:
+Splash Beverage Group, Inc., Attn: CEO. Either Party may change its address by written notice.
+12.4. Assignment. Neither Party may assign
+this Agreement without the other’s prior written consent (not to be unreasonably withheld), except: (a) to an Affiliate (with the
+assignor remaining liable); and (b) either Party may assign this Agreement without the other Party’s consent in connection with
+a merger, acquisition, or sale of all or substantially all of its assets, provided that the assignee agrees in writing to be bound by
+all terms of this Agreement. In the case of an assignment by SBEV in connection with a Change of Control, Section 9.5 shall apply. Purported
+assignments in violation hereof are null and void and without effect.
+12.5. Entire Agreement; Amendment. This Agreement
+(including Schedules A through E) constitutes the entire agreement between the Parties regarding the subject matter hereof and supersedes
+all prior negotiations, understandings, and agreements, whether written or oral. No amendment is effective unless in writing and signed
+by both Parties.
+12.6. Waiver; Severability. No waiver is effective
+unless in writing. If any provision is held invalid, the remaining provisions remain in effect and shall be enforced to the fullest extent
+permitted by law.
+12.7. Counterparts. This Agreement may be executed
+in counterparts, including by electronic signature, each of which is an original.
+12.8. Third-Party Beneficiaries. This Agreement
+is for the sole benefit of the Parties and their permitted successors, except that Mercer Street is an intended third-party beneficiary
+of Sections 3.1(a), 4.4, and this Section 12.8, and C/M Capital is an intended third-party beneficiary of Sections 3.1(b), 4.3, and this
+Section 12.8, each with independent enforcement rights. These beneficiary rights may not be amended without the affected beneficiary’s
+consent.
+12.9. Force Majeure. Neither Party shall be
+liable for delays caused by events beyond its reasonable control, including natural disasters, war, government actions, labor disputes,
+or supply chain disruptions, provided that the affected Party gives prompt notice and uses commercially reasonable efforts to mitigate.
+If a Force Majeure Event continues for more than one hundred eighty (180) days, the unaffected Party may terminate upon thirty (30) days’
+notice.
+16
+12.10. Further Assurances. Each Party shall
+execute such documents and take such actions as reasonably necessary to effectuate this Agreement.
+12.11. Relationship. The Parties are independent
+contractors. Nothing creates a partnership, joint venture, agency, or employment relationship.
+12.12. Construction. This Agreement was jointly
+drafted, and no provision shall be construed against any Party. “Include” means “include without limitation.”
+12.13. Compliance with Laws. Each Party shall
+comply with all applicable laws, including export control laws, anti-corruption laws (including the U.S. Foreign Corrupt Practices Act
+(the “FCPA”) and UK Bribery Act), and sanctions laws. Neither Party nor its personnel is designated on any U.S.
+sanctions list or located in a comprehensively sanctioned country.
+[Signature pages follow.]
+17
+IN WITNESS WHEREOF, the Parties hereto have
+caused this Agreement to be executed by their duly authorized representatives as of the Effective Date first written above.
+ARGENT BIOPHARMA LIMITED
+SPLASH BEVERAGE GROUP, INC.
+By:
+By:
+Name: Roby Zomer
+Name: Brady Cobb
+Title: Chairman
+Title: Interim Chief Executive Officer
+18
+ACKNOWLEDGED AND AGREED solely with respect to
+Sections 3.1(a), 4.4, and 12.8:
+MERCER STREET GLOBAL OPPORTUNITY
+FUND, LLC
+By:
+Name:
+Jonathan Juchno
+Title:
+Manager
+19
+ACKNOWLEDGED AND AGREED solely with respect to
+Sections 3.1(b), 4.3, and 12.8:
+C/M CAPITAL PARTNERS, LP
+By:
+Name:
+Jonathan Juchno
+Title:
+Manager
+20

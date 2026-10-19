@@ -2,13 +2,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, toSentences, addMonths, ymd } from '../public/extract.js';
+import { extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, toSentences, addMonths, ymd, norm } from '../public/extract.js';
 
 const D = JSON.parse(fs.readFileSync(new URL('../public/data/edgar.json', import.meta.url)));
 const C = Object.fromEntries(D.map(c => [c.id, { ...c, x: extract(c.lines) }]));
 const AS = '2026-10-19';
 const get = (id, type) => schedule(C[id].x, AS).find(i => i.type.startsWith(type));
-const lineHas = (id, s, needle) => { const txt = C[id].lines.slice(s.lineStart - 1, s.lineEnd).join(' ').replace(/\s+/g, ' '); return txt.includes(needle); };
+const lineHas = (id, s, needle) => { const txt = norm(C[id].lines.slice(s.lineStart - 1, s.lineEnd).join(' ')); return txt.includes(needle); };
 
 // ---- parsers
 test('words to numbers', () => { assert.equal(wordsToNumber('one hundred and eighty'), 180); assert.equal(wordsToNumber('Eighty-Four'), 84); assert.equal(wordsToNumber('sixty'), 60); assert.equal(wordsToNumber('fifteen'), 15); assert.equal(wordsToNumber('banana'), null); });
@@ -100,7 +100,7 @@ test('c13 ARK/Eightco: redacted term -> no expiry, no act-by', () => {
 test('every dated item quotes a clause that exists verbatim at its line range', () => {
   let n = 0;
   for (const id in C) for (const i of schedule(C[id].x, AS)) if (i.source) {
-    const txt = C[id].lines.slice(i.source.lineStart - 1, i.source.lineEnd).join(' ').replace(/\s+/g, ' ');
+    const txt = norm(C[id].lines.slice(i.source.lineStart - 1, i.source.lineEnd).join(' '));
     assert.ok(txt.includes(i.source.quote.slice(0, 40)), `${id} ${i.type}`); n++;
   }
   assert.ok(n >= 35);
@@ -119,4 +119,50 @@ test('exports', () => {
   assert.ok(ics.split('\r\n').every(l => l.length <= 75));
   const p = toPacket(cs, AS); assert.ok(p.includes('Diligence packet')); assert.equal((p.match(/<section>/g) || []).length, 10);
   assert.ok(!/example\.com/.test(csv + ics + p));
+});
+
+// ---- upload paths: generated PDF/DOCX conversions of real EDGAR filings (test/fixtures/README.md)
+import { pdfLines, docxLines } from './doc-readers.mjs';
+test('PDF fixture (c6 Vivos, generated): act-by 2027-05-31 cited with page and in-page lines', () => {
+  const x = extract(pdfLines(new URL('./fixtures/c6-vivos-msa.generated.pdf', import.meta.url).pathname));
+  const a = schedule(x, AS).find(i => i.type.startsWith('Non-renewal'));
+  assert.equal(a.date, '2027-05-31'); assert.equal(a.source.page, 2); assert.equal(a.source.location, 'p. 2, lines 25–26');
+  assert.ok(a.source.quote.includes('at least sixty (60) days prior to the end of the then-current term'));
+  assert.equal(x.effective.source.location.startsWith('p. 1,'), true);
+});
+test('DOCX fixture (c12 Reborn, generated): act-by 2028-06-10 cited by paragraph', () => {
+  const x = extract(docxLines(new URL('./fixtures/c12-reborn-supply.generated.docx', import.meta.url).pathname));
+  const a = schedule(x, AS).find(i => i.type.startsWith('Non-renewal'));
+  assert.equal(x.effective.date, '2026-08-10'); assert.equal(a.date, '2028-06-10'); assert.match(a.source.location, /^¶ \d+/);
+});
+test('curly-quote whitespace is normalised in quotes', () => {
+  assert.equal(norm('(“ Agreement ”)  is'), '(“Agreement”) is');
+  for (const id in C) for (const i of schedule(C[id].x, AS)) if (i.source) assert.ok(!/“\s|\s”/.test(i.source.quote), id);
+});
+
+// ---- held-out EDGAR exhibits (edgar/holdout/HOLDOUT.md): spot checks of the post-fix behaviour
+const H = id => extract(fs.readFileSync(new URL(`../edgar/holdout/raw/${id}.txt`, import.meta.url), 'utf8').split('\n'));
+const act = id => schedule(H(id), AS).find(i => i.type.startsWith('Non-renewal'));
+test('holdout: clean dates', () => {
+  assert.equal(act('h2').date, '2029-07-10'); assert.equal(act('h8').date, '2029-08-23'); assert.equal(act('h14').date, '2028-10-03');
+  assert.equal(H('h8').renewal.max, 3); assert.equal(H('h8').effective.date, '2025-02-20');
+});
+test('holdout: stated deadline shown as written, flagged', () => { const a = act('h7'); assert.equal(a.date, '2027-04-06'); assert.equal(a.needsReview, true); });
+test('holdout: event-anchored term (regulatory approval) -> no date, no definition-clause guess', () => {
+  const x = H('h12'); assert.equal(x.term.end, ''); assert.equal(x.term.needsReview, true); assert.match(x.term.why, /event/);
+  assert.equal(act('h12').date, '');
+});
+test('holdout: "notice" with no reference point -> date but needs review', () => { const a = act('h9'); assert.equal(a.date, '2027-09-21'); assert.equal(a.needsReview, true); });
+
+// ---- termination for convenience and payment detail
+test('termination for convenience: holder and notice', () => {
+  const t = H('h1').other[0]; assert.equal(t.who, 'SBEV'); assert.deepEqual(t.notice, { n: 180, unit: 'day' });
+  const e = H('h3').other[0]; assert.equal(e.who, 'Elevance Health'); assert.equal(e.notice.n, 365);
+  const b = H('h8').other[0]; assert.equal(b.who, 'Blink'); assert.equal(b.notice.n, 60);
+});
+test('payments name the trigger', () => {
+  assert.ok(H('h8').payments.some(p => p.rule === 'within 21 days of receipt of invoice'));
+  assert.ok(H('h2').payments.some(p => p.rule === 'within 30 days of invoice'));
+  const late = extract(['Customer shall pay each invoice within thirty (30) days after receipt of invoice. Late payments bear interest at 1.5% per month.']);
+  assert.equal(late.payments[0].rule, 'within 30 days of receipt of invoice');
 });

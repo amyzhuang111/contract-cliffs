@@ -1,0 +1,429 @@
+EX-10.55
+2
+ea028714001ex10-55.htm
+AGREEMENT DATED APRIL 13, 2026 BETWEEN THE PIPELINE GROUP, INC. AND AUTHID INC
+Exhibit 10.55
+The Pipeline Group, LLC (“TPG”)
+1625 The Alameda, Suite 402
+San Jose, CA 95126
+BANK DETAILS:
+[**]
+TPG
+Order Form
+More
+effective engagement. More pipeline.
+Prepared
+for:
+authID Inc.
+Ed Sellitto, CFO
+1580 N. Logan St., Ste 660,
+Unit 51767
+Denver, Colorado 80203-1994
+[**]
+[**]
+The Pipeline Group, LLC
+Scott Wiesenfeld, Regional Sales
+Director-U.S.
+[**]
+xDR
+as a Service
+1.
+Fully Managed Business Development Representatives (xDRs)
+- Full-Time Equivalent xDRs: Pipeline creation and efficient new business generation.
+- Outbound calls, emails, social outreach, scheduled meetings, sends calendar invites and attend discovery calls.
+- Certified in client messaging, TPG technology, and TPG best practices.
+- Maintain anticipated activity metrics for the appropriate by xDR Type and Total Addressable Marketing (TAM).
+2.
+xDR Support
+- Full-time support for xDRs during breaks, PTO, and sick days.
+- Backup for performance and unanticipated issues.
+xDR
+Management & Training Deliverables
+3.
+xDR Manager
+- Weekly reviews of reports and dashboards.
+- Identify areas for soft skill improvements.
+4. Cold Calling Optimization Training
+- Role-play sessions with updated conversation guides.
+- Objection-handling techniques. Call blitz campaigns to boost team performance.
+5. xDR Advisory Services & Benchmarking
+- Semi-quarterly executive reviews comparing xDR activities with industry benchmarks.
+- Continuous updates on trends, tactics, and tools.
+6. Meeting Hand-off Training
+- Align systems and ensure smooth handoffs from xDRs to sales teams.
+- All xDRs are trained on TPG-guided selling best practices to ensure the pipeline progresses
+TPG
+Technologies™ Support & Configuration
+7.
+TPG Technologies Configuration & Support
+- First-line support for automated dialing technology, with email and social integration.
+- Ongoing system maintenance and escalation as needed.
+Ideal
+Customer Profile (ICP) Services
+8.
+ICP Data Classification
+- Categorize Salesforce data by industry, employee size, and revenue.
+- Define ICP criteria and create a detailed ICP document.
+9.
+Outbound List Building
+- Segment Salesforce data and 3rd-party leads for outbound calls.
+- Build high-propensity account lists based on ICP.
+Conversation
+Guide Content Curation
+10.
+Content Review
+- Audit sales, marketing, and product content (e.g., personas, objections, use cases).
+- Develop an initial Conversation Guide (CG).
+2
+11.
+Conversation Guide Updates
+- Create checklists and integrate feedback from sales teams.
+- Maintain and refine the guide throughout the project.
+12.
+Conversation Guide Administration
+- Weekly updates with best practices for personas, objections, and qualification criteria.
+- Train sales teams on new guide content.
+Email
+& Social Content Curation
+13.
+Custom Email & Social Messages
+- Create and optimize email/social templates for prospecting and follow-ups.
+- TPG AI Content Co-Pilot creates high-value first-draft emails that can be personalized and authentic.
+Data
+Services
+14.
+Data Enrichment & Custom List Building
+- Enrich and append data from marketing activities (e.g., webinars, trade shows).
+- Custom list building to find new ICP-matched data - up to 1,000 records per xDR per month.
+Sales
+Development Support
+15.
+Network Operations Center
+-
+Real-time monitoring of activity metrics and results.
+- Issue identification, resolution, and support for xDR messaging and call lists.
+xDR
+Team Control Books and Predictable Pipeline Reporting
+16.
+Predictive Pipeline Development (PPD) Reporting
+- Maintain PPD reporting in CRM with weekly data reviews.
+- Ensure process compliance and deliver executive-level reporting.
+[**]
+Technology
+Package
+TPG
+Technologies™ The world’s most advanced parallel dialing technology, offers four hybrid modes: Manual, Click-to-Call, AI, and
+Agent-Assisted Dialing. Enable xDRs to send timely, personalized messages across text, email, and social platforms.
+TPG Task & Activity Outcome Package automates lead status updates based on activity outcomes, streamlining a closed-loop calling
+process.
+TPG Exception Reporting ensures all leads are resolved by identifying gaps in follow-up activities.
+3
+TPG Meeting Influence Tracking monitors meetings via TPG Fuel Lines, linking xDR activities to marketing channels and campaigns.
+TPG Account Matcher connects leads to accounts using email or domain data while suppressing customers, open opportunities, partners,
+and competitors.
+TPG Control Book & Predictable Pipeline Reporting tracks key waterfall metrics, pipeline growth, and automated proactive KPI
+Alerting.
+TPG LinkedIn Sales Navigator empowers xDRs to research and engage prospects, fostering meaningful relationships.
+TPG AI Content Co-Pilot provides tailored prompts to craft high-value emails and messages for executives and target personas.
+Project
+Assumptions
+Customer
+Responsibilities
+Customer
+acknowledges that TPG’s ability to perform the Services, including meeting timelines and anticipated results is expressly conditioned
+upon Customer’s timely, accurate, and complete performance of the Customer Responsibilities set forth herein “Customer Responsibilities”).
+Customer’s failure to comply with these Customer Responsibilities shall relieve TPG of any related performance obligations to the
+extent impacted and shall not constitute a breach of this Order Form or Agreement by TPG. Customer agrees to:
+Provide
+Content and Direction
+Provide
+timely, accurate, and complete access to all sales, marketing, product, and positioning content reasonably required by TPG to perform
+the Services, including messaging guidelines, branding requirements, compliance constraints, and target audience definitions. The Services
+are designed and priced based on Customer-provided project assumptions in effect as of the start date of the Order Form, including without
+limitation Customer’s ICP, target account lists, TAM, target industries, ACV, geographies, personas, and the allocation between
+inbound and outbound motion. Customer shall promptly notify TPG in writing (email) of any material change to the foregoing assumptions,
+including but not limited to: (i) changes to ICP or target personas; (ii) shifts in priority between inbound and outbound activities;
+(iii) expansion, contraction, or redefinition of TAM; or (iv) changes to ACV thresholds, qualification criteria, or deal sizing methodology
+as these changes may materially impact the Services.
+System
+Access and Data Availability
+TPG provides an Opportunity Progression & Alerting Package (“OPAP”) to support objective
+visibility into pipeline activity and to facilitate effective delivery of the Services. Customer acknowledges that OPAP functionality
+and TPG’s performance of the Services require Customer to provide timely, continuous, and appropriately permissioned access to
+Customer’s CRM, marketing automation platforms, and any other systems reasonably necessary for service delivery, including for
+activity alignment, results logging, reporting, and tracking pipeline metrics (including meetings, opportunities, next steps, deal stages,
+and associated values). Customer is solely responsible for the accuracy, completeness, configuration, and ongoing availability of such
+systems and data, and TPG shall have no responsibility or liability for errors, inaccuracies, omissions, or service impacts arising from
+Customer systems, integrations, or data.
+Email
+and Calendar Access
+Provide
+designated xDR personnel with timely access to Customer-approved company email accounts and relevant sales team calendars, with appropriate
+permissions, to enable outreach, scheduling, and coordination of meetings. Customer acknowledges that delays or limitations in granting
+or maintaining such access may materially impact the Services.
+Timeliness
+and Cooperation
+Respond
+promptly and professionally to TPG requests for information, approvals, feedback, or decisions necessary to perform the Services and
+Customer acknowledges that delays in response or failure to provide required approvals may result in delays, reduced effectiveness, or
+suspension of the Services.
+4
+Compliance
+and Authorized Use
+Ensure
+that all Customer systems, data, instructions, and use cases comply with applicable laws, including data protection, privacy, and marketing
+regulations. Customer is responsible for ensuring that outreach conducted on its behalf and for any required consents complies with Customer’s
+internal policies and applicable legal requirements.
+Customer
+further understands and agrees that TPG shall not be responsible for missed deadlines, reduced performance, reporting gaps, or failure
+to achieve anticipated outcomes to the extent caused by Customer’s failure to meet its Customer responsibilities; TPG may reasonably
+adjust timelines, suspend Services, or continue billing in accordance with the applicable Order Form if such failure materially impairs
+performance; any performance targets or anticipated deliverables shall be deemed waived or equitably adjusted to the extent impacted
+by Customer’s non-performance; the Services are provided on a headcount-equivalent model, and not on performance-based basis any
+Fees payable under this Agreement and any applicable Order Form are based on the allocation of personnel, time, and resources, and are
+earned as Services are performed, regardless of any particular outcome or business objective; Customer shall not withhold payment, be
+entitled to fee reductions, credits, or refunds, or assert failure of consideration based on dissatisfaction with results or perceived
+performance shortfalls; TPG uses commercially reasonable industry standards in delivering the Services but does not guarantee specific
+outcomes, results, or business metrics; and the effectiveness and results of the Services depend on numerous factors outside of TPG’s
+control, including without limitation Customer’s product, pricing, market conditions, brand recognition, competitive landscape,
+data quality, system configuration, messaging approvals, compliance constraints, responsiveness, and the timely performance of Customer
+Responsibilities.
+Included
+Services
+TPG Technology Package
+CRM license fees for xDRs using The Pipeline Group Salesforce.com system.
+Access to 28+ data sources and up to 1,000 human-verified records per xDR per month (e.g., a team of four xDRs receives up to 4,000 records
+monthly).
+Excluded
+Costs
+Travel expenses.
+CRM License for Customer Org.
+Custom or CRM code development.
+xDR
+Types & Regions
+●
+[**]
+Strategic US
+Presumed
+ACV/ASP Value
+●
+Strategic
+ACV/ASP $[**]
+Anticipated
+Results (Per xDR)
+●
+Month
+1: [**]
+●
+Month
+2: [**]
+●
+Month
+3: [**]
+Sustain:
+[**].
+Results
+may be lower in November and December due to the holiday season.
+5
+Definitions
+The
+“Handoff”/SAL/SQL/Opportunity: A next step agreed upon by the prospect and salesperson, scheduled within 30–45
+days (e.g., discovery calls, demos, or pricing discussions).
+TAM
+Constraints
+The
+customer will provide a sufficient Total Addressable Market (TAM), including accounts and contacts, to enable xDRs to achieve their objectives.
+If
+the TAM is limited, success criteria may be mutually adjusted to ensure objectives and results remain attainable.
+Terms
+and Conditions
+This
+Order Form and any future Order Form, Statement of Work, (“SOW”) or Addendum agreed to by TPG and authID Inc.(“Customer”)
+(collectively, the “Parties”) is governed by the Master Services Agreement (“Agreement”) located at: https://www.thepipelinegroup.io/master-services-agreement.
+Customer acknowledges and agrees that the Agreement sets forth the governing terms for all purchases and services provided by TPG to
+Customer as of the start date of Services listed in this Order Form. The Agreement available at the link above constitutes a binding
+contract between the Parties. TPG may modify, amend, or update the Agreement without prior individual notice to Customer and the current
+version of the Agreement supersedes all previous versions. TPG will post the most recent version of the Agreement at the link above with
+a revised “Last Modified” date and the revised Agreement shall be effective upon posting. Unless otherwise provided herein,
+all capitalized terms will have the meanings ascribed to them in the Agreement.
+Start Date
+End Date
+Terms
+Price
+6/7/2026
+6/6/2027
+Term. This Order Form shall have a total term of twelve (12)
+months commencing on the start date and finishing on the end date unless early terminated pursuant to this Order Form or the Agreement.
+This Order form supersedes and replaces all previous agreements among the Parties.
+Term Extension. The Term will automatically renew for successive
+renewal terms equal in length to the original Term (each, a “Renewal Term”) unless either Party provides written notice of
+its intent not to extend to the other Party by April 6, 2027 (“Extension Date”). If such notice is timely provided on or before
+the Extension Date, this Order Form will terminate at the end of the then-current Term or Renewal Term. Written notice of intent to not
+extend must be sent to optout@thepipelinegroup.io.
+TPG Data & Technology. TPG Data and Technology are
+included during the Term and Renewal Term. Customer acknowledges and agrees that TPG retains all right, title, and interest in and to
+the Technology (For this Agreement and Order Form Technology shall mean all technology, materials, tools, and intellectual property provided,
+made available, or used by TPG in connection with the Services, and all derivatives, enhancements, modifications, improvements, and adaptations
+thereof, whether created before, during, or after the Term/Renewal Term and includes without limitation all intellectual property and
+proprietary rights therein, including issued patents and pending patent applications including provisional, non-provisional, continuations,
+continuations-in-part, divisionals, reissues, reexaminations, and foreign counterparts, copyrights, trademarks, service marks, mask works,
+and other similar rights, whether registered or unregistered, and whether owned or licensed by TPG as well as all Data (as defined in
+the Agreement) provided hereunder, and that all such Technology is protected by applicable IP laws. Nothing in this Order Form shall
+be construed to transfer ownership of any Technology or Data to Customer and Customer’s use of the Technology is limited to a revocable,
+non-exclusive, non-transferable, non-sublicensable license solely for Customer’s internal business purposes during the Term/Renewal Term
+and only in connection with the Services as specified in this Order Form. Any violation of these restrictions shall constitute a material
+breach of this Order Form. In the event of any conflict between this Order Form and the Agreement, this Order Form shall control with
+respect to intellectual property ownership, Technology and protection of TPG’s proprietary rights.
+The Pipeline Group
+Main Products and Services 1-16
+PE/VC Partner Price:
+$[**] xDR / Data Services / Automated Dialing Technology Mo.
+See Payment Schedule, Exhibit A
+6
+Hiring /Placement Fee. If Customer wishes to hire an assigned
+TPG xDR in a full-time capacity during the Term/Renewal Term of this Order Form or Agreement or within (1) year following termination
+of this Order Form or Agreement, Customer shall deliver to TPG written notice thereof at least sixty (60) days before the intended hiring
+date and agrees to the fee as listed below. If the xDR is hired within the Term/Renewal Term; the final thirty (30) days of the notice
+period shall serve as a professional transition period during which the xDR will continue to work with TPG. Upon the acceptance of a job
+offer by an xDR to be employed or engaged by Customer in a sales, marketing, revenue-generating, demand-generation, or substantially similar
+role, Customer shall pay TPG a non-refundable recruiting fee equal to one (1) month of the then-current fees payable by Customer for such
+xDR under this Order Form for each xDR hired and such fee shall be due and payable within ten (10) days of acceptance of such job offer.
+If any existing or former TPG manager, member of the management team,
+executive or comparable role is hired by Customer during the Term/Renewal Term or within one (1) year following termination of this Order
+Form or Agreement, upon formal acceptance of a job offer by the individual, Customer shall pay TPG a non-refundable placement fee [**]
+per individual hired within ten (10) days of such job offer.
+Payment of any hiring or recruiting fee, as described above, is not
+a penalty, but rather TPG’s and Customer’s reasonable estimate of the costs incurred by TPG if required to replace personnel
+hired by Customer, such as interviews, training and lost revenue during the time period it takes to replace the TPG personnel hired by
+Customer.
+Late Payments. If any payment to TPG is not made within
+fifteen (15) days of its due date, interest shall accrue on the overdue amount, from the date overdue until the date paid, at the overdue
+rate of 1.5% per month. The defaulting party will also be responsible for all costs and attorney’s fees incurred in enforcing this
+agreement.
+7
+Modification to Services: Notwithstanding any conflicting or
+omitted clauses or terms or conditions contained in any Order Form, Addendum, exhibit, or any other agreement, document, instrument, or
+communication between the Parties, the Parties expressly agree that the terms set forth in this section “Modification to Services”
+of this Order Form shall control and take precedence over any such conflicting or omitted terms. The Parties agree that the Customer shall
+be allowed to increase or decrease the Services according to the below notification schedule by providing TPG with prior written notice
+via email to
+optout@thepipelinegroup.io:
+1. Increase or decrease of one (1) xDR requires Customer to
+provide thirty (30) days’ prior written notice to TPG.
+2. Increase or decrease of two (2) xDRs requires Customer to
+provide sixty (60) days’ prior written notice to TPG.
+3. Increase or decrease of between three (3) and ten (10) xDRs
+requires Customer to provide ninety (90) days’ prior written notice to TPG.
+4. Increase or decrease of more than ten (10) xDRs will require
+TPG to provide separate express written approval of such increase or decrease.
+5. Customer agrees that it can only decrease a maximum of ten
+(10) xDRs per any six (6) month rolling period.
+6. Minimum Commitment: Customer agrees to a minimum commitment
+of one (1) xDR for the duration of the Term or Renewal Term.
+The effective date of any such modification according to the above
+notification schedule shall be thirty (30) days after TPG receives written notice from Customer. Any increase in Services shall be subject
+to TPG’s resource availability and capability but TPG agrees to provide commercially reasonable efforts to meet any of Customer’s
+increased needs. This increase or decrease in Services will be subject to any price changes as mutually agreed to by the Parties (email
+to suffice).
+For clarity, the Parties expressly agree that in the event of any inconsistency,
+ambiguity, or conflict between the provisions of this Section in this Order Form and any other agreement, document, instrument, or communication
+between the parties, the provisions in this Section of this Order Form shall prevail.
+8
+Payments
+Terms
+Project
+Scope: Main Tasks 1-16
+Option
+to add additional xDR as a Service pursuant to the terms as listed above.
+Monthly
+Price: $13,500
+First
+Payment Due
+June
+7, 2026
+Monthly
+payments are due on the 7th day of every month.
+Please
+make all checks or wire transfers payable to The Pipeline Group, Inc.
+Signatories
+authID Inc.
+The Pipeline Group, LLC
+Signed
+/s/ Ed Sellitto
+Signed
+/s/ Scott Wiesenfeld
+Name
+Ed Sellitto
+Name
+Scott Wiesenfeld
+Title
+CFO
+Title
+Regional Director of Sales
+Date
+4/13/2026
+Date
+4/14/2026
+The
+information contained in this Order Form is confidential information.
+9
+Exhibit
+A
+Payment
+Schedule
+Subscription
+Period
+June
+7, 2026 – June 6, 2027
+Term Length
+12 (months)
+Monthly Per
+xDR Price (List)
+$[**]
+Monthly Per
+xDR Price (Discount)
+[**]
+Monthly Price
+$13,500
+Agreement
+Price
+$162,000
+10
+Service Periods
+June 7, 2026 - July 6, 2026
+$
+13,500
+July 7, 2026 - August 6, 2026
+$
+13,500
+August 7, 2026 - September 6, 2026
+$
+13,500
+September 7, 2026 - October 6, 2026
+$
+13,500
+October 7, 2026 - November 6, 2026
+$
+13,500
+November 7, 2026 - December 6, 2026
+$
+13,500
+December 7, 2026 - January 6, 2027
+$
+13,500
+January 7, 2027 - February 6, 2027
+$
+13,500
+February 7, 2027 - March 6, 2027
+$
+13,500
+March 7, 2027 - April 6, 2027
+$
+13,500
+April 7, 2027 - May 6, 2027
+$
+13,500
+May 7, 2027 - June 6, 2027
+$
+13,500
+11

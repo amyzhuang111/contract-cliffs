@@ -1,0 +1,163 @@
+EX-10.1
+2
+ex_810665.htm
+EXHIBIT 10.1
+ex_810665.htm
+Exhibit 10.1
+[REDACTED] Indicates that certain information in this exhibit has been excluded because it is both (i) not material and (ii) would be competitively harmful if publicly disclosed.
+Renewal of and Sixth Amendment to
+Mobile Virtual Network Enabler
+(“MVNE”) Master Services Agreement
+This Sixth Amendment to the Mobile Virtual Network Enabler Master Services Agreement (“Sixth Amendment”) is entered into as of the date of the last signature below and effective as of January 1, 2025 (the “Sixth Amendment Effective Date”) by and between Wavelo, Inc., a Delaware corporation and mobile virtual network enabler services provider having a place of business at 96 Mowat Ave, Toronto, Ontario, M6K 3L7 (“Wavelo”) and Tucows Inc. (“Tucows”) (solely as to the obligation set forth in Section 5 of this Sixth Amendment) on the one hand, and DISH Wireless L.L.C., a Colorado limited liability company (“DISH”) having a place of business at 9601 South Meridian Boulevard, Englewood, Colorado 80112 on the other hand.
+All references to “WAVELO” or “MVNE SP” in prior amendments (as noted below) and in the Agreement (as defined below) are deemed to refer to WAVELO.
+WHEREAS, WAVELO and DISH (each individually a “Party”, and collectively, the “Parties”) entered into the Mobile Virtual Network Enabler (“MVNE”) Master Services Agreement (the “MSA”), made and effective as of August 1, 2020 (as amended by the First Amendment to the MSA MVNE (the “First Amendment”), effective September 9, 2021; the Second Amendment to the MSA (the “Second Amendment”), effective December 31, 2021; the Third Amendment to the MSA (the “Third Amendment”), effective July 26, 2022; the Fourth Amendment to the MSA (the “Fourth Amendment”), effective January 1, 2023; the Fifth Amendment to the MSA (the “Fifth Amendment”) effective January 1, 2024 (together with the First Amendment, Second Amendment, Third Amendment, Fourth Amendment, the MSA and all exhibits, appendices and attachments thereto, the “Agreement”), for Wavelo to provide certain mobile enabling services to DISH as defined and specified in the Agreement;
+WHEREAS, the Parties acknowledge the Agreement’s Initial Term expired on July 31, 2024, and in accordance with Section 12.3 of the MSA, the Agreement automatically renewed on August 1, 2024 for a one (1) year term; however, the Parties now wish to amend the Agreement to extend such initial renewal for four (4) years from the Sixth Amendment Effective Date, as further detailed below; and
+WHEREAS, the Parties desire to amend the Agreement to take account of DISH’s changed needs, expectations, and technical requirements around the Scope of Work described in Schedules A and B of the Agreement and provide revised financial terms to reflect such mutually agreed upon changes.
+NOW, THEREFORE, in consideration of the mutual covenants and representations contained in this Sixth Amendment and in the Agreement, the Parties hereby amend the Agreement as follows:
+1. RECITALS. The above recitals are specifically incorporated herein by reference.
+2. SECTION 1 DEFINITIONS (AFFILIATE). As of the Sixth Amendment Effective Date, the definition of “Affiliate” in Section 1 (Definitions) is hereby deleted in its entirety and replaced with the following new definition of “Affiliate”:
+““Affiliate” of an entity means any entity, directly or indirectly, controlling, controlled by, or under common control with such first entity, in each case for so long as such control continues. For purposes of this definition, “control” shall mean: (i) the ownership, directly or indirectly, of at least fifty percent (50%) of either: (a) the voting rights attached to issued voting shares of the relevant entity; or (b) the power to elect fifty percent (50%) of the directors of the relevant entity, or (ii) the ability to direct the actions of the relevant entity."
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 1 of 12
+Confidential
+DISH Initials:
+3. RENEWAL. As of the Sixth Amendment Effective Date, Section 12.3 (Automatic Renewal) of the main body of the Agreement is hereby deleted in its entirety and replaced with the following new Section 12.3:
+"12.3 Automatic Renewal. Following the expiration of the Initial Te1m, the Te1m of this MSA will automatically renew on the same te1ms and conditions set forth in the MSA for one (1) four (4) year te1m (the "First Renewal Term"). Following the First Renewal Te1m, the Te1m of the MSA will automatically extend from year to year (each, an "Optional Renewal Term") unless either Patty upon written notice to the other Pa1ty no later than ninety (90) days p1ior to the expiration of such First Renewal Te1m or Optional Renewal Te1m, as applicable; provided, however, the automatic renewal of this MSA will not se1ve to extend any particular· Se1vice Te1m. Wavelo will notify DISH ninety (90) days prior to the expiration of any Se1vice Te1m, which notice will also state DISH's right to renew such Order Fo1m in accordance with this Section 12.3 and/or the applicable Order Fo1m (the "Expiration Notice"). In the event that DISH elects to renew or extend any Se1vice Te1m, then the te1ms and conditions of such Order Fo1m shall remain in full force and effect without modification."
+4. CONTINUITY OF BUSINESS OPERATIONS. As of the Sixth Amendment Effective Date, Section 18.11 (Escrow) is deleted in its entirety, and replaced with the following new Section 18.11:
+"Section 18.11 Continuitv of Business Operations.
+18.11.1 [REDACTED]
+18.11.2 [REDACTED]
+18.11.3 [REDACTED]
+18.11.3.1 [REDACTED]
+18.11.3.2 [REDACTED]
+18.11.3.3 [REDACTED]
+18.11.3.3.1[REDACTED]
+18.11.3.3.2[REDACTED]
+18.11.3.3.3[REDACTED]
+18.11.3.3.4[REDACTED]
+5. Parent Guarantee. As of the Sixth Amendment Effective Date, a new Section 18.25 (Parent Guarantee) is hereby added to the Agreement:
+18.25 [REDACTED]
+6. SCHEDULE A (SCOPE OF WORK}; Section 1 - Table of Services Revisions. As of the Sixth Amendment Effective Date, Schedule A (Scope of Work) - Section 1 (Table of Services) of the Agreement is hereby amended with the following modifications, exclusions and additions presented in Appendices A-1, A-2, and A-3, and the retained scope of work summarized in A-4 of this Sixth Amendment, which are attached hereto and incorporated herein by reference. As a result, any reference in the Agreement to Section 1 (Table of Services) of Schedule A (Scope of Work), shall mean Section 1 (Table of Services) to Schedule A (Scope of Work) as amended herein, and solely refer to the items referenced in this Sixth Amendment.
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 2 of 12
+Confidential
+DISH Initials:
+7. SCHEDULE A (SCOPE OF WORK): [REDACTED]
+8. SCHEDULE B (SERVICE LEVEL AGREEMENTS). As of the Sixth Amendment Effective Date Schedule B (Service Level Agreements) of the Agreement is hereby deleted in its entirety and replaced with the new Schedule B (Service Level Agreements) included in Appendix B of this Sixth Amendment, which is attached hereto and incorporated herein by reference. As a result, any references in the Agreement to Schedule B (Service Level Agreements) shall mean Schedule B (Service Level Agreements) as amended herein, and solely refer to the items referenced in this Sixth Amendment.
+9. SCHEDULE C {PRICING FOR THE SERVICES). As of the Sixth Amendment Effective Date, Schedule C (Pricing for the Services) of the Agreement is hereby deleted in its entirety and replaced with the new Schedule C (Pricing for the Services) included in Appendix C of this Sixth Amendment, which is attached hereto and inco1porated herein by reference. As a result, any references in the Agreement to Schedule C (Pricing for Services) shall mean Schedule C (Pricing for the Services) as amended herein, and solely refer to the items referenced in this Sixth Amendment.
+10. OFCCP Compliance. DISH Wireless L.L.C. is an equal opportunity employer and federal contractor or subcontractor. Consequently, the Parties agree that, as applicable, they will abide by the requirements of 41 CFR 60-l.4(a), 41 CFR 60-300.S(a) and 41 CFR 60-741.S(a) and that these laws are incorporated herein by reference. These regulations prohibit discrimination against qualified individuals based on their status as protected veterans or individuals with disabilities, and prohibit discrimination against all individuals based on their race, color, religion, sex, sexual orientation, gender identity or national origin. These regulations require that covered prime contractors and subcontractors take affirmative action to employ and advance in employment individuals without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, protected veteran status or disability. The Parties also agree that, as applicable, they will abide by the requirements of Executive Order 13496 (29 CFR Part 471, Appendix A to Subpart A), relating to the notice of employee rights under federal labor laws.
+11. MISCELLANEOUS. All capitalized terms used and not otherwise defined in this Sixth Amendment have the meanings defined for them in the underlying Agreement. Except as modified by this Sixth Amendment, whether expressly or by necessary implication, all provisions of the Agreement will be unaffected and will remain in full force and effect in accordance with their terms. If there is a conflict between the provisions of the Agreement and the provisions of this Sixth Amendment, this Sixth Amendment will control to the extent of the conflict. This Sixth Amendment constitutes the entire agreement between the Parties with respect to the subject matter herein; however, the Agreement shall control in the event that a matter is not addressed by this Sixth Amendment. The Parties agree that any facsimile copy of a signed counterpart of this Sixth Amendment will be treated the same as a signed original of this Sixth Amendment, and signatures by facsimile and electronically scanned signatures shall be effective as original signatures to this Sixth Amendment. This Sixth Amendment may be executed in multiple counterparts, each of which constitutes an original, but all of which, when taken together, shall be considered one (1) document. Each person signing below hereby warrants and represents that they have full authority to execute this Sixth Amendment for the Party on whose behalf they are signing.
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 3 of 12
+Confidential
+DISH Initials:
+IN WITNESS WHEREOF, the Parties have caused this Sixth Amendment to be executed by their duly authorized officers or representatives as of the Sixth Amendment Effective Date.
+Wavelo, Inc.
+DISH Wireless L.L.C.
+Signature:
+Signature:
+Name:
+Justin Reilly
+Name:
+John Swieringa
+Title:
+CEO
+Title:
+President, Technology & COO
+Date:
+Jan 28, 2025
+Date:
+Jan 29, 2025
+Tucows, Inc.
+(solely as to the obligation set forth in Section 18.25 of this Agreement)
+Signature:
+Name:
+Elliot Noss
+Title:
+CEO
+Date:
+Jan 28, 2025
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 4 of 12
+Confidential
+DISH Initials:
+Appendix A-1
+Additions to Section 1 (Table of Services): Schedule A (Scope of Work)
+The following table summarizes the additions made to the scope of work in Section 1 (Table of Services) of Schedule A (Scope of Work) of the Agreement. The Parties acknowledge and agree the modifications set forth in this Appendix A-1 have been made as a result of changes to the overall business objectives and solution architecture that DISH requires to support its service offerings. For clarity and the avoidance of doubt, this Appendix A-1 is meant to supplement Section 1 (Table of Services), and is not intended to replace the scope of work previously agreed upon by the Parties, except for those items specifically removed from the scope of work in Appendix A-3 or modified to the scope of work in Appendix A-2.
+[REDACTED]
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 5 of 12
+Confidential
+DISH Initials:
+Appendix A-2
+Modifications to Section I (Table of Services): Schedule A (Scope of Work)
+The following table summa1izes the modifications made to the scope of work to Section I (Table of Services) of Schedule A (Scope of Work) of the Agreement. The Pa1ties acknowledge and agree the modifications set fo1th in this Appendix A-2 have been made as a result of changes to the overall business objectives and solution architecture that DISH requires to suppo1t its se1vice offerings. For clarity and the avoidance of doubt, in the event of a conflict between an item listed in this Appendix A-2 and the 01iginal Section I (Table of Services) of Schedule A (Scope of Work), this Appendix A-2 shall control with respect to the item set fo1th herein.
+[REDACTED]
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 6 of 12
+Confidential
+DISH Initials:
+Appendix A-3
+Exclusions from Schedule A (Scope of Work)
+The following table summarizes the exclusions made to the scope of work in Section I (Table of Services) of Schedule A (Scope of Work) of the Agreement. The Parties acknowledge and agree the modifications set forth in this Appendix A-3 have been made as a result of changes to the overall business objectives and solution architecture that DISH requires to suppo1t its se1vice offerings. For clarity and the avoidance of doubt, the items listed in this Appendix A-3 are no longer in scope.
+[REDACTED]
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 7 of 12
+Confidential
+DISH Initials:
+Appendix A-4
+Summary of retained scope from Section 1 (Table of Services): Schedule A (Scope of Work)
+For illustration purposes, the following table summarizes the scope of work retained from Section I (Table of Services) of Schedule A(Scope of Work), which together with Appendices A-1and A-2 presented herein represents the full amended scope of work of the Agreement.
+[REDACTED]
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 8 of 12
+Confidential
+DISH Initials:
+Appendix A-5
+Revisions to Section 2 (Solution Summary). Section 3 (Deliverables) and
+Section 4 (Testing and Solution Acceptance) of Schedule A (Scope of Work)
+[REDACTED]
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 9 of 12
+Confidential
+DISH Initials:
+Appendix B
+Schedule B
+SERVICE LEVEL AGREEMENTS
+1.
+Introduction
+This Service Level Agreement (SLA) defines the te1ms and commitments between WAVELO and DISH regarding the WAVELO MVNE platfo1m, consisting of production and test environments. The agreement outlines se1vice availability, incident management processes, and perfo1mance expectations aimed at ensuring the platfo1m meets the operational needs of DISH's business.
+[REDACTED]
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 10 of 12
+Confidential
+DISH Initials:
+Appendix C
+Schedule C
+PRICING FOR THE SERVICES
+I.
+Definitions. Capitalized terms undefined in this Schedule C shall have the meaning ascribed to them in the Agreement.
+[REDACTED]
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 11 of 12
+Confidential
+DISH Initials:
+SLA Excellence Attachment to Schedule C
+[REDACTED]
+Schedules and Exhibits to the agreement have been omitted pursuance to Item 601(b)(2) of Regulation S-K. The Company undertakes to furnish supplementary copies of any of the omitted schedules upon request by the SEC.
+Sixth Amendment to MSA
+DISH Wireless L.L.C.
+Page 12 of 12
+Confidential
+DISH Initials:
