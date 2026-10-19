@@ -35,7 +35,9 @@
   pay within 30 days | lines 527–529
 ## b7
   Effective date | 2024-01-01 | high  | lines 8–10 | SERVICES AGREEMENT (“Agreement”), dated as of January 01, 2024 (“Effective Date”), is entered into by and between ARMSTRONG LOGISTICS INC, a
-  Term / expiry | - | none REVIEW |  | 
+  Current term ends (projected) | 2026-10-31 | medium  | lines 30–32 | The initial term of this Agreement commences on the Effective Date and continues through the last day of the next month following the Effect
+  Auto-renewal | 2026-11-01 | high  | lines 32–33 | The Term shall automatically renew and be extended, and the provisions hereof shall continue to be effective, for additional successive one 
+  Non-renewal notice: act by | - | none REVIEW | lines 32–33 | The Term shall automatically renew and be extended, and the provisions hereof shall continue to be effective, for additional successive one 
   pay within 60 days | lines 175–177
   pay within 30 days of receipt of invoice | lines 213–228
   tfc notice length not stated | lines 229–231 Either Party may terminate this Agreement without cause upon delivery to the other of a written Notice of Termination wh
@@ -57,6 +59,6 @@
   pay within 30 days | line 192
 ## b10
   Effective date | 2017-10-31 | high  | lines 300–305 | THIS MANUFACTURING SERVICES AGREEMENT (the "Agreement") is made as of October 31, 2017 (the “Effective Date”) B E T W E E N: PATHEON UK LIMI
-  Term / expiry | - | none REVIEW | line 526 | If Client forecasts zero volume for [***] period during the term of this Agreement (the “Zero Forecast Period”), then Patheon will have the 
+  Term / expiry | - | low REVIEW | line 606 | This Agreement will become effective as of the Effective Date and will continue until December 31 of the Year that is five full Years after 
   Non-renewal notice: act by | - | none REVIEW | line 606 | This Agreement will automatically renew after the Initial Term for successive terms of one Year each (each a “Renewal Term”), unless either 
   pay within 5 days | line 686

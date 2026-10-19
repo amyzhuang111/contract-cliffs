@@ -19,19 +19,41 @@ await page.goto(BASE + '/?asof=2026-10-19', { waitUntil: 'networkidle0' });
 const edgar = await (await fetch(BASE + '/data/edgar.json')).json();
 ok(edgar.length >= 8 && edgar.length <= 12, `real set has ${edgar.length} contracts (8-12)`);
 await page.waitForSelector('#queue li');
-ok(await page.$eval('#setEdgar', b => b.textContent.trim() === 'Real public contracts (SEC EDGAR)' && b.getAttribute('aria-pressed') === 'true'), 'real set is loaded and labelled');
+ok(await page.$eval('#setEdgar', b => b.textContent.trim() === '10 real public contracts (SEC)' && b.getAttribute('aria-pressed') === 'true'), 'real set is loaded and labelled');
 ok((await page.$$('#queue li[data-id]')).length === 10, 'queue has 10 rows');
 ok((await page.$$('#cards .card')).length === 10, '10 contract cards');
-const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 4 need review · 1 missed window/.test(st), 'counts: ' + st);
+const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 4 need review · 1 missed deadline/.test(st), 'counts: ' + st);
 const order = await page.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('lgrp') ? 'LAPSED' : 'H:' + l.textContent.trim())));
-ok(order.join(',') === 'H:Missed · notice window passed, not yet renewed,c3,H:Resolve first · needs review, no date,c13,c8,H:Upcoming · 31–90 days,c5,H:Upcoming · 91–365 days,c1,c6,H:Upcoming · over a year,c4,c12,c2,LAPSED', 'priority order on the page: ' + order.join(','));
+ok(order.join(',') === 'H:Missed · deadline passed, not yet renewed,c3,H:Resolve first · needs review, no date,c13,c8,H:Upcoming · 31–90 days,c5,H:Upcoming · 91–365 days,c1,c6,H:Upcoming · over a year,c4,c12,c2,LAPSED', 'priority order on the page: ' + order.join(','));
 ok(/^Why it’s here Notice window missed 30 days ago · renews 19 Nov 2026/.test(await page.$eval('#queue li[data-id="c3"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'F1: Dragonfly shows the missed notice window at the top');
-ok(await page.$eval('#queue li.lgrp details', e => !e.open) && /Lapsed \(1\)/.test(await page.$eval('#queue li.lgrp summary', e => e.textContent)), 'F9: lapsed rows collapsed under "Lapsed (1)"');
+ok(await page.$eval('#queue li.lgrp details', e => !e.open) && /Expired \(1\)/.test(await page.$eval('#queue li.lgrp summary', e => e.textContent)), 'F9: expired rows collapsed under "Expired (1)"');
 { const st = await page.$eval('#status', e => e.textContent); const sv = await page.$$eval('#stats > div', ds => Object.fromEntries(ds.map(d => [d.querySelector('.lab').textContent, d.querySelector('.sv').textContent])));
   ok(st.includes(sv['Need review'] + ' need review'), `F3: status line and stats strip agree on need-review (${sv['Need review']})`); }
 ok(!(await page.$$eval('#queue li[data-id]', ls => ls.filter(l => /\d{4}/.test(l.querySelector('.d').textContent) && /^none confidence/.test(l.querySelector('.s').textContent.trim().split('\n').pop().trim())).length)), 'F6: no dated row shows "none" confidence');
 const why5 = await page.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim()); ok(why5 === 'Why it’s here Act in 58 days · missing it locks in 2 more years', 'row reason: ' + why5);
-ok(/Missed first/.test(await page.$eval('#rule', e => e.textContent)) && /Priority rule/i.test(await page.$eval('.rule .lab', e => e.textContent)), 'Priority rule note is shown');
+ok(/1\) Missed/.test(await page.$eval('#rule', e => e.textContent)) && /Priority rule/i.test(await page.$eval('.rule .lab', e => e.textContent)), 'Priority rule note is shown');
+{ const lede = await page.$eval('.lede', e => e.textContent.replace(/\s+/g, ' ').trim());
+  ok(lede === 'Many contracts renew automatically unless you send notice by a deadline. Contract Cliffs reads your contracts and tells you the date you must act by, most urgent first, quoting the exact sentence each date comes from.', 'clarity: plain-words hero');
+  const steps = await page.$$eval('.steps li .lab', l => l.map(x => x.textContent));
+  ok(steps.join('|') === '1 · Load contracts|2 · Read the list|3 · Check and export', 'clarity: 3-step how to use');
+  const ex = await page.$eval('#example', e => e.textContent.replace(/\s+/g, ' '));
+  ok(/Dragonfly \/ Keystone RV: the deadline to send notice passed on 19 Sep 2026, so it renews automatically on 19 Nov 2026/.test(ex), 'clarity: worked example from the real top item: ' + ex.slice(0, 80));
+  ok(await page.$eval('#qh abbr', e => /last day to send notice/.test(e.title)), 'clarity: "Act by" has a plain tooltip');
+  ok(await page.$eval('details.method', e => !e.open) && await page.$eval('details.rule', e => !e.open), 'clarity: method and priority rule collapsed');
+  ok(/Test set \(10 unseen contracts\)/.test(await page.$eval('#setHoldout', e => e.textContent)) && !/holdout|Lapsed/i.test(await page.$eval('body', e => e.innerText.replace(/Method and accuracy[\s\S]*/, ''))), 'clarity: no "holdout" or "Lapsed" jargon in visible labels');
+  const vis = await page.evaluate(() => { const q = document.querySelector('#queue').getBoundingClientRect().top, a = document.querySelector('#add').getBoundingClientRect().top; return q < a; });
+  ok(vis, 'clarity: the list comes before the add/export controls');
+  const d3 = await page.$eval('#queue li[data-id="c3"] .d', e => e.textContent.replace(/\s+/g, ' ').trim()), n3 = await page.$eval('#queue li[data-id="c3"] .n', e => e.textContent.trim());
+  ok(d3 === 'Renews 19 Nov 2026' && n3 === 'in 31 days', `missed row headline is the renewal date (${d3} · ${n3})`);
+  ok(/Need review/.test(await page.$eval('.revlist', e => e.textContent)) && (await page.$$('.revlist .lnk')).length === 4, 'Need review stat names its 4 contracts');
+  await page.$eval('.revlist .lnk', b => b.click()); await new Promise(r => setTimeout(r, 400)); ok(await page.$eval('#drawer', e => e.classList.contains('on')), 'need-review name opens its drawer'); await page.keyboard.press('Escape'); await new Promise(r => setTimeout(r, 300));
+  const cols = await page.$eval('#stats', e => getComputedStyle(e).gridTemplateColumns.split(' ').length); ok(cols === 6, `stats strip has 6 columns at desktop (${cols})`);
+}
+{ const p2 = await browser.newPage(); await p2.setViewport({ width: 1440, height: 900 }); await p2.goto(BASE + '/?asof=2026-12-16', { waitUntil: 'networkidle0' }); await p2.waitForSelector('#queue li[data-id]');
+  const o = await p2.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('sh') ? 'H:' + l.textContent.trim() : '')).filter(Boolean));
+  const iDue = o.indexOf('H:Due now · today or within 7 days'), iRes = o.indexOf('H:Resolve first · needs review, no date');
+  ok(iDue >= 0 && o[iDue + 1] === 'c5' && iDue < iRes, 'R1: on the deadline day (as-of 2026-12-16) Star Brands sits in "Due now" above "Resolve first"');
+  ok(/^Why it’s here Due today · send notice now/.test(await p2.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'R1: due-now reason says "Due today"'); await p2.close(); }
 ok(/two cycles out/.test(await page.$eval('#queue li[data-id="c1"]', e => e.textContent)), 'Cerus reason calls out notice longer than renewal');
 const fonts = await page.evaluate(async () => { await document.fonts.ready; return [document.fonts.check('16px "Geist Mono"'), document.fonts.check('16px Geist'), [...document.fonts].map(f => f.family).join(',')]; });
 ok(fonts[0] && fonts[1] && !/Bodoni|Serif/i.test(fonts[2]), 'self-hosted Geist and Geist Mono loaded; no Bodoni or serif faces');
@@ -76,7 +98,7 @@ ok(rvs.every(r => /^ · \S/.test(r.rs) && r.rcol === TOK.mute), 'each label is f
 const nd = await page.$$eval('#queue li .d', ds => ds.filter(d => !/\d{4}/.test(d.textContent)).map(d => ({ t: d.textContent.trim(), c: getComputedStyle(d.querySelector('.nd') || d).color })));
 ok(nd.length === 2 && nd.every(x => x.t === 'No date found' && x.c === TOK.mute), 'undated rows read "No date found" in grey, no dash');
 await page.$eval('#queue li.lgrp details', e => { e.open = true; });
-const c7 = await page.$eval('#queue li[data-id="c7"]', e => e.textContent.replace(/\s+/g, ' ')); ok(/Lapsed/.test(c7) && /31 May 2024/.test(c7) && /Expired \d+ days ago · all renewals used/.test(c7) && !/send non-renewal/i.test(c7), 'Synacor / Qwest row: Lapsed, Expired 31 May 2024 (all renewals used), no send-notice line');
+const c7 = await page.$eval('#queue li[data-id="c7"]', e => e.textContent.replace(/\s+/g, ' ')); ok(/Expired/.test(c7) && !/Lapsed/.test(c7) && /31 May 2024/.test(c7) && /Expired \d+ days ago · all renewals used/.test(c7) && !/send non-renewal/i.test(c7), 'Synacor / Qwest row: Expired chip, Expired 31 May 2024 (all renewals used), no send-notice line');
 await page.click('#cards .card[data-id="c7"]'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 350));
 const c7d = await page.$eval('#drawer', e => e.textContent); ok(/Expired \(all renewals used\)/i.test(c7d) && !/Auto-renewal/i.test(c7d) && !/Non-renewal notice/i.test(c7d), 'Synacor drawer: expired, no auto-renewal or notice rows');
 ok(await page.evaluate(() => document.activeElement?.id === 'close'), 'drawer moves focus to Close');
@@ -121,8 +143,8 @@ ok((await page.$$('#queue li.grp')).length === 0, 'grouping off restores the fla
 await page.$eval('#g-counterparty', b => b.click()); await new Promise(r => setTimeout(r, 200));
 { const h0 = await page.$eval('#queue li.grp', l => l.textContent); ok(/Keystone RV/.test(h0), 'F10: groups sorted by priority (first group holds the top row, Keystone RV)'); }
 await page.$eval('#g-none', b => b.click());
-await page.$eval('#setHoldout', b => b.click()); await page.waitForFunction(() => document.querySelectorAll('#cards .card').length === 10 && /Blind holdout/.test(document.querySelector('#setnote').textContent), { timeout: 15000 });
-{ const t = await page.$eval('#queue', e => e.textContent); ok(/Management services/.test(t) && (await page.$$('#queue li[data-id]')).length === 10, 'holdout set is live: 10 blind EDGAR contracts in the queue'); }
+await page.$eval('#setHoldout', b => b.click()); await page.waitForFunction(() => document.querySelectorAll('#cards .card').length === 10 && /Test set/.test(document.querySelector('#setnote').textContent), { timeout: 15000 });
+{ const t = await page.$eval('#queue', e => e.textContent); ok(/Blockfusion \/ Thunderra/.test(t) && (await page.$$('#queue li[data-id]')).length === 10, 'holdout set is live: 10 blind EDGAR contracts in the queue'); }
 await page.$eval('#setEdgar', b => b.click()); await new Promise(r => setTimeout(r, 200));
 // cross-referenced notice period (paste)
 await page.$eval('#paste', (e, v) => { e.value = v; }, 'This Services Agreement is entered into as of January 1, 2026 (the "Effective Date").\n7.1 Term. The term of this Agreement shall begin on January 1, 2026 and shall end January 1, 2029. Upon expiration of the Initial Term, this Agreement will automatically renew for successive one (1) year terms, unless either party provides the other with notice of its intent to terminate pursuant to Section 7.4.\n7.4 Termination for Convenience. Customer may terminate this Agreement for any or no reason upon three hundred sixty-five (365) days’ advance written notice.');
@@ -135,7 +157,7 @@ await page.$eval('#setEdgar', b => b.click()); await page.waitForSelector('#queu
 const links = await page.$$eval('a[href]', as => as.map(a => a.href));
 await page.click('#cards .card'); await new Promise(r => setTimeout(r, 450)); const dl2 = await page.$$eval('#drawer a[href]', as => as.map(a => a.href)); await page.click('#close'); await new Promise(r => setTimeout(r, 350));
 const all = [...new Set([...links, ...dl2, ...edgar.map(c => c.url)])];
-ok(!all.some(h => /example\.(com|org)|placeholder|lorem|^#$|javascript:|localhost(?!:4173)/i.test(h)), `no placeholder links among ${all.length}`);
+ok(!all.filter(h => !h.startsWith(BASE + '/')).some(h => /example\.(com|org)|placeholder|lorem|javascript:|localhost|127\.0\.0\.1/i.test(h)) && !all.some(h => /#$/.test(h)), `no placeholder links among ${all.length} (own-origin links allowed for any BASE_URL port)`);
 const html = await page.content(); ok(!/example\.com|lorem ipsum|TODO/i.test(html), 'no placeholder text in page');
 for (const h of all) { let s = 0; try { const r = await fetch(h, { headers: { 'User-Agent': UA }, redirect: 'follow' }); s = r.status; } catch (e) { s = String(e); } ok(s === 200, `200 ${h} (${s})`); await new Promise(r => setTimeout(r, 150)); }
 const src = await browser.newPage(); await src.goto(BASE + '/source/?id=c2&from=352&to=355#L352', { waitUntil: 'networkidle0' });

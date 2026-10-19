@@ -33,28 +33,32 @@ function render() {
   const rows = buildQueue(cs, asOf);
   // one source of truth for the counts shown in the status line and the stats strip
   const dated = rows.filter(r => r.actBy).length, review = rows.filter(r => r.needsReview).length, lapsedN = rows.filter(r => r.section === 'lapsed').length, missedN = rows.filter(r => r.section === 'missed').length;
-  $('#status').textContent = (asOfNote ? asOfNote + ' ' : '') + (cs.length ? `${cs.length} contracts · ${dated} with a computed date · ${review} need review${missedN ? ` · ${missedN} missed window${missedN > 1 ? 's' : ''}` : ''}` : 'No documents yet. Upload or paste a contract.');
+  $('#status').textContent = (asOfNote ? asOfNote + ' ' : '') + (cs.length ? `${cs.length} contracts · ${dated} with a computed date · ${review} need review${missedN ? ` · ${missedN} missed deadline${missedN > 1 ? 's' : ''}` : ''}` : 'No documents yet. Upload or paste a contract.');
   const next = rows.filter(r => r.actBy && r.days >= 0).sort((a, b) => a.days - b.days)[0];
-  $('#stats').innerHTML = [['Contracts', cs.length], ['With an act-by date', dated], ['Need review', review], ['Missed window', missedN], ['Lapsed', lapsedN], ['Next act-by', next ? fmt(next.actBy) : 'None']].map(([k, v]) => `<div><span class="lab">${k}</span><span class="sv">${esc(v)}</span></div>`).join('');
-  $('#setnote').innerHTML = set === 'edgar' ? 'Real public contracts (SEC EDGAR). Ten Exhibit 10 agreements: supply, licence, data licence, cloud and managed services. Each card links to the filing it came from.' : set === 'holdout' ? 'Blind holdout: ten further EDGAR exhibits the rules were never tuned on before scoring. Scored first pass: 3 right, 6 correctly left blank for review, 1 missed, 0 wrong act-by dates (see HOLDOUT.md). Shown here with the current rules.' : 'Your documents. Processed only in this browser tab; nothing is uploaded.';
+  const revNames = rows.filter(r => r.needsReview).map(r => `<button class="lnk" data-open="${esc(r.id)}">${esc(r.name)}</button>`).join(', ');
+  $('#stats').innerHTML = [['Contracts', cs.length], ['With an Act by date', dated], ['Need review', review], ['Missed deadline', missedN], ['Expired', lapsedN], ['Next Act by', next ? fmt(next.actBy) : 'None']].map(([k, v]) => `<div><span class="lab">${k}</span><span class="sv${k === 'Next Act by' ? ' nx' : ''}">${esc(v)}</span></div>`).join('') + (review ? `<p class="revlist"><span class="lab">Need review</span> ${revNames}</p>` : '');
+  document.querySelectorAll('#stats [data-open]').forEach(a => a.onclick = () => openDrawer(a.dataset.open));
+  const top = rows[0];
+  $('#example').innerHTML = !top ? '' : top.missed ? `<span class="lab">Example from the list</span> <b>${esc(top.name)}</b>: the deadline to send notice passed on ${esc(fmt(top.missed.actBy))}, so it renews automatically on <b>${esc(fmt(top.missed.renews))}</b>. Next chance to cancel: send notice by ${esc(fmt(top.actBy))}.` : top.actBy && top.section === 'upcoming' ? `<span class="lab">Example from the list</span> <b>${esc(top.name)}</b>: send notice by <b>${esc(fmt(top.actBy))}</b>, or it renews on its own.` : '';
+  $('#setnote').innerHTML = set === 'edgar' ? '10 real public contracts filed with the SEC (EDGAR). Exhibit 10 agreements: supply, licence, data licence, cloud and managed services. Each card links to the filing it came from.' : set === 'holdout' ? 'Test set: 10 more SEC contracts the rules had never seen when they were scored. Scored first pass: 3 right, 6 correctly left blank for review, 1 missed, 0 wrong act-by dates (see HOLDOUT.md). Shown here with the current rules.' : 'Your documents. Processed only in this browser tab; nothing is uploaded.';
   const li = r => { const past = r.section === 'lapsed';
     return `<li data-id="${esc(r.id)}" role="button" class="${past ? 'past' : ''}${r.section === 'missed' ? ' missed' : ''}${r.days != null && r.days >= 0 && r.days <= 90 ? ' soon' : ''}" tabindex="0">
-    <span class="d">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
-    <span class="n">${r.days == null ? '' : past ? `<span class="lapsed">Lapsed</span> · ${-r.days} days ago` : r.days === 0 ? 'today' : `in ${r.days} days`}</span>
+    <span class="d">${r.missed ? `<span class="rn">Renews</span> ${esc(fmt(r.missed.renews))}` : r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
+    <span class="n">${r.days == null ? '' : r.missed ? `in ${daysBetween(asOf, r.missed.renews)} days` : past ? `<span class="lapsed">Expired</span> · ${-r.days} days ago` : r.days === 0 ? 'today' : `in ${r.days} days`}</span>
     <span class="c"><b>${esc(r.name)}</b><div class="why-here"><span class="wl">Why it’s here</span> ${esc(r.why)}</div></span>
     <span class="s">${r.needsReview ? rv(r.item?.why) + '<br>' : ''}${esc(r.confidence)} confidence</span></li>`; };
   // optional grouping by party: counterparty or filer (the public company)
   ['none', 'counterparty', 'filer'].forEach(g => $('#g-' + g).setAttribute('aria-pressed', groupBy === g));
-  const head = r => r.section === 'missed' ? 'Missed · notice window passed, not yet renewed' : r.section === 'resolve' ? 'Resolve first · needs review, no date' : 'Upcoming · ' + WINDOWS[r.window][2];
+  const head = r => r.section === 'missed' ? 'Missed · deadline passed, not yet renewed' : r.section === 'due' ? 'Due now · today or within 7 days' : r.section === 'resolve' ? 'Resolve first · needs review, no date' : 'Upcoming · ' + WINDOWS[r.window][2];
   const lapsedRows = rows.filter(r => r.section === 'lapsed');
-  const lapsedBlock = rs => rs.length ? `<li class="lgrp" role="presentation"><details><summary><span class="lab">Lapsed (${rs.length})</span> <span class="gn">expired, nothing left to decide</span></summary><ul class="q">${rs.map(li).join('')}</ul></details></li>` : '';
+  const lapsedBlock = rs => rs.length ? `<li class="lgrp" role="presentation"><details><summary><span class="lab">Expired (${rs.length})</span> <span class="gn">expired, nothing left to decide</span></summary><ul class="q">${rs.map(li).join('')}</ul></details></li>` : '';
   if (groupBy === 'none') { let last = ''; $('#queue').innerHTML = rows.filter(r => r.section !== 'lapsed').map(r => { const h = head(r); const out = (h !== last ? `<li class="sh" role="presentation"><span class="lab">${esc(h)}</span></li>` : '') + li(r); last = h; return out; }).join('') + lapsedBlock(lapsedRows); }
   else { const key = r => (cs.find(c => c.id === r.id)?.[groupBy] || 'Not stated'); const groups = new Map(); rows.forEach(r => groups.set(key(r), [...(groups.get(key(r)) || []), r]));
     $('#queue').innerHTML = [...groups.entries()].map(([k, rs]) => [k, rs, rows.indexOf(rs[0])]).sort((a, b) => a[2] - b[2]).map(([k, rs]) => [k, rs]).map(([k, rs]) => `<li class="grp" role="presentation"><span class="lab">${groupBy === 'filer' ? 'Party (filer)' : 'Counterparty'}</span> <b>${esc(k)}</b> <span class="gn">${rs.length} ${rs.length === 1 ? 'agreement' : 'agreements'}${rs.some(r => r.actBy && r.days >= 0) ? ' · next act-by ' + esc(fmt(rs.filter(r => r.actBy && r.days >= 0).sort((a, b) => a.days - b.days)[0].actBy)) : ''}</span></li>` + rs.map(li).join('')).join(''); }
   $('#cards').innerHTML = cs.map(c => { const r = rows.find(x => x.id === c.id);
     return `<button class="card" data-id="${esc(c.id)}"><div class="tile" aria-hidden="true">${esc(initials(c.name, c.counterparty))}</div>
     <div class="t">${esc(c.name)}</div><div class="m">${esc(c.kind || 'Uploaded')}${c.exhibit ? ' · ' + esc(c.exhibit) : ''}${c.filed ? ' · filed ' + esc(fmt(c.filed)) : ''}</div>
-    <div class="a">${r?.actBy ? `${r.days < 0 ? '<span class="lapsed">Lapsed</span> · ' : ''}${esc(r.label)} ${esc(fmt(r.actBy))}` : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.item?.why)}</div>` : ''}</button>`; }).join('');
+    <div class="a">${r?.actBy ? `${r.days < 0 ? '<span class="lapsed">Expired</span> · ' : ''}${esc(r.label)} ${esc(fmt(r.actBy))}` : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.item?.why)}</div>` : ''}</button>`; }).join('');
   document.querySelectorAll('[data-id]:not(.grp)').forEach(el => { el.onclick = () => openDrawer(el.dataset.id); el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(el.dataset.id); } }; });
 }
 let lastFocus = null;
@@ -69,7 +73,7 @@ function openDrawer(id) {
    <p class="why" style="color:var(--mute);font-size:13px">${esc(c.title || c.fileName || '')}${c.filer ? ` · filed by ${esc(c.filer)}` : ''}${c.filed ? ` on ${esc(fmt(c.filed))}` : ''}${c.counterparty ? ` · counterparty ${esc(c.counterparty)}` : ''}</p>
    ${c.url ? `<p style="font-size:13px"><a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">Open the filing on SEC EDGAR ↗</a></p>` : ''}
    ${c.x.reviewNotes.map(n => `<p class="note">${esc(n)}</p>`).join('')}
-   ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(i.type)}</span>${i.status === 'past' ? '<span class="lapsed">Lapsed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(i.why)}</div>` : ''}
+   ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(i.type)}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(i.why)}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? -d + ' days ago' : 'in ' + d + ' days')(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
      <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} Confidence: ${esc(i.confidence)}.</p>
      ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}`;
@@ -83,7 +87,7 @@ $('#asof').onchange = e => { if (validDay(e.target.value)) { asOf = e.target.val
 ['none', 'counterparty', 'filer'].forEach(g => { $('#g-' + g).onclick = () => { groupBy = g; render(); }; });
 $('#setEdgar').onclick = () => { set = 'edgar'; render(); };
 $('#setMine').onclick = () => { set = 'mine'; render(); };
-$('#setHoldout').onclick = async () => { if (!holdout.length) { $('#status').textContent = 'Loading the blind holdout…'; const d = await (await fetch('/data/holdout.json')).json(); holdout = d.map(c => ({ ...c, source: 'edgar', x: extract(c.lines) })); } set = 'holdout'; render(); };
+$('#setHoldout').onclick = async () => { if (!holdout.length) { $('#status').textContent = 'Loading the test set…'; const d = await (await fetch('/data/holdout.json')).json(); holdout = d.map(c => ({ ...c, source: 'edgar', x: extract(c.lines) })); } set = 'holdout'; render(); };
 function download(name, text, type) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
 const tag = () => (set === 'edgar' ? 'sec-edgar' : 'my-docs') + '-asof-' + asOf;
 const guard = f => () => { if (!current().length) { $('#status').textContent = 'Nothing to export yet: add a document or switch to the SEC set.'; return; } f(); };

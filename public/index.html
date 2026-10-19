@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Contract Cliffs · every obligation, flagged before it’s due</title>
-<meta name="description" content="Deterministic extraction of renewal, notice and expiry dates from contracts, with the source clause quoted for every date.">
+<title>Contract Cliffs · the date you must act by, before a contract renews</title>
+<meta name="description" content="Many contracts renew automatically unless you send notice by a deadline. Contract Cliffs reads your contracts and tells you the date you must act by, most urgent first, quoting the exact sentence each date comes from.">
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/GeistMono-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="theme-color" content="#000000">
@@ -16,20 +16,34 @@
 <header>
   <div class="lab">Operations · Contract lifecycle</div>
   <h1 class="mark">contract cliffs</h1>
-  <p class="lede">Every obligation and deadline in an agreement, in time order. <span>Each date carries the clause it came from. Where the text is unclear or redacted, the date stays blank and is marked for review.</span></p>
+  <p class="lede">Many contracts renew automatically unless you send notice by a deadline. <span>Contract Cliffs reads your contracts and tells you the date you must act by, most urgent first, quoting the exact sentence each date comes from.</span></p>
+  <ol class="steps" aria-label="How to use">
+    <li><span class="lab">1 · Load contracts</span>Paste text, <a href="#add">upload a PDF or Word file</a>, or start with the 10 real public SEC contracts already loaded below.</li>
+    <li><span class="lab">2 · Read the list</span>Each row is a date: act by this date, or the contract renews on its own. Most urgent at the top.</li>
+    <li><span class="lab">3 · Check and export</span>Click a contract to see the exact clause behind each date, then <a href="#add">export</a> to your calendar or a CSV.</li>
+  </ol>
+  <p class="example" id="example"></p>
 </header>
-<section class="stats" id="stats" aria-label="Summary"></section>
-<hr class="hair">
-<section class="controls" aria-label="Controls">
-  <div>
-    <span class="lab">Contract set</span>
-    <div class="row">
-      <button id="setEdgar" aria-pressed="true">Real public contracts (SEC EDGAR)</button>
-      <button id="setHoldout" aria-pressed="false">Blind holdout (10)</button>
-      <button id="setMine" aria-pressed="false">Your documents</button>
-    </div>
-    <p class="status" id="status"></p>
+<section class="setbar" aria-label="Which contracts">
+  <div class="row">
+    <button id="setEdgar" aria-pressed="true">10 real public contracts (SEC)</button>
+    <button id="setHoldout" aria-pressed="false">Test set (10 unseen contracts)</button>
+    <button id="setMine" aria-pressed="false">Your documents</button>
   </div>
+  <p class="status" id="status"></p>
+</section>
+<section class="sec" aria-labelledby="qh">
+  <div class="lab">The list</div>
+  <h2 id="qh"><abbr title="The last day to send notice so the contract does not renew on its own. Worked out as: end of the current term minus the notice period written in the contract.">Act by</abbr></h2>
+  <p class="sub">The last day to send notice so a contract doesn’t renew on its own: end of the current term minus the notice period in the clause. Order: missed, due within 7 days, needs review, then time bands (8–30 days, 31–90, 91–365, over a year). Inside a band, the longer lock-in goes first even if its date is later.</p>
+  <section class="stats" id="stats" aria-label="Summary"></section>
+  <details class="rule"><summary><span class="lab">Priority rule · how the list is ordered</span></summary><p id="rule"></p></details>
+  <div class="row grpby" role="group" aria-label="Group the queue"><span class="lab">Group by</span><button id="g-none" aria-pressed="true">None</button><button id="g-counterparty" aria-pressed="false">Counterparty</button><button id="g-filer" aria-pressed="false">Party (filer)</button></div>
+  <ol class="q" id="queue"></ol>
+</section>
+<hr class="hair">
+<section class="controls" id="add" aria-labelledby="addh">
+  <div class="sechead"><div class="lab">Your contracts</div><h2 id="addh">Add, change the date, export</h2></div>
   <div>
     <span class="lab">Add a contract</span>
     <div class="row">
@@ -42,24 +56,16 @@
   <div>
     <label class="lab" for="asof">As of</label>
     <input id="asof" type="date">
-    <p class="status">Act-by dates are computed relative to this date. Past dates are shown, not hidden.</p>
+    <p class="status">“Today” for the list. Change it to see what will be due later. Past dates stay visible.</p>
     <span class="lab" style="margin-top:18px">Export</span>
     <div class="row">
-      <button id="exCsv">Obligations CSV</button>
-      <button id="exIcs">Act-by calendar (.ics)</button>
+      <button id="exCsv">Spreadsheet (CSV)</button>
+      <button id="exIcs">Calendar (.ics)</button>
       <button id="exPack">Diligence packet (HTML)</button>
     </div>
   </div>
 </section>
 <hr class="hair">
-<section class="sec" aria-labelledby="qh">
-  <div class="lab">The queue</div>
-  <h2 id="qh">Act by</h2>
-  <p class="sub">Act-by = end of the current term minus the notice period in the clause.</p>
-  <div class="rule"><span class="lab">Priority rule</span><p id="rule"></p></div>
-  <div class="row grpby" role="group" aria-label="Group the queue"><span class="lab">Group by</span><button id="g-none" aria-pressed="true">None</button><button id="g-counterparty" aria-pressed="false">Counterparty</button><button id="g-filer" aria-pressed="false">Party (filer)</button></div>
-  <ol class="q" id="queue"></ol>
-</section>
 <section class="sec" aria-labelledby="ch">
   <div class="lab">The agreements</div>
   <h2 id="ch">Contracts</h2>
@@ -68,11 +74,12 @@
 </section>
 <footer>
   <hr class="hair" style="margin-bottom:28px">
-  <div class="lab">Method</div>
+  <details class="method"><summary><span class="lab">Method and accuracy</span> <span class="gn">how dates are worked out, how often they are right</span></summary>
   <p>Extraction is deterministic: regular expressions plus date and duration parsing (“sixty (60) days”, “one hundred and eighty (180) days”, “Eighty-Four (84) months”). No language model and no network call touches your documents; uploads stay in this browser tab. A term of N months “commencing on” a date ends the day before the anniversary; “until N years following” ends on the anniversary. When words and numerals disagree, or a value is redacted, the field is left blank and marked for review.</p>
-  <p>Accuracy, stated plainly: tuned on the 10 contracts above (all hand-checked). On a fresh blind set of 10 more EDGAR agreements, run once before any change: 3 act-by dates right, 6 correctly left blank for review, 1 missed, 0 wrong act-by dates, plus one wrong "current term" date that has since been fixed. An earlier set of 14 is now tuning data (first pass there: 2 right, 5 flagged, 6 missed, 1 wrong) (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
+  <p>Accuracy, stated plainly: tuned on the 10 contracts above (all hand-checked). On a test set of 10 more EDGAR agreements it had never seen, run once before any change: 3 act-by dates right, 6 correctly left blank for review, 1 missed, 0 wrong act-by dates, plus one wrong "current term" date that has since been fixed. An earlier set of 14 is now tuning data (first pass there: 2 right, 5 flagged, 6 missed, 1 wrong) (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
   <p>Real contracts are Exhibit 10 material agreements filed with the SEC, fetched from EDGAR with a declared User-Agent under SEC fair-access rules. Dates projected past the initial term assume the agreement was not terminated or amended. Not legal advice.</p>
-  <p>Type: Geist and Geist Mono, both under the SIL Open Font License (<a href="/fonts/OFL-Geist.txt">Geist</a>, <a href="/fonts/OFL-GeistMono.txt">Geist Mono</a>), self-hosted. Colours follow General Intuition's public site; this is an independent demo, not a General Intuition product. PDF reading by pdf.js (<a href="/vendor/LICENSE-pdfjs.txt">Apache 2.0</a>), DOCX by JSZip (<a href="/vendor/LICENSE-jszip.txt">MIT</a>). Built by Amy Zhuang · <a href="https://github.com/amyzhuang111/contract-cliffs">source</a>.</p>
+  <p>Type: Geist and Geist Mono, both under the SIL Open Font License (<a href="/fonts/OFL-Geist.txt">Geist</a>, <a href="/fonts/OFL-GeistMono.txt">Geist Mono</a>), self-hosted. Colours follow General Intuition's public site. Geist stands in for Alpha Lyrae, GI's licensed display face, which is not used here; this is an independent demo, not a General Intuition product. PDF reading by pdf.js (<a href="/vendor/LICENSE-pdfjs.txt">Apache 2.0</a>), DOCX by JSZip (<a href="/vendor/LICENSE-jszip.txt">MIT</a>). Built by Amy Zhuang · <a href="https://github.com/amyzhuang111/contract-cliffs">source</a>.</p>
+  </details>
 </footer>
 </div>
 <div class="scrim" id="scrim"></div>

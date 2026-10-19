@@ -247,7 +247,7 @@ test('priority: sections, windows, reasons', () => {
   assert.match(by.c7.why, /^Expired 871 days ago · all renewals used/);
   assert.equal(by.c8.why, 'No date found · resolve first: redacted in the public filing');
   assert.equal(by.c13.why, 'No date found · resolve first: redacted in the public filing');
-  assert.match(PRIORITY_RULE, /Missed first/);
+  assert.match(PRIORITY_RULE, /1\) Missed/); assert.match(PRIORITY_RULE, /2\) Due now/);
 });
 test('priority: inside a window, worse-to-miss beats sooner', () => {
   const mk = (id, eff, renew, notice) => ({ id, name: id, x: extract([`This Agreement is entered into as of ${eff} (the "Effective Date").`, 'The term of this Agreement shall commence on the Effective Date and continue for one (1) year.', `It shall automatically renew for successive ${renew} periods unless either party gives notice at least ${notice} prior to the end of the then-current term.`]) });
@@ -310,4 +310,30 @@ test('F9/F3 lapsed rows sort last; review count has one definition', () => {
 test('b9 consecutive renewal periods are read (no "none" confidence)', () => {
   const x = T('This Agreement is entered into as of July 17, 2024 (the "Effective Date").', 'The term of this Agreement shall commence on the Effective Date and continue for five (5) years.', 'This Agreement shall automatically renew for consecutive two (2) year periods each, unless one of the Parties notifies the other of its election not to renew this Agreement at least twenty-four (24) months prior to the end of the Initial Period.');
   assert.equal(x.renewal.period.n, 2); assert.equal(x.renewal.confidence, 'high');
+});
+
+// ---- ba7fadd review (R1–R6)
+const TS = Object.fromEntries(JSON.parse(fs.readFileSync(new URL('../public/data/holdout.json', import.meta.url))).map(c => [c.id, { ...c, x: extract(c.lines) }]));
+test('R1 due now: on the deadline day the row sits in "Due now", above resolve-first', () => {
+  const q = buildQueue(Object.values(C), '2026-12-16');
+  const i = q.findIndex(r => r.id === 'c5');
+  assert.equal(q[i].section, 'due'); assert.match(q[i].why, /^Due today · send notice now or it renews for 2 more years/);
+  assert.ok(i < q.findIndex(r => r.section === 'resolve'));
+  assert.equal(buildQueue([C.c5], '2026-12-09')[0].section, 'due');
+  assert.equal(buildQueue([C.c5], '2026-12-08')[0].section, 'upcoming');
+});
+test('R2 test-set parties: filer from EDGAR, counterparty from the preamble; Patheon groups b3/b8/b10', () => {
+  assert.deepEqual(Object.values(TS).filter(c => c.counterparty === 'Patheon').map(c => c.id).sort(), ['b10', 'b3', 'b8']);
+  assert.equal(TS.b5.counterparty, 'Thunderra LLC'); assert.equal(TS.b8.filer, 'ACADIA PHARMACEUTICALS INC');
+  assert.ok(Object.values(TS).every(c => c.counterparty && c.counterparty !== 'See filing'));
+});
+test('R4 b9 ranks above b5 by lock-in (2 years vs 1), and 24 months notice is not "longer" than a 2-year renewal', () => {
+  const q = buildQueue([TS.b5, TS.b9], AS).map(r => r.id); assert.deepEqual(q, ['b9', 'b5']);
+  assert.ok(!TS.b9.x.warnings); assert.ok(!TS.b8.x.warnings);
+});
+test('R5/R6 honest reasons: b3/b10 undated start (not redaction), b7 monthly evergreen with no notice clause', () => {
+  const q = Object.fromEntries(buildQueue(Object.values(TS), AS).map(r => [r.id, r]));
+  assert.match(q.b10.why, /undated Commencement Date/); assert.match(q.b3.why, /term start not dated/);
+  for (const id of ['b3', 'b10']) assert.doesNotMatch(q[id].why, /redact/i);
+  assert.equal(q.b7.why, 'No Act by date: renews every month until terminated, and the contract has no notice clause · current term ends 31 Oct 2026');
 });
