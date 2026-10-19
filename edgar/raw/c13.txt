@@ -1,0 +1,496 @@
+EX-10.103
+2
+ex10-103.htm
+EX-10.103
+Exhibit
+10.103
+MASTER
+Services AGREEMENT
+This
+MASTER SERVICES AGREEMENT (this “ Agreement ”), dated as of May 20, 2026 (the “ Effective Date ”),
+is by and between ARK Capital Markets LLC , a Texas limited liability company (“ ARK ”), and Eightco Holdings
+Inc. , a Texas corporation (NASDAQ: ORBS) (the “ Company ”).
+WHEREAS ,
+pursuant to that certain Letter of Intent / Term Sheet, dated March 8, 2026, by and between ARK and the Company, ARK agreed to enter
+into an agreement to provide certain services to the Company on the terms and conditions set forth therein; and
+WHEREAS ,
+the Company desires to enter into this Agreement to retain ARK to render, and ARK desires to provide, certain services, on the terms
+and conditions set forth herein.
+NOW,
+THEREFORE , for good and valuable consideration, the receipt and sufficiency of which is hereby acknowledged, and intending to be
+legally bound hereby, the parties agree as follows:
+ARTICLE
+I
+APPOINTMENT
+AND COMPENSATION
+Section
+1.1 – Appointment
+The
+Company hereby appoints ARK to provide the Services (as defined in Section 2.1) on a non-exclusive basis, and ARK hereby accepts such
+appointment.
+Section
+1.2 – Relationship of the Parties
+Nothing
+in this Agreement shall be construed as creating a partnership, joint venture, agency, or employment relationship between ARK and the
+Company. Except as expressly provided herein, neither party shall have any authority to contract or in any manner incur any liability
+or obligation for or in the name of the other party. Each party is and shall be solely liable for any federal, state, and provincial
+income and withholding taxes, unemployment taxes, FICA taxes, and workers’ compensation payments and premiums applicable to the
+services provided by such party’s personnel pursuant to this Agreement.
+Section
+1.3 – Compensation
+The
+Company agrees to provide ARK with the following compensation for the Services:
+(a)
+Warrants
+The
+Company shall issue to ARK one or more warrants to purchase 2,200,000 shares of the Company’s common stock, $0.001 par value per
+share (“ Common Stock ”), at an exercise price of $1.01 per share, pursuant to a warrant agreement substantially in
+the form attached hereto as Exhibit A (the “ ARK Warrants ”). The ARK Warrants shall have a ten (10)-year term
+and shall vest over a period of five (5) years in equal quarterly installments commencing on the date that is three months following
+the Effective Date, with 110,000 of the ARK Warrants vesting and becoming exercisable at the end of each three-month period during the
+vesting period.
+*
+Certain portions of this exhibit have been redacted in accordance with Item 6.01 (b)(10) of Regulations S-K. This information is not
+material and would likely cause competitive harm to the registrant if publicly disclosed. “[***]” indicates that information
+has been redacted.
+The
+Company covenants that the shares issuable upon exercise of the warrants (the “ Warrant Shares ”) shall, by the 30th
+calendar day following the issuance of the ARK Warrants, be duly registered under the Securities Act of 1933, as amended, and listed
+for trading on the principal exchange on which the Company’s Common Stock is then traded.
+In
+lieu of exercising the ARK Warrants by payment of the aggregate exercise price in cash, ARK may elect to exercise the ARK Warrants, in
+whole or in part, on a cashless (net) basis. In such event, the Company shall issue to ARK a number of shares of Common Stock equal to
+the net value of the ARK Warrants being exercised, determined by reference to the fair market value of the Common Stock as of the date
+of exercise, as set forth in the Warrant Agreement, with the exercise price satisfied by withholding a portion of the shares otherwise
+issuable upon such exercise. Any fractional shares shall be rounded down to the nearest whole share.
+(b)
+Board Advisor Compensation
+The
+Company shall appoint Brett Winton as the initial ARK-designated representative to serve as a strategic advisor (the “ Advisor ”)
+to the Company’s Board of Directors. ARK shall have the right to change its designated Advisor representative at any time, subject
+to the mutual consent of the Company, such consent not to be unreasonably withheld, conditioned, or delayed.
+ARK
+shall receive: (i) annual cash compensation of $250,000 per year, payable directly to ARK in equal quarterly installments; and (ii) a
+one-time grant of 2,200,000 shares of restricted Common Stock (the “ Advisor Shares ”), to be issued in the name of
+ARK or its designee, subject to a five (5)-year vesting schedule, with 110,000 Advisor Shares vesting at the end of each three-month
+period during the vesting period. The specific terms and conditions of such Advisor Shares shall be set forth in an award agreement substantially
+in the form attached hereto as Exhibit B .
+The
+Company does not expect to provide the Advisor with material non-public information. If the Company determines that providing such information
+is necessary for a particular assignment, the Company will notify ARK in advance and ARK will implement appropriate information barriers
+and trading restrictions for the relevant personnel. Payments due under this provision are not subject to the three-month deferral rule
+set forth in Section 1.3(c) and shall commence as of March 26, 2026, the effective date of the start of such services.
+(c)
+Management Fee – Treasury Asset Management
+ARK,
+or an affiliate of ARK that ARK designates, shall be entitled to receive a management fee (“ Management Fee ”) payable
+in cash by the Company in respect of the Company’s managed treasury assets, equal to [***] percent ([***]%) per annum of the value
+Company’s treasury assets under management (“ AUM ”). as compensation for the Services performed by the RIA Affiliate
+(as defined in Section 2.2). The Management Fee shall be calculated in a manner that is customary in the industry, and payable during
+the Initial Term and, as applicable, any Renewal Term (each as defined herein). Due to the regulatory structure of this arrangement,
+all Management Fee payments described in this Section 1.3(c) shall commence in arrears three (3) months following the Effective Date,
+and shall be conditioned upon the effectiveness of the registration of the RIA Affiliate.
+(d)
+Incentive Fee – AUM Milestone Bonuses
+In
+addition to the Management Fee described in Section 1.3(c) above, and subject to the ARK Parties’ performance of its services as
+outlined in Section 2.1 below and the obligations under the Letter Agreement between the parties, dated May 20, 2026 (the “ Letter
+Agreement ”), ARK shall be entitled to the following incentive compensation, one-time bonus payments upon the initial occurrence
+of the Company or its managed treasury assets reaching the following specified Capitalization Milestones:
+Capitalization Milestone
+Bonus Payment
+$ 1,000,000,000
+$
+[***]
+$ 5,000,000,000
+$
+[***]
+$ 10,000,000,000
+$
+[***]
+Each
+bonus payment shall be payable in cash or, at ARK’s election, in shares of the Company’s Common Stock. For purposes of these
+milestones, “ Capitalization ” means the higher of: (i) the net asset value of the Company’s treasury assets under
+management, or (ii) the Company’s market capitalization, calculated based on the trailing 20-day VWAP of the Company’s Common
+Stock, as calculated by Bloomberg.
+ARTICLE
+II
+DUTIES
+AND RESPONSIBILITIES
+Section
+2.1 – Services
+ARK
+shall provide the following services (collectively, the “ Services ”) to the Company:
+(a)
+Strategic Advisory Services. ARK shall serve as a strategic advisor to the Company, on a non-exclusive basis, providing guidance
+on business origination, capital markets strategy, portfolio construction, corporate development, and long-term value creation, including
+guidance in anticipation of any liquidity event or future capital markets transaction.
+(b)
+Treasury – Balance-Sheet Strategy. ARK shall serve as a treasury advisor to the Company, on a non-exclusive basis, in connection
+with investment management, including advising on balance-sheet optimization, digital asset treasury strategy, and related capital allocation
+decisions. Asset management services under this Agreement shall be provided by a registered investment adviser affiliated with ARK Capital
+Markets LLC (the “ RIA Affiliate ”), as further described in Section 2.2.
+(c)
+Access to Team, Resources, Network, and Brand. In furtherance of the strategic objectives described above, ARK shall provide reasonable
+access to relevant members of its internal team and internal resources, and, where appropriate and subject to availability, access to
+executives of ARK and their respective networks, in each case as may be reasonably necessary to support business origination, strategic
+development, capital markets strategy, strategic positioning, and related initiatives contemplated under this Agreement. Any such access
+shall be subject to ARK’s internal policies, compliance requirements, and scheduling constraints.
+(d)
+Strategic Positioning and Market Narrative. ARK shall support the development of strategic positioning, investor-facing frameworks,
+and market narrative intended to support the Company’s capitalization, liquidity, and long-term value creation, including publication
+of research, public commentary, and institutional engagement.
+(e)
+Balance Sheet Deal Flow. With respect to treasury balance sheet deployment and deal flow, ARK will arrange and coordinate deal
+diligence and underwriting services in connection with potential investments and/or acquisitions. ARK will also facilitate introductions
+to relevant market participants to support the review, evaluation, and structuring of transactions, including the sourcing of private
+portfolio opportunities. ARK’s provision of deal flow pursuant to this section will be subject to any investment opportunity allocation
+policies adopted by the RIA Affiliate.
+(f)
+Public Engagement. Public engagement concerning the Company and its products, services and investor relations, including but not
+limited to media appearances, social media posts, public statements and quotes for Company press and media materials.
+(g)
+Additional Services. Such other consulting and business advisory services as may be agreed upon between the parties from time
+to time.
+(h)
+Regulatory Compliance. Notwithstanding the foregoing, the parties agree that the Services will be provided only to the extent
+consistent with applicable law, including any registration and licensing requirements. In addition, the parties agree that certain Services
+to be provided under this Agreement may constitute broker-dealer activity under the Securities Exchange Act of 1934. Any such activities
+shall be performed exclusively by and through an entity that is a registered broker-dealer, subject to all applicable regulatory approvals,
+oversight, and internal compliance policies. Unless ARK is registered as a broker-dealer, any compensation for such activities shall
+be paid exclusively to the broker-dealer identified by ARK.
+Section
+2.2 – Service Structure; RIA Affiliate
+The
+parties acknowledge that, due to the regulatory structure of this arrangement, asset management services described in Section 2.1(b)
+and 2.1(e) shall be provided by the RIA Affiliate. The RIA Affiliate shall be solely responsible for the provision of investment advisory
+and asset management services under this Agreement, and all such services shall be provided in compliance with applicable federal and
+state securities laws, including the Investment Advisers Act of 1940, as amended, and the rules thereunder. ARK shall use commercially
+reasonable efforts to effectuate the registration of the RIA Affiliate as promptly as practicable. In the event that such registration
+has not been completed as of the date that management fees would otherwise commence, the commencement of management fee payments shall
+be delayed until such registration is effective, without any further obligation or penalty to ARK. Further, the parties agree that the
+Company and the RIA Affiliate will enter into a separate investment management agreement that will govern the provision of the asset
+management services described in Section 2.1(b).
+ARTICLE
+III
+TERM
+AND TERMINATION
+Section
+3.1 – Term
+(a)
+Unless earlier terminated pursuant to this Section 3.1, this Agreement shall continue in full force and effect for an initial term of
+[***] from the Effective Date (the “ Initial Term ”). Thereafter, this Agreement shall automatically renew for successive
+[***] periods (each, a “ Renewal Term ”), unless either party provides written notice of non-renewal to the other party
+at least ninety (90) days prior to the end of the Initial Term or the then-current Renewal Term, as applicable.
+(b)
+Notwithstanding the foregoing, this Agreement shall terminate upon: (i) delivery by either party of written notice of termination for
+material breach, which breach is not able to be cured or otherwise remains uncured ninety (90) calendar days following delivery of written
+notice of such breach; or (ii) upon mutual written agreement of the parties.
+(c)
+Neither party shall have the right to terminate this Agreement for convenience during the Initial Term or any Renewal Term, except by
+non-renewal as expressly provided in this Section 3.1. For the avoidance of doubt, the failure to achieve any particular financial result,
+AUM target, or investment return shall not constitute grounds for termination by either party.
+Section
+3.2 – Effect of Termination
+Upon
+termination of this Agreement, all rights and obligations of the parties shall cease; provided, however, that: (a) any vested options,
+warrants, or rights to purchase, and any accrued and unpaid compensation, shall survive such termination; and (b) the rights and obligations
+set forth in Articles IV through VIII shall survive such termination.
+Section
+3.3 – Survival of Economic Rights
+Termination
+or expiration of this Agreement shall not result in the forfeiture of any vested equity, warrants, options, or accrued milestone rights,
+all of which shall survive in accordance with their terms.
+Section
+3.4 – Change of Control
+(a)
+Upon the occurrence of a Change of Control (as defined below), all unvested warrants, shares, options, and other equity-based awards
+previously granted to ARK or its designees pursuant to this Agreement shall immediately and automatically vest in full as of the date
+of the closing of such Change of Control transaction (the “ CoC Closing Date ”). Milestone-based incentive compensation
+as outlined in section 1.3(d) shall not be subject to termination under any provision of this Agreement on or following the CoC Closing
+Date without payment of an amount equal to the pro rata share of the next milestone achieved, calculated based on the Capitalization
+as of the CoC Closing Date or the date of post-closing termination, whichever is applicable.
+(b)
+For purposes of this Agreement, “ Change of Control ” shall mean: (A) any merger, consolidation, or business combination
+in which the Company’s stockholders immediately prior to such transaction hold less than fifty percent (50%) of the voting power
+of the surviving or resulting entity; (B) the sale, lease, exchange, or other transfer of all or substantially all of the Company’s
+assets; (C) any transaction or series of related transactions resulting in any person or group (as such terms are used in Section 13(d)
+of the Securities Exchange Act of 1934) becoming the beneficial owner of more than fifty percent (50%) of the Company’s outstanding
+voting securities; or (D) any liquidation, dissolution, or winding up of the Company.
+(c)
+In the event of a Change of Control, the Company (or its successor) shall, as a condition to the closing of such transaction, cause the
+surviving or acquiring entity to expressly assume all obligations under this Agreement, including all equity awards, milestone rights,
+and compensation obligations. Failure of the successor entity to assume such obligations shall constitute a termination without cause.
+Section
+3.5 – Board Removal Protections
+The
+Company shall not remove or take any action to cause the removal of ARK’s designated Advisor without ARK’s prior written
+consent, except in the event of commission of a felony or other criminal act rising to the level of theft, fraud, embezzlement, or similar
+conduct by such Advisor.
+ARTICLE
+IV
+NATURE
+OF AGREEMENT
+Section
+4.1 – Nature of Agreement
+(a)
+During the term of this Agreement, the Company, on behalf of itself and its subsidiaries, agrees that ARK shall be the Company’s
+non-exclusive provider of the types of services comprising the Services. Nothing contained herein shall restrict ARK or any of its affiliates,
+including investment funds and other entities managed by or otherwise affiliated with ARK (“ Affiliated Entities ”),
+or any of its or their respective equityholders, managers, directors, officers, employees, representatives, or agents (collectively,
+the “ ARK Parties ”) from engaging in any other business or devoting time and attention to any other business, including
+rendering services of any kind to any other entity, firm, individual, or association. Nothing in this Agreement shall be interpreted
+to provide that ARK shall be the exclusive financial, management, strategic planning, and/or business operations advisor to the Company.
+(b)
+Each of the ARK Parties: (i) shall have the right to, and shall have no duty (contractual or otherwise) not to, directly or indirectly
+engage in the same or similar business activities or lines of business as the Company or do business with any supplier, vendor, client,
+or customer of the Company; (ii) shall not have any liability to the Company for breach of any duty by reason of any of the activities
+set forth in the preceding clause (i); (iii) shall not have any duty (contractual or otherwise) to communicate or present any corporate
+or business opportunity to the Company except as otherwise provided in provision of the Services; and (iv) shall not have any liability
+to the Company for breach of any duty by reason of the fact that any member of the ARK Parties directly or indirectly pursues or acquires
+such opportunity for itself or directs such opportunity to another person.
+(c)
+The Company, on behalf of itself and its affiliates, hereby renounces and waives any right to require the ARK Parties to act in a manner
+inconsistent with the provisions of this Section 4.1. Notwithstanding the foregoing, the ARK Parties’ rights to engage in competing
+business activities are conditioned upon ARK’s compliance with Sections 5 and 6 of this Agreement. ARK agrees to implement and
+maintain standard, commercially reasonable information barriers to ensure that the Company’s non-public information is not accessible
+to or shared with any ARK personnel who are actively advising direct competitors of the Company. Further, the Company acknowledges and
+agrees that ARK may possess material non-public information about third parties, and agrees that ARK is excluded from any duty to disclose
+that information to the Company or to provide advice to the Company based on such information.
+ARTICLE
+V
+CONFIDENTIALITY
+Section
+5.1 – Confidentiality
+(a)
+The content of this Agreement and any discussions, correspondence, or documentation heretofore or hereafter occurring pertaining to proposed
+transactions between ARK and the Company will be held by ARK and the Company in strict confidence and will not be disclosed to nor discussed
+with any person other than ARK’s or the Company’s respective agents, employees, management, board of directors, affiliates,
+and respective agents and advisors, without the prior written consent of the other party hereto. Notwithstanding the foregoing, ARK and
+the Company shall (1) comply with applicable disclosure requirements, including, for example, ownership disclosure in connection with
+any offering or any filings required under the Securities Exchange Act of 1934, as amended, including any filings with the U.S. Securities
+and Exchange Commission, (2) be permitted, in each party’s reasonable judgement, to disclose their relationship in connection with
+any publication of research reports or statements concerning the company made by ARK or any of its affiliates. In addition, ARK may,
+in its discretion, disclose its participation in any non-confidential transaction, including the placement of announcements in financial
+and other newspapers and periodicals describing its services.
+(b)
+Except as required by law or regulation, or pursuant to order of a court of competent jurisdiction, no analysis, information, or advice,
+whether communicated in written, electronic, oral, or other form, provided by ARK or its affiliates in connection with the Services (the
+“ ARK Information ”) shall be disclosed by the Company, in whole or in part, to any third party or circulated or referred
+to publicly, without the prior written consent of ARK. Notwithstanding anything herein to the contrary, the fact of ARK’s services
+and the advice of ARK may be disclosed by the Company to its affiliates and its directors, officers, accountants, financial and legal
+advisors, and employees (the “ Company Representatives ”) to the extent required in connection with ARK’s provision
+of the Services.
+(c)
+Each party hereto acknowledges and agrees that irreparable damage may occur to the other in the event any of the provisions of this Section
+5 were not performed in accordance with their specific terms or were otherwise breached and monetary damages may not be a sufficient
+remedy for any such non-performance or breach. Accordingly, each party shall be entitled to seek specific performance of the terms of
+this Section 5, including, without limitation, an injunction or injunctions to prevent breaches of the provisions of this Section 5 in
+any court of competent jurisdiction located in New York, New York, in addition to any other remedy to which such party may be entitled
+at law or in equity.
+ARTICLE
+VI
+INFORMATION
+PROVIDED TO ARK
+Section
+6.1 – Information Provided to ARK
+(a)
+The Company, at its sole discretion, will furnish ARK with certain information concerning the Company (collectively, the “ Information ”)
+as ARK reasonably requests in connection with this Agreement and, where appropriate and subject to availability, will provide ARK with
+reasonable access to the Company’s officers, directors, employees, accountants, counsel, and other representatives. To the best
+of the Company’s knowledge, the Information will be true and correct in all material respects.
+(b)
+In performing the Services, ARK shall be entitled to use and rely upon the Information as well as publicly available information without
+independent verification. ARK shall not bear responsibility for the accuracy or completeness of the Information furnished by the Company
+and shall not be liable for any claims or losses resulting from any inaccuracy or lack of completeness of such information. The Company
+shall be solely responsible for the information in any prospectus, registration statement, or otherwise provided to investors in connection
+with any offering of securities, except as otherwise provided in any agreement between ARK and the Company.
+ARTICLE
+VII
+EXCULPATION
+AND INDEMNIFICATION
+Section
+7.1 – Exculpation
+(a)
+None of the ARK Parties shall have any liability to the Company or its affiliates, equity holders, managers, directors, officers, employees,
+representatives, or agents for any losses, fees, damages, liabilities, costs, expenses, or equitable relief arising out of or relating
+to this Agreement, the transactions contemplated hereby, or the Services to be rendered hereunder, except to the extent that it is determined
+by an arbitrator, adjudicator, or court of competent jurisdiction that such losses resulted from the fraud, bad faith, gross negligence,
+or willful misconduct of one or more of the ARK Parties. In no event shall any of the ARK Parties be liable: (i) for incidental, indirect,
+special, consequential, or punitive damages, including lost profits or savings, whether or not foreseeable; or (ii) in the aggregate
+for any liability in excess of the aggregate amount of fees and compensation paid to ARK hereunder.
+(b)
+Neither the Company nor any Company Representative shall have any liability to ARK or the ARK Parties, or their respective affiliates,
+equity holders, managers, directors, officers, employees, representatives, or agents for any losses, fees, damages, liabilities, costs,
+expenses, or equitable relief arising out of or relating to this Agreement, the transactions contemplated hereby, or the Services to
+be rendered hereunder, except to the extent that it is determined by an arbitrator, adjudicator, or court of competent jurisdiction that
+such losses resulted from the fraud, gross negligence, or willful misconduct of the Company. In no event shall the Company or any Company
+Representative be liable: (i) for incidental, indirect, special, consequential, or punitive damages, including lost profits or savings,
+whether or not foreseeable; or (ii) in the aggregate for any liability in excess of the aggregate amount of fees payable under this Agreement.
+Section
+7.2 – Indemnification
+(a)
+In the event that either Party, or any of its respective current or former directors, officers, partners, managers, agents, representatives,
+or employees, or those of any of its affiliates, or any other person controlling such Party or any of its affiliates (collectively, “ Indemnified
+Persons ”) becomes involved in any capacity in any actual or threatened action, claim, suit, investigation, or proceeding against
+the other Party (an “ Action ”) arising out of, related to, or in connection with this Agreement or any matter referred
+to herein, the other Party (the “ Indemnifying Party ”) will reimburse such Indemnified Person for the reasonable out-of-pocket
+costs and expenses actually incurred in connection with such Action (including the reasonable fees and disbursements of one (1) legal
+counsel for all Indemnified Persons) of investigating, preparing for, and responding to such Action, as they are incurred; provided that
+such Indemnified Person agrees in writing to promptly refund such reimbursed expenses to the Indemnifying Party if it is ultimately determined
+that such Indemnified Person is not entitled to indemnification under this Agreement.
+(b)
+Each Party, on its own behalf and in the event that it is the Indemnifying Party, agrees to indemnify and hold harmless any Indemnified
+Person from and against any losses, claims, damages, or liabilities (collectively, “ Losses ”): (A) related to or arising
+out of (i) the Indemnifying Party’s actions or failures to act (including oral or written statements or omissions made) or information
+provided by or on behalf of the Indemnifying Party or its agents, except to the extent such statement, omission, or information is based
+upon and made in conformity with information furnished in writing to the Indemnifying Party expressly for use therein, or (ii) actions
+or failures to act by an Indemnified Person with the Indemnifying Party’s written consent or in reasonable reliance on written
+information furnished by or on behalf of the Indemnifying Party; or (B) otherwise arising out of, related to, or in connection with this
+Agreement or the Indemnifying Party’s performance thereof. Notwithstanding anything to the contrary herein, neither Party shall
+have any obligation to reimburse, indemnify, exculpate, or hold harmless any Indemnified Person for any Losses determined by a court
+of competent jurisdiction to have arisen from the fraud or willful misconduct of such Indemnified Person.
+(c)
+Promptly after receipt by an Indemnified Person of notice of the commencement of any Action, such Indemnified Person shall notify the
+Indemnifying Party in writing. The Indemnifying Party shall have the right, upon written notice to the Indemnified Person, to assume
+the defense of any Action for which indemnification is sought with counsel reasonably satisfactory to the Indemnified Person.
+(d)
+The Indemnifying Party will not, without the other Party’s prior written consent (not to be unreasonably withheld), settle, compromise,
+or consent to the entry of any judgment in any Action in respect of which indemnification is or may be sought hereunder unless such settlement
+includes a release of each Indemnified Person from any Losses arising out of such Action.
+ARTICLE
+VIII
+TRANSFER
+RIGHTS
+Section
+8.1 – Transfer Rights
+Notwithstanding
+any transfer restrictions described in this Agreement or otherwise applicable under relevant securities laws, rules or regulations, ARK
+may, without the prior consent of the Company, transfer ownership of any warrants, shares, options, or rights to purchase Common Stock
+to an affiliate of ARK, including an entity that has beneficial owners other than ARK.
+ARTICLE
+IX
+MISCELLANEOUS
+Section
+9.1 – Entire Agreement
+This
+Agreement constitutes the entire understanding of the parties hereto with respect to the subject matter hereof, supersedes all prior
+agreements with respect thereto (including the Term Sheet, except for the binding provisions thereof), has been duly authorized and executed
+by each of the parties hereto, and constitutes the legal, binding obligation of each such party. For the avoidance of doubt, the Investment
+Commitment Letter dated March 11, 2026 is a separate, standalone agreement between the parties and is not incorporated into or made a
+part of this Agreement.
+Section
+9.2 – Governing Law
+This
+Agreement, and any claim, controversy, or dispute arising under or related to this Agreement, shall be governed by and construed in accordance
+with the laws of the State of New York, without regard to conflicts-of-law principles. Each of the Company and ARK irrevocably and unconditionally
+submits to the exclusive jurisdiction and venue of any State or Federal court sitting in New York City over any action, suit, or proceeding
+arising out of or relating to this Agreement. ARK and the Company each waive any right to trial by jury in any action, claim, suit, or
+proceeding arising hereunder.
+Section
+9.3 – Assignment; Third-Party Rights
+This
+Agreement and all of the provisions hereof shall be binding upon and inure to the benefit of the Parties hereto and their respective
+successors and permitted assigns, but neither this Agreement nor any of the rights, interests, or obligations hereunder shall be assigned
+by any party hereto without the prior written consent of the other Party. The ARK Parties shall be third-party beneficiaries of Article
+VII, but otherwise this Agreement is for the sole benefit of the Parties and their successors and permitted assigns.
+Section
+9.4 – Amendment and Modification; Waiver
+This
+Agreement may be amended, modified, or supplemented only by an agreement in writing signed by the Company and ARK. No provision of this
+Agreement may be waived unless executed by the party against whom such waiver is sought.
+Section
+9.5 – Further Assurances
+At
+any time or from time to time after the date hereof, each party shall cooperate in good faith with the other party and, at the request
+of a party, execute and deliver any further instruments or documents and take all such further action as the requesting party may deem
+necessary or advisable to evidence or effectuate the consummation of the transactions contemplated hereby.
+Section
+9.6 – Severability
+If
+any provision contained in this Agreement shall for any reason be held invalid, illegal, or unenforceable in any respect, such invalidity,
+illegality, or unenforceability shall not affect any other provision of this Agreement, and this Agreement shall be construed as if such
+invalid, illegal, or unenforceable provision had never been contained herein.
+Section
+9.7 – Construction
+Each
+party acknowledges that such party and its attorneys have been given an equal opportunity to negotiate the terms and conditions of this
+Agreement and that any rule of construction to the effect that ambiguities are to be resolved against the drafting party shall not be
+applicable to the construction or interpretation of this Agreement.
+Section
+9.8 – Counterparts; Electronic Delivery
+This
+Agreement may be executed in multiple counterparts, each of which shall be deemed an original, but all of which together shall constitute
+one and the same instrument. Signatures delivered by electronic means (including PDF or any electronic signature complying with the U.S.
+federal ESIGN Act of 2000) shall be treated as original signatures with full binding legal effect.
+Section
+9.9 – Notices
+All
+notices, consents, waivers, and other communications hereunder shall be in writing and shall be: (i) delivered by hand, (ii) sent by
+email, or (iii) sent by a nationally recognized overnight delivery service, charges prepaid, to the address set forth below:
+If
+to the Company:
+Eightco
+Holdings Inc.
+101
+Larry Holmes Drive, Suite 313
+Easton,
+PA 18042
+Attn:
+Kevin O’Donnell, Chief Executive Officer
+Email:
+[***]
+with
+a copy (which shall not constitute notice) to:
+Winston
+& Strawn LLP
+800
+Capitol St., Suite 2400
+Houston,
+TX 77002
+Attn:
+Michael Blankenship; Jordan Saddoris
+Email:
+[***]
+If
+to ARK:
+ARK
+Capital Markets LLC
+200
+Central Avenue
+St.
+Petersburg, FL 33701
+Attn:
+Paul Wilson, Forest Wolfe
+Email:
+[***]
+with
+a copy (which shall not constitute notice) to:
+Proskauer
+Rose LLP
+Eleven
+Times Square
+New
+York, NY 10036
+Attn:
+Boris Dolgonos
+Email:
+[***]
+[ Remainder
+of page intentionally left blank .]
+IN
+WITNESS WHEREOF , ARK and the Company have duly executed this Agreement on the day and year first above written.
+ARK CAPITAL MARKETS LLC
+By:
+/s/ Paul Wilson
+Name:
+Paul Wilson
+Title:
+Chief Financial Officer & Chief Strategy Officer
+EIGHTCO HOLDINGS INC.
+By:
+/s/ Kevin O’Donnell
+Name:
+Kevin O’Donnell
+Title:
+Chief Executive Officer

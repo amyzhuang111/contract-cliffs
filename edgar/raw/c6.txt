@@ -1,0 +1,1400 @@
+EX-10.2
+3
+ex10-2.htm
+EX-10.2
+Exhibit
+10.2
+MASTER
+SERVICES AGREEMENT
+between
+The CFO Portal, LLC and Vivos Therapeutics, Inc.
+This
+Master Services Agreement (the “Agreement” ) is entered into as of July 31, 2026 (the “Effective Date” )
+by and between The CFO Portal, LLC , a Florida limited liability company ( “Provider” ), and Vivos Therapeutics,
+Inc. , a Delaware corporation with its principal place of business at 7921 Southpark Plaza, Suite 210, Littleton, CO 80120 ( “Client”
+or “Company” ). Provider and Client are referred to herein individually as a “Party” and collectively
+as the “Parties” .
+RECITALS
+A.
+Client is a publicly traded corporation listed on The Nasdaq Stock Market LLC under the ticker symbol “VVOS.”
+B.
+Provider is a professional services firm specializing in fractional and managed Chief Financial Officer services for public microcap
+companies, including SEC reporting, internal controls, capital markets, and audit support.
+C.
+Client desires to engage Provider to deliver Managed CFO and finance-and-accounting leadership Services as described in this Agreement
+and the Statements of Work attached hereto, and Provider desires to provide such services on the terms set forth herein.
+NOW,
+THEREFORE, in consideration of the mutual covenants and agreements contained herein, the Parties agree as follows:
+1.
+Definitions
+Capitalized
+terms used in this Agreement shall have the meanings set forth in this Section 1 or as otherwise defined herein.
+1.1
+“Confidential Information” means all non-public information disclosed by one Party to the other Party in connection with
+this Agreement, including financial information, customer information, technical information, business plans, and any other information
+that is marked confidential or that a reasonable person would understand to be confidential.
+1.2
+“Engagement Lead” means the senior Provider professional designated to lead the engagement and to serve as Client’s
+Chief Financial Officer and Principal Financial Officer pursuant to Section 6, which shall be Roman Franklin unless and until replaced
+pursuant to Section 5.3.
+1.3
+“Provider Personnel” means the Engagement Lead and any other Provider employees, contractors, or affiliated personnel
+assigned by Provider to deliver the Services.
+1.4
+“Services” means the managed Chief Financial Officer and finance-and-accounting leadership services to be delivered by
+Provider as described in Section 2 and the applicable Statements of Work.
+1.5
+“SOW” means a Statement of Work executed under this Agreement, including the initial SOW attached as Exhibit A and any
+subsequent SOWs.
+1.6
+“SLA” means the Service Level Agreement attached as Exhibit B.
+1.7
+“Designated Officer” means the Engagement Lead (Roman Franklin) in his capacity as the Company’s Chief Financial
+Officer and Principal Financial Officer. The Company’s Principal Accounting Officer shall at all times be an internal officer of
+the Company - currently Brad Amman, upon hire, the permanent Controller, or such other internal officer as the Board may designate. In
+no event shall the Engagement Lead or any other Provider Personnel serve as the Company’s Principal Accounting Officer.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 1
+2.
+Engagement and Scope of Services
+2.1
+Engagement. Client engages Provider to deliver the Services on the terms and conditions set forth in this Agreement and any executed
+SOW. Provider accepts such engagement.
+2.2
+Scope. The Services include, without limitation: (a) acting as Client’s Chief Financial Officer and Principal Financial Officer
+through the Engagement Lead; (b) preparation, review, coordination, and financial / disclosure support for periodic and current reports
+under the Securities Exchange Act of 1934, including Forms 10-Q, 10-K, 8-K, DEF 14A, S-1, S-3, and related filings, with legal drafting,
+legal advice, filing legality, and formal SEC correspondence led by Client’s securities counsel and EDGAR filing mechanics handled
+by Client, counsel, or Client’s filing agent unless otherwise agreed in writing; (c) coordination with Client’s independent
+registered public accounting firm and audit committee; (d) leadership and oversight of the monthly close, internal controls, and financial
+reporting in coordination with Client’s internal finance team; (e) capital markets advisory and financing support, including capital
+raises and financings, Nasdaq continued-listing remediation, and reverse stock-split planning and execution (subject to Section 17);
+(f) board and audit committee material preparation; (g) FP&A, KPI reporting, and operating-model development; and (h) such other
+services as may be set forth in any executed SOW.
+2.3
+Statements of Work. The initial scope, deliverables, and on-site cadence are described in the SOW attached as Exhibit A. Additional
+or modified scope shall be documented in supplemental SOWs executed by both Parties. To the extent any SOW conflicts with this Agreement,
+this Agreement shall control unless the SOW expressly states otherwise and is signed by authorized representatives of both Parties.
+2.4
+Service Levels. Provider shall perform the Services in accordance with the SLA attached as Exhibit B.
+2.5
+Commencement. Provider shall commence the Services, and the Retainer shall commence, on the Effective Date (prorated for any partial
+month). The Engagement Lead is appointed Chief Financial Officer and Principal Financial Officer effective on the Effective Date as set
+forth in Section 6.
+3.
+Term and Termination
+3.1
+Initial Term. This Agreement shall commence on the Effective Date and continue for an initial term of twelve (12) months (the “Initial
+Term”), subject to earlier termination for Cause as contemplated herein.
+3.2
+Renewal. After the Initial Term, this Agreement shall automatically renew for successive twelve (12) month terms unless either Party
+provides written notice of non-renewal at least sixty (60) days prior to the end of the then-current term.
+3.3
+No Termination for Convenience. Neither Party may terminate this Agreement for convenience. This Agreement may be terminated only
+(a) for Cause under Section 3.4 (and, as to the Engagement Lead, Section 3.8), (b) by the Engagement Lead’s resignation under Section
+6.4, or (c) by non-renewal under Section 3.2, or (d) upon a Change of Control of Provider under Section 3.10.
+3.4
+Termination for Cause. Either Party may terminate this Agreement immediately upon written notice if (a) the other Party materially
+breaches this Agreement and fails to cure such breach within fifteen (15) days after receipt of written notice describing the breach
+in reasonable detail, or (b) the other Party becomes insolvent, files for bankruptcy, or makes an assignment for the benefit of creditors.
+Client may additionally terminate this Agreement immediately upon written notice, without any cure period, if (c) Provider or any Provider
+Personnel (including the Engagement Lead) becomes subject to any disqualification, bar, suspension, or similar sanction by the SEC, PCAOB,
+Nasdaq, or any state board of accountancy, or becomes subject to a “bad actor” disqualification under Rule 506(d) of the
+Securities Act or Section 15(b) of the Exchange Act, or (d) Provider commits a material breach of Section 7.
+3.5
+Effect of Termination. Upon termination, (a) Provider shall complete an orderly transition of work product and pending deliverables,
+including filings already in progress, for up to thirty (30) days following termination at Provider’s then-current rates; (b) Client
+shall pay all undisputed fees and expenses incurred through the effective date of termination plus any agreed transition fees; (c) the
+Designated Officer shall resign from his officer titles upon Client’s written request, with Client filing any required Form 8-K
+under Item 5.02 within four business days; (d) the following shall survive termination: accrued payment obligations; the Option and all
+exercise rights (including post-termination exercise under Section 4.7(g)); Sections 4.10 (No Setoff), 4.11 (Tax Reporting), 7 (Confidentiality),
+7.8 (Data Security), 8 (Intellectual Property), 9 (Indemnification), 10 (Limitation of Liability), 11 (Insurance), 12 (Officer Indemnification
+and D&O Coverage), 15 (Compliance), 16 (Miscellaneous), 18 (Representations and Warranties), and 19 (Public Disclosure Review Rights);
+cooperation with claims; records access; and enforcement-cost rights. Any post-termination transition assistance shall be subject to
+Client’s advance payment of estimated transition fees and reimbursement of all outstanding undisputed amounts.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 2
+3.6
+Officer Resignation. Notwithstanding any termination, a Designated Officer’s resignation shall not relieve Client of its obligations
+under Section 12 (Officer Indemnification and D&O Coverage), which shall survive termination indefinitely with respect to acts and
+omissions occurring during the term of this Agreement.
+3.7
+Engagement Lead Term Protection. The Company may terminate the Engagement Lead’s engagement as Chief Financial Officer / Principal
+Financial Officer only for Cause as defined in Section 3.8; the Company may not terminate it for convenience (Section 3.3). The Engagement
+Lead may resign pursuant to Section 6.4.
+3.8
+Cause and Good Reason (Engagement Lead). For purposes of the Engagement Lead’s engagement, and notwithstanding the general
+standard in Section 3.4:
+(a) “Cause”
+means, and is limited to: (i) conviction of, or plea of guilty or nolo contendere to,
+a crime involving fraud or dishonesty; (ii) willful misconduct that materially harms the
+Company; (iii) a material breach of this Agreement that remains uncured thirty (30) days
+after written notice describing it in reasonable detail; (iv) a knowing violation of the
+federal securities laws; or (v) persistent failure to perform material duties after detailed
+written notice and a reasonable opportunity to cure; and (vi) uncured material breach of
+Exhibit A or Exhibit B. “Cause” expressly excludes: good-faith accounting or
+disclosure judgments; refusal to approve, sign, or certify unsupported, incomplete, inaccurate,
+or misleading filings; good-faith disagreement with management, counsel, the auditors, or
+the Board; delays or deficiencies caused by Client personnel, auditors, counsel, systems,
+vendors, regulators, or prior-period matters; and failure to achieve outcomes outside the
+Engagement Lead’s reasonable control.
+(b) “Good
+Reason” means any of the following occurring without the Engagement Lead’s
+written consent: (i) removal as Principal Financial Officer; (ii) a material reduction in
+his authority, duties, or responsibilities; (iii) the appointment of another Chief Financial
+Officer or principal financial officer above or alongside him; (iv) failure to maintain the
+D&O insurance required by Section 12; (v) failure to pay amounts when due; (vi) a material
+failure to provide information or personnel necessary to perform the Services; (vii) a required
+relocation or a materially increased on-site commitment; (viii) a public mischaracterization
+of his departure or performance; or (ix) a change in control followed by a material reduction
+in his role. The Engagement Lead shall give written notice of the Good Reason condition and
+allow the Company thirty (30) days to cure before resigning for Good Reason.
+3.9
+Early Termination Payment. If the Company terminates the Engagement Lead’s engagement without Cause (including in breach of
+Section 3.7), removes him as an officer, materially reduces his authority or duties, or induces Provider to terminate, or if the Engagement
+Lead resigns for Good Reason, then the Company shall pay Provider (for the benefit of the Engagement Lead) an “Early Termination
+Payment” equal to: (a) the Engagement Lead’s remaining Retainer installments through the end of the then-current term, not
+to exceed $108,000 (or, if the termination occurs during the Initial Term, through the end of the Initial Term); plus (b) all accrued
+and unpaid event-based fees and expenses; plus (c) full acceleration of the Option under Section 4.7(h) (or, if the Option is then unavailable,
+a cash amount economically equivalent thereto). The Early Termination Payment is in addition to, and does not limit, the Engagement Lead’s
+rights under Sections 4.7, 9, and 12, and shall be paid within five (5) business days of termination.
+3.10
+Termination upon Change of Control of Provider. Client may terminate this Agreement immediately upon written notice to Provider if
+Provider undergoes a Change of Control. “Change of Control” of Provider means any transaction or series of related transactions
+resulting in a transfer of a majority of the voting equity or management control of Provider to a person or group that did not control
+Provider as of the Effective Date, or the departure of Roman Franklin from control of Provider other than as contemplated by Section
+5.3. Upon any termination under this Section 3.10, Provider shall provide transition assistance in accordance with Section 3.5 for up
+to sixty (60) days.
+4.
+Fees and Expenses
+4.1
+Retainer. Client shall pay Provider a fixed monthly retainer of $27,000 per month (the “Retainer”), payable in advance
+on the first business day of each calendar month, covering the Services of the Engagement Lead as Client’s Chief Financial Officer
+and Principal Financial Officer, including capital raises and financing support, Nasdaq continued-listing remediation (bid-price and
+minimum-stockholders’-equity cures), and reverse stock-split planning and execution (in each case subject to Section 17). Technical
+accounting memoranda and other extraordinary, non-recurring work are event-based under Section 4.2. Provider does not charge hourly fees
+except as expressly set forth in an SOW.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 3
+4.2
+Event-Based Fees. Extraordinary, non-recurring work outside the ordinary-course scope of the Retainer, including (without limitation)
+technical accounting memoranda, restatement support, late-filing remediation of overdue periodic reports, M&A diligence and integration,
+and SEC enforcement or investigation response, shall be quoted and invoiced separately on a fixed-fee basis. For the avoidance of doubt,
+capital raises and financings, Nasdaq continued-listing remediation, and reverse stock-split planning and execution are within the Retainer
+scope and are not event-based. Provider shall provide a written quote of project work costs. Once the quoted costs are approved by the
+Company’s CEO or the Audit Committee, Provider will commence material event-based work.
+4.3
+Expenses. Client shall reimburse Provider for reasonable, pre-approved out-of-pocket expenses incurred in connection with the Services,
+including travel to and from Client locations other than corporate headquarters, expert and counsel fees engaged at Client’s direction,
+and pass-through fees. Expenses more than $500 per occurrence shall require Client’s prior written approval.
+4.4
+Invoicing. Provider shall invoice Client monthly. Invoices for the Retainer are due upon receipt; invoices for event-based fees and
+expenses are due net five (5) days. Undisputed past-due amounts shall accrue interest at the lesser of 1.5% per month or the maximum
+rate permitted by law. The Parties intend that all payments be made contemporaneously with, and as new value for, Services rendered in
+the ordinary course.
+4.5
+Adjustments. After the Initial Term, Provider may adjust the Retainer once per calendar year upon sixty (60) days’ prior written
+notice. Adjustments shall not exceed 8% without mutual written consent.
+4.6
+Payment Required for Performance. Provider shall have no obligation to commence or continue Services unless the applicable Retainer
+and any required deposits have been paid in advance. If any undisputed invoice remains unpaid for more than five (5) business days after
+Provider’s written notice of non-payment, Provider may suspend Services and withhold deliverables, and, if the amount remains unpaid
+for a further ten (10) business days, the Designated Officer may resign from his officer role without breach; provided that Provider
+and the Designated Officer shall cooperate in good faith on an orderly transition notwithstanding any suspension or resignation under
+this Section 4.6.
+4.7
+Equity Compensation (Engagement Lead). In addition to the Retainer, and as compensation for his service as the Company’s Chief
+Financial Officer and Principal Financial Officer, the Engagement Lead (Roman Franklin), individually, shall be granted a non-qualified
+stock option (the “Option”) to purchase 552,000 shares of the Company’s common stock under the Company’s 2024
+Omnibus Equity Incentive Plan (the “Plan”), on the following terms:
+(a) Grant
+timing. The Company shall formally grant the Option (with Compensation Committee or Board
+approval and a fully executed award agreement) no later than ten (10) business days after
+the Effective Date (the date of grant, the “Grant Date”). Vesting shall commence
+on the Effective Date.
+(b) Exercise
+price. The per-share exercise price shall equal the Nasdaq closing price of the Company’s
+common stock on the Grant Date.
+(c) Immediate
+exercisability; early exercise. All 552,000 shares underlying the Option shall be immediately
+exercisable in whole or in part from the Grant Date, whether or not then vested (early exercise
+permitted). Shares acquired on exercise of the then-unvested portion shall be subject to
+the Company’s right to repurchase the unvested shares, upon termination, at the original
+exercise price paid (and not fair market value); such repurchase right lapses as the shares
+vest. The Company shall reasonably cooperate with, and this Section authorizes, an election
+by Mr. Franklin under Section 83(b) of the Internal Revenue Code with respect to any early-exercised
+shares.
+(d) Vesting.
+Subject to Section 4.7(h), the Option shall vest in twelve (12) equal tranches of 46,000
+shares - the first tranche on the Effective Date and one tranche on each of the eleven (11)
+successive thirty (30) day anniversaries thereafter during the Initial Term - until fully
+vested (552,000 shares).
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 4
+(e) Exercise
+methods. The Option shall expressly permit both net (cashless) exercise and broker-assisted
+cashless exercise. Net exercise (withholding shares to cover the exercise price and applicable
+taxes) shall be available at all times when exercise is legally permissible and shall not
+require separate discretionary approval from the Compensation Committee or the plan administrator.
+Broker-assisted cashless exercise shall be available subject to broker and market availability.
+(f) Term.
+The Option shall expire on the fifth (5th) anniversary of the Grant Date, subject to
+the maximum term permitted by the Plan.
+(g) Post-termination
+exercise. Following any termination of the engagement other than for Cause, Mr. Franklin
+shall have thirty-six (36) months to exercise the vested portion of the Option. This post-termination
+exercise period shall be extended day-for-day for any period during which exercise is prohibited
+by law, Company policy, blackout restrictions, lack of an effective registration statement,
+or the Company’s failure to provide an operational exercise mechanism, subject to the
+maximum option term permitted by applicable law.
+(h) Acceleration.
+The Option shall vest in full (i) if the Company terminates the engagement without Cause
+(as defined in Section 3.8) or the Engagement Lead resigns for Good Reason (as defined in
+Section 3.8), including any such termination during the Initial Term, and (ii) upon a change
+in control of the Company. During any paid transition period, the Option shall continue to
+vest.
+(i) Approval;
+availability; make-whole. The grant is subject to approval by the Company’s Compensation
+Committee (or the Board), Section 409A of the Internal Revenue Code, Section 16 reporting
+(Forms 3 and 4), and applicable Nasdaq and SEC requirements. If the grant is not timely approved,
+or sufficient shares are not available under the Plan, the Company shall (x) obtain the necessary
+approvals or additional plan capacity through any other equity award, plan amendment, stockholder
+approval, or legally permissible arrangement providing substantially equivalent economics,
+or (y) pay Mr. Franklin a cash amount economically equivalent to the intended Option (a “Make-Whole
+Payment”). To the extent the Plan does not permit any term expressly required by this
+Section 4.7, the Company shall use a legally permissible alternative award structure that
+provides Mr. Franklin substantially equivalent economic and tax benefits, subject to applicable
+law. Other Provider Personnel may also receive equity compensation from the Company if separately
+approved by the Compensation Committee. The Option is a related-party and executive-compensation
+arrangement subject to Section 13.3.
+4.8
+Scope Assumptions; Change Orders. The Retainer is based on assumptions regarding the volume, complexity, urgency, historical backlog,
+personnel sufficiency, and regulatory condition of the Company. If any of these materially exceeds those assumptions, Provider may require
+a written change order, additional personnel, revised deadlines, or a temporary increase in fees, and the affected SLA commitments shall
+be equitably adjusted.
+4.9
+Billing Disputes. Any dispute of an invoice must be raised in writing within five (5) business days of receipt, must identify the
+specific amount and the factual basis for the dispute, and does not excuse timely payment of the undisputed portion. A dispute not raised
+in good faith and in accordance with this Section shall not prevent Provider from exercising its rights under Section 4.6. The Parties
+shall resolve disputes promptly through good-faith executive escalation.
+4.10
+No Setoff. Except for (a) any amount that a final, non-appealable judicial or arbitral decision determines Provider owes Client under
+Section 9.2 or otherwise under this Agreement, or (b) service credits properly accrued and elected by Client under the SLA in accordance
+with its terms, the Company shall not withhold, offset, deduct, or recoup any alleged damages, service credits, indemnity, or other claims
+against any Retainer, event-based fee, expense reimbursement, Early Termination Payment, or other amount due to Provider, all of which
+shall be paid in full when due.
+4.11
+Tax Reporting. Provider is responsible for its own income and employment taxes and for issuing any required tax forms to Provider
+Personnel. The Company shall report and, to the extent required, withhold on compensation it pays directly to a Designated Officer, including
+income arising from the Option, and shall issue applicable tax forms (for example, a Form 1099 to Provider for the Services, and a Form
+W-2 or 1099 to a Designated Officer for officer compensation, as the Parties’ advisors determine). The Company shall reasonably
+cooperate with any Section 83(b) election by the Engagement Lead. Each Party shall bear its own taxes and rely on its own tax advisors;
+nothing herein constitutes tax advice.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 5
+5.
+Independent Contractor; Personnel
+5.1
+Independent Contractor. Provider is an independent contractor of Client. Nothing in this Agreement creates a partnership, joint venture,
+agency, employer-employee relationship, or franchise between the Parties. Neither Party has authority to bind the other except as expressly
+authorized in this Agreement.
+5.2
+No Employee Benefits. Provider Personnel are not entitled to any benefits provided by Client to its employees, including salary,
+vacation, health insurance, retirement plans, or unemployment insurance, except as expressly provided in this Agreement or any executed
+SOW.
+5.3
+Engagement Lead Continuity. Provider shall use commercially reasonable efforts to maintain continuity of the Engagement Lead. If
+for any reason the Engagement Lead becomes unable to perform, Provider shall propose a qualified replacement with comparable public-company
+experience within ten (10) business days, subject to Client’s reasonable approval. Pending Client’s approval, Provider shall
+maintain Service continuity through other Provider Personnel. During any transition period, Provider may designate other Provider Personnel
+as interim acting officer, subject to Client’s prior consent (not to be unreasonably withheld) and the appointment processes required
+by applicable Nasdaq and SEC rules.
+5.4
+Provider Personnel Authority. The Engagement Lead, as the Company’s Chief Financial Officer and Principal Financial Officer
+(or any successor or interim officer duly appointed pursuant to Section 5.3 and applicable corporate, SEC, and Nasdaq requirements),
+is authorized to sign filings, certifications, and other documents on Client’s behalf in his officer capacity. The Company’s
+Principal Accounting Officer (an internal officer of the Client, and in no event the Engagement Lead or any other Provider Personnel)
+signs periodic-report signature pages and provides sub-certifications in that capacity. All other Provider Personnel serve in non-officer
+support roles, report to the Engagement Lead, and may prepare, review, and assist with such documents but shall not be designated officers
+and shall not sign or certify Client’s SEC filings or Section 16 reports unless duly appointed pursuant to Section 5.3.
+6.
+Officer Designation; Principal Financial Officer
+6.1
+Appointment. Effective on the Effective Date, Client shall appoint the Engagement Lead (Roman Franklin) as Client’s Chief Financial
+Officer (“CFO”) and Principal Financial Officer (“PFO,” and together with the CFO title, the “CFO/PFO”)
+for purposes of the Securities Exchange Act of 1934, the Sarbanes-Oxley Act of 2002, and applicable Nasdaq listing rules. Concurrently,
+the Company’s current Chief Financial Officer, Bradford Amman, shall transition to the role of Principal Accounting Officer. The
+Company’s Principal Accounting Officer (“PAO”) shall at all times be an internal officer of the Company - currently
+Brad Amman and, upon hire, the permanent Controller, or such other internal officer as the Board may designate (including the Principal
+Accounting Officer), so that the Company at all times has a duly designated Principal Accounting Officer for purposes of its periodic
+reports. In no event shall the Engagement Lead or any other Provider Personnel serve as the PAO. Client shall file any required Form
+8-K under Item 5.02 within four business days disclosing the appointment of the Engagement Lead as Chief Financial Officer / PFO and
+Mr. Amman’s transition. Notwithstanding anything to the contrary, the Engagement Lead shall not be required to accept appointment,
+sign certifications or filings, or assume officer duties unless and until Provider has completed onboarding diligence reasonably satisfactory
+to Provider and the conditions in Sections 12.2, 12.3, and 12.4 have been fully satisfied.
+6.2
+Authority and Duties. The CFO/PFO shall have customary authority over the financial function, treasury, accounting, disclosure controls
+and procedures, and oversight of internal control over financial reporting, and shall lead the Company’s finance and accounting
+organization (including the Principal Accounting Officer and the Controller). The Sarbanes-Oxley Section 302 and 906 certifications on
+periodic reports shall be executed by the Company’s principal executive officer and the Engagement Lead as principal financial
+officer; the Principal Accounting Officer shall execute the signature pages of the Company’s periodic reports in his capacity as
+principal accounting officer and shall provide the sub-certifications supporting the Section 302/906 certifications. The Engagement Lead
+shall be a Section 16 reporting person.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 6
+6.3
+Cooperation. Client shall provide the Engagement Lead with timely access to all books, records, personnel, systems, vendors, and
+information reasonably necessary to perform his function and make required certifications, and shall not withhold or misrepresent material
+information. Client acknowledges that the Engagement Lead’s ability to certify or sign depends on access to complete and accurate
+information and the work performance of internal Client staff. The Engagement Lead may decline to approve, sign, certify, authorize,
+or submit any SEC filing, certification, representation letter, disclosure, press release, or other public communication if, in his good-faith
+judgment, the information provided is incomplete, inaccurate, unsupported, misleading, subject to unresolved accounting or disclosure
+issues, or otherwise insufficient to support the requested approval, signature, certification, or filing.
+6.4
+Resignation. The Engagement Lead may resign from the officer role immediately upon written notice if (a) Client materially fails
+to comply with Section 6.3 or with Section 12, (b) he determines in good faith that continuation would require him to violate applicable
+law or professional standards, or (c) this Agreement is terminated. Client shall file any required Form 8-K under Item 5.02 within four
+business days of such resignation. Such resignation shall not constitute a breach of this Agreement.
+7.
+Confidentiality
+7.1
+Obligations. Each Party shall (a) hold the other Party’s Confidential Information in strict confidence, (b) use such Confidential
+Information solely for purposes of performing under this Agreement, (c) protect such Confidential Information with at least the same
+degree of care it uses to protect its own confidential information of similar importance, but in no event less than a reasonable standard
+of care, and (d) upon the disclosing Party’s written request or upon termination of this Agreement, promptly return or destroy
+all Confidential Information in its possession and certify such return or destruction in writing, except for archival copies retained
+solely as required by law, regulation, or a bona fide document-retention policy and subject to the continuing confidentiality obligations
+of this Section 7.
+7.2
+Exclusions. Confidential Information does not include information that (a) is or becomes publicly available through no fault of the
+receiving Party, (b) was rightfully known to the receiving Party prior to disclosure, (c) is rightfully obtained from a third party without
+restriction, or (d) is independently developed by the receiving Party without use of the other Party’s Confidential Information.
+7.3
+Compelled Disclosure. If a Party is compelled by law to disclose Confidential Information, it shall, to the extent permitted, provide
+prompt written notice to the disclosing Party and reasonable cooperation in seeking a protective order.
+7.4
+Material Non-Public Information. Provider acknowledges that, in the course of performing the Services, Provider Personnel will receive
+material non-public information regarding Client. Provider Personnel shall not (i) engage in any transaction in Client securities while
+in possession of material non-public information, or (ii) disclose or “tip” any material non-public information to any third
+party for trading or any other improper purpose, and shall comply with Client’s insider trading policy as in effect from time to
+time.
+7.5
+Insider Trading Compliance. Client shall provide Provider with its insider trading policy before the Engagement Lead’s appointment
+as CFO/PFO and any updates thereafter. Provider Personnel shall be added to the Client’s insider list only as appropriate. Client
+shall provide blackout notices in a timely manner.
+7.6
+Section 16 Reporting. Client shall be responsible for determining Section 16 status and for preparing and filing any required Section
+16 reports (Forms 3, 4, and 5) for the Designated Officer, unless otherwise agreed in writing. Client shall promptly notify the applicable
+Designated Officer of any such determination and of any blackout periods, insider lists, or pre-clearance procedures applicable to him.
+7.7
+Survival. The obligations under this Section 7 shall survive termination of this Agreement for a period of five (5) years, except
+that the obligations with respect to trade secrets shall survive indefinitely.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 7
+7.8
+Data Security. Provider shall implement and maintain administrative, technical, and physical safeguards reasonably designed to protect
+the confidentiality, integrity, and availability of Client Confidential Information and any Client systems Provider Personnel access,
+consistent with applicable law and prevailing industry practice for providers handling public-company financial and non-public information.
+Provider shall promptly, and in no event later than forty-eight (48) hours after becoming aware, notify Client in writing of any actual
+or reasonably suspected unauthorized access to, or acquisition, use, or disclosure of, Client Confidential Information or Client systems
+(a “Security Incident”), and shall reasonably cooperate with Client’s investigation, remediation, and any regulatory
+or public disclosure obligations arising from a Security Incident, including Client’s obligations under Item 1.05 of Form 8-K and
+other applicable SEC cybersecurity disclosure rules. Provider shall maintain cyber liability and privacy liability insurance in amounts
+reasonably sufficient to cover its obligations under this Section 7.8, and shall provide Client with certificates of such insurance upon
+request.
+8.
+Intellectual Property
+8.1
+Client Property. All financial statements, filings, board materials, internal control documentation, policies, procedures, and other
+work product specifically prepared for Client under this Agreement (collectively, “Client Deliverables”) shall be the sole
+and exclusive property of Client upon payment of the corresponding fees.
+8.2
+Provider Property. Provider retains all right, title, and interest in and to its proprietary tools, methodologies, templates, frameworks,
+software, and know-how, including any AI tooling and prompt libraries, used in performing the Services (collectively, “Provider
+IP”). Provider grants Client a non-exclusive, royalty-free, perpetual, irrevocable license to use Provider IP solely as embedded
+in or required to use the Client Deliverables, which license shall survive termination or expiration of this Agreement.
+8.3
+Reservation. Except as expressly granted herein, neither Party grants the other any license to its intellectual property by implication,
+estoppel, or otherwise.
+8.4
+AI Tools and Data. Provider shall not knowingly input Client Confidential Information or material non-public information into publicly
+available AI tools that use submitted data to train public models, unless approved by Client in writing. Provider may use enterprise-grade
+AI, automation, and workflow tools that maintain confidentiality and do not train public models on Client data after notifying Client
+of the specific enterprise-grade tool(s) that will be used. Provider retains all rights to its prompts, workflows, templates, methodologies,
+and generalized know-how, excluding Client Confidential Information. Provider shall remain primarily responsible and liable for any use
+of the enterprise-grade AI tools it uses for the term of this engagement.
+9.
+Mutual Indemnification
+9.1
+Indemnification by Client. Client shall defend, indemnify, and hold harmless Provider, its affiliates, and their respective officers,
+directors, employees, contractors, and agents (including without limitation the Engagement Lead) from and against any and all claims,
+losses, damages, liabilities, judgments, settlements, fines, penalties, and expenses (including reasonable attorneys’ fees and
+costs of investigation) arising out of or relating to (a) any breach by Client of this Agreement, (b) any acts or omissions of Client
+or its officers, directors, employees, or agents (other than Provider Personnel acting within the scope of this Agreement), (c) any claim
+by a third party arising out of Client’s business operations, products, or services, (d) any claim, action, or proceeding by or
+on behalf of any governmental authority (including the SEC, Nasdaq, and any state regulator) or any private party (including any securities
+class action, derivative action, or short-seller-instigated action) relating to Client’s public disclosures, financial statements,
+internal controls, related-party transactions, or capital-raising activities, including matters arising before the Effective Date, and
+(e) any acts or omissions of the Engagement Lead in his capacity as CFO/PFO undertaken in good faith and in the reasonable belief that
+such acts were in or not opposed to the best interests of Client; provided that Client’s indemnification obligations under clauses
+(c), (d), and (e) shall not extend to the extent any such claim, loss, or liability arises from Provider’s or any Provider Personnel’s
+gross negligence, willful misconduct, fraud, or uncured breach of this Agreement.
+9.2
+Indemnification by Provider. Provider shall defend, indemnify, and hold harmless Client and its affiliates and their respective officers,
+directors, employees, and agents from and against any and all claims, losses, damages, liabilities, judgments, settlements, and expenses
+arising out of or relating to (a) any material breach by Provider of this Agreement, (b) the gross negligence or willful misconduct of
+Provider Personnel in performing the Services, (c) any claim that Provider IP infringes a third party’s intellectual property rights,
+or (d) any Security Incident caused by Provider’s failure to maintain the safeguards required by Section 7.8.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 8
+9.3
+Carve-Outs. Provider’s indemnification obligations under Section 9.2 shall not apply to (a) acts or omissions of the Engagement
+Lead in the CFO/PFO role taken in good faith and within the scope of this Agreement, which shall be governed by Section 9.1 and Section
+12, or (b) any claim, loss, or liability arising from Client’s pre-Effective-Date acts, omissions, disclosures, or controls, including
+any prior-period restatements, pre-existing material weaknesses, prior-period filings, or related-party transactions consummated before
+the Effective Date.
+9.4
+Procedure. The Party seeking indemnification shall (a) promptly notify the indemnifying Party of the claim, (b) cooperate reasonably
+in the defense, and (c) not settle the claim without the indemnifying Party’s consent (not to be unreasonably withheld). The indemnifying
+Party shall control the defense using counsel reasonably acceptable to the indemnified Party, provided that the indemnified Party may
+participate at its own expense. Where the indemnified Party reasonably determines a conflict of interest exists between the Parties in
+defending against a claim, or where the claim involves an actual or potential SEC, Nasdaq, or other regulatory proceeding against the
+indemnified Party, the indemnified Party may engage separate counsel of its choosing at the indemnifying Party’s expense.
+10.
+Limitation of Liability
+10.1
+Cap. EXCEPT FOR (A) BREACHES OF CONFIDENTIALITY UNDER SECTION 7, (B) INDEMNIFICATION OBLIGATIONS UNDER SECTIONS 9 AND 12, (C) GROSS
+NEGLIGENCE, WILLFUL MISCONDUCT, OR FRAUD, AND (D) AMOUNTS ACTUALLY RECOVERED UNDER ANY APPLICABLE INSURANCE POLICY (BUT ONLY TO THE EXTENT
+SUCH RECOVERY DOES NOT INCREASE THE LIABLE PARTY’S LIABILITY BEYOND AMOUNTS OTHERWISE AVAILABLE UNDER SUCH POLICY), EACH PARTY’S
+AGGREGATE LIABILITY ARISING OUT OF OR RELATED TO THIS AGREEMENT SHALL NOT EXCEED THE TOTAL FEES PAID BY CLIENT TO PROVIDER UNDER THIS
+AGREEMENT IN THE TWELVE (12) MONTHS PRECEDING THE EVENT GIVING RISE TO THE CLAIM.
+10.2
+Consequential Damages. IN NO EVENT SHALL EITHER PARTY BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE
+DAMAGES, INCLUDING LOST PROFITS, LOST REVENUE, OR BUSINESS INTERRUPTION, ARISING OUT OF OR RELATED TO THIS AGREEMENT, EVEN IF SUCH PARTY
+HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+10.3
+No Limit on Officer Indemnification. For the avoidance of doubt, the limitations in this Section 10 shall not apply to Client’s
+indemnification obligations under Section 9.1 or Section 12 with respect to the Engagement Lead’s acts or omissions in the CFO/PFO
+role, nor to the statutory or fiduciary duties or liabilities of the Engagement Lead as a corporate officer, which are personal to him
+and governed by applicable law, Client’s charter and bylaws, the D&O insurance, and the Indemnification Agreement.
+11.
+Insurance
+11.1
+Provider Insurance. Provider shall maintain, at its own expense, (a) professional liability (errors and omissions) insurance with
+limits of not less than $1,000,000 per occurrence and $2,000,000 in the aggregate, and (b) cyber liability and privacy liability insurance
+with limits of not less than $2,000,000 per occurrence, covering Security Incidents and breaches of Section 7.8 (Data Security). Upon
+request, Provider shall provide Client with certificates of insurance evidencing such coverage. The Parties acknowledge that such policies
+commonly exclude claims arising from an insured’s service as an officer or director of a client, and that protection for the Engagement
+Lead’s acts as a corporate officer is intended to be provided by Client’s D&O insurance and Section 12.
+11.2
+Client Insurance. Client shall maintain, at its own expense, directors and officers (D&O) liability insurance covering the Designated
+Officer (the CFO / PFO) on the same terms and to the same extent as Client’s other Section 16 officers, as further described in
+Section 12. The internal Principal Accounting Officer shall be covered under the Company’s standard officer D&O and indemnification
+arrangements.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 9
+12.
+Officer Indemnification and D&O Coverage
+12.1
+Officer Indemnification. Client shall indemnify the Designated Officer, in his capacity as Client’s CFO/PFO, to the fullest
+extent permitted by applicable law and Client’s certificate of incorporation and bylaws, on the same terms as Client’s other
+officers, including advancement of legal expenses, defense costs, settlements, and judgments arising from any claim, action, or proceeding
+(whether civil, criminal, administrative, or investigative, and whether brought by or on behalf of Client, the SEC, Nasdaq, a stockholder,
+or any other party) arising out of or related to his service as a Designated Officer.
+12.2
+Indemnification Agreement. Concurrently with the execution of this Agreement, Client shall enter into an Indemnification Agreement
+with the Designated Officer (the Engagement Lead, as CFO/PFO) in the form attached as Exhibit C, providing the same protections that
+Client provides its other Section 16 officers. If the Designated Officer is replaced pursuant to Section 5.3, Client and the successor
+shall promptly execute a substantially identical Indemnification Agreement. The internal Principal Accounting Officer shall be provided
+officer indemnification under the Company’s standard arrangements.
+12.3
+D&O Insurance. Client shall maintain D&O liability insurance covering the Designated Officer, on the same terms as such coverage
+applies to Client’s other Section 16 officers, with the following minimums and confirmations:
+● Aggregate
+policy limit of not less than $5,000,000.
+● Outside-service-provider
+coverage - coverage for the Designated Officer as a non-employee outside service provider
+acting as CFO/PFO, including any necessary endorsement confirming that the Designated Officer’s
+status as a contractor (paid through Provider rather than Client payroll) does not impair
+or exclude coverage.
+● Prior-acts
+and tail coverage - prior-acts coverage extending to all acts and omissions of the Designated
+Officer during the term, plus run-off (tail) coverage of not less than six (6) years following
+any termination, purchased and paid for by Client at no cost to Provider or the Designated
+Officer.
+● Side
+A / B / C and policy details - full policy, including all exclusions, retention amounts,
+and Side A / B / C coverage details, including pending and prior litigation exclusions, insolvency
+exclusions, and professional services exclusions.
+● Securities
+and regulatory coverage confirmations - securities-claim coverage confirmation, SEC investigation
+coverage confirmation, and short-seller-related litigation coverage confirmation.
+● Disclosure
+and notice to Provider - Client shall provide Provider with copies of the policy, declarations
+page, all endorsements, and the broker confirmation before the Designated Officer is appointed,
+and shall promptly notify Provider of any cancellation, non-renewal, premium non-payment,
+coverage modification, or other material change.
+● Provider
+satisfaction precondition - Provider shall have no obligation to proceed with appointment
+of the Designated Officer unless the policy and confirmations provided under this Section
+12.3 are reasonably satisfactory to Provider and its counsel.
+12.4
+Confirmation Pre-Effective. It is a condition precedent to the Designated Officer’s appointment that Client deliver the items
+in Section 12.3 to Provider, together with a written confirmation from Client’s D&O broker that the policy covers the Designated
+Officer as described.
+12.5
+No Exclusion of Other Rights. The rights conferred under this Section 12 shall not be exclusive of any other rights to which a Designated
+Officer may be entitled under any other agreement, vote of stockholders or directors, applicable law, or otherwise.
+13.
+Conflicts of Interest
+13.1
+Existing Engagements. Client acknowledges that Provider provides similar services to other clients, including other public microcap
+companies. Provider represents that, as of the Effective Date, there are no material conflicts of interest involving Provider’s
+other engagements known to Provider that would reasonably be expected to interfere with the Services.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 10
+13.2
+Future Engagements. During the term of this Agreement, Provider shall not accept any new engagement that, in Provider’s reasonable
+judgment, would create a material conflict of interest with respect to Client. Provider shall promptly disclose any such potential conflict
+to Client.
+13.3
+Related-Party Acknowledgement. The Parties acknowledge that the engagement of Provider, whose principal serves as Client’s
+CFO/PFO, is a related-party arrangement. Client represents that this Agreement has been reviewed and approved by Client’s Audit
+Committee and/or disinterested directors, and that Client shall make any related-party and executive-compensation disclosures required
+by SEC rules and Nasdaq listing standards.
+13.4
+Other Engagements of the Engagement Lead. The Company acknowledges that the Engagement Lead and other Provider Personnel provide
+fractional and interim finance-leadership services to other companies, and nothing in this Agreement restricts the Engagement Lead from
+serving as an officer, including Chief Financial Officer or Principal Financial Officer, of other companies, provided the Engagement
+Lead continues to satisfy his obligations under this Agreement and discloses any material conflict of interest under Section 13.2.
+14.
+Notices
+All
+notices under this Agreement shall be in writing and shall be deemed given when (a) delivered personally, (b) sent by nationally recognized
+overnight courier, or (c) sent by email with confirmation of receipt, in each case to the addresses set forth below or such other address
+as a Party may designate by notice:
+To
+Provider: The CFO Portal, LLC, Attn: Roman Franklin, CEO, 21620 State Road 19, Howey in the Hills, FL 34737, with email copy to ceo@thecfoportal.com.
+To
+Client: Vivos Therapeutics, Inc., Attn: R. Kirk Huntsman, Chairman & CEO, 7921 Southpark Plaza, Suite 210, Littleton, CO 80120,
+with email copies to kirk@vivoslife.com and to the Chair of the Audit Committee, Leonard (Lenny) Sokolow, at lenny.sokolow@skyx.com.
+15.
+Compliance with Laws
+15.1
+Generally. Each Party shall comply with all applicable federal, state, and local laws, rules, and regulations in connection with
+this Agreement, including without limitation the Securities Act of 1933, the Securities Exchange Act of 1934, the Sarbanes-Oxley Act
+of 2002, the Foreign Corrupt Practices Act, applicable Nasdaq listing rules, and applicable privacy and data-protection laws.
+15.2
+Cooperation with Regulators. Each Party shall cooperate reasonably with any inquiry, investigation, or examination by the SEC, Nasdaq,
+or any other regulatory authority arising out of or related to the Services. The provisions of Section 12 shall apply to expenses incurred
+by the Engagement Lead in connection with any such cooperation.
+15.3
+Books and Records; Regulatory Access. Upon termination or expiration of this Agreement, Provider shall promptly deliver to Client
+(or its designee) all such books, records, and work papers, and all Client Deliverables, in a usable format, to facilitate an orderly
+transition to a successor Chief Financial Officer or internal personnel.
+16.
+Miscellaneous
+16.1
+Governing Law. This Agreement shall be governed by and construed in accordance with the laws of the State of Colorado, without regard
+to its conflict of laws principles.
+16.2
+Venue; Dispute Resolution. Any dispute arising out of or related to this Agreement shall be resolved in the state or federal courts
+located in Denver, Colorado, and each Party consents to the exclusive jurisdiction and venue of such courts.
+16.3
+Relationship to Indemnification Agreement. Notwithstanding Sections 16.1 and 16.2, the Indemnification Agreement attached as Exhibit
+C is governed by, and disputes arising under it are subject to, its own governing-law and forum provisions (the laws of the State of
+Delaware and the exclusive jurisdiction of the Delaware Court of Chancery). Any dispute concerning the Engagement Lead’s rights
+or the Company’s obligations as to officer indemnification, advancement of expenses, or D&O coverage shall be governed exclusively
+by the Indemnification Agreement and resolved in the Delaware forum, while all other disputes arising out of or related to this Agreement
+shall be governed by Colorado law and resolved in the Colorado forum. To the extent a single dispute implicates both, each such Agreement
+shall govern its own subject matter, and neither the choice of law nor the forum of one shall be construed to waive or modify that of
+the other.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 11
+16.4
+Entire Agreement. This Agreement, together with the Exhibits hereto and any executed SOWs, constitutes the entire agreement between
+the Parties with respect to the subject matter hereof and supersedes all prior agreements and understandings.
+16.5
+Amendments. This Agreement may be amended only by a written instrument signed by authorized representatives of both Parties.
+16.6
+Assignment. Neither Party may assign this Agreement without the other Party’s prior written consent, except that either Party
+may assign this Agreement to a successor in connection with a merger, acquisition, or sale of substantially all of its assets, provided
+that the assignee assumes all obligations hereunder. Provider may terminate this Agreement upon thirty (30) days’ written notice
+following any merger, acquisition, change of control, or sale of substantially all of Client’s assets; provided that Provider shall,
+upon Client’s request, continue to provide the Services on the terms of this Agreement for up to an additional sixty (60) days
+following such notice to permit an orderly transition to a successor Chief Financial Officer, and Provider shall cooperate in good faith
+with Client’s and any successor’s reasonable transition requests.
+16.7
+Severability. If any provision of this Agreement is held invalid or unenforceable, the remaining provisions shall remain in full
+force and effect.
+16.8
+Waiver. No waiver of any provision of this Agreement shall be effective unless in writing and signed by the waiving Party. No failure
+or delay in exercising any right shall operate as a waiver thereof.
+16.9
+Force Majeure. Neither Party shall be liable for any delay or failure to perform due to causes beyond its reasonable control, provided
+the affected Party gives prompt notice and uses commercially reasonable efforts to resume performance.
+16.10
+Counterparts; Electronic Signatures. This Agreement may be executed in counterparts, including by electronic signature, each of which
+shall be deemed an original and all of which together shall constitute one instrument.
+16.11
+Independent Counsel. Each Party acknowledges that it has had the opportunity to consult with independent legal counsel of its own
+choosing in connection with this Agreement and that it enters into this Agreement freely and voluntarily.
+17.
+Limitations on Provider’s Role
+Provider
+is not acting as a broker, dealer, placement agent, finder, underwriter, investment banker, legal counsel, or securities counsel. Provider
+shall not solicit investors, recommend securities transactions to investors, negotiate securities sales for transaction-based compensation,
+receive success fees based on financing proceeds, or perform activities requiring broker-dealer registration. Capital markets support
+shall be limited to CFO-level financial analysis, capital planning, management materials, diligence support, banker coordination, investor
+presentation support, and coordination with Client’s licensed broker-dealers, investment bankers, legal counsel, auditors, and
+other advisors.
+18.
+Representations and Warranties
+18.1
+Client Representations and Warranties. Client represents and warrants to Provider, as of the Effective Date and on a continuing basis
+throughout the term, that:
+● Client
+has full corporate power and authority to enter into this Agreement, to appoint the Engagement
+Lead as Chief Financial Officer and Principal Financial Officer, and to designate an internal
+officer of the Company (currently Bradford Amman or, upon hire, the permanent Controller,
+or another internal officer duly designated by the Board) as Principal Accounting Officer,
+and all required Board, Audit Committee, and (for the Option) Compensation Committee approvals
+have been or will be obtained.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 12
+● Client
+has disclosed to Provider all known material facts relevant to the engagement, including
+all material weaknesses, significant deficiencies, auditor disputes, management letters,
+SEC comments, Nasdaq notices, late filings, restatements, litigation, investigations, subpoenas,
+related-party transactions, debt defaults, covenant defaults, pending financings, equity
+commitments, and going-concern issues of which Client is aware.
+● Client’s
+prior SEC filings are accurate in all material respects to Client’s knowledge.
+● Client
+will maintain qualified finance and accounting personnel sufficient to support the PFO/PAO
+function.
+● Client
+will not request that Provider or the Engagement Lead make, approve, sign, or certify any
+disclosure, filing, certification, or representation that Client knows or reasonably should
+know to be misleading.
+● Client
+will retain qualified securities counsel, independent auditors, tax advisors, valuation specialists,
+and other professional advisors as reasonably required to support the Services.
+18.2
+Provider Representations and Warranties. Provider represents and warrants to Client, as of the Effective Date and on a continuing
+basis throughout the term, that:
+● Provider
+has full power and authority to enter into this Agreement and to perform the Services, and
+the individual executing this Agreement on Provider’s behalf is duly authorized to
+do so.
+● Neither
+Provider nor any Provider Personnel (including the Engagement Lead) is subject to any order,
+judgment, decree, suspension, bar, or disqualification by the SEC, PCAOB, Nasdaq, FINRA,
+or any state securities or accountancy regulator, and none of them is subject to a “bad
+actor” disqualification under Rule 506(d) of the Securities Act, Section 15(b) of the
+Exchange Act, or any similar disqualification provision.
+● Neither
+Provider nor any Provider Personnel has been convicted of, or is the subject of any pending
+charge involving, fraud, dishonesty, or a breach of fiduciary duty, or any securities-law
+violation.
+● Provider
+Personnel assigned to the Services, including the Engagement Lead, possess the requisite
+skill, experience, and any licenses or professional credentials reasonably necessary to perform
+the Services in a professional and workmanlike manner consistent with prevailing industry
+standards for providers of outsourced CFO and financial-reporting services to Nasdaq-listed
+companies.
+● Provider
+has disclosed to Client all material conflicts of interest known to Provider as of the Effective
+Date, and shall promptly disclose any material conflict of interest arising during the term.
+● Provider
+will comply, and will cause Provider Personnel to comply, with all applicable laws in performing
+the Services, including the Securities Act of 1933, the Securities Exchange Act of 1934,
+the Sarbanes-Oxley Act of 2002, the Foreign Corrupt Practices Act, applicable Nasdaq listing
+rules, and applicable data-protection and privacy laws.
+● The
+Provider IP does not, to Provider’s knowledge, infringe, misappropriate, or violate
+any third party’s intellectual property rights.
+19.
+Public Disclosure Review Rights
+Client
+shall use reasonable efforts to provide Provider and the Engagement Lead a reasonable opportunity to review and comment on any Form 8-K,
+press release, proxy statement, registration statement, periodic report, investor presentation, or other public disclosure that names
+or describes Provider, the Engagement Lead, this Agreement, the Services, compensation, appointment, resignation, or any related matter,
+not less than twenty-four (24) hours before filing or release in the ordinary course, or as soon as reasonably practicable for time-sensitive
+disclosures; provided that Client shall retain sole and final authority and responsibility for the content, timing, and filing of all
+public disclosures, and nothing in this Section 19 shall delay, condition, or impair Client’s ability to make any disclosure required
+by applicable law, SEC rule, or Nasdaq listing standard.
+Client
+shall use reasonable efforts to provide Provider and the Engagement Lead a reasonable opportunity to review and comment on any characterization
+of a resignation, refusal to certify, disagreement, or dispute involving Provider or the Engagement Lead before such characterization
+is made public, except where Client’s counsel determines that applicable law, SEC rule, or Nasdaq listing standard requires disclosure
+on a shorter timeframe, in which case Client shall provide Provider and the Engagement Lead notice and an opportunity to comment as far
+in advance as reasonably practicable under the circumstances.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 13
+IN
+WITNESS WHEREOF, the Parties have executed this Agreement as of the Effective Date.
+THE
+CFO PORTAL, LLC
+VIVOS
+THERAPEUTICS, INC.
+By:
+/s/
+Roman Franklin
+By:
+/s/
+R. Kirk Huntsman
+Name:
+Roman
+Franklin
+Name:
+R.
+Kirk Huntsman
+Title:
+Chief
+Executive Officer
+Title:
+Chairman
+& Chief Executive Officer
+Date:
+Date:
+Client
+signatory to be an authorized director or officer other than the incoming Engagement Lead, given the related-party nature of the engagement;
+Board and Audit Committee approvals to be reflected in resolutions.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 14
+EXHIBIT
+A
+STATEMENT
+OF WORK NO. 1
+attached
+to and made part of the Master Services Agreement between The CFO Portal, LLC and Vivos Therapeutics, Inc.
+This
+Statement of Work No. 1 (this “SOW”) is entered into pursuant to the Master Services Agreement (the “Agreement”)
+dated July 31, 2026 between The CFO Portal, LLC (“Provider”) and Vivos Therapeutics, Inc. (“Client”).
+Capitalized terms not defined herein have the meanings set forth in the Agreement.
+1.
+Engagement Context
+1.1
+Client’s Internal Finance Team. Client maintains an internal finance and accounting team consisting of: Principal Accounting
+Officer (currently filled by Bradford Amman, formerly Chief Financial Officer); two Accounting Managers (currently filled by Matthew
+White, CPA, and Leanne Grubb, CPA); Manager, FP&A (currently filled by Marty Hoffman); two Senior Accountants (currently filled by
+Matthew Sullivan and Kathleen Victor); Payroll Accountant (currently filled by Danielle Solano); two Accounts Payable Specialists (currently
+filled by Elonca Richardson and Janice Brown); and any other accounting staff (collectively, the “Client Finance Team”).
+The Company’s Principal Accounting Officer is an internal officer of the Company - currently Brad Amman; the permanent Controller
+is a new-hire position to be filled and will serve as principal accounting officer upon hire. In no event shall the Engagement Lead or
+any other Provider Personnel serve as Principal Accounting Officer. The Services under this SOW are designed to supply permanent senior
+CFO leadership and to lead and coordinate the Client Finance Team in clearing the close backlog and bringing filings current.
+1.2
+Provider Personnel. Provider shall make available Roman Franklin as Engagement Lead and as Client’s Chief Financial Officer
+and Principal Financial Officer (PFO) pursuant to Section 6 of the Agreement, who, with the Company’s principal executive officer,
+will execute Sarbanes-Oxley Section 302 / 906 certifications on periodic reports filed during the term, serve as the senior finance officer
+interfacing with the Board, Audit Committee, independent auditor, Nasdaq, the SEC, and the capital markets, and lead the Client Finance
+Team (including the Principal Accounting Officer and the Interim Controller / Controller). Mr. Franklin is the Designated Officer; the
+Principal Accounting Officer is an internal officer of the Client (currently Brad Amman, and the permanent Controller upon hire) and
+not Provider Personnel. In no event shall the Engagement Lead or any other Provider Personnel serve as Principal Accounting Officer.
+1.3
+Reporting Lines. The Client Finance Team, including the Principal Accounting Officer and the Interim Controller / Controller, reports
+to the Engagement Lead (CFO/PFO). Client shall file the required Form 8-K within four business days of the Effective Date disclosing
+(i) the Engagement Lead’s appointment as CFO/PFO and (ii) Mr. Amman’s transition to Principal Accounting Officer.
+2.
+Division of Responsibilities
+The
+following matrix governs the work covered by this SOW. “Lead” means the named party owns execution and is accountable for
+completion; “Review” means the named party reviews and approves the deliverable produced by the Lead; “Support”
+means the named party assists, supplies inputs, or provides expertise but is not the Lead.
+Workstream
+Provider
+(CFO Portal)
+Client
+(internal team)
+Officer
+certifications & report signatures
+Lead
+- CFO/PFO (Franklin) executes SOX 302/906 with the CEO; the Company’s internal Principal Accounting Officer (Brad Amman now;
+the permanent Controller upon hire) signs periodic-report signature pages and provides sub-certifications
+Support
+- Finance Team supplies sub-certifications and inputs
+Disclosure
+controls and procedures
+Lead
+- CFO/PFO chairs Disclosure Committee; Principal Accounting Officer co-leads
+Support
+- Finance Team and counsel as members
+Month-end
+close and close backlog (May 2026 forward)
+Lead
+- Principal Accounting Officer owns close; CFO/PFO reviews package
+Support
+- Accounting Managers and staff accountants execute
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 15
+Workstream
+Provider
+(CFO Portal)
+Client
+(internal team)
+Reconciliations
+(bank, intercompany, GL-to-subledger)
+Review
+- Principal Accounting Officer reviews
+Lead
+- Accounting Managers / staff accountants perform
+Routine
+technical accounting support (SCN, debt/preferred, going concern, ASC 606)
+Lead
+- Principal Accounting Officer with the CFO/PFO; complex or enumerated technical memoranda are event-based under Section 4.2
+Support
+- Accounting Managers / FP&A Manager supply data
+Form
+10-Q and 10-K drafting and review
+Lead
+- Principal Accounting Officer coordinates financials & footnotes with the Interim Controller or permanent Controller, as applicable,
+serving as PAO; CFO/PFO (Franklin) reviews, approves, and certifies with the CEO
+Support
+- Accounting Managers / FP&A Manager supply schedules
+Form
+8-K drafting (coordination)
+Lead
+- Engagement Lead coordinates business and disclosure inputs; securities counsel leads legal drafting and filing legality; EDGAR
+filing by Client, counsel, or filing agent
+Support
+- Finance Team as needed
+Internal
+control / material-weakness remediation (roadmap)
+Lead
+- Principal Accounting Officer designs and oversees; Engagement Lead approves (extensive remediation projects event-based under Section
+4.2)
+Support
+- Finance Team executes new controls
+13-week
+cash forecast and liquidity monitoring
+Lead
+- Engagement Lead
+Support
+- Manager, FP&A builds/maintains; Finance Team supplies AR/AP
+FP&A,
+budget, board KPI dashboard
+Review
+- Engagement Lead reviews
+Lead
+- Manager, FP&A prepares
+Department-level
+P&Ls (CEO milestone)
+Review
+- Engagement Lead / Principal Accounting Officer review
+Lead
+- Finance Team prepares with Provider methodology
+Accounts
+payable processing and vendor payments
+Out
+of scope - no Provider execution
+Lead
+- AP Clerks under Principal Accounting Officer oversight
+Payroll
+processing (bi-weekly, tax, W-2/1099)
+Out
+of scope for execution; Engagement Lead reviews officer-comp and accruals
+Lead
+- Payroll Clerk
+Independent
+auditor relationship and PBC management
+Lead
+- Engagement Lead primary contact; Principal Accounting Officer owns PBC execution
+Support
+- Finance Team
+Nasdaq
+continued-listing compliance & remediation (bid-price, stockholders’ equity, reverse split) - within Retainer
+Lead
+- Engagement Lead
+Support
+- Finance Team / counsel
+Capital
+raises & financing support (equity and debt) - within Retainer, subject to Section 17
+Lead
+- Engagement Lead, alongside CEO
+Support
+- Finance Team on diligence
+All
+capital markets, investor relations, financing, registration statement, proxy, and SEC comment-response support under this SOW is subject
+to Section 17 (Limitations on Provider’s Role) of the Agreement.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 16
+3.
+Provider Deliverables - First 90 Days
+Subject
+to Client’s timely cooperation and the Client Finance Team’s timely execution of supporting tasks, Provider shall deliver
+the following during the first ninety (90) days of the Initial Term. Inclusion of an item in this plan does not change its fee treatment:
+to the extent any deliverable constitutes event-based work under Section 4.2 of the Agreement (as itemized in SOW Section 7.2), Provider’s
+obligation to perform it is subject to a signed change order and agreed separate pricing, and it is not covered by the Retainer.
+Phase
+Deliverables
+Days
+1-30 - Appoint & Stabilize
+Appointment
+of the Engagement Lead as CFO/PFO and Mr. Amman’s transition to Principal Accounting Officer, with Form 8-K Item 5.02 (subject
+to Sections 12.2-12.4); 13-week cash forecast and liquidity floor / trigger framework; completion of the May/June 2026 close and
+accurate financial statements; evaluation of the Client Finance Team and launch of Controller recruiting; controls inventory mapped
+to financial-statement assertions; related-party transaction pre-approval policy; auditor coordination protocol; preliminary department-level
+P&Ls; initial Audit Committee written report.
+Days
+31-60 - Diagnose
+Close
+of May and June 2026; preparation, filing, and certification of the Q2 Form 10-Q (target August 14 or NT extension) by the CFO/PFO
+and the Principal Accounting Officer; material-weakness remediation roadmap; Nasdaq bid-price and minimum-stockholders’-equity
+compliance and remediation (including reverse-split planning as needed) and capital-raise / financing support (within Retainer scope,
+subject to Section 17); FY26 reforecast. Complex technical memoranda and any restatement work are event-based under Section 4.2.
+Days
+61-90 - Reset
+Filing
+of any remaining overdue periodic report and the current 10-Q under a new disclosure-committee posture; permanent Controller recruiting
+plan (or confirmation of interim structure); documented monthly close calendar; board KPI dashboard implemented; ERP (NetSuite) evaluation
+and recommendation; continued Nasdaq compliance execution; investor narrative and earnings-call Q&A refresh.
+4.
+Recurring Deliverables
+Deliverable
+Cadence
+Disclosure
+Committee meeting and memo
+Before
+each Form 10-Q and 10-K filing
+Form
+10-Q review and PFO/PAO certification
+Quarterly
+Form
+10-K review and PFO/PAO certification
+Annually
+Form
+8-K business and disclosure input (coordination only; legal drafting and EDGAR filing by counsel, Client, or filing agent)
+As
+triggered (within applicable SEC deadlines)
+Audit
+Committee written report
+Quarterly,
+3 calendar days before each AC meeting
+Board
+package and CFO report (KPI, cash, listing-compliance)
+Monthly,
+3 calendar days before each board meeting
+13-week
+cash forecast
+Weekly
+during the first 90 days; biweekly thereafter unless cash trigger activated
+Quarterly
+reforecast and variance bridge
+Quarterly
+Auditor
+coordination calls and PBC oversight
+Weekly
+during fieldwork, biweekly otherwise
+Annual
+operating plan refresh
+Annually,
+ahead of fiscal year start
+5.
+On-Site Cadence
+5.1
+Standard Cadence. The Engagement Lead (CFO/PFO) shall be on-site at Client’s Littleton, CO facility as reasonably required
+(including around monthly close completion, audit fieldwork, Board / Audit Committee meetings, and filing deadlines), but in no event
+less than three (3) business days per calendar quarter, except during the first two (2) quarters when Engagement Lead will be on-site
+twice for at least three (3) business days per occurrence.
+5.2
+Critical Periods. During the five (5) calendar days preceding any 10-Q or 10-K filing deadline, audit fieldwork weeks, board and
+audit committee meeting weeks, and earnings release periods, the Designated Officer shall be on-site or remotely available as reasonably
+required.
+5.3
+Team Coordination. Provider and the Client Finance Team shall hold a weekly coordination call with Controller, Principal Accounting
+Officer, and Managers, and a biweekly full finance-team meeting.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 17
+6.
+Client Responsibilities and Dependencies
+Without
+limiting Section 6.3 of the Agreement, Client shall: maintain the Client Finance Team in their roles with prompt notice of material changes;
+provide the Engagement Lead and Principal Accounting Officer full administrative and reporting access to the GL, ERP (NetSuite), expense
+management, banking portals, and other systems; cause the Client Finance Team to deliver workpapers, footnotes, and reconciliations to
+the review queue on the close and disclosure calendar; provide sub-certifications to the Engagement Lead for each SOX 302/906 certification;
+promptly notify the Engagement Lead of any actual or suspected fraud, error, or control deficiency; and engage external tax advisors,
+counsel, valuation specialists, and SOX consultants as reasonably recommended and at Client’s expense. Provider shall not be responsible
+for delays, missed SLAs, increased costs, or inability to certify resulting from Client personnel turnover, vacancy, lack of cooperation,
+insufficient competence, or failure to timely complete assigned responsibilities.
+7.
+Fees Specific to this SOW
+7.1
+Retainer. The fixed monthly retainer of $27,000 set forth in Section 4.1 of the Agreement covers the Services of the Engagement Lead
+as Client’s Chief Financial Officer and Principal Financial Officer (Roman Franklin), engaged and compensated by Provider on an
+independent-contractor (1099) basis. The Retainer covers ordinary-course recurring CFO leadership and reporting oversight, as well as
+capital raises and financing support, Nasdaq continued-listing remediation, and reverse stock-split planning and execution (subject to
+Section 17). Technical accounting memoranda and other extraordinary, non-recurring, transaction-driven, remedial, delayed, or historical
+cleanup work are event-based under Section 4.2 / Section 7.2.
+7.2
+Event-Based Fees. The following anticipated event-based work shall be priced separately, in each case scoped via a written change
+order signed by both Parties before commencement:
+● Late-filing
+remediation and preparation of overdue periodic reports; restatement of any historical period.
+● SEC
+comment-letter response and amendments beyond ordinary cycle response.
+● Complex
+equity or debt classification analysis and related technical accounting for financing instruments
+(for example, the Streeterville and V-Co / New Seneca instruments).
+● M&A
+diligence, integration, and purchase accounting beyond ordinary support.
+● Internal
+investigation or whistleblower matter; response to SEC enforcement inquiry; short-seller-related
+litigation response.
+● Replacement
+or transition of the independent auditor beyond ordinary onboarding; XBRL / EDGAR filing-agent
+coordination beyond ordinary review.
+● Technical
+accounting memos covering warrants, derivatives, convertible debt, preferred stock, stock-based
+compensation, leases, impairment, going concern, and business combinations.
+7.3
+Equity Compensation. In addition to the Retainer, the Engagement Lead (Roman Franklin), individually, shall receive the Option described
+in Section 4.7 of the Agreement. Other Provider Personnel may also receive equity compensation from the Company if separately approved
+by the Company’s Compensation Committee.
+8.
+Term of this SOW
+This
+SOW shall be co-terminous with the Agreement. Termination of this SOW or the Agreement shall be governed by Section 3 of the Agreement,
+including the protection of the Engagement Lead’s engagement (Section 3.7) and the limitation that the Agreement may be terminated
+only for Cause or by non-renewal (Section 3.3).
+ACKNOWLEDGED
+AND AGREED:
+THE CFO PORTAL, LLC
+VIVOS THERAPEUTICS, INC.
+By:
+/s/ Roman
+Franklin
+By:
+/s/ R.
+Kirk Huntsman
+Name:
+Roman
+Franklin
+Name:
+R.
+Kirk Huntsman
+Title:
+Chief
+Executive Officer
+Title:
+Chairman
+& Chief Executive Officer
+Date:
+Date:
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 18
+EXHIBIT
+B
+SERVICE
+LEVEL AGREEMENT
+attached
+to and made part of the Master Services Agreement between The CFO Portal, LLC and Vivos Therapeutics, Inc.
+This
+Service Level Agreement (this “SLA”) sets forth the performance standards Provider commits to in delivering the Services.
+Capitalized terms not defined in this SLA have the meanings given in the Agreement.
+1.
+Service Hours and Availability
+1.1
+Standard Hours. Provider Personnel shall be available during standard business hours of 7:00 a.m. to 3:00 p.m. Mountain Time, Monday
+through Friday, excluding federal holidays and NYSE market holidays. On occasion, Provider may flex hours by working weekends or during
+other time windows.
+1.2
+Extended Coverage. During Critical Periods (the five (5) calendar days preceding any 10-Q or 10-K filing deadline, audit fieldwork
+weeks, board and audit committee meeting weeks, and earnings release periods), Provider Personnel shall be reasonably available outside
+Standard Hours, including evenings and weekends as required.
+1.3
+After-Hours Emergency. Provider shall maintain an after-hours contact protocol for time-sensitive matters (Section 2.1, Severity
+1).
+2.
+Response Time Standards
+The
+Engagement Lead (or designee) shall acknowledge inbound requests within the timeframes below.
+Severity
+Examples
+Acknowledgment
+Resolution
+Target
+Severity
+1 - Urgent
+Imminent
+filing deadline; auditor or SEC inquiry; Nasdaq compliance notice; suspected material misstatement; market-moving disclosure event
+Within
+3 hours
+As
+soon as reasonably practicable, with continuous engagement until resolved
+Severity
+2 - High
+Audit
+committee or board request; auditor PBC item; capital-raise or investor inquiry; close blocker
+Within
+6 business hours
+Within
+2 business days
+Severity
+3 - Routine
+Standard
+accounting question; FP&A request; vendor or policy inquiry; routine document request
+Within
+1 business day
+Within
+5 business days
+3.
+Filing and Reporting Deliverables
+Deliverable
+Timing
+Commitment
+Notes
+Monthly
+Close
+Completed
+by Business Day 10 of the following month (once backlog cleared)
+Preliminary
+GL close, reconciliations, flux analysis, management report
+Form
+10-Q Draft
+Initial
+draft to Disclosure Committee 7 calendar days before filing deadline
+Final
+auditor-cleared draft 2 business days before filing
+Form
+10-K Draft
+Initial
+draft to Disclosure Committee 10 business days before filing deadline
+Final
+auditor-cleared draft 3 business days before filing
+Form
+8-K (Item 2.02 / 5.02 / Other)
+Provider
+supplies business and disclosure inputs on a timeline that supports filing within the applicable SEC deadline (generally 4 business
+days); legal drafting and EDGAR filing by counsel, Client, or filing agent
+Earnings
+8-K coordinated with press release timing
+Board
+Meeting Materials
+Delivered
+3 calendar days before each board meeting
+CFO
+report, KPI dashboard, cash forecast, listing-compliance check
+Audit
+Committee Report
+Quarterly,
+3 calendar days before each AC meeting
+Audit
+status, controls remediation, key accounting matters, related-party transactions
+13-Week
+Cash Forecast
+Weekly
+during first 90 days; biweekly thereafter unless cash trigger activated
+Weekly
+cadence re-activates if cash falls below agreed floor
+Disclosure
+Committee Memo
+Issued
+before each 10-Q and 10-K filing
+Documents
+disclosure controls assessment and material disclosures
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 19
+Dependent
+milestones; efforts standard. All dates and timeframes in this SLA are dependent milestones and not guarantees of outcome. Provider
+is responsible only for commercially reasonable efforts within its assigned responsibilities and is not responsible for delays or failures
+attributable to Client, its personnel, auditors, counsel, vendors, regulators, historical deficiencies, or other matters outside Provider’s
+reasonable control.
+4.
+Escalation Procedures
+4.1
+Primary Contact. Day-to-day contact for the engagement is the Engagement Lead or the Principal Accounting Officer.
+4.2
+Escalation Path. If a Severity 1 or Severity 2 matter is not acknowledged within the timeframe in Section 2, Client may escalate
+to Provider’s CEO at ceo@thecfoportal.com.
+4.3
+Backup Coverage. If the Engagement Lead is unavailable for more than two (2) consecutive business days outside of pre-notified time
+off, Provider shall designate an interim contact (including the Principal Accounting Officer) with sufficient familiarity with Client’s
+matters to handle Severity 1 and Severity 2 items.
+5.
+Performance Reporting and Service Credits
+5.1
+Quarterly Review. Provider shall deliver a quarterly performance report summarizing deliverables produced, SLA compliance, open items,
+and recommended adjustments.
+5.2
+Service Credits. If Provider materially and repeatedly fails to meet the response or delivery timeframes in Sections 2 or 3, solely
+and directly as a result of Provider’s own failure (and not, in whole or in part, due to Client, its personnel, auditors, counsel,
+vendors, regulators, historical deficiencies, or Force Majeure), and Provider fails to cure within a reasonable period after written
+notice, then Provider shall, at Client’s election, (a) issue a service credit equal to 3% of that month’s Retainer, or (b)
+provide additional services of equivalent value at no additional cost. A related series of delays arising from the same or related cause
+constitutes a single event. Service credits: (i) shall not exceed 15% of that month’s Retainer; (ii) do not apply to any regulatory,
+filing, audit, or legal outcome; (iii) may not be set off against amounts otherwise due unless mutually agreed in writing; (iv) are Client’s
+sole and exclusive remedy for SLA misses (except in cases of Provider’s gross negligence or willful misconduct); and (v) must be
+claimed in writing within thirty (30) days after the end of the month in which the miss occurred, failing which they are waived.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 20
+EXHIBIT
+C
+INDEMNIFICATION
+AGREEMENT
+attached
+to and made part of the Master Services Agreement between The CFO Portal, LLC and Vivos Therapeutics, Inc.
+This
+Indemnification Agreement (this “Agreement”) is made and entered into as of July 31, 2026 (the “Effective Date”),
+by and between Vivos Therapeutics, Inc., a Delaware corporation (the “Company”), and Roman Franklin (“Indemnitee”),
+serving as the Company’s Chief Financial Officer and Principal Financial Officer.
+RECITALS
+WHEREAS,
+the Company desires to attract and retain talented and experienced individuals to serve as officers and recognizes that such individuals
+are reluctant to serve without adequate protection from personal liability; and
+WHEREAS,
+Indemnitee, as a designated outside-service-provider Chief Financial Officer and Principal Financial Officer of the Company under the
+Master Services Agreement between the Company and The CFO Portal, LLC dated July 31, 2026 (the “Master Services Agreement”),
+is being asked to take on responsibilities that expose Indemnitee to potential personal liability under the Securities Act of 1933, the
+Securities Exchange Act of 1934, the Sarbanes-Oxley Act of 2002, applicable Nasdaq listing rules, and other applicable laws; and
+WHEREAS,
+the Board of Directors has determined that the indemnification of and advancement of expenses to Indemnitee is reasonable and prudent
+and serves the best interests of the Company and its stockholders; and
+WHEREAS,
+the Company’s certificate of incorporation and bylaws permit the Company to indemnify and advance expenses to its officers to the
+fullest extent permitted by Delaware law.
+NOW,
+THEREFORE, in consideration of the mutual promises set forth herein, the Company and Indemnitee agree as follows:
+1.
+Definitions
+1.1
+“Corporate Status” means the status of a person who is, was, or becomes an officer of the Company in any capacity, including
+Indemnitee’s service as a Designated Officer of the Company pursuant to the Master Services Agreement.
+1.2
+“Expenses” means all reasonable attorneys’ fees, retainers, court costs, transcript costs, fees of experts, witness
+fees, travel expenses, duplicating and printing costs, and all other disbursements or expenses incurred in connection with prosecuting,
+defending, preparing to prosecute or defend, investigating, being or preparing to be a witness in, settling, or otherwise participating
+in a Proceeding, including any tax imposed on Indemnitee as a result of the actual or deemed receipt of any payments under this Agreement.
+1.3
+“Indemnifiable Event” means any event or occurrence related to the fact that Indemnitee is or was an officer of the Company,
+or by reason of any action taken or not taken by Indemnitee while acting in his Corporate Status.
+1.4
+“Independent Counsel” means a law firm, or a member of a law firm, experienced in corporation law and neither presently
+nor in the past five (5) years retained to represent the Company or Indemnitee.
+1.5
+“Proceeding” means any threatened, pending, or completed action, suit, arbitration, alternative dispute resolution mechanism,
+formal or informal hearing, inquiry, or investigation, whether civil, criminal, administrative, or investigative, in which Indemnitee
+was, is, or will be involved by reason of an Indemnifiable Event, including SEC comment processes, informal SEC inquiries, Nasdaq inquiries,
+document requests, subpoenas, interviews, Wells-related matters, internal investigations, and stockholder demands.
+2.
+Service to the Company
+Indemnitee
+will serve in his designated officer capacity (Chief Financial Officer and Principal Financial Officer) at the will of the Company and
+consistent with the Master Services Agreement. Indemnitee may resign at any time and for any reason in accordance with the Master Services
+Agreement. This Agreement shall not be construed as giving Indemnitee any right to continued service with the Company.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 21
+3.
+Indemnification
+3.1
+General. Subject to this Agreement, the Company shall indemnify Indemnitee, to the fullest extent permitted by applicable law, against
+all Expenses, judgments, fines, penalties, ERISA excise taxes, and amounts paid in settlement actually and reasonably incurred by Indemnitee
+in connection with any Proceeding by reason of an Indemnifiable Event, if Indemnitee acted in good faith and in a manner Indemnitee reasonably
+believed to be in or not opposed to the best interests of the Company, and, with respect to any criminal Proceeding, had no reasonable
+cause to believe his conduct was unlawful.
+3.2
+Proceedings by or in the Right of the Company. The Company shall indemnify Indemnitee, to the fullest extent permitted by law, against
+all Expenses actually and reasonably incurred in connection with any Proceeding by or in the right of the Company, if Indemnitee acted
+in good faith and in a manner reasonably believed to be in or not opposed to the best interests of the Company.
+3.3
+Successful Party; Witness; Partial. To the extent Indemnitee is successful on the merits or otherwise, or is a witness by reason
+of an Indemnifiable Event, Indemnitee shall be indemnified against all Expenses actually and reasonably incurred. If Indemnitee is entitled
+to indemnification for a portion but not the total amount, the Company shall indemnify for the portion to which Indemnitee is entitled.
+3.4
+Scope of Covered Matters. For the avoidance of doubt, indemnification and advancement under this Agreement extend to any Proceeding
+or matter arising from Indemnitee’s execution of Sarbanes-Oxley Section 302 and 906 certifications, and to Indemnitee’s participation
+in interviews, testimony, document preservation and production, and cooperation with any regulatory or internal investigation, in each
+case by reason of his Corporate Status.
+3.5
+Settlement. The Company shall not settle any Proceeding in a manner that imposes on Indemnitee any admission of wrongdoing, personal
+monetary payment, injunctive or other restriction, or adverse reputational statement, without Indemnitee’s prior written consent.
+3.6
+Contribution. If indemnification under this Agreement is unavailable to Indemnitee for any reason, the Company shall contribute to
+the amounts paid or payable by Indemnitee in such proportion as is appropriate to reflect the relative benefits and relative fault of
+the Company and Indemnitee, with the Company’s contribution maximized to the fullest extent permitted by law.
+4.
+Advancement of Expenses
+4.1
+Advancement. The Company shall advance, to the fullest extent permitted by law, all Expenses incurred by Indemnitee in connection
+with any Proceeding within ten (10) business days after receipt of a written request, whether or not a determination to indemnify has
+been made. Such advancement shall be unsecured and interest-free and made without regard to Indemnitee’s ability to repay.
+4.2
+Undertaking. Indemnitee undertakes to repay any advanced Expenses to the extent it is ultimately determined by a final, non-appealable
+judicial decision that Indemnitee is not entitled to indemnification. This undertaking is an unlimited general obligation but is not
+secured and requires no cash collateral.
+4.3
+Advancement During Dispute. The Company’s obligation to advance Expenses shall continue during the pendency of any dispute
+regarding Indemnitee’s entitlement to indemnification or advancement, until a final, non-appealable determination that Indemnitee
+is not entitled.
+4.4
+Enforcement. If Indemnitee is required to bring any action to enforce rights or to collect amounts due under this Agreement and is
+successful in whole or in part, the Company shall indemnify Indemnitee against all Expenses incurred in connection with such enforcement
+action.
+5.
+Procedures; Presumptions
+5.1
+Notification and Determination. Indemnitee shall notify the Company of any Proceeding as soon as reasonably practicable; failure
+to notify relieves the Company only to the extent materially prejudiced. Any required determination of entitlement shall be made by a
+majority of Disinterested Directors, a committee thereof, Independent Counsel, or the stockholders. If by Independent Counsel, Indemnitee
+selects counsel subject to the Company’s reasonable approval, at the Company’s expense; if a conflict exists, Indemnitee
+may select separate counsel at the Company’s expense.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 22
+5.2
+Presumption. In making any determination, the person making it shall presume that Indemnitee is entitled to indemnification if a
+request has been submitted, and the Company shall bear the burden of proof to overcome that presumption. Termination of a Proceeding
+by judgment, settlement, conviction, or plea shall not of itself create a presumption that Indemnitee did not act in good faith.
+5.3
+Reliance. Indemnitee shall be deemed to have acted in good faith if his action is based on the Company’s records or financial
+statements, information supplied by officers, advice of counsel, or reports of an independent accountant, appraiser, or other expert
+selected with reasonable care.
+6.
+Directors’ and Officers’ Liability Insurance
+6.1
+D&O Insurance. The Company shall obtain and maintain D&O insurance with reputable insurers providing Indemnitee coverage
+for losses arising from any actual or alleged wrongful act, with Indemnitee covered as an insured on terms and benefits at least as favorable
+as those provided to the most-favorably-insured directors or officers.
+6.2
+Outside-Service-Provider Coverage; Tail. The Company shall ensure the policy explicitly covers Indemnitee as a non-employee outside
+service provider serving as Chief Financial Officer / PFO, including any necessary endorsement, and shall maintain or purchase run-off
+(tail) coverage for not less than six (6) years following termination of Indemnitee’s service, at the Company’s expense.
+6.3
+Security. Upon a change in control of the Company, or if the Company becomes or is reasonably likely to become financially distressed
+or insolvent, the Company shall, upon Indemnitee’s request, establish and fund a trust, escrow, or letter of credit in an amount
+sufficient to satisfy the Company’s reasonably anticipated indemnification and advancement obligations to Indemnitee.
+7.
+Exceptions
+Notwithstanding
+any other provision, the Company shall not indemnify Indemnitee: (a) for amounts actually paid under an insurance policy (except any
+excess); (b) for an accounting of profits under Section 16(b) of the Exchange Act; (c) where a final, non-appealable judicial decision
+determines indemnification is prohibited by law; or (d) in connection with a Proceeding initiated by Indemnitee against the Company,
+except to enforce this Agreement, where authorized by the Board, or as required by law.
+8.
+General
+8.1
+Non-Exclusivity; Survival. The rights herein are not exclusive of any other rights under law, the charter, bylaws, any other agreement,
+or a vote of stockholders or directors, and continue regardless of whether Indemnitee continues to serve, inuring to Indemnitee’s
+heirs and representatives.
+8.2
+No Duplication; Period of Limitations. The Company shall not be liable to make any payment to the extent Indemnitee has actually
+received payment otherwise. No action shall be brought by the Company against Indemnitee after five (5) years from the date Indemnitee
+ceased to serve.
+8.3
+Governing Law; Venue. This Agreement is governed by the laws of the State of Delaware, without regard to conflicts principles, and
+the Parties consent to the exclusive jurisdiction of the Court of Chancery of the State of Delaware.
+8.4
+Amendment; Counterparts. This Agreement may be amended only in a writing signed by both parties and may be executed in counterparts,
+including by electronic signature.
+8.5
+No Adverse Amendment. No amendment, modification, or termination of this Agreement, or of the Company’s certificate of incorporation
+or bylaws, shall impair or reduce any right of Indemnitee with respect to acts, omissions, or events occurring before such amendment,
+modification, or termination.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 23
+IN
+WITNESS WHEREOF, the parties have executed this Indemnification Agreement as of the Effective Date.
+VIVOS
+THERAPEUTICS, INC.
+INDEMNITEE
+By:
+/s/
+R. Kirk Huntsman
+By:
+/s/
+Roman Franklin
+Name:
+R.
+Kirk Huntsman
+Name:
+Roman
+Franklin
+Title:
+Chairman
+& Chief Executive Officer
+Title:
+Chief
+Financial Officer / Principal Financial Officer
+Date:
+Date:
+DRAFT
+- prepared by The CFO Portal, conformed to the firm’s Master Services Agreement precedent. Not legal advice. To be reviewed and
+finalized by counsel for both Parties before execution, together with Board/Audit Committee resolutions and D&O confirmation.
+Master Services Agreement - The CFO Portal & Vivos Therapeutics, Inc. | Page 24
