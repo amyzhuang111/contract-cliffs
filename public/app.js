@@ -12,6 +12,8 @@ let edgar = [], mine = [], set = 'edgar', groupBy = ['counterparty', 'filer'].in
 let holdout = [];
 const current = () => set === 'edgar' ? edgar : set === 'holdout' ? holdout : mine;
 document.getElementById('rule').textContent = PRIORITY_RULE;
+// How it works: open on desktop, collapsed on phones so the list comes first
+if (matchMedia('(min-width: 821px)').matches) document.getElementById('how').open = true;
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1]} ${y}`; };
 const STOP = /^(the|inc\.?|llc|corp\.?|corporation|company|co\.?|ltd\.?|limited|holdings|of|and|\(.*)$/i;
 const initials0 = name => (name || '?').replace(/\(.*?\)/g, ' ').replace(/[(),.]/g, ' ').split(/\s+/).filter(w => w && !STOP.test(w)).slice(0, 2).map(w => w[0].toUpperCase()).join('') || '?';
@@ -20,7 +22,7 @@ const initials0 = name => (name || '?').replace(/\(.*?\)/g, ' ').replace(/[(),.]
 const reason = shortReason;
 // Plain confidence words instead of high/medium/low/none
 const sure = c => c === 'high' ? 'Sure' : c === 'none' ? 'Can’t tell' : 'Check this';
-const TYPE = t => t.replace(/^Non-renewal notice: act by$/, 'Send-notice deadline');
+const TYPE = t => t;
 const rv = why => `<span class="rv">Needs review</span><span class="rvw"> · ${esc(reason(why))}</span>`;
 // "Cerus / Purolite" -> "CP"; otherwise first letters of the counterparty name
 const initials = (name, fallback) => /\s\/\s/.test(name || '') ? name.split(/\s\/\s/).slice(0, 2).map(p => initials0(p)[0] || '').join('') : initials0(fallback || name);
@@ -45,7 +47,7 @@ function render() {
   const ex = rows.find(r => r.id === 'c5' && r.actBy && r.days >= 0) || rows.find(r => r.section === 'due' || r.section === 'upcoming');
   const exRp = ex && cs.find(c => c.id === ex.id)?.x.renewal?.period;
   $('#example').innerHTML = !ex ? '' : `<span class="lab">Example from the list</span> <b>${esc(ex.name)}</b>: send notice by <b>${esc(fmt(ex.actBy))}</b>, or the licence renews automatically${exRp ? ` for another ${exRp.n} ${exRp.unit}${exRp.n > 1 ? 's' : ''}` : ''}.`;
-  $('#setnote').innerHTML = set === 'edgar' ? '10 real public contracts filed with the SEC (EDGAR). Exhibit 10 agreements: supply, licence, data licence, cloud and managed services. Each card links to the filing it came from.' : set === 'holdout' ? 'Test set: 10 more SEC contracts. First blind pass: 3 right, 6 correctly left blank, 1 missed, 0 wrong. The rules were adjusted after that pass, so what you see now is better than the blind score. Scored first pass: 3 right, 6 correctly left blank for review, 1 missed, 0 wrong act-by dates (see HOLDOUT.md). Shown here with the current rules.' : 'Your documents. Processed only in this browser tab; nothing is uploaded.';
+  $('#setnote').innerHTML = set === 'edgar' ? '10 real public contracts filed with the SEC: supply, licence, data licence, cloud and managed services. Each card links to the filing it came from.' : set === 'holdout' ? 'Test set: 10 SEC contracts the rules had not seen; the first blind pass got 3 dates right, left 6 blank for review, missed 1 and got 0 wrong, and the rules were adjusted afterwards.' : 'Your documents. Processed only in this browser tab; nothing is uploaded.';
   const li = r => { const past = r.section === 'lapsed';
     return `<li data-id="${esc(r.id)}" role="button" class="${past ? 'past' : ''}${r.section === 'missed' ? ' missed' : ''}${r.days != null && r.days >= 0 && r.days <= 90 ? ' soon' : ''}" tabindex="0">
     <span class="d">${r.missed ? `<span class="rn">Renews</span> ${esc(fmt(r.missed.renews))}` : r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
@@ -59,7 +61,7 @@ function render() {
   const lapsedBlock = rs => rs.length ? `<li class="lgrp" role="presentation"><details><summary><span class="lab">Expired (${rs.length})</span> <span class="gn">expired, nothing left to decide</span></summary><ul class="q">${rs.map(li).join('')}</ul></details></li>` : '';
   if (groupBy === 'none') { let last = ''; $('#queue').innerHTML = rows.filter(r => r.section !== 'lapsed').map(r => { const h = head(r); const out = (h !== last ? `<li class="sh" role="presentation"><span class="lab">${esc(h)}</span></li>` : '') + li(r); last = h; return out; }).join('') + lapsedBlock(lapsedRows); }
   else { const key = r => (cs.find(c => c.id === r.id)?.[groupBy] || 'Not stated'); const groups = new Map(); rows.forEach(r => groups.set(key(r), [...(groups.get(key(r)) || []), r]));
-    $('#queue').innerHTML = [...groups.entries()].map(([k, rs]) => [k, rs, rows.indexOf(rs[0])]).sort((a, b) => a[2] - b[2]).map(([k, rs]) => [k, rs]).map(([k, rs]) => `<li class="grp" role="presentation"><span class="lab">${groupBy === 'filer' ? 'Party (filer)' : 'Counterparty'}</span> <b>${esc(k)}</b> <span class="gn">${rs.length} ${rs.length === 1 ? 'agreement' : 'agreements'}${rs.some(r => r.actBy && r.days >= 0) ? ' · next deadline ' + esc(fmt(rs.filter(r => r.actBy && r.days >= 0).sort((a, b) => a.days - b.days)[0].actBy)) : ''}</span></li>` + rs.map(li).join('')).join(''); }
+    $('#queue').innerHTML = [...groups.entries()].map(([k, rs]) => [k, rs, rows.indexOf(rs[0])]).sort((a, b) => a[2] - b[2]).map(([k, rs]) => [k, rs]).map(([k, rs]) => `<li class="grp" role="presentation"><span class="lab">${groupBy === 'filer' ? 'Company that filed it' : 'Counterparty'}</span> <b>${esc(k)}</b> <span class="gn">${rs.length} ${rs.length === 1 ? 'agreement' : 'agreements'}${rs.some(r => r.actBy && r.days >= 0) ? ' · next deadline ' + esc(fmt(rs.filter(r => r.actBy && r.days >= 0).sort((a, b) => a.days - b.days)[0].actBy)) : ''}</span></li>` + rs.map(li).join('')).join(''); }
   $('#cards').innerHTML = cs.map(c => { const r = rows.find(x => x.id === c.id);
     return `<button class="card" data-id="${esc(c.id)}"><div class="tile" aria-hidden="true">${esc(initials(c.name, c.counterparty))}</div>
     <div class="t">${esc(c.name)}</div><div class="m">${esc(c.kind || 'Uploaded')}${c.filed ? ' · filed ' + esc(fmt(c.filed)) : ''}</div>
@@ -98,7 +100,7 @@ const tag = () => (set === 'edgar' ? 'sec-edgar' : 'my-docs') + '-asof-' + asOf;
 const guard = f => () => { if (!current().length) { $('#status').textContent = 'Nothing to export yet: add a document or switch to the SEC set.'; return; } f(); };
 $('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf), 'text/csv'));
 $('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), 'text/calendar'));
-$('#exPack').onclick = guard(() => download(`diligence-packet-${tag()}.html`, toPacket(current(), asOf), 'text/html'));
+$('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf), 'text/html'));
 
 let n = 0;
 function addDoc(name, lines) {

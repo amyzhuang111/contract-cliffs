@@ -1,11 +1,11 @@
 # Held-out EDGAR test (Oct 19, 2026)
 14 real Exhibit 10 commercial agreements from SEC EDGAR that were **not** used to write or tune the rules. Found via EDGAR full-text search, fetched with User-Agent "Amy Zhuang amyzhuang111@gmail.com", normalised with `edgar/holdout/totext.py`. URLs: `raw/urls.txt`. Re-run: `node edgar/holdout/run.mjs` (output: `results.txt`).
 
-Scored on the act-by date (non-renewal notice deadline), as of 2026-10-19, against my own reading of each clause.
+Scored on the send-notice deadline date (non-renewal notice deadline), as of 2026-10-19, against my own reading of each clause.
 - **Right**: the date matches the hand reading.
 - **Flagged**: no date shown, marked needs review, and the exhibit genuinely doesn't let you compute one.
 - **Missed**: no date shown, but the clause was readable.
-- **Wrong**: a date (act-by or term end) that doesn't match the clause.
+- **Wrong**: a date (send-notice deadline or term end) that doesn't match the clause.
 
 ## First pass, before any change
 Batch A (h1–h8) ran on the code at 9c960e7. Batch B (h9–h14) was fetched after the batch A fixes and ran once, untouched.
@@ -19,7 +19,7 @@ Batch A (h1–h8) ran on the code at 9c960e7. Batch B (h9–h14) was fetched aft
 Honest hit rate on unseen contracts: 2/14 dates right, 7/14 acceptable (right or flagged correctly), 1/14 wrong.
 
 ## After the rule fixes (these 14 are now tuning data, not a test)
-| id | agreement | act-by shown | hand reading | verdict |
+| id | agreement | send-notice deadline shown | hand reading | verdict |
 |---|---|---|---|---|
 | h1 | Argent/Splash exclusive licence | 2045-07-05 | 20 yrs from 2026-07-06, 12 months notice | right |
 | h2 | Flexible Solutions mfg & supply | 2029-07-10 | "five-year term" from 2025-01-07, 180 days | right (fixed: hyphenated term, line-break split) |
@@ -40,9 +40,9 @@ After: 9 dated (5 clean, 4 still marked for review), 5 left blank and marked, 0 
 
 ---
 # Blind holdout 2 (Oct 19, 2026, evening): 10 new agreements, run before any rule change
-Fresh set: the first 10 commercial Exhibit 10 services, manufacturing, custody, hosting and colocation agreements returned by four new EDGAR full-text searches. A lease was skipped on title alone, before any extraction ran. None of these companies appear in the tuning set or in holdout 1. URLs are in `../holdout2/raw/urls.txt`. The extractor ran once, at commit f81bb99, the same code as the live site; output is in `../holdout2/results-firstpass.txt`. Same scoring as above, on the act-by date as of 2026-10-19.
+Fresh set: the first 10 commercial Exhibit 10 services, manufacturing, custody, hosting and colocation agreements returned by four new EDGAR full-text searches. A lease was skipped on title alone, before any extraction ran. None of these companies appear in the tuning set or in holdout 1. URLs are in `../holdout2/raw/urls.txt`. The extractor ran once, at commit f81bb99, the same code as the live site; output is in `../holdout2/results-firstpass.txt`. Same scoring as above, on the send-notice deadline date as of 2026-10-19.
 
-| id | agreement | first-pass act-by | hand reading | verdict |
+| id | agreement | first-pass send-notice deadline | hand reading | verdict |
 |---|---|---|---|---|
 | b1 | Power Upp power-as-a-service & colocation (Cuentas) | 2029-05-21 | 36 months from 2026-08-20, 90 days | right |
 | b2 | BitGo custodial services (DevvStream) | blank, review | Effective Date = last signature (not in filing) | flagged |
@@ -51,13 +51,13 @@ Fresh set: the first 10 commercial Exhibit 10 services, manufacturing, custody, 
 | b5 | Management services (Blockfusion) | blank, review | "until third anniversary of the Effective Date" (2022-06-01), yearly renewal, 30 days → 2027-05-02 | **missed** (no "the" before "third anniversary"; left unfixed: missed, not wrong) |
 | b6 | Sphere 3D / Rebel Mining master hosting | blank, review | term = later of 3 years or the last Hosting Order | flagged |
 | b7 | Armlogi warehousing & fulfilment | blank, review | month-to-month "unless and until terminated"; no non-renewal notice | flagged |
-| b8 | Acadia / Patheon master manufacturing | 2026-12-31 | through 2020-12-31, 2-year renewals, 24 months notice → the decision for the term ending 2028-12-31 is due 2026-12-31 | right on the act-by. **Wrong** secondary date: "current term ends 2028-12-31"; the term running today ends 2026-12-31 |
+| b8 | Acadia / Patheon master manufacturing | 2026-12-31 | through 2020-12-31, 2-year renewals, 24 months notice → the decision for the term ending 2028-12-31 is due 2026-12-31 | right on the send-notice deadline. **Wrong** secondary date: "current term ends 2028-12-31"; the term running today ends 2026-12-31 |
 | b9 | Alimera manufacturing services | 2027-07-16, review | 5 years after 2024-07-17, 24 months notice | right, flagged (renewal length unread) |
 | b10 | Evoke / Patheon manufacturing services | blank, review | term ends 31 Dec of the year five years after the Commencement Date (an event) | flagged |
 
-**First pass, honest numbers: 3 right (1 of them flagged), 6 flagged correctly, 1 missed, 0 wrong act-by dates; 1 wrong secondary date (b8 current-term end).**
+**First pass, honest numbers: 3 right (1 of them flagged), 6 flagged correctly, 1 missed, 0 wrong send-notice deadline dates; 1 wrong secondary date (b8 current-term end).**
 
 Fix (wrong dates only): the schedule now shows the term running on the as-of date ("Current term ends") separately from the term the next decision governs ("Following term ends"), and the next auto-renewal date comes from the running term. The same bug was showing Cerus (c1) as "current term ends 2029-04-20"; it now shows 2027-04-20. b5 stays missed by design: only rules that produced wrong dates were changed.
 
 ### Holdout 2 after the test-lead re-run fixes (Oct 19, ~6:30 PM ET; not blind any more)
-The first-pass numbers above stay the published blind score. After the fixes (`edgar/holdout2/results-after-rerun-fixes.txt`): b5 is now dated (act by 2027-05-02, matching the independent recompute); b9's renewal ("consecutive two (2) year periods") is read, so its act-by is no longer shown with "none" confidence; b8's effective date ("made as of August 3, 2015") is picked up and its conditional renewal ("if there is a Product Agreement in effect") is flagged for review. No act-by date changed for b1–b4, b6–b8 or b10. The holdout set can now be viewed on the site ("Blind holdout (10)").
+The first-pass numbers above stay the published blind score. After the fixes (`edgar/holdout2/results-after-rerun-fixes.txt`): b5 is now dated (act by 2027-05-02, matching the independent recompute); b9's renewal ("consecutive two (2) year periods") is read, so its send-notice deadline is no longer shown with "none" confidence; b8's effective date ("made as of August 3, 2015") is picked up and its conditional renewal ("if there is a Product Agreement in effect") is flagged for review. No send-notice deadline date changed for b1–b4, b6–b8 or b10. The holdout set can now be viewed on the site ("Blind holdout (10)").

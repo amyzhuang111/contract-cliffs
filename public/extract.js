@@ -252,14 +252,14 @@ export function extract(lines) {
       const redactedBefore = ct.match(new RegExp(`${REDACT_RE}\\s+(?:prior|before)`, 'i'));
       const byDate = !nm && !redactedBefore && ct.match(/\b(?:by|on\s+or\s+before)\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*\d{4})/i);
       if (byDate) { res.notice = { period: null, date: ymd(parseDate(byDate[1]).date), confidence: 'high', needsReview: false, why: `The clause states the notice deadline as a calendar date ("${byDate[0]}"); shown as written, not computed.`, source: src(cand) }; break; }
-      if (!nm && !redactedBefore && bare) { const d = parseDuration(bare[0]); if (d && d.n) { res.notice = { period: { n: d.n, unit: d.unit, text: d.text }, confidence: 'medium', needsReview: true, why: `Act-by = end of term minus ${d.n} ${d.unit}(s). The clause gives "${d.text} notice" without saying before what; measured back from the end of the term (the usual reading). Confirm.`, source: src(cand) }; break; } }
+      if (!nm && !redactedBefore && bare) { const d = parseDuration(bare[0]); if (d && d.n) { res.notice = { period: { n: d.n, unit: d.unit, text: d.text }, confidence: 'medium', needsReview: true, why: `Send-notice deadline = end of term minus ${d.n} ${d.unit}(s). The clause gives "${d.text} notice" without saying before what; measured back from the end of the term (the usual reading). Confirm.`, source: src(cand) }; break; } }
       if (!nm && !redactedBefore) continue;
       const d = nm ? parseDuration(nm[1].trim() + ' ' + (/business\s+(?:days?)\b/i.test(nm[0]) ? 'business ' : '') + nm[2]) : { redacted: true, text: redactedBefore[0] };
       let nconf = 'high', nreview = false, nwhy;
-      if (!d || d.redacted || d.n == null) { nconf = 'none'; nreview = true; nwhy = d?.redacted ? 'Notice period is redacted in the public filing. Act-by date cannot be computed.' : `Notice length in "${(nm?.[0] || '').trim().slice(0, 60)}" could not be read. Act-by date cannot be computed.`; }
+      if (!d || d.redacted || d.n == null) { nconf = 'none'; nreview = true; nwhy = d?.redacted ? 'Notice period is redacted in the public filing. Send-notice deadline date cannot be computed.' : `Notice length in "${(nm?.[0] || '').trim().slice(0, 60)}" could not be read. Send-notice deadline date cannot be computed.`; }
       else {
-        nwhy = `Act-by = end of term minus ${d.n} ${d.unit}(s).`;
-        if (d.business) { nconf = 'medium'; nreview = true; nwhy = `Act-by = end of term minus ${d.n} business days (Saturdays and Sundays skipped; public holidays are not modelled, so check the calendar).`; }
+        nwhy = `Send-notice deadline = end of term minus ${d.n} ${d.unit}(s).`;
+        if (d.business) { nconf = 'medium'; nreview = true; nwhy = `Send-notice deadline = end of term minus ${d.n} business days (Saturdays and Sundays skipped; public holidays are not modelled, so check the calendar).`; }
         if (d.conflict) { nconf = 'low'; nreview = true; nwhy = `Words and numerals disagree in "${d.text}".`; }
         if (/first\s+renewal\s+term/i.test(ct) && !/initial\s+term/i.test(ct.split(/notice/i)[1] || '')) { nconf = 'low'; nreview = true; nwhy += ' Clause measures notice from "the end of the first Renewal Term", not the Initial Term. Drafting is ambiguous.'; }
         if (/at\s+least|not\s+less|no\s+less/i.test(nm?.[0] || '')) nwhy += ' "At least / not less than": send on or before this date.';
@@ -277,11 +277,11 @@ export function extract(lines) {
       const sec = hi >= 0 ? [S[hi], S[hi + 1]].filter(Boolean) : [];
       let found = null;
       for (const x of sec) { const m = x.text.match(new RegExp(`((?:${NUMWORD_RE})?\\s*(?:\\(\\s*\\d+\\s*\\)|\\d+)?)\\s*(days?|months?)['’]?s?\\s+(?:prior\\s+|advance\\s+)?(?:written\\s+)?notice`, 'i')); const d = m && parseDuration(m[0]); if (d && d.n) { found = { d, x }; break; } }
-      if (found) res.notice = { period: { n: found.d.n, unit: found.d.unit, text: found.d.text }, confidence: 'medium', needsReview: true, why: `Act-by = end of term minus ${found.d.n} ${found.d.unit}(s). The renewal clause sends notice to Section ${xr[1]} by cross-reference; that section (quoted) gives ${found.d.text}. Confirm it governs non-renewal.`, source: src(found.x), via: src(cand) };
-      else res.notice = { period: null, confidence: 'none', needsReview: true, why: `The renewal clause defers the notice to Section ${xr[1]}${sec.length ? ', quoted here, which states no notice length' : ', which is not in this document'}. No act-by computed.`, source: sec.length ? src(sec[0]) : src(cand), via: src(cand) };
+      if (found) res.notice = { period: { n: found.d.n, unit: found.d.unit, text: found.d.text }, confidence: 'medium', needsReview: true, why: `Send-notice deadline = end of term minus ${found.d.n} ${found.d.unit}(s). The renewal clause sends notice to Section ${xr[1]} by cross-reference; that section (quoted) gives ${found.d.text}. Confirm it governs non-renewal.`, source: src(found.x), via: src(cand) };
+      else res.notice = { period: null, confidence: 'none', needsReview: true, why: `The renewal clause defers the notice to Section ${xr[1]}${sec.length ? ', quoted here, which states no notice length' : ', which is not in this document'}. No send-notice deadline computed.`, source: sec.length ? src(sec[0]) : src(cand), via: src(cand) };
       break;
     }
-    if (!res.notice) res.notice = /unless\s+and\s+until\s+terminated/i.test(t) && res.renewal.period ? { period: null, confidence: 'none', needsReview: true, evergreen: true, why: `Evergreen: renews every ${res.renewal.period.n} ${res.renewal.period.unit} "unless and until terminated", and the contract states no non-renewal notice period, so there is no act-by date. To exit, use its termination clause.`, source: src(s) } : { period: null, confidence: 'none', needsReview: true, why: 'Auto-renews, but no non-renewal notice period was found near the renewal clause.', source: src(s) };
+    if (!res.notice) res.notice = /unless\s+and\s+until\s+terminated/i.test(t) && res.renewal.period ? { period: null, confidence: 'none', needsReview: true, evergreen: true, why: `Evergreen: renews every ${res.renewal.period.n} ${res.renewal.period.unit} "unless and until terminated", and the contract states no non-renewal notice period, so there is no send-notice deadline date. To exit, use its termination clause.`, source: src(s) } : { period: null, confidence: 'none', needsReview: true, why: 'Auto-renews, but no non-renewal notice period was found near the renewal clause.', source: src(s) };
     const nq = res.notice.source?.quote || '';
     res.notice.who = /either\s+party|each\s+party|either\s+of\s+the\s+parties/i.test(nq) ? 'Either party' : (nq.match(/\b([A-Z][A-Za-z&.]+(?:\s+[A-Z][A-Za-z&.]+)?)\s+(?:may|shall|must)\s+(?:give|provide|deliver|notify)/)?.[1] || 'Not stated');
     const days = p => !p ? 0 : p.unit === 'year' ? p.n * 12 * 30.44 : p.unit === 'month' ? p.n * 30.44 : p.n * ({ day: 1, week: 7 })[p.unit]; // months and years compared in months, so 24 months == 2 years
@@ -330,15 +330,16 @@ export function extract(lines) {
   return res;
 }
 
-// ---------- schedule: act-by queue ----------
+// ---------- schedule: send-notice deadline queue ----------
 // Returns the dated items for one contract given an as-of date (YYYY-MM-DD).
+export const sure = c => c === 'high' ? 'Sure' : c === 'none' ? 'Can’t tell' : 'Check this';
 export function schedule(x, asOf) {
   const items = [];
   const as = new Date(asOf + 'T00:00:00Z');
   const base = { confidence: 'none', needsReview: true };
   if (x.effective) items.push({ type: 'Effective date', date: x.effective.date, confidence: x.effective.confidence, needsReview: x.effective.needsReview, why: x.effective.why, source: x.effective.source });
-  if (!x.term) { items.push({ ...base, type: 'Term / expiry', date: '', why: 'No term clause found. Needs review.', source: null }); if (x.notice?.date) items.push({ type: 'Non-renewal notice: act by', date: x.notice.date, actBy: true, confidence: 'medium', needsReview: true, why: x.notice.why + ' Term end not found, so the date is not cross-checked against the term.', source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' }); return items; }
-  if (!x.term.end) { items.push({ type: 'Term / expiry', date: '', confidence: x.term.confidence, needsReview: true, why: x.term.why, source: x.term.source }); if (x.notice?.date) items.push({ type: 'Non-renewal notice: act by', date: x.notice.date, actBy: true, confidence: 'medium', needsReview: true, why: x.notice.why + ' Term end not computable here, so the date is not cross-checked against the term.', source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' }); else if (x.notice) items.push({ type: 'Non-renewal notice: act by', date: '', confidence: 'none', needsReview: true, why: 'No computable expiry, so no act-by date. ' + (x.notice.why || ''), source: x.notice.source, noticeText: x.notice.period?.text || '' }); return items; }
+  if (!x.term) { items.push({ ...base, type: 'Term / expiry', date: '', why: 'No term clause found. Needs review.', source: null }); if (x.notice?.date) items.push({ type: 'Send-notice deadline', date: x.notice.date, actBy: true, confidence: 'medium', needsReview: true, why: x.notice.why + ' Term end not found, so the date is not cross-checked against the term.', source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' }); return items; }
+  if (!x.term.end) { items.push({ type: 'Term / expiry', date: '', confidence: x.term.confidence, needsReview: true, why: x.term.why, source: x.term.source }); if (x.notice?.date) items.push({ type: 'Send-notice deadline', date: x.notice.date, actBy: true, confidence: 'medium', needsReview: true, why: x.notice.why + ' Term end not computable here, so the date is not cross-checked against the term.', source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' }); else if (x.notice) items.push({ type: 'Send-notice deadline', date: '', confidence: 'none', needsReview: true, why: 'No end date could be worked out, so no send-notice deadline date. ' + (x.notice.why || ''), source: x.notice.source, noticeText: x.notice.period?.text || '' }); return items; }
   const end0 = new Date(x.term.end + 'T00:00:00Z');
   const termConf = x.term.confidence, termRev = x.term.needsReview;
   const rp = x.renewal?.period, maxR = x.renewal ? (x.renewal.max ?? Infinity) : 0;
@@ -366,24 +367,25 @@ export function schedule(x, asOf) {
   }
   // The term running on the as-of date can be earlier than the cycle the next decision applies to (notice already missed for it).
   let kc = 0; if (x.renewal && rp) while (kc < k && endOf(kc) < as) kc++;
-  // Missed window: the running term's notice date passed, it has not renewed yet, and no later act-by falls before that renewal.
+  // Missed window: the running term's notice date passed, it has not renewed yet, and no later send-notice deadline falls before that renewal.
   const renewOn = x.renewal && rp ? addDays(endOf(kc), 1) : null;
   const missedWindow = kc < k && renewOn && actBy && actBy >= renewOn ? { actBy: ymd(actByOf(endOf(kc))), renews: ymd(renewOn) } : null;
   const skipped = []; for (let j = kc + 1; j < k; j++) skipped.push(ymd(endOf(j)));
+  if (missedWindow) items.push({ type: 'MISSED send-notice deadline', date: missedWindow.actBy, missed: true, status: 'missed', confidence: termConf === 'high' ? 'medium' : termConf, needsReview: true, why: `MISSED: the send-notice deadline for the term ending ${ymd(endOf(kc))} passed on ${missedWindow.actBy}, so the contract renews automatically on ${missedWindow.renews} unless the other side agrees to end it. The next send-notice deadline is ${ymd(actBy)}.`, source: x.notice?.source || x.term.source });
   if (kc < k) items.push({ missedWindow, type: kc > 0 ? 'Current term ends (projected)' : 'Initial term ends', date: ymd(endOf(kc)), confidence: kc > 0 && termConf === 'high' ? 'medium' : termConf, needsReview: termRev || x.renewal.needsReview, why: `The term running on the as-of date. Its non-renewal deadline (${ymd(actByOf(endOf(kc)))}) has already passed, so it renews; the next decision below applies to the following term.`, source: x.term.source });
   items.push({ type: kc < k ? 'First term you can still stop (projected)' : projected ? 'Current term ends (projected)' : 'Initial term ends', date: ymd(end), confidence: projected && termConf === 'high' ? 'medium' : termConf, needsReview: termRev || (x.renewal ? x.renewal.needsReview : false), why: x.term.why + projNote + (skipped.length ? ` The term${skipped.length > 1 ? 's' : ''} ending ${skipped.join(', ')} renew${skipped.length > 1 ? '' : 's'} automatically: the notice window has already passed.` : '') + (last ? ` Final possible expiry if all renewals run: ${ymd(last)}.` : ''), source: x.term.source, status: expired ? 'past' : '' });
   if (x.renewal) {
     if (!rp) items.push({ type: 'Auto-renewal', date: '', confidence: 'none', needsReview: true, why: x.renewal.why, source: x.renewal.source });
     else items.push({ type: 'Auto-renewal', date: ymd(addDays(endOf(kc), 1)), confidence: x.renewal.confidence, needsReview: x.renewal.needsReview, why: x.renewal.why, source: x.renewal.source, status: k >= maxR ? 'no further renewals' : '' });
     const nRev = x.notice?.needsReview || termRev || x.renewal.needsReview;
-    if (x.notice?.date) items.push({ type: 'Non-renewal notice: act by', date: x.notice.date, actBy: true, confidence: x.notice.confidence, needsReview: x.notice.needsReview, why: x.notice.why, source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' });
+    if (x.notice?.date) items.push({ type: 'Send-notice deadline', date: x.notice.date, actBy: true, confidence: x.notice.confidence, needsReview: x.notice.needsReview, why: x.notice.why, source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' });
     else if (actBy) {
       const c = [x.notice.confidence, termConf, x.renewal.confidence, projected ? 'medium' : 'high'];
       if (x.notice.via) c.push('medium');
-      // A dated act-by is never 'none': at worst 'low' (the date is computed, the inputs need review).
+      // A dated send-notice deadline is never 'none': at worst 'low' (the date is computed, the inputs need review).
       const conf = c.includes('none') || c.includes('low') ? 'low' : c.includes('medium') ? 'medium' : 'high';
-      items.push({ type: 'Non-renewal notice: act by', date: ymd(actBy), actBy: true, who: x.notice.who, via: x.notice.via, confidence: conf, needsReview: nRev || !!x.notice.via || conf === 'low', why: `${x.notice.why} (${ymd(end)} − ${np.n} ${np.unit}(s)).${projNote}${x.warnings ? ' ' + x.warnings[0] : ''}`, source: x.notice.source, status: actBy < as ? 'past' : '' });
-    } else items.push({ type: 'Non-renewal notice: act by', date: '', confidence: 'none', needsReview: true, why: x.notice?.why || 'No notice period found.', source: x.notice?.source || null });
+      items.push({ type: 'Send-notice deadline', date: ymd(actBy), actBy: true, who: x.notice.who, via: x.notice.via, confidence: conf, needsReview: nRev || !!x.notice.via || conf === 'low', why: `${x.notice.why} (${ymd(end)} − ${np.n} ${np.unit}(s)).${projNote}${x.warnings ? ' ' + x.warnings[0] : ''}`, source: x.notice.source, status: actBy < as ? 'past' : '' });
+    } else items.push({ type: 'Send-notice deadline', date: '', confidence: 'none', needsReview: true, why: x.notice?.why || 'No notice period found.', source: x.notice?.source || null });
   }
   return items;
 }
@@ -398,9 +400,9 @@ export function nextFixed(rule, asOf) {
 }
 export function daysBetween(a, b) { return Math.round((new Date(b + 'T00:00:00Z') - new Date(a + 'T00:00:00Z')) / 86400000); }
 
-// Ranked act-by queue across contracts: upcoming act-by dates first (soonest), then needs-review, then past.
+// Ranked send-notice deadline queue across contracts: upcoming send-notice deadline dates first (soonest), then needs-review, then past.
 // Short plain reason for a needs-review item.
-export const shortReason = (why = '') => /^Evergreen/.test(why) ? 'renews monthly, no notice clause' : /Not a redaction/.test(why) ? (/Commencement/.test(why) ? 'term runs from an undated Commencement Date' : 'term start not dated in the document') : /redact/i.test(why) ? 'redacted in the public filing' : /No term clause/i.test(why) ? 'no term found' : /event \(e\.g/i.test(why) ? 'term runs from an event' : /cross-reference|defers the notice/i.test(why) ? 'notice set by another section' : /first Renewal Term/i.test(why) ? 'ambiguous drafting' : /inclusive of the final day/i.test(why) ? 'could land one day later' : /without saying before what/i.test(why) ? 'notice reference point not stated' : /Effective Date that needs review|no Effective Date/i.test(why) ? 'effective date not defined' : /disagree/i.test(why) ? 'words and numerals disagree' : /no non-renewal notice|No notice period/i.test(why) ? 'no notice period found' : /not cross-checked/i.test(why) ? 'stated date, term not found' : /not tied/i.test(why) ? 'term start unclear' : (why.split('.')[0] || 'confirm against the clause').slice(0, 60).toLowerCase();
+export const shortReason = (why = '') => /^Evergreen/.test(why) ? 'renews monthly, no notice clause' : /Not a redaction/.test(why) ? (/Commencement/.test(why) ? 'term runs from an undated Commencement Date' : 'term start not dated in the document') : /redact/i.test(why) ? 'redacted in the public filing' : /No term clause/i.test(why) ? 'no term found' : /event \(e\.g/i.test(why) ? 'term runs from an event' : /cross-reference|defers the notice/i.test(why) ? 'notice set by another section' : /first Renewal Term/i.test(why) ? 'unclear which term the notice counts from' : /inclusive of the final day/i.test(why) ? 'could land one day later' : /without saying before what/i.test(why) ? 'notice reference point not stated' : /Effective Date that needs review|no Effective Date/i.test(why) ? 'effective date not defined' : /disagree/i.test(why) ? 'words and numerals disagree' : /no non-renewal notice|No notice period/i.test(why) ? 'no notice period found' : /not cross-checked/i.test(why) ? 'stated date, term not found' : /not tied/i.test(why) ? 'term start unclear' : (why.split('.')[0] || 'confirm against the clause').slice(0, 60).toLowerCase();
 
 const durMonths = p => !p ? 0 : p.unit === 'year' ? 12 * p.n : p.unit === 'month' ? p.n : p.unit === 'week' ? p.n / 4.35 : p.n / 30.44;
 const lockText = p => { if (!p) return ''; const m = durMonths(p); return m >= 12 && m % 12 === 0 ? `${m / 12} more year${m / 12 > 1 ? 's' : ''}` : m >= 1 && Number.isInteger(m) ? `${m} more month${m > 1 ? 's' : ''}` : `another ${p.n} ${p.unit}${p.n > 1 ? 's' : ''}`; };
@@ -408,12 +410,12 @@ export const WINDOWS = [[0, 30, 'within 30 days'], [31, 90, '31–90 days'], [91
 export const PRIORITY_RULE = 'Order, top to bottom: 1) Missed: the send-notice deadline has passed but the contract has not renewed yet (soonest renewal first). 2) Due within 30 days: send-notice deadline today or in the next 30 days (soonest first). 3) Resolve first: needs review, no date could be found. 4) Later, in time bands: 31–90 days, 91–365, over a year. Inside a band, the bigger risk goes first even if its date is later: first a notice period longer than the renewal, then the longer renewal (2 years before 1 year), then the earlier date. Ties: name A–Z. 5) Expired contracts (nothing left to decide), collapsed at the bottom.';
 const fmtD = d => { const [y, m, dd] = d.split('-'); return `${+dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1]} ${y}`; };
 
-// Ranked act-by queue with an explicit, deterministic priority rule (PRIORITY_RULE) and a one-line reason per row.
+// Ranked send-notice deadline queue with an explicit, deterministic priority rule (PRIORITY_RULE) and a one-line reason per row.
 export function buildQueue(contracts, asOf) {
   const rows = [];
   for (const c of contracts) {
     const items = schedule(c.x, asOf);
-    const act = items.find(i => i.type.startsWith('Non-renewal notice'));
+    const act = items.find(i => i.type === 'Send-notice deadline');
     const exp = items.find(i => /term|Expired/i.test(i.type));
     const isExp = exp?.type.startsWith('Expired');
     const mw = items.find(i => i.missedWindow)?.missedWindow;
@@ -426,10 +428,10 @@ export function buildQueue(contracts, asOf) {
     const section = mw ? 'missed' : lapsed ? 'lapsed' : !key ? 'resolve' : d <= 30 && act ? 'due' : 'upcoming';
     const win = section === 'upcoming' || section === 'due' ? WINDOWS.findIndex(([a, b]) => d >= a && d <= b) : -1;
     let why;
-    if (mw) { const ago = daysBetween(mw.actBy, asOf), inn = daysBetween(asOf, mw.renews); why = `Notice window missed ${ago} day${ago === 1 ? '' : 's'} ago · renews ${fmtD(mw.renews)} (in ${inn} day${inn === 1 ? '' : 's'}) for ${lockText(rp)}; only a negotiated exit stops it · next act-by ${fmtD(key)}`; }
+    if (mw) { const ago = daysBetween(mw.actBy, asOf), inn = daysBetween(asOf, mw.renews); why = `MISSED: send-notice deadline passed ${ago} day${ago === 1 ? '' : 's'} ago · renews ${fmtD(mw.renews)} (in ${inn} day${inn === 1 ? '' : 's'}) for ${lockText(rp)} unless the other side agrees to end it · next send-notice deadline ${fmtD(key)}`; }
     else if (section === 'lapsed') why = isExp ? `Expired ${-d} days ago · all renewals used; confirm a replacement is in place` : act ? `Notice date passed ${-d} days ago · it has renewed or lapsed; check which` : `Expired ${-d} days ago · no auto-renewal`;
-    else if (section === 'resolve' && c.x.notice?.evergreen) { const cur = items.find(i => /term ends/i.test(i.type) && i.date); why = `No Act by date: renews every ${c.x.renewal.period.unit} until terminated, and the contract has no notice clause${cur ? ` · current term ends ${fmtD(cur.date)}` : ''}`; }
-    else if (section === 'resolve') why = `No date found · resolve first: ${shortReason(/No computable expiry/.test(item?.why || '') && exp ? exp.why : item?.why)}`;
+    else if (section === 'resolve' && c.x.notice?.evergreen) { const cur = items.find(i => /term ends/i.test(i.type) && i.date); why = `No send-notice deadline: renews every ${c.x.renewal.period.unit} until terminated, and the contract has no notice clause${cur ? ` · current term ends ${fmtD(cur.date)}` : ''}`; }
+    else if (section === 'resolve') why = `No date found · resolve first: ${shortReason(/No end date could be worked out/.test(item?.why || '') && exp ? exp.why : item?.why)}`;
     else if (section === 'due') why = `Due ${d === 0 ? 'today' : `in ${d} day${d === 1 ? '' : 's'}`} · send notice now or it renews for ${lockText(rp) || 'another term'}`;
     else if (act) why = `Deadline in ${d} day${d === 1 ? '' : 's'} · miss it and it renews for ${lockText(rp) || 'another term'}${noticeLong ? ' · notice is longer than the renewal, so this decides two cycles out' : ''}`;
     else why = `Expires in ${d} days · no auto-renewal, so plan the replacement`;
@@ -452,7 +454,7 @@ export function toCSV(contracts, asOf) {
   const out = [head.join(',')];
   for (const c of contracts) {
     for (const i of [...schedule(c.x, asOf), ...c.x.payments.map(p => ({ type: 'Payment: ' + p.rule, date: nextFixed(p.rule, asOf), who: '', confidence: p.confidence, needsReview: p.needsReview, why: nextFixed(p.rule, asOf) ? 'Next date on or after the as-of date from the fixed schedule in the clause.' : 'Event-driven or recurring; no single calendar date is stated.', source: p.source })), ...c.x.other.map(p => ({ type: 'Termination for convenience: ' + p.rule, date: '', who: p.who || 'Not stated', confidence: p.confidence, needsReview: p.needsReview, why: 'Right, not a deadline.', source: p.source }))]) {
-      out.push([c.name, c.filer || '', c.counterparty || '', i.type, i.who || '', i.date, i.date ? daysBetween(asOf, i.date) : '', asOf, i.confidence, i.needsReview ? 'yes' : 'no', i.why, i.source?.location || '', i.source?.quote || '', c.url || ''].map(csvCell).join(','));
+      out.push([c.name, c.filer || '', c.counterparty || '', i.type, i.who || '', i.date, i.date ? daysBetween(asOf, i.date) : '', asOf, sure(i.confidence), i.needsReview ? 'yes' : 'no', i.why, i.source?.location || '', i.source?.quote || '', c.url || ''].map(csvCell).join(','));
     }
   }
   return out.join('\r\n') + '\r\n';
@@ -460,15 +462,16 @@ export function toCSV(contracts, asOf) {
 const icsEsc = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
 const fold = l => { const o = []; while (l.length > 74) { o.push(l.slice(0, 74)); l = ' ' + l.slice(74); } o.push(l); return o.join('\r\n'); };
 export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
-  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Contract Cliffs//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Contract Cliffs act-by'];
+  const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Contract Cliffs//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Contract Cliffs send-notice deadlines'];
   for (const c of contracts) for (const i of schedule(c.x, asOf)) {
+    if (i.missed) { const r = schedule(c.x, asOf).find(t => t.missedWindow)?.missedWindow; if (r) { const d = r.renews.replace(/-/g, ''); const n = ymd(addDays(new Date(r.renews + 'T00:00:00Z'), 1)).replace(/-/g, ''); L.push('BEGIN:VEVENT', `UID:${c.id}-renews-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`, fold(`SUMMARY:${icsEsc('MISSED: ' + c.name + ' renews today (send-notice deadline missed)')}`), fold(`DESCRIPTION:${icsEsc(i.why)}`), ...(c.url ? [fold(`URL:${c.url}`)] : []), 'END:VEVENT'); } continue; }
     if (!i.actBy || !i.date || i.status === 'past') continue;
     const d = i.date.replace(/-/g, ''); const n = ymd(addDays(new Date(i.date + 'T00:00:00Z'), 1)).replace(/-/g, '');
     L.push('BEGIN:VEVENT', `UID:${c.id}-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`,
       fold(`SUMMARY:${icsEsc('Send-notice deadline: ' + c.name)}`),
-      fold(`DESCRIPTION:${icsEsc(`${i.why}${i.needsReview ? ' NEEDS REVIEW.' : ''} Confidence: ${i.confidence}. Source ${i.source?.location}: "${i.source?.quote}"`)}`),
+      fold(`DESCRIPTION:${icsEsc(`${i.why}${i.needsReview ? ' NEEDS REVIEW.' : ''} Confidence: ${sure(i.confidence)}. Source ${i.source?.location}: "${i.source?.quote}"`)}`),
       ...(c.url ? [fold(`URL:${c.url}`)] : []),
-      'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:-P30D', fold(`DESCRIPTION:${icsEsc('30 days to act-by: ' + c.name)}`), 'END:VALARM', 'END:VEVENT');
+      'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:-P30D', fold(`DESCRIPTION:${icsEsc('30 days to the send-notice deadline: ' + c.name)}`), 'END:VALARM', 'END:VEVENT');
   }
   L.push('END:VCALENDAR');
   return L.join('\r\n') + '\r\n';
@@ -478,7 +481,7 @@ export function toPacket(contracts, asOf) {
   const rows = buildQueue(contracts, asOf);
   const body = contracts.map(c => {
     const its = schedule(c.x, asOf);
-    return `<section><h2>${h(c.name)}</h2><p class="m">${h(c.title || '')}${c.filer ? ' · filed by ' + h(c.filer) : ''}${c.exhibit ? ' · ' + h(c.exhibit) : ''}${c.filed ? ' · ' + h(c.filed) : ''}</p>${c.url ? `<p><a href="${h(c.url)}">${h(c.url)}</a></p>` : '<p class="m">Uploaded document (no public source).</p>'}<table>${its.map(i => `<tr><td>${h(i.type)}</td><td>${h(i.date || 'needs review')}</td><td>${h(i.confidence)}${i.needsReview ? ' · needs review' : ''}</td><td><q>${h(i.source?.quote || '')}</q><br><small>${h(i.source?.location || '')}</small></td></tr>`).join('')}</table></section>`;
+    return `<section><h2>${h(c.name)}</h2><p class="m">${h(c.title || '')}${c.filer ? ' · filed by ' + h(c.filer) : ''}${c.filed ? ' · filed ' + h(c.filed) : ''}</p>${c.url ? `<p><a href="${h(c.url)}">${h(c.url)}</a></p>` : '<p class="m">Uploaded document (no public source).</p>'}<table>${its.map(i => `<tr><td>${h(i.type)}</td><td>${h(i.date || 'needs review')}</td><td>${h(sure(i.confidence))}${i.needsReview ? ' · needs review' : ''}</td><td><q>${h(i.source?.quote || '')}</q><br><small>${h(i.source?.location || '')}</small></td></tr>`).join('')}</table></section>`;
   }).join('');
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><title>Audit pack · Contract Cliffs · as of ${h(asOf)}</title><style>body{font:14px/1.7 Geist,Arial,sans-serif;color:#000;max-width:960px;margin:48px auto;padding:0 20px}h1{font-weight:500;text-transform:lowercase}h2{font-weight:500;margin-top:48px}.m,small{color:#666}table{border-collapse:collapse;width:100%}td{border-top:.5px solid #4d4d4d;padding:8px 6px;vertical-align:top}</style><h1>contract cliffs</h1><p class="m">Audit pack · ${contracts.length} contracts · as of ${h(asOf)} · generated by deterministic extraction; every date shows its source clause. Blank dates need human review.</p><h2>Act-by queue</h2><table>${rows.map(r => `<tr><td>${h(r.name)}</td><td>${h(r.label)}</td><td>${h(r.actBy || 'needs review')}</td><td>${r.days == null ? '' : r.days + ' days'}</td></tr>`).join('')}</table>${body}</html>`;
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><title>Audit pack · Contract Cliffs · as of ${h(asOf)}</title><style>body{font:14px/1.7 Geist,Arial,sans-serif;color:#000;max-width:960px;margin:48px auto;padding:0 20px}h1{font-weight:500;text-transform:lowercase}h2{font-weight:500;margin-top:48px}.m,small{color:#666}table{border-collapse:collapse;width:100%}td{border-top:.5px solid #4d4d4d;padding:8px 6px;vertical-align:top}</style><h1>contract cliffs</h1><p class="m">Audit pack · ${contracts.length} contracts · as of ${h(asOf)} · generated by deterministic extraction; every date shows its source clause. Blank dates need human review.</p><h2>Send-notice deadlines, most urgent first</h2><table>${rows.map(r => r.missed ? `<tr class="missed"><td>${h(r.name)}</td><td><b>MISSED</b> · send-notice deadline was ${h(r.missed.actBy)}</td><td>Renews ${h(r.missed.renews)}</td><td>in ${daysBetween(asOf, r.missed.renews)} days · next send-notice deadline ${h(r.actBy)}</td></tr>` : `<tr><td>${h(r.name)}</td><td>${h(r.label)}</td><td>${h(r.actBy || 'needs review')}</td><td>${r.days == null ? '' : r.days + ' days'}</td></tr>`).join('')}</table>${body}</html>`;
 }

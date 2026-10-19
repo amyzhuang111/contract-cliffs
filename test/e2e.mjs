@@ -25,17 +25,18 @@ ok((await page.$$('#cards .card')).length === 10, '10 contract cards');
 const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 4 need review · 1 missed deadline/.test(st), 'counts: ' + st);
 const order = await page.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('lgrp') ? 'LAPSED' : 'H:' + l.textContent.trim())));
 ok(order.join(',') === 'H:Missed · deadline passed, not yet renewed,c3,H:Resolve first · needs review, no date,c13,c8,H:Later · 31–90 days,c5,H:Later · 91–365 days,c1,c6,H:Later · over a year,c4,c12,c2,LAPSED', 'priority order on the page: ' + order.join(','));
-ok(/^Why it’s here Notice window missed 30 days ago · renews 19 Nov 2026/.test(await page.$eval('#queue li[data-id="c3"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'F1: Dragonfly shows the missed notice window at the top');
+ok(/^Why it’s here MISSED: send-notice deadline passed 30 days ago · renews 19 Nov 2026/.test(await page.$eval('#queue li[data-id="c3"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'F1: Dragonfly shows the missed notice window at the top');
 ok(await page.$eval('#queue li.lgrp details', e => !e.open) && /Expired \(1\)/.test(await page.$eval('#queue li.lgrp summary', e => e.textContent)), 'F9: expired rows collapsed under "Expired (1)"');
 { const st = await page.$eval('#status', e => e.textContent); const sv = await page.$$eval('#stats > div', ds => Object.fromEntries(ds.map(d => [d.querySelector('.lab').textContent, d.querySelector('.sv').textContent])));
   ok(st.includes(sv['Need review'] + ' need review'), `F3: status line and stats strip agree on need-review (${sv['Need review']})`); }
 ok(!(await page.$$eval('#queue li[data-id]', ls => ls.filter(l => /\d{4}/.test(l.querySelector('.d').textContent) && /^Can’t tell/.test(l.querySelector('.s').textContent.trim().split('\n').pop().trim())).length)), 'F6: no dated row shows "none" confidence');
 const why5 = await page.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim()); ok(why5 === 'Why it’s here Deadline in 58 days · miss it and it renews for 2 more years', 'row reason: ' + why5);
 ok(/1\) Missed/.test(await page.$eval('#rule', e => e.textContent)) && /Priority rule/i.test(await page.$eval('.rule .lab', e => e.textContent)), 'Priority rule note is shown');
-for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setViewport({ width: w, height: 900 }); await pf.goto(BASE + '/', { waitUntil: 'networkidle0' }); await pf.waitForSelector('#queue li[data-id]');
-  const m = await pf.evaluate(() => { const r = document.querySelector('#queue li[data-id]').getBoundingClientRect(); return { top: r.top, bottom: r.bottom, sw: document.documentElement.scrollWidth, lede: !!document.querySelector('.lede').offsetHeight, steps: document.querySelectorAll('.steps li').length, over: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1 && getComputedStyle(e).position !== 'fixed' && !e.closest('.drawer')).length }; });
-  if (w === 1440) { ok(m.top < 900, `first screen: first queue row top at ${Math.round(m.top)}px < 900 at 1440x900`); ok(m.bottom <= 900, `first screen: first queue row fully visible (bottom ${Math.round(m.bottom)}px)`); }
-  else ok(m.sw <= 375 && m.over === 0 && m.lede && m.steps === 3, `375: nothing breaks (scrollWidth ${m.sw}, ${m.over} overflowing elements, hero + 3 steps shown)`);
+for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setViewport({ width: w, height: w === 1440 ? 900 : 812 }); await pf.goto(BASE + '/', { waitUntil: 'networkidle0' }); await pf.waitForSelector('#queue li[data-id]');
+  const m = await pf.evaluate(() => { const r = document.querySelector('#queue li[data-id]').getBoundingClientRect(); return { top: r.top, bottom: r.bottom, rowsTop: [...document.querySelectorAll('#queue li[data-id]')].filter(x => x.offsetParent && x.getBoundingClientRect().top < innerHeight).length, sw: document.documentElement.scrollWidth, lede: !!document.querySelector('.lede').offsetHeight, steps: document.querySelectorAll('.steps li').length, over: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1 && getComputedStyle(e).position !== 'fixed' && !e.closest('.drawer')).length }; });
+  if (w === 1440) { ok(m.top < 900, `first screen: first queue row top at ${Math.round(m.top)}px < 900 at 1440x900`); ok(m.bottom <= 900, `first screen: first queue row fully visible (bottom ${Math.round(m.bottom)}px)`); ok(m.rowsTop >= 3, `first screen: ${m.rowsTop} queue rows start within 1440x900`); }
+  else { ok(m.top < 812, `phone: first queue row starts at ${Math.round(m.top)}px, inside the first 375x812 screen`); ok(await pf.$eval('#how', e => !e.open), 'phone: How it works is collapsed'); }
+  if (w === 375) ok(m.sw <= 375 && m.over === 0 && m.lede && m.steps === 3 && true, `375: nothing breaks (scrollWidth ${m.sw}, ${m.over} overflowing elements, hero + 3 steps shown)`);
   await pf.close(); }
 { const lede = await page.$eval('.lede', e => e.textContent.replace(/\s+/g, ' ').trim());
   ok(lede === 'Many contracts renew automatically unless you send notice by a deadline. Contract Cliffs reads your contracts and tells you the date you must act by, most urgent first, quoting the exact sentence each date comes from.', 'clarity: plain-words hero');
@@ -55,7 +56,7 @@ for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setV
   ok(d3 === 'Renews 19 Nov 2026' && n3 === 'in 31 days', `missed row headline is the renewal date (${d3} · ${n3})`);
   ok(/Need review/.test(await page.$eval('.revlist', e => e.textContent)) && (await page.$$('.revlist .lnk')).length === 4, 'Need review stat names its 4 contracts');
   await page.$eval('.revlist .lnk', b => b.click()); await new Promise(r => setTimeout(r, 400)); ok(await page.$eval('#drawer', e => e.classList.contains('on')), 'need-review name opens its drawer'); await page.keyboard.press('Escape'); await new Promise(r => setTimeout(r, 300));
-  const cols = await page.$eval('#stats', e => getComputedStyle(e).gridTemplateColumns.split(' ').length); ok(cols === 6, `stats strip has 6 columns at desktop (${cols})`);
+  const tops = await page.$$eval('#stats > div', ds => ds.map(d => Math.round(d.getBoundingClientRect().top))); ok(tops.length === 6 && new Set(tops).size === 1, `stats strip: all 6 figures on one line at desktop (${tops.length})`);
 }
 { const p2 = await browser.newPage(); await p2.setViewport({ width: 1440, height: 900 }); await p2.goto(BASE + '/?asof=2026-12-16', { waitUntil: 'networkidle0' }); await p2.waitForSelector('#queue li[data-id]');
   const o = await p2.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('sh') ? 'H:' + l.textContent.trim() : '')).filter(Boolean));
@@ -87,8 +88,17 @@ const waitFile = async (re) => { for (let i = 0; i < 50; i++) { const f = fs.rea
 await page.click('#exCsv'); const csv = await waitFile(/\.csv$/);
 ok(csv && csv.startsWith('contract,filer,counterparty,item,who_acts,date') && csv.includes('2026-12-16') && csv.includes('https://www.sec.gov/Archives/edgar/'), 'CSV export downloaded with dates and EDGAR URLs');
 await page.click('#exIcs'); const ics = await waitFile(/\.ics$/);
-ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []).length === 7 && ics.includes('DTSTART;VALUE=DATE:20261216') && !ics.includes('20240302'), 'ICS export has 7 upcoming act-by events (no lapsed Synacor event)');
-await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Audit pack') && (pk.match(/<section>/g) || []).length === 10, 'diligence packet export');
+ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []).length === 8 && ics.includes('DTSTART;VALUE=DATE:20261216') && !ics.includes('20240302'), 'ICS export: 7 upcoming send-notice deadlines + 1 MISSED renewal event (no expired Synacor event)');
+await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Audit pack') && (pk.match(/<section>/g) || []).length === 10, 'audit pack export');
+{ const BANNED_CS = /\bAct by\b/; const BANNED = /act-by|ambiguous drafting|computable expiry|Notice window missed|negotiated exit|Exhibit 10|Party \(filer\)|Contract lifecycle|diligence|\b(?:high|medium|low|none) confidence|Confidence: (?:high|medium|low|none)/i;
+  const texts = { csv, ics, pack: pk };
+  texts.page = await page.evaluate(() => { document.querySelectorAll('details').forEach(d => d.open = true); return document.body.innerText; });
+  for (const id of ['c3', 'c13', 'c4']) { await page.$eval(`#cards .card[data-id="${id}"]`, b => b.click()); await new Promise(r => setTimeout(r, 300)); texts['drawer-' + id] = await page.$eval('#drawer', e => e.innerText); await page.keyboard.press('Escape'); await new Promise(r => setTimeout(r, 250)); }
+  const hits = Object.entries(texts).map(([k, v]) => [k, ((v || '').match(BANNED) || (v || '').match(BANNED_CS))?.[0]]).filter(([, m]) => m);
+  ok(hits.length === 0, 'jargon sweep: no banned terms in the page, drawers, CSV, .ics or audit pack' + (hits.length ? ' ' + JSON.stringify(hits) : ''));
+  ok(fs.readdirSync(dl).some(n => /^audit-pack-.*\.html$/.test(n)) && !fs.readdirSync(dl).some(n => /diligence/.test(n)), 'audit pack downloads as audit-pack-*.html');
+  ok(/MISSED: Dragonfly/.test(ics) && /DTSTART;VALUE=DATE:20261119/.test(ics) && /<b>MISSED<\/b>[^<]*<\/td><td>Renews 2026-11-19/.test(pk) && /MISSED send-notice deadline/.test(csv), 'exports mark Dragonfly MISSED with the 19 Nov 2026 renewal');
+  await page.evaluate(() => { document.querySelectorAll('details').forEach(d => d.open = false); if (matchMedia('(min-width: 821px)').matches) document.getElementById('how').open = true; }); }
 // as-of control
 await page.$eval('#asof', e => { e.value = '2027-01-01'; e.dispatchEvent(new Event('change')); });
 ok(/Cerus/.test(await page.$eval('#queue li[data-id]:not(.missed):not([data-id="c7"]):not([data-id="c13"]):not([data-id="c8"])', e => e.textContent)), 'as-of 2027-01-01 moves Cerus / Purolite to the top of the upcoming rows');
@@ -149,7 +159,7 @@ let g = await page.evaluate(() => ({ heads: [...document.querySelectorAll('#queu
 ok(g.heads.length >= 2 && g.rows === 10 && g.pressed === 'true' && g.heads.some(h => /Counterparty Purolite Corporation 1 agreement · next deadline 20 Apr 2027/.test(h)), `group by counterparty: ${g.heads.length} groups, 10 rows`);
 await page.$eval('#g-filer', b => b.click()); await new Promise(r => setTimeout(r, 200));
 g = await page.evaluate(() => [...document.querySelectorAll('#queue li.grp')].map(l => l.textContent.replace(/\s+/g, ' ').trim()));
-ok(g.some(h => /Party \(filer\) Kopin Corporation/.test(h)), 'group by party (filer) works');
+ok(g.some(h => /Company that filed it Kopin Corporation/.test(h)), 'group by company that filed it works');
 await page.$eval('#g-none', b => b.click()); await new Promise(r => setTimeout(r, 200));
 ok((await page.$$('#queue li.grp')).length === 0, 'grouping off restores the flat queue');
 await page.$eval('#g-counterparty', b => b.click()); await new Promise(r => setTimeout(r, 200));

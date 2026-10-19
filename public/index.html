@@ -14,16 +14,18 @@
 <body>
 <div class="wrap">
 <header>
-  <div class="lab">Operations · Contract lifecycle</div>
+  <div class="lab">Contract renewal deadlines</div>
   <h1 class="mark">contract cliffs</h1>
   <p class="lede">Many contracts renew automatically unless you send notice by a deadline. <span>Contract Cliffs reads your contracts and tells you the date you must act by, most urgent first, quoting the exact sentence each date comes from.</span></p>
   <p class="who">For ops and legal teams tracking vendor and customer contracts.</p>
+  <details class="how" id="how"><summary><span class="lab">How it works</span></summary>
   <ol class="steps" aria-label="How to use">
     <li><span class="lab">1 · Load contracts</span>Paste text, <a href="#add">upload a PDF or Word file</a>, or start with the 10 real public SEC contracts already loaded below.</li>
     <li><span class="lab">2 · Read the list</span>Each row is a send-notice deadline: send notice by this date, or the contract renews on its own. Most urgent at the top.</li>
     <li><span class="lab">3 · Check and export</span>Click a contract to see the exact clause behind each date, then <a href="#add">export</a> to your calendar or a CSV.</li>
   </ol>
   <p class="example" id="example"></p>
+  </details>
 </header>
 <section class="setbar" aria-label="Which contracts">
   <div class="row">
@@ -36,11 +38,11 @@
 <section class="sec" aria-labelledby="qh">
   <div class="lab">The list</div>
   <h2 id="qh"><abbr title="The last day to send notice so the contract does not renew on its own. Worked out as: end of the current term minus the notice period written in the contract.">Send-notice deadlines</abbr></h2>
-  <p class="sub">The last day to send notice so a contract doesn’t renew on its own: end of the current term minus the notice period in the clause. Order: missed, due within 30 days, needs review, then time bands (31–90 days, 91–365, over a year). Inside a band, the longer renewal goes first even if its date is later.</p>
+  <p class="sub">The last day to send notice so a contract doesn’t renew on its own: end of the current term minus the notice period in the clause.<span class="order"> Order: missed, due within 30 days, needs review, then time bands (31–90 days, 91–365, over a year). Inside a band, the longer renewal goes first even if its date is later.</span></p>
   <section class="stats" id="stats" aria-label="Summary"></section>
 <div class="qtools">
   <details class="rule"><summary><span class="lab">Priority rule · how the list is ordered</span></summary><p id="rule"></p></details>
-  <div class="row grpby" role="group" aria-label="Group the queue"><span class="lab">Group by</span><button id="g-none" aria-pressed="true">None</button><button id="g-counterparty" aria-pressed="false">Counterparty</button><button id="g-filer" aria-pressed="false">Party (filer)</button></div>
+  <div class="row grpby" role="group" aria-label="Group the queue"><span class="lab">Group by</span><button id="g-none" aria-pressed="true">None</button><button id="g-counterparty" aria-pressed="false">Counterparty</button><button id="g-filer" aria-pressed="false">Company that filed it</button></div>
   </div>
   <ol class="q" id="queue"></ol>
 </section>
@@ -79,8 +81,8 @@
   <hr class="hair" style="margin-bottom:28px">
   <details class="method"><summary><span class="lab">Method and accuracy</span> <span class="gn">how dates are worked out, how often they are right</span></summary>
   <p>Extraction is deterministic: regular expressions plus date and duration parsing (“sixty (60) days”, “one hundred and eighty (180) days”, “Eighty-Four (84) months”). No language model and no network call touches your documents; uploads stay in this browser tab. A term of N months “commencing on” a date ends the day before the anniversary; “until N years following” ends on the anniversary. When words and numerals disagree, or a value is redacted, the field is left blank and marked for review.</p>
-  <p>Accuracy, stated plainly: tuned on the 10 contracts above (all hand-checked). On a test set of 10 more EDGAR agreements it had never seen, run once before any change: 3 act-by dates right, 6 correctly left blank for review, 1 missed, 0 wrong act-by dates, plus one wrong "current term" date that has since been fixed. An earlier set of 14 is now tuning data (first pass there: 2 right, 5 flagged, 6 missed, 1 wrong) (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
-  <p>Real contracts are Exhibit 10 material agreements filed with the SEC, fetched from EDGAR with a declared User-Agent under SEC fair-access rules. Dates projected past the initial term assume the agreement was not terminated or amended. Not legal advice.</p>
+  <p>Accuracy, stated plainly: tuned on the 10 contracts above (all hand-checked). On a test set of 10 more EDGAR agreements it had never seen, run once before any change: 3 send-notice deadline dates right, 6 correctly left blank for review, 1 missed, 0 wrong send-notice deadline dates, plus one wrong "current term" date that has since been fixed. An earlier set of 14 is now tuning data (first pass there: 2 right, 5 flagged, 6 missed, 1 wrong) (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
+  <p>Real contracts are material agreements filed with the SEC, fetched from EDGAR with a declared User-Agent under SEC fair-access rules. Dates projected past the initial term assume the agreement was not terminated or amended. Not legal advice.</p>
   <p>Type: Geist and Geist Mono, both under the SIL Open Font License (<a href="/fonts/OFL-Geist.txt">Geist</a>, <a href="/fonts/OFL-GeistMono.txt">Geist Mono</a>), self-hosted. Colours follow General Intuition's public site. Geist stands in for Alpha Lyrae, GI's licensed display face, which is not used here; this is an independent demo, not a General Intuition product. PDF reading by pdf.js (<a href="/vendor/LICENSE-pdfjs.txt">Apache 2.0</a>), DOCX by JSZip (<a href="/vendor/LICENSE-jszip.txt">MIT</a>). Built by Amy Zhuang · <a href="https://github.com/amyzhuang111/contract-cliffs">source</a>.</p>
   </details>
 </footer>
