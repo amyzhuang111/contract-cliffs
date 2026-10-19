@@ -404,8 +404,8 @@ export const shortReason = (why = '') => /^Evergreen/.test(why) ? 'renews monthl
 
 const durMonths = p => !p ? 0 : p.unit === 'year' ? 12 * p.n : p.unit === 'month' ? p.n : p.unit === 'week' ? p.n / 4.35 : p.n / 30.44;
 const lockText = p => { if (!p) return ''; const m = durMonths(p); return m >= 12 && m % 12 === 0 ? `${m / 12} more year${m / 12 > 1 ? 's' : ''}` : m >= 1 && Number.isInteger(m) ? `${m} more month${m > 1 ? 's' : ''}` : `another ${p.n} ${p.unit}${p.n > 1 ? 's' : ''}`; };
-export const WINDOWS = [[0, 30, '8–30 days'], [31, 90, '31–90 days'], [91, 365, '91–365 days'], [366, Infinity, 'over a year']];
-export const PRIORITY_RULE = 'Order, top to bottom: 1) Missed: the deadline to send notice has passed but the contract has not renewed yet (soonest renewal first). 2) Due now: deadline today or within 7 days (soonest first). 3) Resolve first: needs review, no date could be found. 4) Upcoming, in time bands: 8–30 days, 31–90, 91–365, over a year. Inside a band, the bigger risk goes first even if its date is later: first a notice period longer than the renewal, then the longer renewal lock-in (2 years before 1 year), then the earlier date. Ties: name A–Z. 5) Expired contracts (nothing left to decide), collapsed at the bottom.';
+export const WINDOWS = [[0, 30, 'within 30 days'], [31, 90, '31–90 days'], [91, 365, '91–365 days'], [366, Infinity, 'over a year']];
+export const PRIORITY_RULE = 'Order, top to bottom: 1) Missed: the send-notice deadline has passed but the contract has not renewed yet (soonest renewal first). 2) Due within 30 days: send-notice deadline today or in the next 30 days (soonest first). 3) Resolve first: needs review, no date could be found. 4) Later, in time bands: 31–90 days, 91–365, over a year. Inside a band, the bigger risk goes first even if its date is later: first a notice period longer than the renewal, then the longer renewal (2 years before 1 year), then the earlier date. Ties: name A–Z. 5) Expired contracts (nothing left to decide), collapsed at the bottom.';
 const fmtD = d => { const [y, m, dd] = d.split('-'); return `${+dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1]} ${y}`; };
 
 // Ranked act-by queue with an explicit, deterministic priority rule (PRIORITY_RULE) and a one-line reason per row.
@@ -423,7 +423,7 @@ export function buildQueue(contracts, asOf) {
     const rp = c.x.renewal?.period || null;
     const lockM = durMonths(rp), noticeLong = !!c.x.warnings?.length;
     const lapsed = d != null && d < 0;
-    const section = mw ? 'missed' : lapsed ? 'lapsed' : !key ? 'resolve' : d <= 7 && act ? 'due' : 'upcoming';
+    const section = mw ? 'missed' : lapsed ? 'lapsed' : !key ? 'resolve' : d <= 30 && act ? 'due' : 'upcoming';
     const win = section === 'upcoming' || section === 'due' ? WINDOWS.findIndex(([a, b]) => d >= a && d <= b) : -1;
     let why;
     if (mw) { const ago = daysBetween(mw.actBy, asOf), inn = daysBetween(asOf, mw.renews); why = `Notice window missed ${ago} day${ago === 1 ? '' : 's'} ago · renews ${fmtD(mw.renews)} (in ${inn} day${inn === 1 ? '' : 's'}) for ${lockText(rp)}; only a negotiated exit stops it · next act-by ${fmtD(key)}`; }
@@ -431,9 +431,9 @@ export function buildQueue(contracts, asOf) {
     else if (section === 'resolve' && c.x.notice?.evergreen) { const cur = items.find(i => /term ends/i.test(i.type) && i.date); why = `No Act by date: renews every ${c.x.renewal.period.unit} until terminated, and the contract has no notice clause${cur ? ` · current term ends ${fmtD(cur.date)}` : ''}`; }
     else if (section === 'resolve') why = `No date found · resolve first: ${shortReason(/No computable expiry/.test(item?.why || '') && exp ? exp.why : item?.why)}`;
     else if (section === 'due') why = `Due ${d === 0 ? 'today' : `in ${d} day${d === 1 ? '' : 's'}`} · send notice now or it renews for ${lockText(rp) || 'another term'}`;
-    else if (act) why = `Act ${d === 0 ? 'today' : `in ${d} day${d === 1 ? '' : 's'}`} · missing it locks in ${lockText(rp) || 'another term'}${noticeLong ? ' · notice is longer than the renewal, so this decides two cycles out' : ''}`;
+    else if (act) why = `Deadline in ${d} day${d === 1 ? '' : 's'} · miss it and it renews for ${lockText(rp) || 'another term'}${noticeLong ? ' · notice is longer than the renewal, so this decides two cycles out' : ''}`;
     else why = `Expires in ${d} days · no auto-renewal, so plan the replacement`;
-    rows.push({ id: c.id, name: c.name, actBy: key, days: d, missed: mw || null, item, section, window: win, lockMonths: lockM, noticeLong, why, label: mw ? 'Renews' : act ? 'Send notice by' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || !!item?.needsReview, confidence: key ? (item?.confidence === 'none' ? 'low' : item?.confidence || 'low') : 'none' });
+    rows.push({ id: c.id, name: c.name, actBy: key, days: d, missed: mw || null, item, section, window: win, lockMonths: lockM, noticeLong, why, label: mw ? 'Next send-notice deadline' : act ? 'Send-notice deadline' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || !!item?.needsReview, confidence: key ? (item?.confidence === 'none' ? 'low' : item?.confidence || 'low') : 'none' });
   }
   const sec = { missed: 0, due: 1, resolve: 2, upcoming: 3, lapsed: 4 };
   rows.sort((a, b) => sec[a.section] - sec[b.section]
@@ -465,7 +465,7 @@ export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
     if (!i.actBy || !i.date || i.status === 'past') continue;
     const d = i.date.replace(/-/g, ''); const n = ymd(addDays(new Date(i.date + 'T00:00:00Z'), 1)).replace(/-/g, '');
     L.push('BEGIN:VEVENT', `UID:${c.id}-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`,
-      fold(`SUMMARY:${icsEsc('Act by: non-renewal notice, ' + c.name)}`),
+      fold(`SUMMARY:${icsEsc('Send-notice deadline: ' + c.name)}`),
       fold(`DESCRIPTION:${icsEsc(`${i.why}${i.needsReview ? ' NEEDS REVIEW.' : ''} Confidence: ${i.confidence}. Source ${i.source?.location}: "${i.source?.quote}"`)}`),
       ...(c.url ? [fold(`URL:${c.url}`)] : []),
       'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:-P30D', fold(`DESCRIPTION:${icsEsc('30 days to act-by: ' + c.name)}`), 'END:VALARM', 'END:VEVENT');
@@ -480,5 +480,5 @@ export function toPacket(contracts, asOf) {
     const its = schedule(c.x, asOf);
     return `<section><h2>${h(c.name)}</h2><p class="m">${h(c.title || '')}${c.filer ? ' · filed by ' + h(c.filer) : ''}${c.exhibit ? ' · ' + h(c.exhibit) : ''}${c.filed ? ' · ' + h(c.filed) : ''}</p>${c.url ? `<p><a href="${h(c.url)}">${h(c.url)}</a></p>` : '<p class="m">Uploaded document (no public source).</p>'}<table>${its.map(i => `<tr><td>${h(i.type)}</td><td>${h(i.date || 'needs review')}</td><td>${h(i.confidence)}${i.needsReview ? ' · needs review' : ''}</td><td><q>${h(i.source?.quote || '')}</q><br><small>${h(i.source?.location || '')}</small></td></tr>`).join('')}</table></section>`;
   }).join('');
-  return `<!doctype html><html lang="en"><meta charset="utf-8"><title>Diligence packet · Contract Cliffs · as of ${h(asOf)}</title><style>body{font:14px/1.7 Geist,Arial,sans-serif;color:#000;max-width:960px;margin:48px auto;padding:0 20px}h1{font-weight:500;text-transform:lowercase}h2{font-weight:500;margin-top:48px}.m,small{color:#666}table{border-collapse:collapse;width:100%}td{border-top:.5px solid #4d4d4d;padding:8px 6px;vertical-align:top}</style><h1>contract cliffs</h1><p class="m">Diligence packet · ${contracts.length} contracts · as of ${h(asOf)} · generated by deterministic extraction; every date shows its source clause. Blank dates need human review.</p><h2>Act-by queue</h2><table>${rows.map(r => `<tr><td>${h(r.name)}</td><td>${h(r.label)}</td><td>${h(r.actBy || 'needs review')}</td><td>${r.days == null ? '' : r.days + ' days'}</td></tr>`).join('')}</table>${body}</html>`;
+  return `<!doctype html><html lang="en"><meta charset="utf-8"><title>Audit pack · Contract Cliffs · as of ${h(asOf)}</title><style>body{font:14px/1.7 Geist,Arial,sans-serif;color:#000;max-width:960px;margin:48px auto;padding:0 20px}h1{font-weight:500;text-transform:lowercase}h2{font-weight:500;margin-top:48px}.m,small{color:#666}table{border-collapse:collapse;width:100%}td{border-top:.5px solid #4d4d4d;padding:8px 6px;vertical-align:top}</style><h1>contract cliffs</h1><p class="m">Audit pack · ${contracts.length} contracts · as of ${h(asOf)} · generated by deterministic extraction; every date shows its source clause. Blank dates need human review.</p><h2>Act-by queue</h2><table>${rows.map(r => `<tr><td>${h(r.name)}</td><td>${h(r.label)}</td><td>${h(r.actBy || 'needs review')}</td><td>${r.days == null ? '' : r.days + ' days'}</td></tr>`).join('')}</table>${body}</html>`;
 }

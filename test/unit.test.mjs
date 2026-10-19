@@ -121,7 +121,7 @@ test('exports', () => {
   assert.ok(csv.includes('2030-01-26')); assert.ok(csv.includes('https://www.sec.gov/Archives/edgar/data/771266/'));
   const ics = toICS(cs, AS); assert.equal((ics.match(/BEGIN:VEVENT/g) || []).length, 7); assert.ok(!ics.includes('20240302')); assert.ok(ics.includes('DTSTART;VALUE=DATE:20261216'));
   assert.ok(ics.split('\r\n').every(l => l.length <= 75));
-  const p = toPacket(cs, AS); assert.ok(p.includes('Diligence packet')); assert.equal((p.match(/<section>/g) || []).length, 10);
+  const p = toPacket(cs, AS); assert.ok(p.includes('Audit pack')); assert.equal((p.match(/<section>/g) || []).length, 10);
   assert.ok(!/example\.com/.test(csv + ics + p));
 });
 
@@ -242,12 +242,12 @@ test('priority: sections, windows, reasons', () => {
   const q = buildQueue(Object.values(C), AS);
   assert.deepEqual(q.map(r => r.section), ['missed', 'resolve', 'resolve', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'lapsed']);
   const by = Object.fromEntries(q.map(r => [r.id, r]));
-  assert.equal(by.c5.why, 'Act in 58 days · missing it locks in 2 more years');
-  assert.match(by.c1.why, /^Act in 183 days · missing it locks in 1 more year · notice is longer than the renewal/);
+  assert.equal(by.c5.why, 'Deadline in 58 days · miss it and it renews for 2 more years');
+  assert.match(by.c1.why, /^Deadline in 183 days · miss it and it renews for 1 more year · notice is longer than the renewal/);
   assert.match(by.c7.why, /^Expired 871 days ago · all renewals used/);
   assert.equal(by.c8.why, 'No date found · resolve first: redacted in the public filing');
   assert.equal(by.c13.why, 'No date found · resolve first: redacted in the public filing');
-  assert.match(PRIORITY_RULE, /1\) Missed/); assert.match(PRIORITY_RULE, /2\) Due now/);
+  assert.match(PRIORITY_RULE, /1\) Missed/); assert.match(PRIORITY_RULE, /2\) Due within 30 days/);
 });
 test('priority: inside a window, worse-to-miss beats sooner', () => {
   const mk = (id, eff, renew, notice) => ({ id, name: id, x: extract([`This Agreement is entered into as of ${eff} (the "Effective Date").`, 'The term of this Agreement shall commence on the Effective Date and continue for one (1) year.', `It shall automatically renew for successive ${renew} periods unless either party gives notice at least ${notice} prior to the end of the then-current term.`]) });
@@ -319,8 +319,8 @@ test('R1 due now: on the deadline day the row sits in "Due now", above resolve-f
   const i = q.findIndex(r => r.id === 'c5');
   assert.equal(q[i].section, 'due'); assert.match(q[i].why, /^Due today · send notice now or it renews for 2 more years/);
   assert.ok(i < q.findIndex(r => r.section === 'resolve'));
-  assert.equal(buildQueue([C.c5], '2026-12-09')[0].section, 'due');
-  assert.equal(buildQueue([C.c5], '2026-12-08')[0].section, 'upcoming');
+  assert.equal(buildQueue([C.c5], '2026-11-16')[0].section, 'due');
+  assert.equal(buildQueue([C.c5], '2026-11-15')[0].section, 'upcoming');
 });
 test('R2 test-set parties: filer from EDGAR, counterparty from the preamble; Patheon groups b3/b8/b10', () => {
   assert.deepEqual(Object.values(TS).filter(c => c.counterparty === 'Patheon').map(c => c.id).sort(), ['b10', 'b3', 'b8']);
@@ -336,4 +336,19 @@ test('R5/R6 honest reasons: b3/b10 undated start (not redaction), b7 monthly eve
   assert.match(q.b10.why, /undated Commencement Date/); assert.match(q.b3.why, /term start not dated/);
   for (const id of ['b3', 'b10']) assert.doesNotMatch(q[id].why, /redact/i);
   assert.equal(q.b7.why, 'No Act by date: renews every month until terminated, and the contract has no notice clause · current term ends 31 Oct 2026');
+});
+
+// ---- 625d6b4 review (N1, N3)
+test('N1 missed row: card/packet never pair "Renews" with the next deadline', () => {
+  const r = buildQueue([C.c3], AS)[0];
+  assert.equal(r.missed.renews, '2026-11-19'); assert.equal(r.label, 'Next send-notice deadline'); assert.equal(r.actBy, '2027-09-19');
+  const p = toPacket([C.c3], AS); assert.doesNotMatch(p, /Renews<\/td><td>2027-09-19/); assert.match(p, /Next send-notice deadline<\/td><td>2027-09-19/);
+  const ics = toICS([C.c3], AS); assert.match(ics, /SUMMARY:Send-notice deadline: /); assert.doesNotMatch(ics, /Renews/);
+  const csv = toCSV([C.c3], AS); assert.match(csv, /Auto-renewal[^\n]*2026-11-19/);
+});
+test('N3 as-of 25 Nov 2026: dated items within 30 days beat "No date found"', () => {
+  const q = buildQueue(Object.values(C), '2026-11-25');
+  const i5 = q.findIndex(r => r.id === 'c5'), iRes = q.findIndex(r => r.section === 'resolve');
+  assert.equal(q[i5].section, 'due'); assert.equal(q[i5].days, 21); assert.ok(i5 < iRes);
+  assert.match(q[i5].why, /^Due in 21 days · send notice now or it renews for 2 more years/);
 });

@@ -17,9 +17,10 @@
   <div class="lab">Operations · Contract lifecycle</div>
   <h1 class="mark">contract cliffs</h1>
   <p class="lede">Many contracts renew automatically unless you send notice by a deadline. <span>Contract Cliffs reads your contracts and tells you the date you must act by, most urgent first, quoting the exact sentence each date comes from.</span></p>
+  <p class="who">For ops and legal teams tracking vendor and customer contracts.</p>
   <ol class="steps" aria-label="How to use">
     <li><span class="lab">1 · Load contracts</span>Paste text, <a href="#add">upload a PDF or Word file</a>, or start with the 10 real public SEC contracts already loaded below.</li>
-    <li><span class="lab">2 · Read the list</span>Each row is a date: act by this date, or the contract renews on its own. Most urgent at the top.</li>
+    <li><span class="lab">2 · Read the list</span>Each row is a send-notice deadline: send notice by this date, or the contract renews on its own. Most urgent at the top.</li>
     <li><span class="lab">3 · Check and export</span>Click a contract to see the exact clause behind each date, then <a href="#add">export</a> to your calendar or a CSV.</li>
   </ol>
   <p class="example" id="example"></p>
@@ -27,18 +28,20 @@
 <section class="setbar" aria-label="Which contracts">
   <div class="row">
     <button id="setEdgar" aria-pressed="true">10 real public contracts (SEC)</button>
-    <button id="setHoldout" aria-pressed="false">Test set (10 unseen contracts)</button>
+    <button id="setHoldout" aria-pressed="false">Test set (10 contracts; first blind pass 3 right, 1 missed, 0 wrong; rules adjusted after)</button>
     <button id="setMine" aria-pressed="false">Your documents</button>
   </div>
   <p class="status" id="status"></p>
 </section>
 <section class="sec" aria-labelledby="qh">
   <div class="lab">The list</div>
-  <h2 id="qh"><abbr title="The last day to send notice so the contract does not renew on its own. Worked out as: end of the current term minus the notice period written in the contract.">Act by</abbr></h2>
-  <p class="sub">The last day to send notice so a contract doesn’t renew on its own: end of the current term minus the notice period in the clause. Order: missed, due within 7 days, needs review, then time bands (8–30 days, 31–90, 91–365, over a year). Inside a band, the longer lock-in goes first even if its date is later.</p>
+  <h2 id="qh"><abbr title="The last day to send notice so the contract does not renew on its own. Worked out as: end of the current term minus the notice period written in the contract.">Send-notice deadlines</abbr></h2>
+  <p class="sub">The last day to send notice so a contract doesn’t renew on its own: end of the current term minus the notice period in the clause. Order: missed, due within 30 days, needs review, then time bands (31–90 days, 91–365, over a year). Inside a band, the longer renewal goes first even if its date is later.</p>
   <section class="stats" id="stats" aria-label="Summary"></section>
+<div class="qtools">
   <details class="rule"><summary><span class="lab">Priority rule · how the list is ordered</span></summary><p id="rule"></p></details>
   <div class="row grpby" role="group" aria-label="Group the queue"><span class="lab">Group by</span><button id="g-none" aria-pressed="true">None</button><button id="g-counterparty" aria-pressed="false">Counterparty</button><button id="g-filer" aria-pressed="false">Party (filer)</button></div>
+  </div>
   <ol class="q" id="queue"></ol>
 </section>
 <hr class="hair">
@@ -61,7 +64,7 @@
     <div class="row">
       <button id="exCsv">Spreadsheet (CSV)</button>
       <button id="exIcs">Calendar (.ics)</button>
-      <button id="exPack">Diligence packet (HTML)</button>
+      <button id="exPack">Audit pack (HTML)</button>
     </div>
   </div>
 </section>

@@ -24,23 +24,31 @@ ok((await page.$$('#queue li[data-id]')).length === 10, 'queue has 10 rows');
 ok((await page.$$('#cards .card')).length === 10, '10 contract cards');
 const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 4 need review · 1 missed deadline/.test(st), 'counts: ' + st);
 const order = await page.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('lgrp') ? 'LAPSED' : 'H:' + l.textContent.trim())));
-ok(order.join(',') === 'H:Missed · deadline passed, not yet renewed,c3,H:Resolve first · needs review, no date,c13,c8,H:Upcoming · 31–90 days,c5,H:Upcoming · 91–365 days,c1,c6,H:Upcoming · over a year,c4,c12,c2,LAPSED', 'priority order on the page: ' + order.join(','));
+ok(order.join(',') === 'H:Missed · deadline passed, not yet renewed,c3,H:Resolve first · needs review, no date,c13,c8,H:Later · 31–90 days,c5,H:Later · 91–365 days,c1,c6,H:Later · over a year,c4,c12,c2,LAPSED', 'priority order on the page: ' + order.join(','));
 ok(/^Why it’s here Notice window missed 30 days ago · renews 19 Nov 2026/.test(await page.$eval('#queue li[data-id="c3"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'F1: Dragonfly shows the missed notice window at the top');
 ok(await page.$eval('#queue li.lgrp details', e => !e.open) && /Expired \(1\)/.test(await page.$eval('#queue li.lgrp summary', e => e.textContent)), 'F9: expired rows collapsed under "Expired (1)"');
 { const st = await page.$eval('#status', e => e.textContent); const sv = await page.$$eval('#stats > div', ds => Object.fromEntries(ds.map(d => [d.querySelector('.lab').textContent, d.querySelector('.sv').textContent])));
   ok(st.includes(sv['Need review'] + ' need review'), `F3: status line and stats strip agree on need-review (${sv['Need review']})`); }
-ok(!(await page.$$eval('#queue li[data-id]', ls => ls.filter(l => /\d{4}/.test(l.querySelector('.d').textContent) && /^none confidence/.test(l.querySelector('.s').textContent.trim().split('\n').pop().trim())).length)), 'F6: no dated row shows "none" confidence');
-const why5 = await page.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim()); ok(why5 === 'Why it’s here Act in 58 days · missing it locks in 2 more years', 'row reason: ' + why5);
+ok(!(await page.$$eval('#queue li[data-id]', ls => ls.filter(l => /\d{4}/.test(l.querySelector('.d').textContent) && /^Can’t tell/.test(l.querySelector('.s').textContent.trim().split('\n').pop().trim())).length)), 'F6: no dated row shows "none" confidence');
+const why5 = await page.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim()); ok(why5 === 'Why it’s here Deadline in 58 days · miss it and it renews for 2 more years', 'row reason: ' + why5);
 ok(/1\) Missed/.test(await page.$eval('#rule', e => e.textContent)) && /Priority rule/i.test(await page.$eval('.rule .lab', e => e.textContent)), 'Priority rule note is shown');
+for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setViewport({ width: w, height: 900 }); await pf.goto(BASE + '/', { waitUntil: 'networkidle0' }); await pf.waitForSelector('#queue li[data-id]');
+  const m = await pf.evaluate(() => { const r = document.querySelector('#queue li[data-id]').getBoundingClientRect(); return { top: r.top, bottom: r.bottom, sw: document.documentElement.scrollWidth, lede: !!document.querySelector('.lede').offsetHeight, steps: document.querySelectorAll('.steps li').length, over: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1 && getComputedStyle(e).position !== 'fixed' && !e.closest('.drawer')).length }; });
+  if (w === 1440) { ok(m.top < 900, `first screen: first queue row top at ${Math.round(m.top)}px < 900 at 1440x900`); ok(m.bottom <= 900, `first screen: first queue row fully visible (bottom ${Math.round(m.bottom)}px)`); }
+  else ok(m.sw <= 375 && m.over === 0 && m.lede && m.steps === 3, `375: nothing breaks (scrollWidth ${m.sw}, ${m.over} overflowing elements, hero + 3 steps shown)`);
+  await pf.close(); }
 { const lede = await page.$eval('.lede', e => e.textContent.replace(/\s+/g, ' ').trim());
   ok(lede === 'Many contracts renew automatically unless you send notice by a deadline. Contract Cliffs reads your contracts and tells you the date you must act by, most urgent first, quoting the exact sentence each date comes from.', 'clarity: plain-words hero');
   const steps = await page.$$eval('.steps li .lab', l => l.map(x => x.textContent));
   ok(steps.join('|') === '1 · Load contracts|2 · Read the list|3 · Check and export', 'clarity: 3-step how to use');
   const ex = await page.$eval('#example', e => e.textContent.replace(/\s+/g, ' '));
-  ok(/Dragonfly \/ Keystone RV: the deadline to send notice passed on 19 Sep 2026, so it renews automatically on 19 Nov 2026/.test(ex), 'clarity: worked example from the real top item: ' + ex.slice(0, 80));
-  ok(await page.$eval('#qh abbr', e => /last day to send notice/.test(e.title)), 'clarity: "Act by" has a plain tooltip');
+  ok(/Star Brands \/ Schwazze: send notice by 16 Dec 2026, or the licence renews automatically for another 24 months/.test(ex), 'N6: worked example uses Star Brands / Schwazze: ' + ex.slice(0, 90));
+  ok(/For ops and legal teams tracking vendor and customer contracts\./.test(await page.$eval('.who', e => e.textContent)), 'N7: audience line');
+  const card3 = await page.$eval('#cards .card[data-id="c3"]', e => e.textContent.replace(/\s+/g, ' ')); ok(/Renews 19 Nov 2026 · send-notice deadline missed/.test(card3) && !/Renews 19 Sep 2027/.test(card3), 'N1: Dragonfly card says Renews 19 Nov 2026');
+  ok(!/EX-10/.test(await page.$eval('#cards', e => e.textContent)) && !/(high|medium|low|none) confidence/.test(await page.$eval('#queue', e => e.textContent)) && /Sure/.test(await page.$eval('#queue', e => e.textContent)) && /Check this/.test(await page.$eval('#queue', e => e.textContent)), 'N5: plain confidence words, no exhibit codes on cards');
+  ok(await page.$eval('#qh abbr', e => /last day to send notice/.test(e.title)), 'clarity: "Send-notice deadlines" has a plain tooltip');
   ok(await page.$eval('details.method', e => !e.open) && await page.$eval('details.rule', e => !e.open), 'clarity: method and priority rule collapsed');
-  ok(/Test set \(10 unseen contracts\)/.test(await page.$eval('#setHoldout', e => e.textContent)) && !/holdout|Lapsed/i.test(await page.$eval('body', e => e.innerText.replace(/Method and accuracy[\s\S]*/, ''))), 'clarity: no "holdout" or "Lapsed" jargon in visible labels');
+  ok(/Test set \(10 contracts; first blind pass 3 right, 1 missed, 0 wrong; rules adjusted after\)/.test(await page.$eval('#setHoldout', e => e.textContent)) && !/holdout|Lapsed/i.test(await page.$eval('body', e => e.innerText.replace(/Method and accuracy[\s\S]*/, ''))), 'clarity: no "holdout" or "Lapsed" jargon in visible labels');
   const vis = await page.evaluate(() => { const q = document.querySelector('#queue').getBoundingClientRect().top, a = document.querySelector('#add').getBoundingClientRect().top; return q < a; });
   ok(vis, 'clarity: the list comes before the add/export controls');
   const d3 = await page.$eval('#queue li[data-id="c3"] .d', e => e.textContent.replace(/\s+/g, ' ').trim()), n3 = await page.$eval('#queue li[data-id="c3"] .n', e => e.textContent.trim());
@@ -51,9 +59,13 @@ ok(/1\) Missed/.test(await page.$eval('#rule', e => e.textContent)) && /Priority
 }
 { const p2 = await browser.newPage(); await p2.setViewport({ width: 1440, height: 900 }); await p2.goto(BASE + '/?asof=2026-12-16', { waitUntil: 'networkidle0' }); await p2.waitForSelector('#queue li[data-id]');
   const o = await p2.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('sh') ? 'H:' + l.textContent.trim() : '')).filter(Boolean));
-  const iDue = o.indexOf('H:Due now · today or within 7 days'), iRes = o.indexOf('H:Resolve first · needs review, no date');
-  ok(iDue >= 0 && o[iDue + 1] === 'c5' && iDue < iRes, 'R1: on the deadline day (as-of 2026-12-16) Star Brands sits in "Due now" above "Resolve first"');
+  const iDue = o.indexOf('H:Due within 30 days'), iRes = o.indexOf('H:Resolve first · needs review, no date');
+  ok(iDue >= 0 && o[iDue + 1] === 'c5' && iDue < iRes, 'R1: on the deadline day (as-of 2026-12-16) Star Brands sits in "Due within 30 days" above "Resolve first"');
   ok(/^Why it’s here Due today · send notice now/.test(await p2.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'R1: due-now reason says "Due today"'); await p2.close(); }
+{ const p3 = await browser.newPage(); await p3.setViewport({ width: 1440, height: 900 }); await p3.goto(BASE + '/?asof=2026-11-25', { waitUntil: 'networkidle0' }); await p3.waitForSelector('#queue li[data-id]');
+  const o = await p3.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('sh') ? 'H:' + l.textContent.trim() : '')).filter(Boolean));
+  ok(o[0] === 'H:Due within 30 days' && o[1] === 'c5' && o.indexOf('H:Due within 30 days') < o.indexOf('H:Resolve first · needs review, no date'), 'N3: as-of 25 Nov 2026, Star Brands (21 days) ranks above "No date found": ' + o.slice(0, 4).join(','));
+  await p3.close(); }
 ok(/two cycles out/.test(await page.$eval('#queue li[data-id="c1"]', e => e.textContent)), 'Cerus reason calls out notice longer than renewal');
 const fonts = await page.evaluate(async () => { await document.fonts.ready; return [document.fonts.check('16px "Geist Mono"'), document.fonts.check('16px Geist'), [...document.fonts].map(f => f.family).join(',')]; });
 ok(fonts[0] && fonts[1] && !/Bodoni|Serif/i.test(fonts[2]), 'self-hosted Geist and Geist Mono loaded; no Bodoni or serif faces');
@@ -76,7 +88,7 @@ await page.click('#exCsv'); const csv = await waitFile(/\.csv$/);
 ok(csv && csv.startsWith('contract,filer,counterparty,item,who_acts,date') && csv.includes('2026-12-16') && csv.includes('https://www.sec.gov/Archives/edgar/'), 'CSV export downloaded with dates and EDGAR URLs');
 await page.click('#exIcs'); const ics = await waitFile(/\.ics$/);
 ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []).length === 7 && ics.includes('DTSTART;VALUE=DATE:20261216') && !ics.includes('20240302'), 'ICS export has 7 upcoming act-by events (no lapsed Synacor event)');
-await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Diligence packet') && (pk.match(/<section>/g) || []).length === 10, 'diligence packet export');
+await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Audit pack') && (pk.match(/<section>/g) || []).length === 10, 'diligence packet export');
 // as-of control
 await page.$eval('#asof', e => { e.value = '2027-01-01'; e.dispatchEvent(new Event('change')); });
 ok(/Cerus/.test(await page.$eval('#queue li[data-id]:not(.missed):not([data-id="c7"]):not([data-id="c13"]):not([data-id="c8"])', e => e.textContent)), 'as-of 2027-01-01 moves Cerus / Purolite to the top of the upcoming rows');
@@ -134,7 +146,7 @@ await page.$eval('#setEdgar', b => b.click()); await page.waitForSelector('#queu
 // group by party
 await page.$eval('#g-counterparty', b => b.click()); await new Promise(r => setTimeout(r, 200));
 let g = await page.evaluate(() => ({ heads: [...document.querySelectorAll('#queue li.grp')].map(l => l.textContent.replace(/\s+/g, ' ').trim()), rows: document.querySelectorAll('#queue li[data-id]').length, pressed: document.querySelector('#g-counterparty').getAttribute('aria-pressed') }));
-ok(g.heads.length >= 2 && g.rows === 10 && g.pressed === 'true' && g.heads.some(h => /Counterparty Purolite Corporation 1 agreement · next act-by 20 Apr 2027/.test(h)), `group by counterparty: ${g.heads.length} groups, 10 rows`);
+ok(g.heads.length >= 2 && g.rows === 10 && g.pressed === 'true' && g.heads.some(h => /Counterparty Purolite Corporation 1 agreement · next deadline 20 Apr 2027/.test(h)), `group by counterparty: ${g.heads.length} groups, 10 rows`);
 await page.$eval('#g-filer', b => b.click()); await new Promise(r => setTimeout(r, 200));
 g = await page.evaluate(() => [...document.querySelectorAll('#queue li.grp')].map(l => l.textContent.replace(/\s+/g, ' ').trim()));
 ok(g.some(h => /Party \(filer\) Kopin Corporation/.test(h)), 'group by party (filer) works');
