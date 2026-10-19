@@ -1,0 +1,429 @@
+EX-10.7
+3
+ex_710409.htm
+EXHIBIT 10.7
+ex_710409.htm
+Exhibit 10.7
+Portions of this document have been redacted as marked with [***]
+Manufacturing Services Agreement
+Custom Drug Product
+This Manufacturing Services Agreement (Agreement) is entered into as of July 17, 2024 (the Effective Date) between
+Alliance Medical Products, Inc., 9342 Jeronimo Rd, Irvine, CA 92618, USA
+(Siegfried)
+and
+Alimera Sciences, Inc., 6310 Town Square, Suite 400, Alpharetta, GA 30005, USA
+(Customer)
+(each a Party, together the Parties).
+Preamble
+A.
+Customer engages in the business of research, development and commercialization of pharmaceutical products;
+B.
+Siegfried has substantial expertise in manufacturing medical products;
+C.
+Siegfried and Customer are each currently party to a First Amended and Restated Commercial Contract Manufacturing Agreement dated as of February 5, 2016 (the “2016 Agreement”); and
+D.
+Customer and Siegfried desire to enter into this Agreement to supersede and replace the 2016 Agreement to provide the terms and conditions upon which Siegfried shall continue to perform certain manufacturing services for Customer.
+Now, therefore, the Parties agree as follows:
+1.
+Definitions
+Unless otherwise defined in this Agreement, each of the capitalized terms used in this Agreement (other than the headings of the sections) shall have the meanings indicated below. Such meanings shall apply equally to all forms of such terms, including singular and plural forms, unless otherwise clearly indicated.
+1.1
+Affiliate shall mean with respect to any Party any person or entity controlling, controlled by, or under common control with such Party at any time during the term of this Agreement. For purposes of this definition, the term control shall mean the power to direct or cause the direction of the management and policies of an entity, whether through the ownership of voting stock, by contract or otherwise, including, in the case of a corporation or limited liability company, through the direct or indirect ownership of at least fifty percent (50%) of the outstanding voting equity.
+1.2
+Batch shall mean a specific quantity of Product that is intended to be of uniform character and quality, within specified limits, and is produced during the same cycle of Manufacture as defined by the applicable Batch record.
+1.3
+Business Day shall mean a day (not being a Saturday or Sunday) on which banks are open for business in Irvine, California.
+1.4
+cGMP Regulations shall have the meaning as set forth in the Quality Agreement.
+1.5
+Change shall mean any change to the Specifications, Master Batch Record, Raw Materials, Customer Supplied Materials, Mandatory Vendor, or the Facility, or any other change referred to in the change control procedure set forth in the Quality Agreement, such Change being either (i) a Required Change (as defined in Section 14.1), (ii) a Customer Change (as defined in Section 14.3), or (iii) a Siegfried Change (as defined in Section 14.4).
+1.6
+Confidential Information shall mean any information of whatever kind, and all tangible and intangible embodiments and oral disclosures thereof of any kind whatsoever, which has been or will be disclosed or otherwise made accessible by one Party (Disclosing Party) to the other Party (Receiving Party) in connection with this Agreement, and which is confidential or proprietary to the Disclosing Party or an Affiliate thereof, including, without limitation, any and all information pertaining to this Agreement, the Product or the Manufacturing Services and other non-public information which relates to the business of either Party, including business plans, strategies, operations, pricing, policies, procedures, techniques, accounts, marketing plans, financial plans and status, and personnel of either Party, provided that such information was designated in writing as "Confidential" or "Proprietary" information at the time of the initial disclosure or by confirmation in writing to the Receiving Party within one (1) month of the initial disclosure; and further provided, that such information shall be subject to the obligations set forth herein and constitute Confidential Information, even if not identified as confidential, if the Receiving Party knows, or in the exercise of reasonable business judgment should know, such information to be confidential to the Disclosing Party.
+1.7
+Customer Supplied Materials shall mean the active pharmaceutical ingredients and other materials that are to be provided by or on behalf of Customer (directly or through Customer’s relevant vendor) to Siegfried for the performance of the Manufacturing Services under this Agreement, as set forth in Annex B.
+1.8
+Effective Date shall have the meaning set forth on the front page of this Agreement.
+1.9
+EMA shall mean the European Medicines Agency or any successors to its responsibilities with respect to pharmaceutical products.
+1.10
+Entitled Person shall have the meaning set forth in 18.2.
+1.11
+Facility shall mean Siegfried’s facility where the Manufacturing is performed Alliance Medical Products, Inc., 9342, 9292, and/or 9272 Jeronimo Rd, Irvine, CA 92618. Additional Siegfried facilities may be added upon written agreement between the Parties.
+1.12
+FDA shall mean the US Food and Drug Administration or any successors to its responsibilities with respect to pharmaceutical products.
+1.13
+Force Majeure Event shall have the meaning set forth in 20.3.
+1.14
+Forecast shall have the meaning as set out in 4.1.
+1.15
+Hidden Defects shall mean any failure of a Product to conform to the Specifications that is not discoverable upon reasonable physical inspection or standard testing upon receipt of the Product.
+1.16
+Improvement shall mean any result, data, documentation, invention, improvement, modification, adaptation, enhancement, or other improvement to or for any part of the Product, which is conceived, derived, reduced to practice, made or developed by Siegfried in its performance of the Manufacturing Services under this Agreement.
+1.17
+Independent Improvement shall mean an Improvement which is severable from Customer's Intellectual Property and which is not uniquely applicable to the Product.
+1.18
+Initial Term shall have the meaning set forth in 19.1.
+1.19
+Intellectual Property shall mean all inventions, patent applications, patents, registered or unregistered design rights, copyrights, database rights, trademarks, trade names, know-how, trade secrets and other industrial or intellectual property and the rights relating thereto of whatever kind.
+1.20
+Mandatory Vendor shall mean any vendor (other than Siegfried) that is registered in the Marketing Authorization or any other regulatory documentation of Customer or as set forth in the Quality Agreement or Annex B.
+1.21
+Manufacture / Manufacturing Services shall mean all operations performed by or on behalf of Siegfried in the receipt of Raw Materials and the production, including without limitation sterilization, packaging, labeling, handling, warehousing, quality control testing, and stability testing of Product(s).
+1.22
+Marketing Authorization shall mean any of the following: (a) a New Drug Application (NDA) filed with the FDA, (b) an Abbreviated New Drug Application (ANDA) filed with the FDA or (c) any other similar or equivalent regulatory filing with any Regulatory Authority seeking authorization and approval to manufacture, package, ship, and sell the Product that will be used to treat humans; and (d) all supplements and amendments that may be filed with respect to the foregoing.
+1.23
+Master Batch Record shall mean the master production batch record approved by Customer for specifying the Manufacture of the Product(s).
+1.24
+Party, Parties shall mean either Customer or Siegfried, or both, as the context may require.
+1.25
+Person in Plant shall mean an employee, contractor, or consultant of the Customer and designated by Customer located at the Facility.
+1.26
+Product shall mean the good to be Manufactured by Siegfried as defined in Annex A and Annex B.
+1.27
+Quality Agreement shall mean the Quality/Technical Agreement for the contract manufacture of medicinal products between Siegfried and Customer signed in March 2021. The terms of the Quality Agreement shall be incorporated by reference into this Agreement.
+1.28
+Raw Materials shall mean all excipients, packaging materials and other raw materials, excluding any Customer Supplied Materials, which are necessary to Manufacture the Product, including but not limited to those set forth in Annex B.
+1.29
+Regulatory Authority shall mean any of the FDA, the European Medicines Agency, and any similar or equivalent competent regulatory authority from any other country outside the US and the European Union.
+1.30
+Specifications shall mean the detailed description of technical requirements that the Product has to conform to, as further defined in the Quality Agreement.
+2.
+Manufacture of Product
+2.1
+Manufacturing. Subject to the terms and conditions set forth in the Agreement and any related statements of work, Siegfried shall Manufacture the Product for the Customer at the Facility and Customer shall purchase such Product from Siegfried. Customer shall have the right to designate a Person in Plant who shall be entitled, upon advance notice to and approval from Siegfried, to observe, and provide general support and feedback to Customer with respect to, Product Manufacturing. The Person in the Plant shall coordinate his or her on-site presence with Siegfried to occur at reasonable times and for appropriate purposes. The Person in Plant will take all necessary precautions and follow Siegfried's directions to avoid disruption to Siegfried operations and to comply with Facility safety, security, and confidentiality policies.
+2.2
+Manufacturing standards. Siegfried shall conduct all Manufacturing Services in compliance with this Agreement, the Quality Agreement, the Master Batch Record, cGMP Regulations and all laws, rules and regulations applicable to the Manufacturing of the Product at the place of the Facility.
+2.3
+[Intentionally Omitted.]
+2.4
+Quality Agreement. The Parties have entered into the Quality Agreement which is incorporated herein by reference, as same may be amended from time to time by written agreement between the Parties.
+2.5
+Volume requirement. Customer agrees to purchase from Siegfried and Siegfried agrees to Manufacture and supply to the Customer the volume of Product as set forth in Annex A.
+2.6
+Information. During the term of this Agreement, Customer shall provide to Siegfried all information available to Customer or in its possession which may be required for the due performance by Siegfried of its Manufacturing Services or other obligations under this Agreement, including but not limited to any existing or new information on Product safety, efficacy or quality and/or regulatory requirements relating thereto.
+3.
+Product Schedules and Affiliates
+3.1
+Product Schedules. During the term of this Agreement, Siegfried and Customer shall enter into a Product Schedule (see Annex A) for each Product, each of which is incorporated into and made part of this Agreement upon execution.
+3.2
+Affiliates. If an Affiliate of Customer desires to purchase a Product under this Agreement, such Affiliate may obtain the Product by entering into a Product Schedule executed by Siegfried, Customer and the applicable Customer Affiliate. If an Affiliate of Siegfried desires to provide Product, such Affiliate may do so by entering into a Product Schedule executed by Customer, Siegfried, and the applicable Siegfried Affiliate. Customer shall not unreasonably withhold its consent to Siegfried's wish to Manufacture the Product at a Siegfried Affiliate provided that Customer shall have the opportunity to review and approve in advance a detailed Manufacturing Services qualification plan and provided further that all changes are authorized and approved in writing by the Customer in advance of the change per Section 14 of this Manufacturing Services Agreement and the Quality Agreement. Siegfried shall bear all costs of any Manufacturing Services setup or transfer initiated by Siegfried or an Affiliate. The Parties agree to discuss in good faith potential sharing of transfer expenses when the relocation of manufacturing activities is reasonably expected to provide benefits to both Parties.
+4.
+Forecast and Ordering
+4.1
+Forecast. On the Effective Date and by the 15th calendar day of each calendar month thereafter, Customer shall submit an eighteen (18)-month rolling forecast, broken down on a monthly basis, covering Customer’s anticipated requirements of Product as set forth in Annex A (Forecast). The first four (4) months of each Forecast shall be binding on both Parties; the remaining non-binding fourteen (14) month part of each Forecast shall be for information and planning purposes only and shall be non-binding for both Parties. The foregoing notwithstanding, upon qualification of a second, additional manufacturing line for Product the Parties agree to extending the binding portion of each Forecast to six (6) months.
+4.2
+Information. In the event, Siegfried anticipates any difficulties with regard to the Manufacture of the Product according to the non-binding Forecast, Siegfried shall inform Customer in writing within no more than fourteen (14) days after receipt of a Forecast and the Parties shall discuss and, as appropriate, agree on a revised Forecast in good faith.
+4.3
+Orders. Customer shall submit firm written Orders (by email (pdf) or letter) to Siegfried for the binding period of the Forecast and may submit firm written Orders for the non-binding period of the Forecast, giving Siegfried a lead time, i.e. time period between receipt of the Order and delivery date, as set forth in the Annex A (Lead Time). Each Order shall specify (i) the Product ordered, (ii) the quantity ordered (iii) the Price pursuant to Annex A and (iv) the required delivery date in accordance with the respective Lead Time.
+4.4
+Exceeding Orders. Customer may submit and Siegfried shall confirm Orders, which exceed the binding forecast volume by up to twenty-five percent (25%). Orders exceeding the binding forecast by more than twenty-five percent (25%) of the corresponding binding Forecast shall be discussed between the Parties in good faith. The order quantity for Orders of Customer is restricted to full batches as set forth in Annex A.
+4.5
+Order Confirmation. Each Order that meets all of criteria (i)-(iii) below shall be binding on Siegfried, and Siegfried shall send Customer a written confirmation within ten (10) Business Days from the date of the receipt of the Order from Customer. Siegfried shall be bound by and confirm any Order, which
+(i)
+complies with the Lead Time of the relevant Product;
+(ii)
+is consistent with the minimum order quantities listed in Annex A;
+(iii)
+does not deviate by more than twenty-five percent (25%) from the latest binding Forecast of the Product for the relevant month.
+Each response confirming an Order shall either confirm the requested delivery date and quantities set forth in the Order or propose reasonable alternative delivery dates. Both Parties agree to find within five (5) Business Days after the receipt of the Confirmation by Siegfried, a mutually acceptable date of delivery, which will become binding. Failure by Siegfried to confirm in writing an Order that satisfies the foregoing criteria (i) – (iii) shall not relieve Siegfried from its obligation to fill the Order according to its terms.
+5.
+Raw Materials and Customer Supplied Materials
+5.1
+Raw Materials. Siegfried shall timely order sufficient quantities of Raw Materials to enable Siegfried to Manufacture and deliver Product in line with the 12-month rolling forecast. Customer acknowledges that Siegfried will rely on the accuracy of Customer’s Forecasts in planning its acquisitions of Raw Materials. Thus, Siegfried has the right to use the Forecast for planning and buying Raw Materials reasonably ahead sufficient for covering the Forecast for the Product needs of Customer (especially with respect to long lead-time items). Customer shall be responsible for the cost of Raw Material reasonably purchased to be used in the Manufacture of Product that is not Manufactured because Customer fails to submit Orders according to the Forecasts and which Siegfried cannot reasonably use for the Manufacture of the Product under future Orders or third-party products. Any material bought for the submitted Forecasts, which Siegfried is not able to use for Manufacturing of Product or other products because of Customer’s failure to submit Orders in line with the Forecast, will be sold to Customer upon Siegfried’s request at a price equal to Siegfried’s purchase price from supplier plus a handling fee of [***]%.
+5.2
+Customer Supplied Material Customer shall supply all Customer Supplied Material in sufficient quantity and good quality as necessary to enable Siegfried to Manufacture Product in accordance with Customer’s Forecast and Orders, at Customer’s cost and expense. Any import duties, taxes or other fees due to Governmental Authorities regarding Customer Supplied Materials shall be paid by Customer (DDP Incoterms 2020).
+i)
+Unless otherwise ordered by Siegfried in writing, Customer shall supply Customer Supplied Materials to Siegfried no later than the requested delivery date as set forth in the order issued by Siegfried requesting the delivery of Customer Supplied Material. Customer shall compensate Siegfried for any loss or damage (including idle capacity) incurred in connection with late delivery or delivery of non-conforming Customer Supplied Materials. In the event of a Delay in Customer supplied materials, Siegfried will have 10 days upon actual delivery to Siegfried's site to recalculate the new confirmed delivery date of all impacted Customer orders.
+ii)
+Siegfried shall use all reasonable and appropriate precautions in handling and storing Customer Supplied Materials and inform Customer promptly in writing of any damage occurring to Customer Supplied Materials in Siegfried’s possession and any adverse effects experienced by persons handling Customer Supplied Materials.
+iii)
+Any Customer Supplied Materials shall be used by Siegfried solely for the purpose of conducting the Manufacture of Products and shall not be transferred to any third party unless otherwise approved by Customer, including without limitation pursuant to Section 5.1. Customer shall retain all right, title and interest in and to all Customer Supplied Material delivered to Siegfried and shall insure the Consigned Materials against loss and damage. Siegfried shall be liable for any loss of or damage to Customer Supplied Material after delivery to Siegfried if such loss or damage was caused by Siegfried’s willful misconduct or gross negligence in handling, storing or processing Customer Supplied Materials.
+iv)
+Siegfried shall inspect any Raw Material and Customer Supplied Material in accordance with the Quality Agreement.
+v)
+Subject to Section 5.1, any delivered Customer Supplied Material which Siegfried is not able to use for Manufacturing of Product or other products prior to its expiration date, will, at Customer’s request, either be returned to Customer or destroyed by Siegfried, with all associated packing, transportation, destruction and other costs and expenses to be borne by Customer in either case.
+6.
+Mandatory Vendor
+6.1
+Mandatory Vendor. Siegfried shall purchase the relevant Raw Material only from a Mandatory Vendor. Siegfried shall promptly inform Customer of any acts or omissions of any Mandatory Vendor impacting the due and timely delivery of the Product, including without limitation, any supply shortage, supply failure (including, but not limited to, any supply of defective Raw Material or service) or late supply of Raw Material or late performance of service by such a Mandatory Vendor (each a Mandatory Vendor Failure), and the Parties shall confer and use commercially reasonable efforts to have any such Mandatory Vendor Failure promptly cured.
+6.2
+Change of Mandatory Vendor. Either Party may suggest, upon reasonable prior written notice to the other Party, to change or add a Mandatory Vendor and the Parties shall promptly confer in good faith if and how to proceed, including, without limitation, with respect to qualification costs and possible adjustment to Price.
+7.
+Delivery
+7.1
+Delivery. The Product shall be delivered from Siegfried to Customer on the date confirmed in the Order confirmation (see section 4.5 above) according to the Incoterm as set forth in Annex A. Customer assumes all responsibilities and liability arising out of the transport, storage, handling and use of the Product after delivery by Siegfried to Customer.
+7.2
+Acceptance of delivery. Customer shall accept deliveries of +/- 15% (fifteen percent) of an Order. Customer shall pay solely for the Products actually delivered by Siegfried. The Parties will agree in good faith how to manage both excess Product (Product that is more than 15% above the Ordered quantity) and short Product (Product that is more than 15% below the Ordered quantity), including, for example, through allocation to later Orders, increases or decreases to existing or future Orders, or other alternatives, provided, however, that Customer’s acceptance of short Product resulting from Siegfried’s negligence or other fault shall not affect Customer’s right to pursue any other remedy available to it, whether under this Agreement or otherwise, for Siegfried’s failure to fulfill a binding Order that cannot reasonably be resolved through increased deliveries in later orders or similar measures or for Siegfried to otherwise meet its obligations under this Agreement or the Quality Agreement.
+7.3
+Late pick up. In the event the Customer does not pick up the Products on the date confirmed in the Order confirmation or any later agreed date, the risk and rewards of ownership in the Product shall pass to Customer on the originally confirmed pick-up date as per the applicable Incoterm except in the event the pick-up delay has resulted from Siegfried’s actions or inactions, in which case title will transfer upon actual pick-up. Siegfried shall store the Products that are not picked up on the date confirmed in the Order confirmation in its warehouse on behalf of Customer against a reasonable storage fee and shall have the right to invoice such Products to Customer upon delivery. For Products that have been stored on behalf of Customer for a period of no less than one (1) month after the last scheduled delivery date, Siegfried shall have the right to procure shipment of the Product on behalf of Customer at reasonable rates and have the Product shipped to Customer, at Customer’s costs and expenses. In the event Customer is unable to pick up Product on the confirmed or any later agreed delivery date because of Siegfried’s failure to have the Product available for Customer’s courier, Siegfried shall bear all additional costs of storage, provided that Customer organizes substitute pick up in reasonable time (within two (2) weeks from the date Siegfried informs Customer in writing that the Product is available for pick up).
+7.4
+Information on delay. Siegfried shall promptly notify Customer in writing of any anticipated delay or of any circumstance(s) rendering it unable to deliver the Product in accordance with the confirmed delivery date(s) and the estimated duration of such delay/circumstance(s). Upon such written notice, the Parties will work together to agree upon a revised delivery schedule.
+7.5
+Delay. If delay under Section 7.4 is due to a negligent act or omission of Siegfried, Siegfried, at its cost and expense, shall use all commercially reasonable efforts to deliver the delayed Product within a reasonable after time. The Price for Product whose delivery is delayed beyond [***] days shall be reduced by [***] percent, with an additional [***] percent reduction each additional [***] days thereafter, up to a maximum of a [***]% Price reduction. In the event Customer desires early delivery of Product, the Parties agree to discuss in good faith appropriate financial incentives for Siegfried to make such early delivery.
+7.6
+Product Price and Invoicing
+7.7
+Price. The purchase price for the Product (Price) shall be as set forth in Annex A attached hereto.
+7.8
+Price increase. In each calendar year, Siegfried shall have the right to increase the Price based on the annual average percentage increase of the Producer Price Index: Pharmaceutical and Medicine Manufacturing for the previous calendar year (as published by the U.S. Bureau of Labor Statistics).
+7.9
+Invoicing. Invoices shall be issued by Siegfried upon Siegfried Quality release and delivery of the executed batch record to the Customer (see section 7.3). Customer shall pay such invoices to Siegfried within [***] calendar days after the date of such invoice, it being understood that the invoiced amount shall be on Siegfried’s bank account on the due date at the latest.
+7.10
+Interest. In case any sum is not paid within [***] after becoming due, then Customer shall pay interest at the [***] per month or at the maximum annual interest rate permitted by law, whichever is lower, on the amount of the late sum (from original due date until the late sum is paid).
+7.11
+Payment delay. If Customer's credit rating demonstrably and materially deteriorates during the term of the Agreement, giving Siegfried reasonable grounds to assume that Customer will not honor the terms of payment, Siegfried has the right to demand an advance payment, security deposit or other financial security by Customer.
+7.12
+Outstanding Amounts. The expiration or termination of this Agreement shall not relieve Customer of its obligation to pay any outstanding amounts due to Siegfried.
+7.13
+[Intentionally omitted.]
+7.14
+Product examination. Upon receipt of the Product, Customer shall examine the Product within thirty (30) Business Days in order to determine compliance with the Specifications. If the Product delivered does not comply with the Specifications, Customer shall notify Siegfried in writing thereof. If Customer does not notify within thirty-five (35) Business Days after receipt of the Product by Customer, the Product shall be deemed accepted, provided that Customer retains the right to reject the Product at a later time, for a period of one (1) year after delivery in case of Hidden Defects, in which case Customer shall notify Siegfried in writing within fifteen (15) Business Days of discovering the existence of a Hidden Defect.
+7.15
+Claim by Customer. Any claims by Customer that a delivered Product does not meet Specifications shall specify in reasonable detail the nature and basis for the claim and cite Siegfried’s relevant batch numbers or other information to enable specific identification of the Product involved. Siegfried shall review any written claim made by Customer regarding the quality of the Product and provide Customer with the results of such review. Subject to Section 9.3, if such review and testing by Siegfried confirms that the identified Product did not meet the Specifications, Customer shall have the right to reject such Product and the Parties shall proceed according to Section 9.5.
+7.16
+Testing laboratory. If the Parties fail to agree as to whether a delivered quantity of Product is a non-conforming Product, the Parties shall have the batch in dispute further tested and analyzed by an independent testing laboratory selected by agreement between the Parties. The decision of the independent testing laboratory shall be deemed final. Should the laboratory's testing determine that the delivered Product are non-conforming Product, then (i) Siegfried shall bear all costs for the independent laboratory testing, (ii) Customer shall have the right to reject such non-conforming Product, and (iii) the Parties shall proceed according to Section 9.5. However, if said quantity of Product is determined by the independent laboratory to conform to the Specifications, then Customer shall bear all costs of the independent laboratory and compensate Siegfried for the rejected Products, the replacement delivery (if any), and the transportation costs as set out in this Agreement.
+7.17
+Disposal of non-conforming Product. Customer shall, at Siegfried’s expense and written direction, dispose of the Product not conforming to the Specifications or deliver it to such destination as Siegfried shall specify in writing, provided that such directions are in compliance with applicable environmental laws and regulations. Customer shall not use or dispose of any Product that does not, or of which Customer claims that it does not, conform to the Specifications without Siegfried's prior written consent.
+7.18
+Non-conforming Product. If a Product is a non-conforming Product due to a negligent act or omission of Siegfried, Siegfried shall within a reasonable period use all commercially reasonable efforts to replace the rejected Product with Product that conforms with the Specifications and, in the case of Siegfried’s gross negligence or willful misconduct, shall reimburse Customer for all Customer Supplied Materials used in Manufacturing the non-conforming Product. Except in the case of Siegfried’s gross negligence or willful misconduct, such replacement delivery, shall be the only remedy available to Customer in case of delivery of Non-Conforming Product. For the avoidance of doubt, Siegfried shall not be liable against the Customer for a non-conforming Product if the non-conformity results from the failure of the Customer Supplied Material to meet Specifications or a Mandatory Vendor Failure.
+8.
+Equipment; Manufacturing Footprint
+8.1
+Siegfried agrees to ensure all calibration and normal operating maintenance on, cleaning of, repair to and replacement of customer-owned and customer-dedicated equipment used, directly or indirectly, to Manufacture Products, are performed as and when necessary, provided that within thirty (30) days after receipt of appropriate documentation from Siegfried (including, without limitation, an invoice), Customer shall reimburse Siegfried for any reasonable expense of, repair or replacement with respect to customer-owned or customer-dedicated equipment only to the extent that such need for repair or replacement does not arise from gross negligence or willful misconduct on the part of Siegfried. The Parties agree to conduct a semi-annual review of performed maintenance and the maintenance schedule as well as a review of the adequacy and condition of the equipment used to Manufacture Product.
+8.2
+Equipment obtained or used by Siegfried to manufacture Product shall be the property of Customer to the extent the purchase of such equipment was made or reimbursed by Customer. As between the Parties, a Party who identifies a piece of equipment as suitable for use in Product manufacturing shall be responsible for the manufacturing performance of such equipment, and a Party ordering equipment shall be responsible for ensuring that the equipment meets the specifications set forth in the order.
+8.3
+Siegfried will maintain and not reduce the physical space dedicated to Product manufacturing without the prior written approval of Customer, such approval not to be unreasonably withheld.
+9.
+Safety Stock and Inventory
+9.1
+Siegfried shall at all times have sufficient inventory of Raw Materials available to Manufacture the binding part of the forecast plus Raw Materials for the Manufacture of two extra batches of Products at any given time. Siegfried shall ensure to manage this safety stock on a rolling basis first-expire, first-out basis; Customer agrees to purchase such Raw Materials, including the Raw Materials for the additional two safety stock batches, upon expiration of the Agreement.
+9.2
+Siegfried shall provide Customer with a monthly reconciliation sheet with an inventory overview of Customer Supplied Material and Raw Material.
+9.3
+Customer shall pay Siegfried an annual handling fee for the safety stock of the two extra batches of Raw Material inventory in the amount of fifteen percent (15%) of the worth of such safety stock.
+10.
+Audits and Recalls
+10.1
+Audit by Customer. During the term of this Agreement, Customer has the right to carry out compliance and cGMP Regulations audits on the Facility, as set forth in the Quality Agreement. Any additional audit day not foreseen in the Quality Agreement will be charged [***] per audit day (except for-cause audits). Access shall be granted during normal business hours only and upon three (3) months prior written notice. Limit on number of auditors (2) and number of days (2) for pre-planned audit. If in either party’s reasonable opinion, additional auditors or days are needed, the parties will discuss in good faith any increase in auditors or days.
+10.2
+Siegfried's policies. While carrying out the audit on the Facility, Customer shall comply with all of Siegfried’s policies regarding safety, health, data protection, confidentiality and the like which Siegfried, in its sole discretion, deems relevant.
+10.3
+Audit by Regulatory Authority. Siegfried shall permit any Regulatory Authority to inspect the buildings, equipment and records on the Facility (at their request).
+10.4
+Adverse reaction. Each Party shall notify the other Party promptly of any serious or unexpected adverse reaction from the use of the Product, which is reported to it or of which it becomes aware otherwise, as set forth in the Quality Agreement.
+10.5
+Recall. In the event either Party believes that any Batch of Product Manufactured by Siegfried is subject of a field alert, recall, market withdrawal or correction (Recall), whether threatened or actual, such Party shall notify the other Party as set forth in the Quality Agreement and the Parties shall confer and consult with each other on how best to proceed. The Parties acknowledge and agree that the ultimate decision on conducting a Recall shall always be with the holder of the marketing authorization for the Product.
+10.6
+Consequences of Recall. If a Recall of any batch of Product Manufactured by Siegfried is due to Siegfried’s negligent act or omission, Siegfried shall reimburse Customer for all of Customer's reasonable, actual and documented costs and expenses directly related to the Recall, if any. For any Recall affecting unreleased Product that is not due to Siegfried’s negligent act or omission, Customer shall reimburse Siegfried for all reasonable, actual and documented costs and expenses incurred by Siegfried that are directly related to the Recall. Customer will have no responsibility for any Siegfried costs or expenses relating to any Recall affecting Product that is due to Siegfried’s negligent act or omission.
+11.
+Regulatory Affairs
+11.1
+Regulatory Filings. Customer shall be responsible for all regulatory filings in connection with the Product. All information, documents and updates with regard to the Manufacture of Product which are in the possession of Siegfried and required by any Regulatory Authority shall, as reasonably requested by Customer in connection with a submission for such regulatory filings, be provided by Siegfried to Customer, at Customer’s costs.
+11.2
+Assistance by Siegfried. Siegfried shall further provide Customer, at Customer’s costs and expenses, with reasonable assistance in preparing or reviewing the regulatory filing or formulating responses to any questions and/or inquiries (e.g. deficiency letters) with respect to the above submissions.
+11.3
+Review by Siegfried. Customer shall provide, and Siegfried shall review, at Customer's cost, any regulatory filings related to Siegfried’s key obligations hereunder before any application or modification of a Marketing Authorization are submitted to the relevant Regulatory Authorities. Customer shall consider Siegfried’s comments thereto in good faith.
+11.4
+Marketing authorization. Siegfried will support Customer efforts to obtain and maintain Marketing Authorization approvals for a reasonable fee after Customer review and approval. This may include Pre-Approval or Routine Inspections and providing data and information for applications and Annual Reporting. Siegfried will comply and maintain cGMP and Health Authority requirements.
+12.
+Manufacturing Changes
+12.1
+Changes. All Changes shall be handled in accordance with the relevant provisions set forth in the Quality Agreement. In the event of a Change, regardless of whether it is a Required Change, a Customer Change or a Siegfried Change, Siegfried shall provide to Customer (i) a calculation of the Change costs, (ii) if applicable, a new Price for the Product, (iii) the timing for implementation (iv) as well as the amount and discard cost of any Raw Material obsolete because of the Change (Change Documentation).
+12.2
+Required Change. In the event that either Party becomes aware and notifies the other Party that any Change is mandated by Applicable Laws and Regulations (including, without limitation cGMP Regulations) or by a competent Regulatory Authority (Required Change), Siegfried shall provide Customer the Change Documentation. Siegfried shall, if feasible, implement such Required Change and
+(i)
+if the Required Change relates exclusively to the Product, the Customer shall bear all costs relating to the Required Change;
+(ii)
+if the Required Change relates to, or will be used for, the Products and other products manufactured by Siegfried at the Facility, Customer and Siegfried shall discuss and agree on a pro-rated allocation of any costs in relation to the Required Change in good faith; or
+(iii)
+if the Required Change applies generally to the operation of the Facility, all costs relating to the Required Change shall be borne by Siegfried.
+(iv)
+Customer shall reimburse Siegfried for the Raw Materials rendered obsolete due to the Required Change and Customer shall notify Siegfried whether such obsolete Raw Material shall be delivered to Customer or destroyed on behalf of Customer, both at Customer's costs and expenses.
+(v)
+if applicable, Customer shall pay the new Price for the Product as set forth in the Change Documentation.
+12.3
+Customer Change. In the event Customer wishes to effect a Change, which is not a Required Change (Customer Change), Customer shall advise Siegfried in writing of such Customer Change as set forth in the Quality Agreement. Siegfried shall provide the Change Documentation to Customer. In case Customer approves the Change Documentation, Manufacturer shall implement such Customer Change and
+(i)
+Customer shall bear all costs with regard to such Customer Change.
+(ii)
+Customer shall reimburse Siegfried for the Raw Materials rendered obsolete due to the Customer Change and Customer shall notify Siegfried whether such obsolete Raw Material shall be delivered to Customer or destroyed on behalf of Customer, both at Customer's costs and expenses.
+(iii)
+if applicable, Customer shall pay the new Price for the Product as set forth in the Change Documentation.
+12.4
+Siegfried Change. In the event Siegfried wishes to effect a Change, which is not a Required Change (Siegfried Change), Siegfried shall advise Customer in writing of such Siegfried Change as set forth in the Quality Agreement. If Customer does not notify Siegfried in writing to refrain from implementation within thirty (30) days after the date of Siegfried’s request, then Siegfried shall be free to implement such Siegfried Change. Both Parties shall negotiate in good faith the (a) the allocation of the costs relating to the Siegfried Change, (b) the new Price applicable after the Siegfried Change has been implemented, (c) the timing for implementation (d) as well as an estimated amount of any Raw Material rendered obsolete as a result of the Siegfried Change and respective costs to be allocated. In allocating the costs, the Parties should consider whether such Siegfried Change is beneficial to either or both Parties.
+13.
+Intellectual Property
+13.1
+Intellectual Property. Unless otherwise required by law or specified in writing, the results of the Manufacturing Services performed pursuant to and during the term of this Agreement, including, but not limited to, any Intellectual Property arising out of any Improvements (other than an Independent Improvement) shall be the property of Customer and all rights, title and interest therein shall be vested in Customer. Siegfried shall provide reasonable assistance with, but have no responsibility for, prosecuting, maintaining and enforcing any patents or other Intellectual Property that Customer obtains pursuant to this Agreement.
+13.2
+Assignment by Siegfried. Siegfried assigns to Customer all title and interest it may have in any Intellectual Property Right(s) arising out of any Improvements (other than Independent Improvements); provided, that Customer shall grant a non-exclusive, worldwide, irrevocable, royalty-free, sub-licensable license to Siegfried for the use of such Improvements for manufacture of Products. Customer shall have the sole right to file and seek protection for any Intellectual Property Right(s) arising out of any Improvements (other than an Independent Improvement). To the extent that Customer deems it reasonable to seek protection, Customer shall bear the costs (including, but not limited to attorney’s fees) and the responsibility associated with developing, applying for, and maintaining such protection. In the event Customer decides to file and prosecute patent applications on any Improvement (other than an Independent Improvement), Siegfried shall provide Customer with reasonable assistance to obtain and defend such patents at Customer's costs and expenses, including executing any necessary or desirable document to confirm or accomplish the assignment of Intellectual Property Rights described in this paragraph.
+13.3
+Independent Improvements. All rights related to any Independent Improvements shall be the sole property of Siegfried. Siegfried hereby grants Customer a non-exclusive, worldwide, irrevocable, royalty-free license to use such Independent Improvement for the purpose of selling and commercializing any Products Manufactured under this Agreement.
+13.4
+Infringement of Intellectual Property. In the event of patent infringement or regulatory litigation or other legal proceedings, threatened in writing or actual, involving the Product, Siegfried shall have the right to suspend further supply of the Product to the extent this is required by a court order or arbitral award or order (whether interim or final) or deemed necessary or advisable by Siegfried to prevent or limit actual or possible damages, liability or injury. Such suspension shall be deemed a temporary suspension of Siegfried’s Manufacturing and supply obligations under this Agreement; provided, that if such suspension continues for more than one hundred an eighty (180) days, the Parties shall jointly attempt in good faith to modify this Agreement to resolve the situation but if they are unable to do so within the following thirty (30) Business Days either Party may terminate this Agreement by notice to the other Party. The Parties will reasonably cooperate in removing, if possible, any impediment to Manufacturing under this Section 15.4, including designing new processes or workarounds to avoid the impediment or obtaining a license on reasonable terms to permit Manufacturing.
+14.
+Representations and Warranties
+14.1
+Representations of each Party. Each Party represents and warrants to the other Party that (i) it has the legal power, authority and right to enter into this Agreement and to perform its respective obligations set forth herein; (ii) this Agreement has been duly executed and delivered by such Party and constitutes the valid and binding obligation of such Party, enforceable against such Party in accordance with its terms; and (iii) is not and will not be under any obligation or restriction, including, without limitation, pursuant to its charter document(s) or by-laws, which in any way limits or conflicts with its ability to fulfill any of its obligations under this Agreement.
+14.2
+Representations of Siegfried. Siegfried represents and warrants that
+(i)
+the Products have been Manufactured in compliance with cGMP Regulations,
+(ii)
+the Products are, upon delivery to Customer, in conformity with the Specifications of such Product,
+(iii)
+in the Manufacture of the Product, none of the Intellectual Property used by Siegfried in its processes or procedures (and other than those under Customer responsibility as set forth in 16.3), infringe or misappropriate or will infringe or misappropriate the Intellectual Property of any third party.
+14.3
+Representations of Customer. Customer represents and warrants that
+(i)
+the Customer Supplied Material is free of defects upon delivery to Siegfried,
+(ii)
+none of the Intellectual Property, processes, procedures, substances or materials of Customer, including any samples and Customer Supplied Materials supplied by or on behalf of Customer and used by Siegfried in the Manufacture of Product infringe or misappropriate or will infringe or misappropriate the Intellectual Property of any third party.
+14.4
+EXCEPT AS STATED IN 16 OF THIS AGREEMENT, SIEGFRIED MAKES NO WARRANTIES, EXPRESS OR IMPLIED, WITH RESPECT TO THE PRODUCT, MATERIALS OR SERVICES AND DISCLAIMS ALL IMPLIED WARRANTIES, INCLUDING THE WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT. EXCEPT FOR CASES OF WILLFUL MISCONDUCT OR GROSS NEGLIGENCE, SIEGFRIED'S LIABILITY UNDER THIS AGREEMENT SHALL BE STRICTLY LIMITED TO THE REMEDIES PROVIDED FOR UNDER THIS AGREEMENT.
+15.
+Indemnity and Liability
+15.1
+Indemnification by Siegfried. Siegfried shall indemnify, defend and hold Customer harmless against all losses arising out of or in connection with third-party claims, suits, actions, demands or judgments to the extent resulting from the negligent (i) breach of representations under this Agreement or (ii) breach of any of Siegfried's obligations under this Agreement, except to the extent Customer is obligated to indemnify Siegfried under Section 17.2 below.
+15.2
+Indemnification by Customer. Customer shall indemnify, defend and hold Siegfried harmless against all losses, arising out of or in connection with third-party claims, suits, actions, demands or judgments to the extent resulting from the negligent (i) breach of representations under this Agreement, (ii) breach of any of Customer's obligations, (iii) the handling, use, distribution of the Product after delivery to Customer, (iv) the death of or injury to any person or any damage to property, resulting from side effects, characteristics or defects of the Product; except to the extent Siegfried is obligated to indemnify Customer under Section 17.1 above.
+15.3
+Indemnification procedure. With respect to any indemnification obligation under this Agreement, the following conditions shall be applicable:
+(a)
+the Party seeking to be indemnified shall notify the indemnifying Party promptly in writing of any claim which may give rise to an obligation on the part of the indemnifying Party hereunder;
+(b)
+the indemnifying Party shall be allowed to timely take the sole control of the defense of any such action and claim, including all negotiations for the settlement, or compromise of such claim or action at its sole expense;
+(c)
+the Party to be indemnified shall, at the expense of the indemnifying Party, render reasonable assistance, information, co-operation and authority to permit the indemnifying Party to defend such action; and
+(d)
+no settlement or compromise shall be binding on a Party hereto without its prior written consent.
+15.4
+Limitation of Liability. Neither Party shall be liable to the other for incidental, indirect (except with respect to the indemnification against claims of third parties under Sections 17.1 or 17.2), or consequential damages of the other Party or any third party, including but not limited to claims based on lost profits, loss of time or loss of business opportunity suffered or incurred as a result of this Agreement, regardless of whether the liable Party was informed in advance of the possibility of such damages and whether such loss or damage may be based upon principles of contract, warranty, negligence or other tort, breach of any statutory duty, principles of indemnity or contribution, the failure of any limited or exclusive remedy to achieve its essential purpose, or otherwise.
+15.5
+Liability cap. To the extent permitted by applicable law, Siegfried’s maximum indemnity and liability under this Agreement shall be limited to the Price of the relevant batch of Product giving rise to the dispute, except for cases of willful misconduct or gross negligence.
+15.6
+Insurance. Before the commencement of any Manufacturing Services under this Agreement, Siegfried and Customer shall each obtain and carry in full force and effect adequate commercial, general liability insurance as is common in the industry, including product liability insurance. Such insurance shall be written by a reputable insurance company and shall be endorsed to include liability coverage for Product used. Both Parties shall provide each other on request with a copy of certificates of insurance evidencing the same. The foregoing notwithstanding, each party agrees to maintain in effect at least the following types and amounts of insurance:
+Commercial General Liability $[***] per occurrence
+Contractual Liability $[***] per occurrence
+Product Liability $[***] per occurrence
+Annual Aggregate $[***]
+16.
+Confidentiality
+16.1
+Confidentiality. Each Receiving Party agrees to retain in strict confidence any Confidential Information of the Disclosing Party (or its Affiliate), whether disclosed prior to, or after the Effective Date or the date of prior secrecy agreements and not to use any such Confidential Information for any purpose except pursuant to, and in order to carry out, the terms and objectives of this Agreement, nor to disclose, divulge or otherwise communicate any such Confidential Information to any third party.
+16.2
+Entitled Person. The Receiving Party may disclose Confidential Information of the Disclosing Party to its (or its Affiliate's) officers, directors, employees, agents, consultants, subcontractors or representatives (each an Entitled Person), who, in each case, (i) need to know such information for purposes of the implementation and performance by the Receiving Party of this Agreement, (ii) will use the Information only for such limited purposes and (iii) are subject to confidentiality restrictions covering the Confidential Information that are at least as stringent at those contained herein.
+16.3
+Exceptions to confidentiality. The provisions of this Section 18 shall not apply to any Confidential Information disclosed hereunder which
+(a)
+was independently developed or known by the Receiving Party prior to its disclosure to the Receiving Party by the Disclosing Party, as evidenced by written records; or
+(b)
+was before or after the date of such disclosure in the public domain or lawfully disclosed to the Receiving Party by an independent, unaffiliated third party rightfully in possession of the Confidential Information and not under any confidentiality obligation towards the Disclosing Party with regard to such Confidential Information; or
+(c)
+is required to be disclosed by the Receiving Party to the officials of a Regulatory Authority or to comply with applicable laws, to defend or prosecute litigation, or to comply with governmental laws or regulations, judicial orders or valid subpoenas, provided that the Receiving Party provides the Disclosing Party with prior written notice of such intended disclosure and takes reasonable and lawful actions, at Disclosing Party’s expense, to avoid and/or minimize the degree of such disclosure.
+The burden of proof of the foregoing exceptions shall lie with the Receiving Party. Unless required by law, the Receiving Party in the foregoing circumstances shall not disclose that the same Confidential Information was also acquired from the Disclosing Party.
+16.4
+Irreparable Harm. The Parties acknowledge that any breach of this Section 18 may cause the other Party irreparable harm, and that the non-breaching Party shall be entitled to seek specific performance or injunctive relief to enforce this Section 18 without the necessity of posting bond, in addition to whatever remedies such Party may otherwise be entitled to at law or in equity.
+16.5
+Use of Confidential Information. All terms of this Section 18 are subject to Customer's and Siegfried's rights under Section 9. Notwithstanding anything herein to the contrary, should Siegfried be granted a license for the use of an Improvement pursuant to 15.2 herein, the Parties agree that mere use alone by Siegfried or an Affiliate pursuant to the license granted shall not be a violation of any term or condition contained in this Article.
+16.6
+Return of Confidential Information. Upon termination or expiration of this Agreement, each Party shall, upon the other Party’s request, immediately destroy or deliver to the other (and cause any of its employees, agents or Entitled Persons, consultants to so deliver), at such Party’s expense, all Confidential Information of the other Party, including without limitation any and all copies, duplications, summaries and/or notes thereof or derived thereof, regardless of the format, and all remaining samples of Product or Materials, provided however, that both Parties may keep original documents, copies and samples as required by law, for archival purposes or stored on their back up devices.
+17.
+Term and Termination
+17.1
+Initial Term. This Agreement shall become effective on the Effective Date and, unless earlier terminated in accordance with this Agreement, shall continue in full force and effect for an initial period of five (5) years after the Effective Date (hereinafter Initial Term).
+17.2
+Renewal of Initial Term. This Agreement shall automatically renew for consecutive two (2) year periods each, unless one of the Parties notifies the other of its election not to renew this Agreement at least twenty-four (24) months prior to the end of the Initial Period or any renewal period then in effect, in which case this Agreement shall terminate upon the expiration of such term.
+17.3
+Termination for material breach. Each Party may terminate this Agreement (i) for material breach by the other Party, (ii) upon one hundred twenty (120) days written notice to the other Party specifying the nature of such material breach and (iii) if such breach has not been substantially cured within such one hundred twenty (120) days period.
+17.4
+Termination for cause. Either Party may terminate this Agreement immediately, but not later than six (6) months after becoming aware of such event, by providing written notice to the other Party:
+(a)
+upon the liquidation or dissolution of the other Party, or the commencement of insolvency procedures or any proceeding under any bankruptcy, insolvency or moratorium law, or any other law or laws for the relief of debtors which proceeding is not dismissed within sixty (60) days, or the appointment of any receiver, trustee or assignee to take possession of the properties of the other Party, or
+(b)
+the cessation of all or substantially all of the other Party’s business operations.
+17.5
+Survival. Neither the expiration nor the termination of this Agreement shall relieve the Parties of their obligations incurred prior to such expiration or termination. All provisions that, by their express or implied terms, are meant to survive termination of this Agreement shall continue irrespective of such termination.
+18.
+Miscellaneous
+18.1
+No set-off. Neither Party shall be entitled to set off any of its rights or obligations under this Agreement against the rights or obligations of another Party without having first obtained the prior written consent of that other Party.
+18.2
+Subcontractor. Siegfried shall be entitled to engage subcontractors for conducting portions of the Manufacturing Services with the prior written consent of Customer, such consent not to be unreasonably withheld. Siegfried shall Manufacture all Product(s) at the authorized/licensed Facility or authorized/licensed subcontractors (i.e. Gamma Sterilization Provider). Changes in manufacturing location or changes to subcontractors must be approved in writing by the Customer and in advance of the change as provided in Section 14 of this Agreement and in the Quality Agreement. Siegfried shall be responsible for all work performed by Siegfried’s authorized subcontractor as if performed by itself and further, that the use of said subcontractor is in compliance with the Quality Agreement.
+18.3
+Force Majeure. A Party shall be excused from performing its obligations under this Agreement (other than obligations of payment) to the extent that its performance is delayed or prevented by any cause beyond such Party’s control, including, but not limited to, supplier failure, fire, explosion, weather, disease (including epidemic and pandemic), war, terrorist act, insurrection, civil strike, riots, government action power failure or energy or Raw Material shortages (each, a Force Majeure Event). Performance shall be excused only to the extent of and during the reasonable continuance of such Force Majeure Event. Any deadline or time for performance specified in this Agreement that falls due during or subsequent to the occurrence of any of the Force Majeure Event shall be automatically extended for a period of time equal to the period of such Force Majeure Event. The prevented Party shall immediately notify the other Party if, by reason of any Force Majeure Event, the prevented Party is unable to meet any deadline or time for performance specified in this Agreement. In the event that such Force Majeure Event cannot be removed or overcome within one-hundred and eighty (180) days (or such other period as the Parties jointly shall determine) from the date the Party affected first became affected, then either Party may at any time after the expiration of such period, by written notice to the other Party, either (i) suspend this Agreement for as long as such Force Majeure Event continues to exist, or (ii) terminate this Agreement with immediate effect.
+18.4
+Precedence of Agreement. Unless expressly agreed otherwise in writing, the terms outlined in this Agreement shall prevail over any inconsistent terms and conditions outlined in any Order and any general terms and conditions of a Party, and such terms and conditions are hereby expressly excluded. In case of discrepancies between this Agreement and an Annex hereto, the provisions of this Agreement shall prevail; provided, however, that in case of discrepancies between this Agreement and the Quality Agreement regarding (i) the delineation of responsibilities pursuant to cGMP Regulations, (ii) the Specifications or (iii) the Manufacturing procedure, the Quality Agreement shall be decisive.
+18.5
+No Assignment. This Agreement is binding upon and shall inure to the benefit of the Parties hereto and their successors and permitted assigns. This Agreement and any rights or obligations hereunder, other than claims to payment, may be assigned or delegated only (i) with the consent of the other Party, not to be unreasonably withheld, conditioned or delayed or (ii) to the successor to all or substantially all of the business of a Party (whether by merger, consolidation, asset transfer or similar transaction) to which this Agreement relates. Any other assignment or delegation by either Party without the prior written consent of the other Party is void.
+18.6
+No waiver. The failure by either Party at any time to enforce any of the terms, provisions or conditions of this Agreement or to exercise any right hereunder shall not constitute or be construed to constitute a waiver of the same or affect that Party's rights thereafter to enforce or exercise the same.
+18.7
+Independent Parties. Nothing in this Agreement shall be deemed or construed to constitute or create between the Parties hereto a partnership, joint venture, agency, or other relationship other than as expressly set forth herein. Neither Party shall be responsible for the acts or omissions of the other Party, and neither Party shall have authority to speak for, represent or obligate the other Party in any way without prior written consent of the other Party.
+18.8
+Entire Agreement. This Agreement contains the full understanding of the Parties with respect to the subject matter hereof and supersedes all prior understandings and writings relating thereto. No waiver, alteration or modification of any of the provisions hereof shall be binding unless made in writing and signed by the Parties.
+18.9
+Severability. If any portion of this Agreement is held invalid by a court of competent jurisdiction, such portion shall be deemed to be of no force and effect and this Agreement shall be construed as if such portion had not been included herein, provided however, if the deletion of such provision materially impairs the commercial value of this Agreement to either Party, the Parties shall attempt to renegotiate such provision in good faith. The fact that any provision of this Agreement shall be prohibited or unenforceable in any jurisdiction shall not invalidate or render unenforceable such provision in any other jurisdiction. To the extent permitted by applicable law, the Parties to this Agreement waive any provision of law that renders any provision of this Agreement prohibited or unenforceable in any respect.
+18.10
+Notices. Any notice required under this Agreement shall be effective upon delivery and only if in writing and delivered (i) in person, (ii) by a recognized courier service, (iii) by registered mail or (iv) by e-mail (pdf) confirmed by registered mail within five (5) Business Days. Any notice is to be addressed to the applicable address set forth below.
+if to Siegfried:
+Alliance Medical Products, Inc.
+Attention: Troy Gardner Vice President & General Manager
+e-mail: [***]
+with a copy to:
+Siegfried AG
+Legal Department
+Untere Bruehlstrasse 4,4800 Zofingen, Switzerland
+e-mail: [***]
+if to Customer:
+Alimera Sciences, Inc.
+Attention: Chief Operating Officer
+6310 Town Square, Suite 400
+Alpharetta, GA 30005
+e-mail: [***]
+Either Party may change the above addresses, but no such change shall have any effect until the other Party has been properly notified with written notice of the change of the address.
+18.11
+Compliance with Laws. Each Party shall comply with all applicable laws, statutes, rules and regulations governing its performance of the terms of this Agreement, including, but not limited to, those relating to health, safety and the environment, fair labor practices, unlawful discrimination, debarment, anti-corruption and anti-bribery laws.
+18.12
+Hardship. If unexpected or unpredictable changes in technical, legal, or economic factors occur during the term of the Agreement external to the will of the Parties and have a seriously detrimental long-term impact on the general economic balance of the Agreement or the ability of one or both Parties to perform the Agreement, the Parties agree to undertake in good faith reasonable efforts to discuss a possible amicable resolution or possible amendment to this Agreement in light of the change in circumstances, provided, however, that neither Party shall have any obligation to amend this Agreement or to waive or modify any of its rights under this Agreement
+18.13
+Counterparts. This Agreement may be executed in two (2) or more counterparts, each of which shall for all purposes be deemed an original and all of which shall constitute one and the same instrument. This Agreement and any future amendments may be signed by electronic signature (e.g., using DocuSign), whereby the Parties acknowledge its validity and binding force.
+18.14
+Cumulative Remedies. No remedy referred to in this Agreement is intended to be exclusive unless expressly so stated but shall be cumulative and in addition to every other remedy referred to in this Agreement or otherwise available at law or equity.
+18.15
+Further Assurances. Each Party agrees to execute such other papers, agreements, documents, instruments, and the like as may be necessary or desirable to effect the purposes of this Agreement and carry out its provisions.
+18.16
+Headings; Attachments. The headings assigned to the articles and sections of this Agreement are for convenience only and shall not limit the scope and applicability of the articles and sections. Each and every attachment to this Agreement is hereby incorporated herein by reference and made a part hereof.
+18.17
+Publicity. This Agreement is Confidential Information of the Parties and shall not be disclosed except as provided herein. The Parties agree to make no public announcement of this Agreement or their relationship without the express permission of the other Party, except that each Party may make such disclosures as are required by law, including the securities laws of the United States.
+18.18
+Independent Contractors. The Parties shall at all times act as and be deemed independent contractors. Nothing in this Agreement shall be construed to render any employee, officer, director of one Party the employee, officer or director of the other or to create any joint venture, agency, or partnership.
+19.
+Applicable Law and Dispute Resolution
+19.1
+Applicable law. This Agreement shall be governed by the laws of the State of California without regard to its conflict of laws provisions. Application of the UN-Convention regarding Contracts on the International Sale of Goods (Vienna Convention) is excluded.
+19.2
+Jurisdiction. The Parties agree that venue for any action arising out or related to this Agreement shall lie in the competent federal courts located in Orange County, California.
+List of Annexes
+Annex A
+Products Schedule Form
+Annex B
+Customer Supplied Material and Mandatory Vendors
+Alliance Medical Products, Inc.
+/s/ Troy Gardner /s/ Kevin O’Brien
+………………………………………. ……………………………………….
+Troy Gardner Kevin O’Brien
+Vice President & General Manager Vice President, Drug Products
+North America
+Alimera Sciences, Inc.
+/s/ Richard S. Eiswirth Jr
+……………………………………….
+Richard S. Eiswirth, Jr
+President and Chief Executive Officer
+Annex A
+Product Schedule – ILUVIEN®
+[***]
+Annex B
+Customer Supplied Material and Mandatory Vendors
+[***]

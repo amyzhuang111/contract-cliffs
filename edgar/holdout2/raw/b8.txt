@@ -1,0 +1,1024 @@
+EX-10.17
+4
+acad-ex10_17.htm
+EX-10.17
+EX-10.17
+Exhibit 10.17
+CERTAIN CONFIDENTIAL INFORMATION CONTAINED IN THIS DOCUMENT, MARKED BY […***…], HAS BEEN OMITTED BECAUSE IT IS BOTH (I) NOT MATERIAL AND (II) IS THE TYPE THAT THE REGISTRANT TREATS AS PRIVATE OR CONFIDENTIAL.
+Master Manufacturing Services Agreement
+August 3, 2015
+Master Manufacturing Services Agreement
+Table of Contents
+ARTICLE 1
+1
+Structure of Agreement and Interpretation
+1
+1.1
+Master Agreement.
+1
+1.2
+Product Agreements.
+1
+1.3
+Definitions.
+2
+1.4
+Currency.
+9
+1.5
+Sections and Headings.
+9
+1.6
+Singular Terms.
+9
+1.7
+Appendix 1, Schedules and Exhibits.
+9
+ARTICLE 2
+9
+PATHEON'S MANUFACTURING services
+9
+2.1
+Manufacturing Services.
+9
+2.2
+Active Material Yield.
+11
+ARTICLE 3
+13
+CLIENT'S OBLIGATIONS
+13
+3.1
+Payment.
+13
+3.2
+Active Materials and Qualification of Additional Sources of Supply.
+13
+ARTICLE 4
+14
+CONVERSION fees AND COMPONENT COSTS
+14
+4.1
+First Year Pricing.
+14
+4.2
+Price Adjustments – Subsequent Years’ Pricing.
+14
+4.3
+Price Adjustments – Current Year Pricing.
+16
+4.4
+Adjustments Due to Technical Changes.
+16
+4.5
+Multi-Country Packaging Requirements.
+17
+ARTICLE 5
+17
+ORDERS, SHIPMENT, INVOICING, PAYMENT
+17
+5.1
+Orders and Forecasts.
+17
+5.2
+Reliance by Patheon.
+18
+5.3
+Minimum Orders.
+19
+5.4
+Shipments.
+19
+5.5
+Late Delivery.
+19
+5.6
+Invoices and Payment.
+20
+- i -
+Master Manufacturing Services Agreement
+ARTICLE 6
+21
+PRODUCT CLAIMS AND RECALLS
+21
+6.1
+Product Claims.
+21
+6.2
+Product Recalls and Returns.
+21
+6.3
+Patheon’s Responsibility for Non-Conforming and Recalled Products.
+22
+6.4
+Disposition of Defective or Recalled Products.
+23
+6.5
+Healthcare Provider or Patient Questions and Complaints.
+23
+6.6
+Sole Remedy.
+24
+ARTICLE 7
+24
+CO-OPERATION
+24
+7.1
+Quarterly Review.
+24
+7.2
+Governmental Agencies.
+24
+7.3
+Records and Accounting by Patheon.
+24
+7.4
+Inspection.
+24
+7.5
+Access.
+25
+7.6
+Notification of Regulatory Inspections.
+25
+7.7
+Reports.
+25
+7.8
+Regulatory Filings.
+26
+7.9
+Quality Agreement.
+27
+ARTICLE 8
+27
+TERM AND TERMINATION
+27
+8.1
+Initial Term.
+27
+8.2
+Termination for Cause.
+27
+8.3
+Product Discontinuation.
+28
+8.4
+Obligations on Termination.
+28
+ARTICLE 9
+29
+REPRESENTATIONS, WARRANTIES AND COVENANTS
+29
+9.1
+Authority.
+29
+9.2
+Client Warranties.
+29
+9.3
+Patheon Warranties.
+30
+9.4
+Debarred Persons.
+31
+9.5
+Permits.
+31
+9.6
+No Warranty.
+31
+ARTICLE 10
+32
+REMEDIES AND INDEMNITIES
+32
+- ii -
+Master Manufacturing Services Agreement
+10.1
+Consequential Damages.
+32
+10.2
+Limitation of Liability.
+32
+10.3
+Patheon Indemnity.
+32
+10.4
+Client Indemnity.
+33
+ARTICLE 11
+33
+CONFIDENTIALITY
+33
+11.1
+Confidential Information.
+33
+11.2
+Use of Confidential Information.
+33
+11.3
+Exclusions.
+34
+11.4
+Photographs and Recordings.
+34
+11.5
+Permitted Disclosure.
+34
+11.6
+Marking.
+35
+11.7
+Return of Confidential Information.
+35
+11.8
+Remedies.
+35
+ARTICLE 12
+35
+DISPUTE RESOLUTION
+35
+12.1
+Commercial Disputes.
+35
+12.2
+Technical Dispute Resolution.
+36
+ARTICLE 13
+36
+MISCELLANEOUS
+36
+13.1
+Inventions.
+36
+13.2
+Intellectual Property.
+37
+13.3
+Insurance.
+37
+13.4
+Independent Contractors.
+37
+13.5
+No Waiver.
+37
+13.6
+Assignment.
+37
+13.7
+Force Majeure.
+38
+13.8
+Additional Product.
+38
+13.9
+Notices.
+38
+13.10
+Severability.
+40
+13.11
+Entire Agreement.
+40
+13.12
+Other Terms.
+40
+13.13
+No Third Party Benefit or Right.
+40
+13.14
+Execution in Counterparts.
+40
+13.15
+Use of Client Name.
+40
+13.16
+Governing Law.
+40
+- iii -
+Master Manufacturing Services Agreement
+MASTER MANUFACTURING SERVICES AGREEMENT
+THIS MASTER MANUFACTURING SERVICES AGREEMENT (the "Agreement") is made as of August 3, 2015 (the “Effective Date”)
+B E T W E E N:
+PATHEON PHARMACEUTICALS INC.,
+a corporation existing under the laws of the State of Delaware
+("Patheon"),
+- and -
+Acadia Pharmaceuticals Inc.,
+a corporation existing under the laws of the State of Delaware
+("Client").
+THIS AGREEMENT WITNESSES THAT in consideration of the rights conferred and the obligations assumed herein, and for other good and valuable consideration (the receipt and sufficiency of which are acknowledged by each Party), and intending to be legally bound the Parties agree as follows:
+ARTICLE 1
+Structure of Agreement and Interpretation
+1.1 Master Agreement.
+This Agreement establishes the general terms and conditions under which Patheon or any Affiliate of Patheon may perform Manufacturing Services for Client or any Affiliate of Client, at the manufacturing site where the Affiliate of Patheon resides. This “master” form of agreement is intended to allow the Parties, or any of their Affiliates, to contract for the manufacture of multiple Products through Patheon’s global network of manufacturing sites through the issuance of site specific Product Agreements without having to re-negotiate the basic terms and conditions contained herein.
+1.2 Product Agreements.
+This Agreement is structured so that a Product Agreement may be entered into by the Parties for the manufacture of a particular Product or multiple Products at a Patheon manufacturing site. Each Product Agreement will be governed by the terms and conditions of this Agreement unless the Parties to the Product Agreement expressly modify the terms and conditions of this Agreement in the Product Agreement. Unless otherwise agreed by the Parties, each Product Agreement will be in the general form and contain the information set forth in Appendix 1 hereto.
+- 1 -
+Master Manufacturing Services Agreement
+1.3 Definitions.
+The following terms will have the respective meanings set out below and grammatical variations of these terms will have corresponding meanings:
+"Active Materials", “Active Pharmaceutical Ingredients” or “API” means the materials listed in a Product Agreement on Schedule D;
+"Active Materials Credit Value" means the value of the Active Materials for certain purposes of this Agreement, as set forth in a Product Agreement on Schedule D;
+“Actual Annual Yield” or “AAY” has the meaning specified in Section 2.2(a);
+"Affiliate" means:
+(a) a business entity which owns, directly or indirectly, a controlling interest in a Party to this Agreement, by stock ownership or otherwise; or
+(b) a business entity which is controlled by a Party to this Agreement, either directly or indirectly, by stock ownership or otherwise; or
+(c) a business entity, the controlling interest of which is directly or indirectly common to the controlling interest of a Party to this Agreement;
+For this definition, "control" means the ownership of shares carrying at least a majority of the votes for the election of the directors of a corporation or other business entity (with corresponding meanings for “controlling interest” and “controlled by”);
+“Annual Minimum” will have the meaning specified in Section 2.1;
+“Annual Product Review Report” means the annual product review report prepared by Patheon as described in Title 21 of the United States Code of Federal Regulations, Section 211.180(e);
+"Annual Report" means the annual report to the FDA prepared by Client regarding the Product as described in Title 21 of the United States Code of Federal Regulations, Section 314.81(b)(2);
+"Annual Volume" means the minimum volume of Product to be manufactured in any Year of this Agreement as set forth in a Product Agreement on Schedule B;
+"Applicable Laws" means the applicable provisions of any and all national, supranational, regional, state, provincial, county and local laws, statutes, treaties, ordinances, regulations, rules, administrative codes, guidance, ordinances, by-laws, judgments, decrees, directives, injunctions, permits (including marketing approvals) or orders of or from any Authority having jurisdiction over or related to the subject item;
+"Authority" means any governmental or regulatory authority, department, body or agency or any court, tribunal, bureau, commission or other similar body, whether national, supranational, regional, state, provincial, county or local;
+- 2 -
+Master Manufacturing Services Agreement
+“Batch” means a specific quantity of Product or other material that is intended to have uniform character and quality, within specified limits, and is produced according to a single manufacturing order during the same cycle of Manufacturing Services;
+“Bill Back Items” means the reasonable documented actual expenses in accordance with Section 2.1(g) for all third party supplier fees for the purchase or use of columns, standards, tooling, non-standard pallets, PAPR or PPE suits (where applicable), RFID tags and supporting equipment, and other Product-specific items, in each case, as necessary for Patheon to perform the Manufacturing Services, and which are not included as Components;
+“Breach Notice” will have the meaning specified in Section 8.2(a);
+"Business Day" means a day other than a Saturday, Sunday or a day that is a statutory holiday in the jurisdiction where the Manufacturing Site is located or in the State of California;
+“Capital Equipment Agreement” means a separate agreement that the Parties may enter into that will address responsibility for the purchase of capital equipment and facility modifications that may be required to perform the Manufacturing Services under a particular Product Agreement;
+"cGMPs" means, as applicable, current good manufacturing practices as described in:
+(a) Division 2 of Part C of the Food and Drug Regulations (Canada);
+(b) Parts 210 and 211 of Title 21 of the United States' Code of Federal Regulations;
+(c) EC Directive 2003/94/EC; and
+(d) ICH guidelines;
+together with the latest Health Canada, FDA, and EMA and any other jurisdiction agreed to by the Parties guidance documents pertaining to manufacturing and quality control practice, all as updated, amended and revised from time to time, and any foreign equivalents to any such regulations which may apply to the Manufacturing Site or be applicable to Products sold outside of the United States, Canada or the European Union;
+“Certificate of Analysis” means, with respect to a Batch, that document setting for the measured and observable characteristics of Product from the Batch, as required by the Specifications, as dated, executed and provided to Client by Patheon prior to delivery of the Product;
+“Certificate of Compliance” means a statement signed by Patheon that certifies that all Manufacturing Services of a Batch of Product was performed or otherwise implemented, packaged, stored and tested in accordance with cGMP and all other regulatory requirements;
+“Claims” has the meaning specified in Section 10.3;
+“Client Indemnitees” has the meaning specified in Section 10.3;
+“Client Intellectual Property” means Intellectual Property generated or derived by Client or any of its Affiliates before entering into this Agreement or independent of this Agreement, or by Patheon or any of its Affiliates while performing any Manufacturing Services or otherwise
+- 3 -
+Master Manufacturing Services Agreement
+generated or derived by Patheon or any of its Affiliates in its business, which Intellectual Property is directly related to, specific to, or dependent upon, Client’s Active Materials or Product;
+“Client Property” will have the meaning specified in Section 8.4(e);
+“Client-Supplied Components” means those Components to be supplied by Client or that have been supplied by Client;
+“CMC” has the meaning specified in Section 7.8(c);
+"Components" means, collectively, all packaging components, raw materials, ingredients, and other materials (including labels, product inserts and other labelling for the Products) required to manufacture the Products in accordance with the Specifications, other than the Active Materials;
+“Confidential Information” has the meaning specified in Section 11.1;
+“DDP” has the meaning as set forth in the 2010 edition of the International Commercial terms published by the International Chamber of Commerce, as may be amended or modified from time to time (Incoterms 2010);
+“Deficiencies” has the meaning specified in Section 7.8(d);
+"Deficiency Notice" has the meaning specified in Section 6.1(a);
+“Delivery Date” means the date scheduled for shipment of Product under a Firm Order as set forth in Section 5.1(d);
+“Delivery Documentation” has the meaning specified in Section 2.1(b);
+“Disclosing Party” has the meaning specified in Section 11.1;
+“Deviation” means a departure from an established quality standard, including, but not limited to, that set forth in any Product Agreement, any Quality Agreement, cGMP standard operating procedure, manufacturing work order, packaging order, raw material or product specification, analytical control procedure, water monitoring procedure, equipment maintenance schedule, or any unusual occurrence that could affect the Product. Deviations may be either anticipated or unanticipated departures from established quality standards and may have the potential to affect the safety, identity, strength, quality or purity of a Product;
+"EMA" means the European Medicines Agency or any successor agency thereto which may regulate pharmaceutical products;
+“EXW” has the meaning as set forth in Incoterms 2010;
+"FDA" means the United States Food and Drug Administration or any successor agency thereto which may regulate pharmaceutical products;
+"Firm Order" has the meaning specified in Section 5.1(c);
+"First Firm Order" has the meaning specified in Section 5.1(b);
+- 4 -
+Master Manufacturing Services Agreement
+“For Cause Audit” means an audit of manufacturing records of Patheon or its subcontractors and supplies by Client following: (a) an unfavorable observation during regulatory inspections that is material to the quality of Product; or (b) a major or repeated quality excursion that may result in a failed manufacture Batch or Non-Conforming Product;
+“Force Majeure Event” has the meaning specified in Section 13.7;
+"Health Canada" means the section of the Canadian Government known as Health Canada and includes, among other departments, the Therapeutic Products Directorate and the Health Products and Food Branch Inspectorate or any successor agency thereto which may regulate pharmaceutical products;
+“Initial Manufacturing Month” has the meaning specified in Section 5.1(b);
+“Initial Manufacturing Period” has the meaning specified in Section 5.1(b);
+“Initial Product Term” has the meaning specified in Section 8.1;
+“Initial Set Exchange Rate” means as of the Effective Date of a Product Agreement, the initial exchange rate set forth in the Product Agreement to convert one unit of the Patheon Manufacturing Site local currency into one unit of the billing currency, calculated as the daily average interbank exchange rate for conversion of one unit of the Patheon Manufacturing Site local currency into one unit of the billing currency during the 90 day period immediately preceding the Effective Date as published by OANDA.com “The Currency Site” under the heading “FxHistory: historical currency exchange rates” at www.OANDA.com/convert/fxhistory;
+“Initial Term” has the meaning specified in Section 8.1;
+"Intellectual Property" means any and all rights in patents, patent applications, formulae, trademarks, trademark applications, trade-names, Inventions, copyrights, industrial designs, trade secrets, and know how;
+"Invention" means any and all information, results, data, innovation, improvement, development, discovery, computer program, device, trade secret, method, know-how, process, technique or the like, whether or not written or otherwise fixed in any form or medium, regardless of the media on which it is contained and whether or not patentable or copyrightable;
+"Inventory" means all inventories of Components and work-in-process produced or held by Patheon for the manufacture of the Products but, for greater certainty, does not include the Active Materials;
+“Late Delivery” will have the meaning specified in Section 5.5(b);
+“Latent Defect” means a defect in any Batch of Product, the API or Materials that was not, and could not reasonably be expected to have been, found by exercise of ordinary care, following the approved specifications or in inspection at Delivery;
+“Late Product” means Product ordered under a Firm Order that is not delivered on the Delivery Date;
+“Losses” has the meaning specified in Section 10.3;
+- 5 -
+Master Manufacturing Services Agreement
+"Manufacturing Services" means the manufacturing, quality control, quality assurance, stability testing, packaging, labelling, storage and related services provided by Patheon to manufacture Product or Products using the Active Materials, Components, and Bill Back Items pursuant to this Agreement;
+"Manufacturing Site" means the facility owned and operated by Patheon where the Manufacturing Services will be performed as identified in a Product Agreement;
+“Materials” means all Components and Bill Back Items required to manufacture the Products in accordance with the Specifications, other than the Active Materials;
+"Maximum Credit Value" means the maximum value of Active Materials that may be credited by Patheon under this Agreement, as set forth in a Product Agreement on Schedule D;
+"Minimum Order Quantity" means the minimum number of Batches of a Product to be produced as set forth in a Product Agreement on Schedule B;
+“Non-Conforming Products” will have the meaning specified in Section 6.1(a);
+“Out of Specification” or “OOS” means a confirmed result that falls outside the Specifications.
+“Party” or “Parties” means, as the context requires individually or collectively, Patheon and Client;
+“Patheon Competitor” means a business that derives greater than 50% of its revenues from performing contract pharmaceutical development or commercial manufacturing services for Third Parties;
+“Patheon Indemnitees” has the meaning specified in Section 10.4;
+“Patheon Intellectual Property” means Intellectual Property generated or derived by Patheon before performing any Manufacturing Services, or developed by Patheon while performing the Manufacturing Services or otherwise generated or derived by Patheon in its business which Intellectual Property is not Client Intellectual Property;
+“Price” means the price measured in US Dollars to be charged by Patheon for performing the Manufacturing Services, and includes the cost of Components (other than Client-Supplied Components), certain cost items as set forth in a Product Agreement on Schedule B, and annual stability testing costs as set forth in a Product Agreement on Schedule C;
+"Product(s)" means the product(s) listed in a Product Agreement on Schedule A;
+“Product Agreement” means the agreement between Patheon and Client issued under this Agreement in the form set forth in Appendix 1 (including Schedules A to D) under which Patheon will perform Manufacturing Services at a particular Manufacturing Site as updated, amended and revised from time to time by the Parties in accordance with the terms of this Agreement;
+“Product Warranties” will have the meaning specified in Section 9.3(a);
+"Quality Agreement" means the agreement between the Parties entering into a Product Agreement that sets out the quality assurance standards and responsibilities for the
+- 6 -
+Master Manufacturing Services Agreement
+Manufacturing Services to be performed by Patheon for Client, as such agreement may be amended from time to time in accordance with its terms; the Parties anticipate that the Quality Agreement will be executed within 30 days after the Effective Date of the Product Agreement;
+“Quantity Converted” as the meaning specified in Section 2.2(a);
+“Quantity Dispensed” has the meaning specified in Section 2.2(a);
+“Quantity Received” has the meaning specified in Section 2.2(a);
+“Quarter” means each successive period of three calendar months commencing on January 1, April 1, July 1 and October 1;
+“Recall” means any action (i) by Client or its Affiliates or licensees to recover title to or possession, or stop distribution, prescription or consumption, of quantities of the Products sold or shipped to Third Parties (including, without limitation, the voluntary withdrawal of Products from the market); or (ii) by any Regulatory Authorities to detain or destroy any of the Products. Recall will also include any action by Client or its Affiliates or licensees to refrain from selling or shipping quantities of the Products to Third Parties that would have been subject to a Recall if sold or shipped.
+“Recipient” has the meaning specified in Section 11.1;
+"Regulatory Authority" means the FDA, EMA, and Health Canada and any other foreign regulatory agencies competent to grant marketing approvals for pharmaceutical products including the Products in the Territory;
+“RFID” means Radio Frequency Identification Devices which (at present or in the future) may be affixed to Products or Materials to assist in inventory control, tracking, and identification;
+“Remediation Period” has the meaning specified in Section 8.2(a);
+“Set Exchange Rate” means the exchange rate to convert one unit of the Patheon Manufacturing Site local currency into one unit of the billing currency for each Year, calculated as the average daily interbank exchange rate for conversion of the Patheon Manufacturing Site local currency into one unit of the billing currency during the full year period (October 1st [preceding year] to September 30th) as published by OANDA.com “The Currency Site” under the heading “FxHistory: historical currency exchange rates” at www.OANDA.com/convert/fxhistory;
+“Shortfall” has the meaning specified in Section 2.2(b);
+“Significant Quality Event” means any event occurring during the Manufacturing of the Product resulting in a Deviation that materially impacts the quality, performance, safety or reliability of the Product or intermediates thereof. A confirmed Out of Specification result is a Significant Quality Event;
+"Specifications" means the requirements, for each Material, Component, Active Material or Product, which is given by Client to Patheon in accordance with the procedures listed in a Product Agreement on Schedule A and which contains documents or requirements relating to each Product, including, without limitation:
+- 7 -
+Master Manufacturing Services Agreement
+(a) specifications for Active Materials and Components;
+(b) manufacturing specifications, directions, and processes;
+(c) storage requirements;
+(d) all environmental, health and safety information for each Product including material safety data sheets;
+(e) the in-process specifications; and
+(f) the finished Product specifications, packaging specifications and shipping requirements for each Product;
+all as updated, amended and revised from time to time by Client in accordance with the terms of this Agreement;
+“Target Yield” has the meaning specified in Section 2.2(a);
+“Target Yield Determination Batches” has the meaning specified in Section 2.2(a);
+"Technical Dispute" has the meaning specified in Section 12.2;
+“Technology Transfer” means the transfer to Client or any Third Party designated by Client by Patheon of all information relating to the process of manufacturing Product, all documents, manufacturing instructions, specifications, and any other relevant documentation, all relevant manufacturing know-how, licenses and materials (including raw materials specifications) related to Product that Patheon or its Affiliates, as applicable, controls or has the right to license at any time during the Term and that is necessary to enable Client or its designee to manufacture Product in accordance with the Specifications, and to comply with applicable regulatory requirements (including obtaining any necessary regulatory approvals, conducting any required studies and developing any other regulatory documentation) and all Applicable Laws in connection with the transfer;
+"Territory" means any geographic area described in a Product Agreement where Products manufactured by Patheon will be distributed by Client;
+“Third Party” means any party other than Client, Patheon or their respective Affiliates;
+"Third Party Rights" means any Intellectual Property of any party other than Client or Patheon or their respective Affiliates;
+“United States” means the United States of America including its territories and possessions; and
+"Year" means in the first year of this Agreement, the period from the Effective Date up to and including December 31 of the same calendar year, and thereafter will mean a calendar year.
+- 8 -
+Master Manufacturing Services Agreement
+1.4
+- 9 -
+Master Manufacturing Services Agreement
+Currency.
+Unless otherwise agreed in a Product Agreement, all monetary amounts expressed in this Agreement are in United States Dollars (USD).
+1.5 Sections and Headings.
+The division of this Agreement into Articles, Sections, Subsections, an Appendix, Schedules and Exhibits and the insertion of headings are for convenience of reference only and will not affect the interpretation of this Agreement. Unless otherwise indicated, any reference in this Agreement to a Section, Appendix, Schedule or Exhibit refers to the specified Section, Appendix, Schedule or Exhibit to this Agreement. In this Agreement, the terms "this Agreement", "hereof", "herein", "hereunder" and similar expressions refer to this Agreement as a whole and not to any particular part, Section, Appendix, Schedule or Exhibit of this Agreement.
+1.6 Singular Terms.
+Except as otherwise expressly stated or unless the context otherwise requires, all references to the singular will include the plural and vice versa, and all references to “includes” or “including” will mean “includes without limitation” or “including without limitation.”
+1.7 Appendix 1, Schedules and Exhibits.
+Appendix 1 (including Schedules thereto) and the following Exhibits are attached to, incorporated in, and form part of this Agreement:
+Appendix 1 - Form of Product Agreement (Including Schedules A to D)
+Exhibit A - Technical Dispute Resolution
+Exhibit B - Monthly Active Materials Inventory Report
+Exhibit C - Report of Annual Active Materials Inventory Reconciliation and Calculation of Actual Annual Yield
+Exhibit D - Example of Price Adjustment Due to Currency Fluctuation
+ARTICLE 2
+PATHEON'S MANUFACTURING services
+2.1 Manufacturing Services.
+Patheon will perform the Manufacturing Services for the Territory for the fees specified in a Product Agreement in Schedules B and C. Schedule B to a Product Agreement sets forth a list of cost items that are included or not included in the unit Price for Products; all cost items that are not included in the Price are subject to additional fees to be paid by the Client as agreed by the Parties. Patheon may amend the fees set out in Schedules B and C to a Product Agreement as set forth and in accordance with Article 4. Patheon will perform the Manufacturing Services in strict compliance with the established Specifications, cGMP and Applicable Laws. Patheon may not change the Specifications or the Manufacturing Site (including facility modifications) or any other aspect of the manufacturing process used to perform the Manufacturing Services with respect to the Products except with the prior written consent of Client, this consent not to be unreasonably withheld. Unless otherwise agreed in a Product
+- 10 -
+Master Manufacturing Services Agreement
+Agreement or in this Agreement, and for so long as Patheon remains in material compliance with its obligations under this Agreement and the applicable Product Agreement, Patheon will manufacture at least […***…] % (“Annual Minimum”) of Products manufactured by or on Client’s behalf for sale by Client in the Territory in a particular Year. If Patheon does not remain in material compliance, the Annual Minimum will no longer apply in addition to any other remedies the Client may have under this Agreement. In performing the Manufacturing Services, Patheon and Client agree that:
+(a) Use of Active Materials and Components. Patheon will use the Active Materials and Components to manufacture Products in accordance with this Agreement. Patheon will not use the Active Materials, any Client-Supplied Components or any other Components paid for by Client for any other use or purpose. Patheon will use all Active Materials and Components on a first-to-expire, first-to-use basis in manufacturing Products under this Agreement.
+(b) Quality Control and Quality Assurance. Patheon will perform the quality control and quality assurance testing specified in the Quality Agreement. Batch review and release to Client will be the responsibility of Patheon’s quality assurance group, consistent with the Quality Agreement. Patheon will perform its Batch review and release responsibilities in accordance with Patheon’s standard operating procedures copies of which have been made available to Client and will not change in a material way related to Product without Client consent (not to be unreasonably withheld), and the Quality Agreement. Each time Patheon ships Products to Client or Client’s designee, it will give Client a Certificate of Analysis and Certificate of Compliance, and a list of all Deviations (“Delivery Documentation”). Client will have sole responsibility for the release of Products to the market. The Batch documents, including, but not limited to, Batch production records, lot packaging/labeling records, equipment set up control, operating parameters, investigation/non-conformances, and data printouts, raw material data, and laboratory notebooks will be the exclusive property of Client. But any intellectual property comprised of the form and style of those Batch documents are the exclusive property of Patheon and Patheon will not be obligated to disclose to Client confidential or proprietary information of Third Parties contained in any lab notebooks that is unrelated to the Manufacturing Services. Subject to the foregoing, Patheon will provide any information reasonably required by Client to perform, if required, a Technology Transfer or if requested by a Regulatory Authority in a redacted form at Client’s expense. Except for Patheon Intellectual Property, all information contained in the Batch documents, including, but not limited to specific Product related information, is Client property.
+(c) Components. Patheon will purchase (with the exception of Client-Supplied Components) and test all Components at Patheon's expense and as required by the Product Agreement in accordance with the Specifications and the Quality Agreement.
+(d) Stability Testing. Patheon will conduct stability testing on the Products as part of the Manufacturing Services provided hereunder. Patheon will perform this testing in accordance with the protocols set out in the Quality Agreement and the Specifications for the separate fees and during the time periods set out in Schedule C to a Product Agreement, if applicable. Patheon will not make any changes to these testing protocols without prior written approval from Client. If a confirmed stability test failure occurs, Patheon will notify Client within one Business Day, after which Patheon and Client will jointly determine the proceedings and methods to be undertaken to investigate the cause of the failure in accordance with the Quality Agreement, including which Party will bear the cost of the investigation. Patheon will not be liable for these costs unless it has failed to perform the Manufacturing Services in accordance with the Quality Agreement, Specifications, cGMPs or Applicable Laws. Patheon will give Client all stability test data and results (including a final report) at Client’s request within […***…] Business Days, upon completion of the testing.
+- 11 -
+Master Manufacturing Services Agreement
+(e) Packaging. Patheon will package the Products as set out in the Specifications and the applicable master packaging records approved by Client. Client will be responsible for the cost of artwork development, as applicable. Patheon will determine and imprint the Batch numbers and expiration dates for each Product shipped. The expiration dates must be determined in accordance with the Specifications. The Batch numbers and expiration dates will be affixed on the Products and on the shipping carton of each Product as outlined in the Specifications and as required by the Quality Agreement, cGMPs and Applicable Laws. Client may, in its sole discretion, make changes to labels, product inserts, and other packaging for the Products. Those changes will be submitted by Client to all applicable Regulatory Authorities. Client will be responsible for the cost of labelling obsolescence when changes occur, as contemplated in Section 4.4. Patheon's name will not appear on the label or anywhere else on the Products unless: (i) required by any Applicable Laws; or (ii) Patheon consents in writing to the use of its name.
+(f) Active Materials and Client-Supplied Components. At least […***…] before the scheduled production date, Client will deliver the Active Materials and any Client-Supplied Components to the Manufacturing Site DDP, in sufficient quantity to enable Patheon to manufacture the desired quantities of Product and to ship Product on the Delivery Date. Upon receipt of the Active Materials, Patheon will test all Active Materials in accordance with the provisions of the Product Agreement and in accordance with the applicable Quality Agreement. If the Active Materials and/or Client-Supplied Components are not received […***…] before the scheduled production date, Patheon may delay the shipment of Product by the same number of days as the delay in receipt of the Active Materials and/or Client-Supplied Components. But if Patheon is unable to manufacture Product to meet this new shipment date due to prior Third Party production commitments, Patheon may delay the shipment until a later date as agreed to by the Parties, but Patheon will make commercially reasonable efforts to make the shipment as soon as possible. All shipments of Active Material will be accompanied by Certificate(s) of Analysis provided by Client, confirming the identity and purity of the Active Materials and its compliance with the Active Material Specifications set forth in the Product Agreement.
+(g) Bill Back Items. Bill Back Items purchased by Patheon will be charged to Client at Patheon’s actual and reasonable cost plus a […***…]% handling fee for Bill Back Items that cost less than $5,000 and a […***…]% handling fee for Bill Back Items that cost $5,000 or more, but Client must give prior written approval for the purchase of all Bill Back items. Patheon will use commercially reasonable efforts to order Bill Back Items in amounts to minimize the handling fee.
+(h) Handling and Storage. Patheon will store at no cost to Client inventory to support […***…] months of production per the forecast of the Active Material and Client-Supplied Components in a controlled and monitored environment and at appropriate conditions in accordance with Specifications, the Quality Agreement, and Applicable Laws.
+2.2 Active Material Yield.
+(a) Reporting. Patheon will give Client a monthly inventory report of the Active Materials held by Patheon within five Business Days of the end of the most recent monthly using the inventory report form set out in Exhibit B, which will contain the following information for the month:
+Quantity Received: The total quantity of Active Materials that complies with the Specifications and is received at the Manufacturing Site during the applicable month (“Quantity Received”).
+Quantity Dispensed: The total quantity of Active Materials dispensed at the Manufacturing Site during the applicable month (“Quantity Dispensed”). The Quantity
+- 12 -
+Master Manufacturing Services Agreement
+Dispensed is calculated by adding the Quantity Received to the inventory of Active Materials that complies with the Specifications and is held by Patheon at the beginning of the applicable month, less the inventory of Active Materials that complies with the Specifications and is held by Patheon at the end of the month. The Quantity Dispensed will only include Active Materials received and dispensed in commercial manufacturing of Products and will not include any (i) Active Materials that must be retained by Patheon as samples, (ii) Active Materials contained in Product that must be retained as samples, (iii) Active Materials used in testing (if applicable), and (iv) Active Materials received or dispensed in technical transfer activities or development activities during the applicable period, including without limitation, any regulatory, stability, validation or test Batches manufactured during the applicable period, in each case of clauses (i) through (iv) in accordance with this Agreement.
+Quantity Converted: The total amount of Active Materials contained in the Product manufactured with the Quantity Dispensed (including any additional Product produced in accordance with Section 6.3(a) or 6.3(b)), delivered by Patheon, and not rejected, recalled or returned in accordance with Section 6.1 or 6.2 because of Patheon’s failure to perform the Manufacturing Services in accordance with Specifications, cGMPs, and Applicable Laws.
+Client acknowledges that, if there is no change in this information from one month to the next month, the report will reflect that.
+Within […***…] days after the end of each Year, Patheon will prepare an annual reconciliation of Active Materials on the reconciliation report form set forth in Exhibit C including the calculation of the "Actual Annual Yield" or "AAY" for the Product at each Manufacturing Site during the Year. AAY is the percentage of the Quantity Dispensed that was converted to Product and is calculated as follows:
+Quantity Converted during the Year x 100%
+Quantity Dispensed during the Year
+After Patheon has produced a minimum of […***…] successful commercial production Batches of Product and has produced commercial production Batches for at least […***…] months at the Manufacturing Site (collectively, the "Target Yield Determination Batches"), the Parties will agree on the target yield for the Product at the Manufacturing Site (each, a "Target Yield"). The Target Yield will be revised annually to reflect the actual manufacturing experience as agreed to by the Parties.
+Additionally, promptly following production of the validation Batches, but prior to production of the […***…] Target Yield Determination Batches described above, the Parties will agree to an interim Target Yield that will apply before determination of the Target Yield set out above, based on data from production of the validation Batches. Promptly following production of the first […***…] Target Yield Determination Batches described above, the Parties will agree to an updated interim Target Yield that will apply before determination of the Target Yield set out above, based on data from production of the first […***…] Target Yield Determination Batches.
+(b) Shortfall Calculation. If the Actual Annual Yield falls more than […***…]% below the respective Target Yield in a Year, then the shortfall for the Year (the "Shortfall") will be calculated as follows:
+- 13 -
+Master Manufacturing Services Agreement
+Shortfall = [(Target Yield – […***…]%) – AAY] * Active Materials Credit Value * Quantity Dispensed
+(c) Credit for Shortfall. If there is a Shortfall for a Product in a Year, then Patheon will credit Client’s account for the amount of the Shortfall not later than […***…] days after the end of the Year.
+Each credit under this Section 2.2(c) will be summarized on the reconciliation report form set forth in Exhibit C. Upon expiration or termination of a Product Agreement, any remaining credit owing under this Section 2.2 will be paid to Client within […***…] days of the expiration or termination of the Product Agreement. The Annual Shortfall, if any, will be disclosed by Patheon on the reconciliation report form.
+(d) Maximum Credit. Patheon's liability for Active Materials calculated in accordance with this Section 2.2 for any Product Agreement in a Year will not exceed, in the aggregate, the Maximum Credit Value set forth in Schedule D to the Product Agreement.
+(e) No Material Breach. It will not be a material breach of this Agreement by Patheon under Section 8.2(a) if the Actual Annual Yield is less than the Target Yield unless the Actual Annual Yield is more than […***…]% below the Target Yield.
+ARTICLE 3
+CLIENT'S OBLIGATIONS
+3.1 Payment.
+Client will pay Patheon for performing the Manufacturing Services in accordance with this Agreement according to the Prices specified in Schedules B and C in a Product Agreement. These Prices may be subject to adjustment under Sections 4.2 and 4.3 of this Agreement. Client will also pay Patheon for any Bill Back Items as provided in Section 2.1(g).
+3.2 Active Materials and Qualification of Additional Sources of Supply.
+Client will at its sole cost and expense, deliver the Active Materials to Patheon (in accordance with Section 2.1(f)). If applicable, Patheon and the Client will reasonably cooperate to permit the import of the Active Materials to the Manufacturing Site. Client’s obligation will include obtaining the proper release of the Active Materials from the applicable Customs Agency and Regulatory Authority. Client or Client’s designated broker will be the “Importer of Record” for Active Materials imported to the Manufacturing Site. The Active Materials will be held by Patheon on behalf of Client as set forth in this Agreement. The Active Materials will at all times remain the property of Client. Patheon will ensure that the Active Materials will not become subject to any encumbrances, liens or other third-party claims while in Patheon’s possession. Any Active Materials received by Patheon will only be used by Patheon to perform the Manufacturing Services.
+If Client asks Patheon to qualify an additional source for the Active Material or any Component, Patheon will evaluate the Active Material or Component to be supplied by the additional source to determine if it is suitable for use in the Product. The Parties will agree on the scope of work to be performed by Patheon at Client’s cost. For an Active Material, this work at a minimum will include:
+- 14 -
+Master Manufacturing Services Agreement
+(a) laboratory testing to confirm the Active Material meets existing specifications;
+(b) manufacture of an experimental Batch of Product that will be placed on three months accelerated stability; and
+(c) manufacture of three full-scale validation Batches that will be placed on concurrent stability (one Batch may be the registration Batch if manufactured at full scale).
+Section 6.3(c) will apply to all Product manufactured using the newly approved Active Material or Component because of the limited material characterization that is performed on additional sources of supply.
+ARTICLE 4
+CONVERSION fees AND COMPONENT COSTS
+4.1 First Year Pricing.
+The tiered Price and annual stability Price for the Products through December 31, 2015 are listed in Schedules B and C in a Product Agreement and are subject to the adjustments set forth in Sections 4.2 and 4.3.
+4.2 Price Adjustments – Subsequent Years’ Pricing.
+Beginning January 1, 2016, Patheon may adjust the Price effective January 1st of each Year as follows:
+(a) Manufacturing and Stability Testing Costs. For Products manufactured in the United States or Puerto Rico, Patheon may adjust the conversion component of Price for inflation, based upon the preliminary number for any increase or decrease in the Producer Price Index pcu325412325412 for Pharmaceutical Preparation Manufacturing published by the United States Department of Labor, Bureau of Labor Statistics (“PPI”) in August of the preceding Year compared to the final number for the same month of the Year prior to that, unless the Parties otherwise agree in writing. On or before November 30th of each Year, Patheon will give Client a statement setting forth the calculation for the inflation adjustment to be applied in calculating the Price for the next Year. But Client will have the right to dispute the calculation in good faith and the existing Prices will continue to apply until the dispute is resolved. If necessary, the Price will be retroactively adjusted for the applicable period after the dispute is resolved. For Products manufactured outside the United States or Puerto Rico, Patheon may similarly adjust the Price for inflation using an equivalent inflation index to be agreed by the Parties in a Product Agreement.
+(b) Component Costs. Patheon may increase or, if the average price of the Component costs decreases, Patheon will decrease the Price for the next Year to pass through the actual additional or reduced Component costs. In November of each Year, Patheon will give Client reasonably detailed information about the increase or decrease in Component costs which will be applied to the calculation of the Price for the next Year to reasonably demonstrate that the Price increase or decrease is justified. But Patheon will not be required to give information to Client that is subject to obligations of confidentiality between Patheon and its suppliers. But, at Client’s request, Patheon will allow an independent third party auditor to review the information supporting the increase or decrease in Component costs and confirm that the information reasonably demonstrates that the Price increase or decrease is justified and reasonable.
+- 15 -
+Master Manufacturing Services Agreement
+(c) Pricing Basis. Client acknowledges that the Price in any Year is quoted based upon the Minimum Order Quantity and the Annual Volume specified in Schedule B to a Product Agreement. The Price is subject to change if the specified Minimum Order Quantity changes or if the Annual Volume is not ordered in a Year. For greater clarity, if Patheon and Client agree that the Minimum Order Quantity will be reduced or the Annual Volume in the lowest tier will not be ordered in a Year whether as a result of a decrease in estimated Annual Volume or otherwise and, as a result of the reduction, Patheon demonstrates to Client’s reasonable satisfaction that its costs to perform the Manufacturing Services or to acquire the Components for the Product will increase or decrease on a per unit basis (including the amount of the increase), then Patheon may increase or decrease the Price by an amount sufficient to absorb the documented increased or reduced costs. On or before November 1st of each Year, Patheon will give Client a statement setting forth the information to be applied in calculating those cost increases or decreases for the next Year. But Patheon will not be required to give information to Client that is subject to obligations of confidentiality between Patheon and its suppliers. But, at Client’s request, Patheon will allow an independent third party auditor to review the information supporting the increase in Component costs and confirm that the information reasonably demonstrates that the Price increase is justified.
+(d) Adjustments Due to Currency Fluctuations. If the Parties agree in a Product Agreement to invoice in a currency other than the local currency for the Manufacturing Site, Patheon will adjust the Price to reflect currency fluctuations in accordance with this Section 4.2(d). If the Set Exchange Rate for a given Year has changed, the adjustment will be calculated after all other annual Price adjustments under this Section 4.2 have been made. The adjustment will proportionately reflect the increase or decrease, if any, in the Set Exchange Rate compared to the Set Exchange Rate established for the prior Year or the Initial Set Exchange Rate, as the case may be. An example of the calculation of the price adjustment (for a Canadian Manufacturing Site invoiced in USD) is set forth in Exhibit D.
+(e) Tier Pricing (if applicable). The pricing in Schedule B of a Product Agreement is set forth in Annual Volume tiers based upon the Client’s volume forecasts under Section 5.1. The Client will be invoiced during the Year for the unit price set forth in the Annual Volume tier based on the […***…] month forecast provided in September of the previous Year. Within 30 days of the end of each Year or of the termination of the Agreement, Patheon will send Client a reconciliation of the actual volume of Product ordered by the Client during the Year with the pricing tiers. If Client has overpaid during the Year, Patheon will issue a credit to the Client for the amount of the overpayment within 45 days of the end of the Year or will issue payment to the Client for the overpayment within 45 days of the termination of the Agreement. If Client has underpaid during the Year, Patheon will issue an invoice to the Client under Section 5.6 for the amount of the underpayment within 45 days of the end of the Year or termination of the Agreement. If Client disagrees with the reconciliation, the Parties will work in good faith to resolve the disagreement amicably. If the Parties are unable to resolve the disagreement within 30 days, the matter will be handled under Section 12.1.
+For all Price adjustments under this Section 4.2, Patheon will deliver to Client on or before November 30th of each Year a revised Schedule B to the Product Agreement to be effective for Product delivered on or after the first day of the next Year, which revised Schedule B must be approved in writing by Client before it becomes binding on the Parties. Client’s approval must not be unreasonably withheld.
+- 16 -
+Master Manufacturing Services Agreement
+4.3 Price Adjustments – Current Year Pricing.
+During any Year, the Prices set out in Schedule B of a Product Agreement will be adjusted as follows:
+Extraordinary Increases or Decreases in Component Costs. If, at any time, market conditions result in Patheon's cost of Components being materially greater or less than the cost on which the current Price is based, then the Parties will adjust the Price for any affected Product that reflects the increased or decreased Component costs. Changes materially greater than normal forecasted increases or decreases will have occurred if: (i) the cost of a Component increases or decreases by […***…]% of the cost for that Component upon which the most recent fee quote was based; or (ii) the aggregate cost for all Components required to manufacture a Product increases or decreases by […***…]% of the total Component costs for the Product upon which the most recent fee quote was based. If Component costs have been previously adjusted to reflect an increase or decrease in the cost of one or more Components, the adjustments set out in (i) and (ii) above will operate based on the last cost adjustment for the Components.
+For a Price adjustment under this Section 4.3, Patheon will deliver to Client a revised Schedule B to the Product Agreement and budgetary pricing information, adjusted Component costs or other documents reasonably sufficient to demonstrate that a Price adjustment is justified, to Client’s reasonable satisfaction. Client will have the right to dispute any Price adjustment in good faith, and for the duration of the dispute, the existing Prices will continue to apply. If necessary, the Price will be retroactively adjusted for the applicable period after the dispute is resolved. At Client’s request, Patheon will allow an independent Third Party auditor to review the information supporting the increase or decrease in Component costs and confirm that the information reasonably demonstrates that the Price increase or decrease is justified and reasonable. Patheon will have no obligation to deliver any supporting documents that are subject to obligations of confidentiality between Patheon and its suppliers. For an undisputed Price adjustment, the revised Price will be effective for any Product delivered on or after the first day of the month following Client’s receipt of the revised Schedule B to the Product Agreement. If the Price is revised pursuant to this Section 4.3, it will not be revised subsequently pursuant to Section 4.2(b) with respect to the same increased Component costs.
+4.4 Adjustments Due to Technical Changes.
+Amendments to the Specifications or the Quality Agreement requested by Client will only be implemented following a technical and cost review that Patheon will perform at Client’s cost, and are subject to Client and Patheon reaching agreement on any Price changes required because of the amendment. Amendments to the Specifications, the Quality Agreement, or the Manufacturing Site requested by Patheon will only be implemented following the written approval of Client. Upon receiving notice of a request by Client for any such amendments, Patheon will promptly advise Client in writing of any scheduling adjustments, any cost increases or decreases or other changes that may result from the change, and (a) will use its best efforts to make any change identified in the Client request that is in response to a regulatory or safety issue pertaining to the Product, and (b) will use commercially reasonable efforts to implement any other change identified in a Client request by the date requested by Client, or as soon thereafter as it is commercially reasonable. If Client accepts a proposed Price change, the proposed change in the Specifications will be implemented, and the Price change will become effective, only for those orders of Products that are manufactured under the revised Specifications. In addition, Client agrees to purchase, at Patheon's actual cost (including all reasonable costs incurred by Patheon for the purchase and handling of the Inventory), all Inventory used under the "old" Specifications and purchased or maintained by Patheon in order to fill Firm Orders or under Section 5.2, but only to the
+- 17 -
+Master Manufacturing Services Agreement
+extent the Inventory can no longer be used under the revised Specifications. Open purchase orders for Components no longer required under any revised Specifications that were placed by Patheon with suppliers in order to fill Firm Orders or under Section 5.2 will be cancelled where possible, and if the orders may not be cancelled without penalty, will, at Client’s sole discretion, be assigned to and satisfied by Client or cancelled by Patheon and Client will reimburse Patheon for any penalty it incurs due to the cancellation.
+4.5 Multi-Country Packaging Requirements.
+If Client decides to have Patheon perform Manufacturing Services for the Product for countries outside the Territory, then Client will inform Patheon of the packaging requirements for each such country and Patheon will prepare a quotation for consideration by Client of any additional costs for Components (other than Client-Supplied Components) and the change over fees for the Product destined for each such country. The agreed additional packaging requirements and related packaging costs and change over fees will be set out in a written amendment to this Agreement.
+ARTICLE 5
+ORDERS, SHIPMENT, INVOICING, PAYMENT
+5.1 Orders and Forecasts.
+(a) Rolling […***…] Month Forecast. When each Product Agreement is executed, Client will give Patheon a non-binding […***…] month forecast of the volume of Product that Client expects to order in the first […***…] months of commercial manufacture of the Product. This forecast will then be updated by Client on or before the […***…] day of each month on a rolling forward basis. Client will update the forecast forthwith if it determines that the volumes estimated in the most recent forecast have changed by more than […***…]%. The most recent […***…] month forecast will prevail.
+(b) Firm Orders for Initial Manufacturing Month. At least […***…] months before the start of commercial manufacture of the Product, Client will update the rolling forecast for the first […***…] months of manufacture of the Product (the “Initial Manufacturing Period”). Subject to the provisions of Section 5.1(c), the first month of this updated forecast (“Initial Manufacturing Month”) will constitute a firm written order in the form of a purchase order or otherwise ("First Firm Order") by Client to purchase and, when accepted by Patheon, for Patheon to manufacture the quantity of the Product. If manufacturing has not started, Client may cancel any Batches from the First Firm Order at a cost of $[…***…] per cancelled Batch per month until manufacturing starts, if notice of cancellation is received by Patheon […***…] days or more before the scheduled Delivery Date under the First Firm Order. If manufacturing has not started, Client may cancel any Batches from the First Firm Order if notice of cancellation is received by Patheon more than […***…] days but fewer than […***…] days before the scheduled Delivery Date under the First Firm Order, but Client will pay Patheon $[…***…] for each cancelled Batch. The Parties agree that this payment will be considered liquidated damages for Patheon’s loss of manufacturing capacity due to the Client’s cancellation of manufacturing and will not be considered a penalty. If the First Firm Order is changed or adjusted as described above, then the initial rolling […***…] month forecast will also be adjusted as necessary.
+(c) Firm Orders Thereafter. Before and during the Initial Manufacturing Period, and on a rolling basis during the term of the Product Agreement, Client will issue an updated […***…] month forecast on
+- 18 -
+Master Manufacturing Services Agreement
+or before the […***…] day of each month. This forecast will start on the first day of the next month. The first […***…] months of this updated forecast will be considered binding firm orders. But the initial order related to the launch of each Product will not be binding until the Client receives approval from the FDA to market the applicable Product. Concurrent with the delivery of the applicable forecast, Client will issue a firm written order for the first […***…] months of the forecast in the form of a purchase order or otherwise (“Firm Order”) by Client to purchase and, when accepted by Patheon, for Patheon to manufacture and deliver the agreed quantity of the Products as set forth in the Firm Order. The Delivery Date specified in the Firm Order will not be less than …***… days following the date that the Firm Order is submitted. Firm Orders submitted to Patheon will specify Client's purchase order number, quantities by Product type, monthly delivery schedule, and any other elements necessary to ensure the timely manufacture and shipment of the Products. Upon Patheon’s acceptance of a Firm Order, the quantities of Products ordered in the Firm Order will be firm and binding on the Parties and may only be reduced by written agreement of the Parties.
+(d) […***…] Year Forecast. On or before the […***…] day of May of each Year, Client will give Patheon a written non-binding […***…]-year forecast, broken down by Quarters […***…], of the volume of each Product Client then anticipates will be required to be manufactured and delivered to Client during the […***…]-year period.
+(e) Acceptance of Firm Order. Patheon will accept Firm Orders by sending an acknowledgement to Client within […***…] Business Days of its receipt of the Firm Order. The acknowledgement will include, subject to confirmation from the Client, the Delivery Date for the Product ordered. The Delivery Date may be amended by written agreement of the Parties or as set forth in Section 2.1(f) or 5.1(b). If Patheon fails to send an acknowledgement to Client within the applicable […***…] Business Day period, then the Firm Order will be deemed to have been accepted by Patheon. Patheon will accept Firm Orders submitted in accordance with this Agreement. If Patheon rejects a Firm Order submitted in accordance with this Agreement, without limiting Client’s other rights and remedies hereunder, Client may obtain the Product from another supplier, and this Product will not be included for purposes of calculating the Annual Minimum under this Agreement, and the Annual Minimum will automatically be reduced by […***…]%. If Patheon rejects two or more Firm Orders in a […***…]-month period, the Annual Minimum will no longer apply.
+5.2 Reliance by Patheon.
+(a) Client understands and acknowledges that Patheon will rely on the Firm Orders and rolling forecasts submitted under Sections 5.1(a) and (b) in ordering the Components (other than Client-Supplied Components) required to meet the Firm Orders. In addition, Client understands that to ensure an orderly supply of the Components, Patheon may want to purchase the Components in reasonable volumes to meet the production requirements for Products during part or all of the forecasted periods referred to in Section 5.1(a) or to meet the production requirements of any longer period agreed to in writing by Patheon and Client. Accordingly, Client authorizes Patheon to purchase Components in quantities reasonably needed to satisfy the Manufacturing Services requirements for Products for the first […***…] months contemplated in the most recent forecast given by Client under Section 5.1(a). Patheon may make other purchases of Components to meet Manufacturing Services requirements for longer periods if agreed to in writing by the Parties. The Client will give Patheon written authorization to order Components for any launch quantities of Product requested by Client which will be considered a Firm Order when accepted by Patheon. If Components ordered by Patheon under Firm Orders or this Section 5.2(a) are not included in finished Products manufactured for Client within […***…] months after the forecasted month for which the purchases have been made (or for a longer period as the Parties may agree) or if the Components have expired during the period, then Client will pay to Patheon its costs therefor (including all reasonable costs incurred by Patheon for the purchase and handling of the Components). But if these
+- 19 -
+Master Manufacturing Services Agreement
+Components are used in Products subsequently manufactured for Client or in third party products manufactured by Patheon, Client will receive credit for any costs of those Components previously paid to Patheon by Client or, at Client’s election, a refund in an amount equal to these costs. On a Quarterly basis, Patheon will provide a report summarizing the Inventory held by Patheon.
+(b) If Client fails to take possession or arrange for the destruction of Components purchased by Patheon in accordance with Section 5.2(a) within 12 months of purchase or, in the case of finished Product that is not the subject of a Deficiency Notice, within three months of manufacture, Client will pay Patheon $100.00 per pallet, per month thereafter for storing the Components or finished Product. Storage fees for Components or Product which contain controlled substances or require refrigeration will be charged at $200.00 per pallet per month. Storage fees are subject to a one pallet minimum charge per month. Patheon may ship finished Product that is not the subject of a Deficiency Notice held by it longer than three months to the Client at Client’s expense on 14 days’ prior written notice to the Client in accordance with the Specifications.
+5.3 Minimum Orders.
+Client may only order Manufacturing Services for amounts of Products in multiples of the Minimum Order Quantities as set out in Schedule B to a Product Agreement.
+5.4 Shipments.
+Shipments of Products will be made EXW Patheon’s shipping point unless otherwise agreed in a Product Agreement. Risk of loss or of damage to Products will remain with Patheon until Patheon loads the Products onto the carrier’s vehicle for shipment at the shipping point at which time risk of loss or damage will transfer to Client. Patheon will, in accordance with Client’s instructions and as agent for Client, at Client’s risk, (i) arrange for shipping to be paid by Client and (ii) at Client’s expense, obtain any export license or other official authorization necessary to export the Products. Client will arrange for insurance and will select the freight carrier used by Patheon to ship Products and may monitor Patheon’s shipping and freight practices as they pertain to this Agreement. Products will be transported in accordance with the Specifications.
+5.5 Late Delivery.
+(a) Patheon will deliver Products ordered under a Firm Order on the applicable Delivery Date. The Parties agree that they will work together closely to expedite deliveries of Product, including, without limitation, any samples of Products and Products for initial launch, and manage the scheduling of the initial Product launch.
+(b) If, after the Initial Manufacturing Period, Patheon is unable to deliver […***…]% of the quantity of a particular Product ordered under a Firm Order within […***…] days of the Delivery Date due to an act or omission by Patheon (a “Late Delivery”), Client will receive a credit from Patheon for the Late Delivery that will be applied against the purchase price under the next Firm Order. The credit will be […***…]% of the Price of the quantities of Product not delivered by Patheon under the Firm Order (i.e., Client Credit = [Quantity Ordered in the Firm Order – Actual Delivery Quantities of Product] * Price *[…***…]%). Patheon will make commercially reasonable efforts to replace the late Product within […***…] days. If, after the Initial Manufacturing Period, Patheon makes two or more Late Deliveries for the same Product in the same calendar Quarter, Client will receive an additional credit of […***…]% from Patheon for the Late Deliveries that will be applied against the purchase price under the next Firm Order. The total credit will be […***…]% of the Price of the quantities of Product not delivered by Patheon under the Firm Order (i.e., Client Credit = [Quantity Ordered in the Firm Order – Actual Delivery Quantities of Product] * Price *[…***…]%. Without
+- 20 -
+Master Manufacturing Services Agreement
+limiting Client’s other rights or remedies in this Agreement, if Patheon makes two or more Late Deliveries within a […***…]-month period, the Annual Minimum will be reduced to […***…]%. In such case, for the remainder of the term of this Agreement, the Parties agree that Patheon will manufacture at least […***…]% of the Products manufactured by or on Client’s behalf for sale by Client in the Territory in a particular Year until Patheon has no Late Deliveries for a […***…] month period in which case the Annual Minimum will increase by […***…]% and by […***…]% in each sequential […***…] month period that there are no Late Deliveries up to a maximum of […***…]%. Notwithstanding the foregoing, if Patheon makes two or more Late Deliveries within a […***…]-month period, the Parties will meet and agree on and implement a delivery improvement action plan within five Business Days. If, after the delivery improvement plan is in place, two additional Late Deliveries occur within a […***…]-month period, these Late Deliveries may be considered a material breach of this Agreement by Patheon under Section 8.2(a) and Patheon will not be allowed any further opportunity to remedy the material breach.
+(c) A Late Delivery will not include any delay in shipment of Product caused by events outside of Patheon’s reasonable control, such as a Force Majeure Event, a delay in delivery of API or Materials, a delay in Product release approval from Client, inaccurate Client forecasts, or receipt of non-conforming API or Client-Supplied Components.
+5.6 Invoices and Payment.
+Invoices will be sent by fax or email to the fax number or email address given by Client to Patheon in writing. Invoices will be sent when the Product is manufactured and released by Patheon to the Client. Patheon will also submit to Client, with each shipment of Products, a duplicate copy of the invoice covering the shipment and the associated Delivery Documentation. Patheon will also give Client an invoice covering any Inventory or Components which are to be purchased by Client under Section 5.2 of this Agreement. All payments made that are associated with Inventory or Components will be credited against the Price of any Batch of Product that incorporates the Components and/or Inventory. Each invoice will also reflect any credit to Client under Section 5.2. Each invoice will, to the extent applicable, identify Client’s Manufacturing Services purchase order number, Product numbers, names and quantities, unit price, freight charges, Delivery Documentation and the total amount to be paid by Client. Client will pay all invoices within […***…] days of the date thereof. If any portion of an invoice is disputed, the Client will pay Patheon for the undisputed amount and the Parties will use good faith efforts to reconcile the disputed amount as soon as practicable, but in no case more than […***…] days. Interest on undisputed past due accounts will accrue at […***…]% per month which is equal to an annual rate of […***…]%. The Late Delivery credits set forth in Section 5.5(b) are only available to Client if all outstanding undisputed invoices have been paid in full or are within […***…] days outstanding from the invoice date when the Late Delivery arose. In the case of a Deficiency Notice, payments will be due within […***…] days following receipt of a replacement Batch or Batches that are not subject to a Deficiency Notice. Batches that are determined to have a Latent Defect due to Patheon will be either credited against future Batches or refunded at the sole discretion of Client. No payments will be due for Non-Conforming Product and Patheon will use commercially reasonable efforts to replace the Non-Conforming Product within […***…] days.
+- 21 -
+Master Manufacturing Services Agreement
+ARTICLE 6
+PRODUCT CLAIMS AND RECALLS
+6.1 Product Claims.
+(a) Product Claims. Client has the right to reject any shipment of Products or any portion thereof that does not conform to the Product Warranties set forth in Section 9.3(a) (“Non-Conforming Products”), without invalidating any portion of the shipment of Products that conforms to the Product Warranties. Client will inspect the Products manufactured by Patheon upon receipt at the third-party site agreed to by Patheon and Client and will give Patheon written notice (a "Deficiency Notice") of all claims for Non-Conforming Products within […***…] days after Client’s receipt of the Product and the Delivery Documentation thereof (or, in the case of Latent Defect, within […***…] days after confirmation by Client, its Affiliate or any licensee, distributor or other Third Party but not after the expiration date of the Product). If Client fails to give Patheon the Deficiency Notice within the applicable […***…]- or […***…]-day period, then the delivery will be deemed to have been accepted by Client on the […***…] or […***…] day after delivery or confirmation, as applicable. Except as set out in Section 6.3, Patheon will have no liability for any Deviations for which it has not received notice within the applicable […***…]-day period except for a Latent Defect.
+(b) Determination of Deficiency. Upon receipt of a Deficiency Notice, Patheon will have […***…] days to advise Client by notice in writing that it disagrees with the contents of the Deficiency Notice. Should Patheon fail to provide such notice to Client within the […***…] day period, then Patheon will be deemed to agree with the contents of the Deficiency Notice. If Client and Patheon fail to agree within […***…] days after Patheon's notice to Client as to whether any Products identified in the Deficiency Notice are Non-Conforming Products, then the Parties will mutually select an independent laboratory or expert to evaluate if the Products are Non-Conforming Products. This evaluation will be binding on the Parties. If the independent laboratory or expert determines that any Products are Non-Conforming Products, Client may reject those Products in the manner contemplated in this Section 6.1 and Patheon will be responsible for the cost of the evaluation. If the independent laboratory determines that the Products conform to the Product Warranties, then Client will be deemed to have accepted delivery of the Products on the […***…] day after delivery (or, in the case of any defects not reasonably susceptible to discovery upon receipt of the Product, on the […***…] day after confirmation thereof by Client, but not after the expiration date of the Product) and Client will be responsible for the cost of the evaluation.
+(c) Shortages. Claims for shortages in the amount of Products shipped by Patheon will be dealt with by reasonable agreement of the Parties.
+6.2 Product Recalls and Returns.
+(a) Records and Notice. Patheon and Client will each maintain records necessary to permit a Recall of any Products delivered to Client or customers of Client. Each Party will promptly notify the other by telephone to the contacts designated in the Quality Agreement (to be confirmed in writing) of any information which might affect the marketability, safety or effectiveness of the Products or which might result in the Recall or seizure of the Products within one Business Day. Upon receiving this notice or upon this discovery, each Party will stop making any further shipments of any Products in either Party’s possession or control until Client has made a decision as to whether a Recall or some other corrective action is necessary. The decision to initiate a Recall or to take some other corrective action, if any, will be made and implemented by Client.
+- 22 -
+Master Manufacturing Services Agreement
+(b) Recalls. If (i) any Regulatory Authority issues a directive, order or, following the issuance of a safety warning or alert about a Product, a written request that any Product be Recalled, (ii) a court of competent jurisdiction orders a Recall, or (iii) Client determines that any Product should be Recalled or that a "Dear Doctor" letter is required relating the restrictions on the use of any Product, Patheon will co-operate as reasonably required by Client, having regard to all Applicable Laws.
+(c) Product Returns. Client will have the responsibility for handling customer returns of the Products. Patheon will give Client any assistance that Client may reasonably require to handle the returns including, if requested by Client, appropriate investigations.
+6.3 Patheon’s Responsibility for Non-Conforming and Recalled Products.
+(a) Non-Conforming Product. If Client rejects Products under Section 6.1, Client will not be required to pay for the Product under Section 3.1. Patheon will promptly, at Client’s election, either: (i) refund the amount paid for the Non-Conforming Products if Client previously paid for the Products, and the cost incurred by Client for the Bill Back Items and Client-Supplied Components used in the Products; (ii) offset the amount paid for the Non-Conforming Products, if Client previously paid for the Products, and the cost incurred by Client for the Bill Back Items and Client-Supplied Components used in the Products, against other amounts due to Patheon hereunder; or (iii) at Patheon’s sole expense (excluding expense to incur replacement Active Materials, but including the replacement of Client-Supplied Components and Bill Back Items), replace the Products with conforming Products without Client being liable for payment therefor under Section 3.1, contingent upon the receipt from Client of all Active Materials and Client-Supplied Components required for the manufacture of the replacement Products. For greater certainty, Patheon’s responsibility for any loss of Active Materials in Non-Conforming Product will be captured and calculated in the Active Materials Yield under Section 2.2.
+(b) Recalled Product. If a Recall or return of Products results from, or arises out of, a failure by Patheon to perform the Manufacturing Services in accordance with the terms of this Agreement, including the warranties set forth in Sections 9.3 and 9.4 or other negligence or willful misconduct of Patheon, Patheon will be responsible for the documented costs and out-of-pocket expenses of the Recall or return and will promptly, at the election of Client, either: (i) refund the amount paid for the Recalled or returned Products and the cost incurred by Client for the Bill Back Items and Client-Supplied Components used in the Products; (ii) offset the amount paid for the Recalled or returned Products and the cost incurred by Client for the Bill Back Items and Client-Supplied Components used in the Products, against other amounts due to Patheon hereunder; or (iii) replace the Recalled or returned Products with conforming Products, at Patheon’s sole expense (excluding expense to incur replacement Active Materials, but including the expense to obtain replacement Bill Back Items and Client-Supplied Components), as promptly as practical without Client being liable for payment therefor under Section 3.1, contingent upon the receipt from Client of all Active Materials and Client-Supplied Components required for the manufacture of the replacement Products. For greater certainty, Patheon’s responsibility for any loss of Active Materials in Recalled Product will be captured and calculated in the Active Materials Yield under Section 2.2. In all other circumstances, Recalls, returns, or other corrective actions will be made at Client's cost and expense. For clarification, any refund of the amount paid by Client for the Recall or return of Products that is paid by Patheon subject to this Section 6.3(b) will not be considered a liability under, and therefore will not be subject to, Section 10.2(a).
+(c) Product Rejection for Finished Product Specification Failure. Internal process specifications will be defined and agreed upon. If a Batch or portion of a Batch of Product does not meet a finished Product Specification despite Patheon’s assertion that it manufactured the Product in accordance with the agreed upon process specifications, the Batch production record, and Patheon’s standard operating procedures for manufacturing, the Parties agree that they will mutually select an
+- 23 -
+Master Manufacturing Services Agreement
+independent laboratory or expert to evaluate if such laboratory or expert can determine why the Products do not meet a finished Product Specification. The evaluation will be binding on the Parties. If the independent laboratory or expert determines that the Product is Non-Conforming due to an act or omission by Patheon or does not otherwise comply with the Terms of the Agreement, Client may reject those Products in the manner contemplated by Section 6.1 and Patheon will be responsible for the cost of the evaluation. If the independent laboratory determines that the Patheon complied with the agreed upon process specifications, the Batch production record, and Patheon’s standard operating procedures and that the Product does not meet a finished Product specification, Client will be responsible for the cost of the evaluation and will pay Patheon the applicable fee per unit for the Non-Conforming Product. In which case, the API in the Non-Conforming Product will be included in the “Quantity Converted” for purposes of calculating the “Actual Annual Yield” under Section 2.2(a).
+(d) Except as set forth in Sections 6.3(a) and (b) above, Patheon will not be liable to Client nor have any responsibility to Client for any deficiencies in, or other liabilities associated with, any Product manufactured by it (collectively, "Product Claims"). For greater clarity, Patheon will have no obligation for any Product Claims to the extent the Product Claim (i) is caused by deficiencies in the Specifications, the safety, efficacy, or marketability of the Products manufactured in accordance with this Agreement and conforming to the Specifications or any distribution thereof, (ii) results from a defect in a Component that is not reasonably discoverable by Patheon using the methods set forth in the Specifications or as otherwise provided in this Agreement, (iii) results from a defect in the Active Materials or Client-Supplied Components that is not reasonably discoverable by Patheon using the methods set forth in the Specifications or as otherwise provided in this Agreement, (iv) is caused by actions of Third Parties occurring after the Product is shipped by Patheon under Section 5.4, (v) is due to packaging design or labelling defects or omissions for which neither Patheon nor any of its Affiliates or its or their employees, agents or subcontractors has any responsibility, (vi) is due to any unascertainable reason despite Patheon having performed the Manufacturing Services in accordance with the Quality Agreement, Specifications, cGMPs, Applicable Laws, and the other terms of this Agreement, as determined by an independent laboratory or expert as set forth in Section 6.3(c) above; or (vii) is due to any other breach by Client of its obligations under this Agreement.
+6.4 Disposition of Defective or Recalled Products.
+Client will not dispose of any damaged, defective, returned, Non-Conforming or Recalled Products for which it intends to assert a claim against Patheon without Patheon’s prior written authorization to do so, which will not be unreasonably withheld or delayed. Alternatively, Patheon may instruct Client to return the Products to Patheon. Patheon will bear the cost of disposition (including any applicable storage fees or the cost of destruction) for any damaged, defective, returned or Recalled Products for which it bears responsibility under Section 6.1 or 6.3. In all other circumstances, Client will bear the cost of disposition, including all applicable fees for Manufacturing Services, for any damaged, defective, returned, or Recalled Products.
+6.5 Healthcare Provider or Patient Questions and Complaints.
+Client will have the sole responsibility for responding to questions and complaints from its customers. Questions or complaints received by Patheon from Client's and its Affiliates’ and licensees’ customers, healthcare providers or patients will be promptly referred to Client. Patheon will co-operate as reasonably required to allow Client to determine the cause of and resolve any questions and complaints. This assistance will include follow-up investigations, including testing and any other assistance reasonably requested by Client. In addition, Patheon promptly (and in any event within the timelines specified in the Quality Agreement) will give Client all agreed upon information that will enable Client to respond properly to questions or complaints about the Products as set forth in the Quality Agreement.
+- 24 -
+Master Manufacturing Services Agreement
+Client will bear all costs incurred under this Section 6.5, except to the extent the complaint resulted from a failure by Patheon to perform the Manufacturing Services in accordance with the Specifications, cGMPs, Applicable Laws, and the other terms of this Agreement, in which case those costs incurred under this Section 6.5 will be borne by Patheon.
+6.6 Sole Remedy.
+Except for the indemnity set forth in Section 10.3 and subject to the limitations set forth in Sections 10.1 and 10.2, the remedies described in this Article 6 will be Client’s sole remedy for any failure by Patheon to supply Products that conform to the Product Warranties.
+ARTICLE 7
+CO-OPERATION
+7.1 Quarterly Review.
+Each Party will forthwith upon execution of this Agreement appoint one of its employees to be a relationship manager responsible for liaison between the Parties. The relationship managers will meet not less than Quarterly to review the current status of the business relationship and manage any issues that have arisen.
+7.2 Governmental Agencies.
+Subject to Section 7.8, Patheon may communicate with any governmental agency, including but not limited to governmental agencies responsible for granting regulatory approval for the Products, regarding the Products only if, in the opinion of Patheon’s counsel, the communication is necessary to comply with the terms of this Agreement or the requirements of any Applicable Law and a representative of Client is present for a verbal communication or has reviewed and approved a written communication. Patheon will notify Client immediately upon and in any event within 24 hours after receiving any request from a Regulatory Authority for communication related to a Product.
+7.3 Records and Accounting by Patheon.
+Patheon will keep records of the manufacture, testing, and shipping of the Products (including evidence on the testing of raw materials, packaging and labeling materials as required by the Quality Agreement), and retain samples of the Products as are necessary to comply with applicable manufacturing regulatory requirements, as well as to assist with resolving Product complaints and other similar investigations. Copies of the records and samples will be retained for five years or one year following the date of Product expiry (whichever is longer), or longer if required by Applicable Laws, at which time Client will be contacted concerning the delivery and destruction of the documents and/or samples of Products at least 45 days prior to the destruction of the documents or samples. Patheon will not store these documents and/or samples beyond the time period set forth above.
+7.4 Inspection of Financial Records.
+Client or its designee may inspect Patheon reports and records relating to this Agreement during normal business hours and with reasonable advance notice of at least […***…] Business Days, but a Patheon representative must be present during the inspection. In addition, as more fully set forth in Section 4.2, Client will have the right to allow an independent third party auditor to review the information supporting the price adjustments made under Sections 4.2, 4.3 and 4.4.
+- 25 -
+Master Manufacturing Services Agreement
+7.5 Access.
+Patheon will give Client reasonable access at agreed times to procedures and documentation relevant to the Product, and to the areas of the Manufacturing Site in which the Products are manufactured, stored, handled, or shipped, to permit Client to verify that the Manufacturing Services are being performed in accordance with the Specifications, cGMPs, Applicable Laws and the Quality Agreement. But, with the exception of “For-Cause” Audits, Client will be limited each Year to one cGMP-type audit, lasting no more than […***…] days, and involving no more than […***…] auditors. Client may request additional cGMP-type audits, additional audit days, or the participation of additional auditors subject to payment to Patheon of a fee of $5,000 for each additional audit day and $1,000 per audit day for each additional auditor. The right of access set forth in this Section 7.5 will not include a right to access or inspect Patheon’s financial records. In addition, upon the request of any Regulatory Authority having jurisdiction over the manufacture of Products hereunder, the Regulatory Authority will have access to observe, audit and inspect any Manufacturing Site and Patheon’s procedures used for the manufacture, release and stability testing, and/or warehousing of Products and to audit those facilities and procedures for compliance with cGMP and/or other regulatory requirements. Patheon specifically agrees to cooperate with any inspection by a Regulatory Authority, whether prior to or after Regulatory Approval of a Product, and to provide Client a copy of any inspection or audit report resulting from the inspection within three Business Days from receiving the report. Client may be present at the Facility for consultation during any such inspection.
+7.6 Notification of Regulatory Inspections.
+Patheon will notify Client within one Business Day of any inspection, receipt of notice of any inspection and/or any request for samples by any governmental agency specifically involving the Products. Patheon will also notify Client within three Business Days of receipt of any form 483’s or warning letters or any other significant regulatory action or finding which could directly or indirectly impact the regulatory status of the Products or Patheon’s ability to perform the Manufacturing Services. Within three Business Days of receipt, Patheon will provide Client with a reasonable description of the notifications and inspections and all supporting documentation, including, as applicable, all form 483’s and warning letters or similar warning or objection, responses and all other correspondence and discussions of the applicable Regulatory Authority, which should be redacted to protect the confidential information of Third Parties. Patheon will discuss with Client and consider in good faith any comments provided by Client on the proposed response. Additionally, Patheon will obtain Client’s prior approval of any such responses related to Product. Patheon will use commercially reasonable efforts to address and rectify any issues or problems in its manufacturing facility or procedures and any objections or warnings raised by the Regulatory Authority as soon as practicable and to continue to manufacture and supply to Client, in compliance with all Applicable Laws and the terms of this Agreement, the Products ordered by Client. After the filing of a response with the FDA or other Regulatory Authority, Patheon will notify Client of any further contacts with the Regulatory Authority relating to the subject matter of the response.
+7.7 Reports.
+Patheon will supply on an annual basis all Product data in its control, including release test results, complaint test results, and all investigations (in manufacturing, testing, and storage), that Client reasonably requires in order to complete any filing under any applicable regulatory regime, including any Annual Report that Client is required to file with the FDA or any other Regulatory Authority or other information related to the performance of the Manufacturing Services mandated by a Regulatory Authority. Patheon will promptly provide a copy of the Annual Product Review Report to the Client at no additional cost. Any additional report requested by Client beyond the scope of cGMPs and customary
+- 26 -
+Master Manufacturing Services Agreement
+FDA or other Regulatory Authority requirements will be subject to an additional fee to be agreed upon between Patheon and the Client.
+7.8 Regulatory Filings.
+(a) Regulatory Authority. Client will have the sole right and responsibility for filing all documents with all Regulatory Authorities and taking any other actions that may be required for the receipt and/or maintenance of Regulatory Authority approval for the manufacture, import, export, distribution, marketing, sale, pricing and/or reimbursement of the Products. Patheon will assist Client, to the extent consistent with Patheon’s obligations under this Agreement, to obtain Regulatory Authority approval for the commercial manufacture of all Products as quickly as reasonably possible. Client will provide copies of relevant sections of regulatory filings to Patheon that are necessary for Patheon to ensure compliance of the manufacturing processes to those submitted to Regulatory Authorities.
+(b) Verification of Data. Prior to filing any documents with any Regulatory Authority that incorporate data generated by Patheon, Client will give Patheon a copy of the documents incorporating this data to give Patheon the opportunity to verify the accuracy and regulatory validity of those documents as they relate to Patheon generated data. Patheon requires […***…] days to perform this review but the Parties may agree to a shorter time for the review as needed, including as mandated by a Regulatory Authority. These documents will be Confidential Information of Client.
+(c) Verification of CMC. Prior to filing with any Regulatory Authority any documentation which is or is equivalent to the FDA’s Chemistry and Manufacturing Controls (all such documentation herein referred to as “CMC”) related to any Marketing Authorization, such as a New Drug Application or Abbreviated New Drug Application, Client will give Patheon a copy of the CMC as well as all supporting documents which have been relied upon to prepare the CMC that directly relate to the Manufacturing Services provided by Patheon. This disclosure will permit Patheon to verify that the CMC accurately describes the work that Patheon has performed and the manufacturing processes that Patheon will perform under this Agreement. Patheon requires […***…] days to perform this review but the Parties may agree to a shorter time for the review as needed. Client will give Patheon copies of all FDA filings at the time of submission to the extent containing CMC information that directly relate to the Manufacturing Services provided by Patheon and may redact this information to protect the Confidential Information of any Third Party.
+(d) Deficiencies. If, in Patheon’s sole discretion, acting reasonably, Patheon determines that any of the information given by Client under clauses (b) and (c) above is inaccurate or deficient in any material respect (the "Deficiencies"), Patheon will notify Client in writing of the Deficiencies as promptly as practical and in any case within the time frame set forth in clause (b) or (c), as applicable. The Parties will work together to have the Deficiencies resolved prior to any pre-approval inspection.
+(e) Client Responsibility. For clarity, the Parties agree that in reviewing the documents referred to in clause (b) above, Patheon’s role will be limited to verifying the accuracy of the description of the work undertaken or to be undertaken by Patheon. Subject to the foregoing, Patheon will not assume any responsibility for the accuracy of any application for receipt of an approval by a Regulatory Authority. The Client is solely responsible for the preparation and filing of the application for approval by the Regulatory Authority and any relevant costs will be borne by the Client.
+(f) Inspection by Regulatory Authorities. If Client does not give Patheon the documents requested under clause (b) above within the time specified and if Patheon reasonably believes that Patheon’s standing with a Regulatory Authority may be jeopardized, Patheon may, in its sole discretion, delay or postpone any inspection by the Regulatory Authority until Patheon has reviewed the requested
+- 27 -
+Master Manufacturing Services Agreement
+documents that directly relate to the Manufacturing Services provided by Patheon and is satisfied with their contents.
+7.9 Quality Agreement.
+For clarification, if there is any conflict between the terms and conditions of this Agreement, including this Article 7, and the terms and conditions of the Quality Agreement, the terms and conditions of the Quality Agreement will control with regard to topics directly related to quality and compliance only.
+ARTICLE 8
+TERM AND TERMINATION
+8.1 Initial Term.
+This Agreement will become effective as of the Effective Date and will continue until December 31, 2020 (the "Initial Term"), unless terminated earlier by one of the Parties in accordance herewith. This Agreement will automatically renew after the Initial Term for successive terms of two Years each if there is a Product Agreement in effect, unless either Party gives written notice to the other Party of its intention to terminate this Agreement at least 24 months prior to the end of the then current term, subject to earlier termination in accordance with the terms of this Agreement. In any event, the legal terms and conditions of this Agreement will continue to govern any Product Agreement in effect as provided in Section 1.2. Each Product Agreement will have an initial term of five Years from the start of commercial manufacture at the Manufacturing Site for the Product unless the Parties agree to a different number of Years in the applicable Product Agreement (each, an “Initial Product Term”), subject to earlier termination in accordance with the terms of this Agreement. Product Agreements will automatically renew after the Initial Product Term for successive terms of two Years each unless either Party gives written notice to the other Party of its intention to terminate the Product Agreement at least 24 months prior to the end of the then current term, subject to earlier termination in accordance with the terms of this Agreement.
+8.2 Termination for Cause.
+(a) Either Party at its sole option may terminate this Agreement or any Product Agreement upon written notice where the other Party has failed to remedy a material breach of any of its representations, warranties, or other obligations under this Agreement or any Product Agreement within 60 days following receipt of a written notice (the "Remediation Period") of the breach that expressly states that it is a notice under this Section 8.2(a) (a "Breach Notice"). The aggrieved Party's right to terminate this Agreement or a Product Agreement under this Section 8.2(a) may only be exercised for a period of 60 days following the expiry of the Remediation Period (where the breach has not been remedied) and if the termination right is not exercised during this period then the aggrieved Party will be deemed to have waived the breach of the representation, warranty, or obligation described in the Breach Notice.
+(b) Either Party at its sole option may immediately terminate this Agreement or any Product Agreement upon written notice, but without prior advance notice, to the other Party if: (i) the other Party is declared insolvent or bankrupt by a court of competent jurisdiction; (ii) a voluntary petition of bankruptcy is filed in any court of competent jurisdiction by the other Party; or (iii) this Agreement or any Product Agreement is assigned by the other Party for the benefit of creditors.
+- 28 -
+Master Manufacturing Services Agreement
+(c) Client may terminate this Agreement as to any Product and the related Product Agreement upon at least 30 days' prior written notice, if any Authority takes any action, or raises any objection, that prevents Client from importing, exporting, purchasing, or selling the Product, or Client (or its Affiliate or licensee) determines that for safety or efficacy reasons Client is not going to continue to develop or commercialize the Product. But if this occurs, Client must still fulfill all of its obligations under Section 8.4 below and under any Capital Equipment Agreement regarding the Product.
+(d) Client may terminate this Agreement or a Product Agreement at any time upon written notice to Patheon, without limiting Client’s other rights or remedies under this Agreement, if any Authority takes any enforcement action regarding the Manufacturing Site that relates to the Product or could reasonably be expected to adversely affect the ability of Patheon to supply the Product.
+(e) Patheon may terminate this Agreement or a Product Agreement upon 18 months' prior written notice if Client assigns under Section 13.6 any of its rights under this Agreement or a Product Agreement to an assignee that, in the opinion of Patheon acting reasonably is a Patheon Competitor. But this time period will automatically be extended by an additional three months if, at 18 months after the notice, Client is working in good-faith to secure, and/or obtain required approvals for, another supplier.
+8.3 Product Discontinuation; Other Causes for Termination by Client.
+(a) Client will give at least six months' advance notice if it intends to no longer order Manufacturing Services for a Product due to this Product's discontinuance in the market. Upon expiration of the applicable six-month notice period, this Agreement will terminate with respect to the Product or, if the Product is the only Product subject to this Agreement, this Agreement will terminate in its entirety.
+(b) Except for terminations under the other termination provisions of this Agreement (including Sections 8.2, 8.3(a), 9.4 and 13.7), Client will give at least 36 months’ advance notice if it intends to no longer order Manufacturing Services for a Product for any other reason. In such case, the Annual Minimum will be reduced by […***…]% beginning one year from the date of notice and each year thereafter. Upon expiration of the applicable 36 month period, at Client’s option, this Agreement will terminate with respect to the Product or, if the Product is the only Product subject to this Agreement, the Agreement will terminate in its entirety. Upon receipt of notice, Patheon will provide assistance to Client in a Technology Transfer. Except for a material breach of this Agreement by Patheon, Client will be responsible for all costs associated with the Technology Transfer. If the Technology Transfer is a result of a material breach of the Agreement by Patheon, each Party will be responsible for its own costs associated with the Technology Transfer. In all circumstances, Patheon will use at least commercially reasonable efforts to meet the timeline requested by Client.
+8.4 Obligations on Termination.
+If a Product Agreement is completed, expires, or is terminated in whole or in part for any reason, then:
+(a) Client will take delivery of and pay for all undelivered Products that are manufactured and/or packaged under a Firm Order and in compliance with the terms of this Agreement, at the price in effect at the time the Firm Order was placed;
+(b) Client will purchase, at Patheon's actual cost (including all costs incurred by Patheon for the purchase and handling of the Inventory), the Inventory applicable to the Products which was purchased, produced and maintained by Patheon in contemplation of filling Firm Orders or in accordance with Section 5.2;
+- 29 -
+Master Manufacturing Services Agreement
+(c) Client will reimburse Patheon for the purchase price payable under Patheon's orders with suppliers of Components, if the orders were made by Patheon in reliance on Firm Orders or in accordance with Section 5.2;
+(d) Client acknowledges that no Patheon Competitor will be permitted access to the Manufacturing Site; and
+(e) Client will make commercially reasonable efforts, at its own expense, to remove from Patheon site(s), within 30 days, all unused Active Material and Client-Supplied Components, all applicable Inventory and Materials (whether current or obsolete), supplies, undelivered Product, chattels, equipment or other moveable property owned by Client, related to the Agreement and located at a Patheon site or that is otherwise under Patheon’s care and control (“Client Property”). If Client fails to remove the Client Property within 30 days following the completion, termination, or expiration of the Product Agreement, Client will pay Patheon $100.00 per pallet, per month, one pallet minimum (except that Client will pay $200 per pallet, per month, one pallet minimum, for any of the Client Property that contains controlled substances, requires refrigeration or other special storage requirements) thereafter for storing the Client Property and will assume any third party storage charges invoiced to Patheon regarding the Client Property. Patheon will invoice Client for the storage charges as set forth in Section 5.5 of this Agreement.
+Any termination or expiration of this Agreement or a Product Agreement will not affect any outstanding obligations or payments due prior to the termination or expiration, nor will it prejudice any other remedies that the Parties may have under this Agreement or a Product Agreement or any related Capital Equipment Agreement. For greater certainty, expiration or termination of this Agreement or of a Product Agreement for any reason will not affect the obligations and responsibilities of the Parties under Articles 10, 11 and 12 and Sections 5.4, 5.6, 6.3, 6.4, 6.5, 6.6, 7.3, 7.4, 8.4, 13.1, 13.2, 13.3, 13.11, 13.15 and 13.16, all of which survive any termination.
+ARTICLE 9
+REPRESENTATIONS, WARRANTIES AND COVENANTS
+9.1 Authority.
+Each Party covenants, represents, and warrants to the other Party, as of the Effective Date, that (a) it has the full right and authority to enter into this Agreement and that it is not aware of any impediment that would inhibit its ability to perform its obligations hereunder and has taken all necessary action on its part to authorize the performance of the obligations; (b) the execution and delivery of this Agreement and the performance of the Party’s obligations hereunder (i) do not conflict with or violate any requirement of Applicable Laws or regulations and (ii) do not conflict with, or constitute a default or require any consent under, any contractual obligation of the Party; (c) it is duly organized, validly existing and in good standing under the laws of the state or country in which it is organized; and (d) this Agreement has been duly executed and delivered on behalf of the Party, and constitutes a legal, valid, binding obligation, enforceable against the Party in accordance with its terms.
+9.2 Client Warranties.
+Client covenants, represents, and warrants that:
+(a) Non-Infringement.
+- 30 -
+Master Manufacturing Services Agreement
+(i) the Specifications for each of the Products are its or its Affiliate's property and Client may lawfully disclose the Specifications to Patheon;
+(ii) any Client Intellectual Property provided by Client for use by Patheon in performing the Manufacturing Services according to the Specifications and the other terms of this Agreement (i) is owned or controlled by Client or its Affiliate, (ii) may be lawfully used by Patheon as directed by Client, and (iii) when used by Patheon according to the Specifications and the other terms of this Agreement does not infringe any Third Party Rights known to Client;
+(iii) subject to […***…], the […***…] or the […***…];
+(iv) as of the Effective Date, there are no actions or other legal proceedings to which the Client is a party or of which Client is aware, concerning the infringement of Third Party Rights related to any of the Specifications, or any of the Active Materials and the Client-Supplied Components, or the sale, use, or other disposition of any Product made in accordance with the Specifications;
+(b) Quality and Compliance.
+(i) the Specifications for all Products conform to all applicable cGMPs and Applicable Laws;
+(ii) once Client has received approval from the FDA to market the Products, the Products, if labelled and manufactured in accordance with the Specifications and in compliance with applicable cGMPs and Applicable Laws (i) may be lawfully sold and distributed in every jurisdiction in which Client markets the Products and (iii) will be safe for human consumption;
+(iii) on the date of shipment to the Manufacturing Site, the API will conform to the specifications for the API that Client has given to Patheon, subject to Patheon’s obligation to test the API in accordance with the Quality Agreement before beginning manufacture of the Products using the API, and that the API will be adequately contained, packaged, and labelled and will conform to the affirmations of fact on the container.
+9.3 Patheon Warranties.
+Patheon covenants, represents, and warrants that:
+(a) (1) all Products delivered hereunder will (i) conform to the applicable Specifications; (ii) be free and clear of any and all encumbrances, liens, or other third party claims; (iii) be manufactured, packaged, labelled and delivered in compliance with the Quality Agreement and applicable cGMP, all regulatory approvals for the Product, and Applicable Laws and in accordance with manufacturing procedures described in the applicable master Batch records for the Product; (iv) not be adulterated or misbranded within the meaning of the
+- 31 -
+Master Manufacturing Services Agreement
+United States Food, Drug and Cosmetic Act, as amended, and any regulations promulgated thereunder or comparable provisions under the laws and regulations of any other applicable jurisdiction (the “Act”); and (v) not be articles that, under the provisions of the Act, may not be introduced into interstate commerce; and (2) Patheon’s processes used to perform the Manufacturing Services will not infringe on any Third Party Rights (collectively, the “Product Warranties”);
+(b) it will perform the Manufacturing Services in accordance with the Quality Agreement, Specifications, cGMPs, and Applicable Laws;
+(c) the Components, Active Materials and the Bill Back Items will at all times be free and clear of any and all encumbrances, liens, or other third party claims; and
+(d) any Patheon Intellectual Property used by Patheon to perform the Manufacturing Services (i) is Patheon’s or its Affiliate's unencumbered property, (ii) may be lawfully used by Patheon, and (iii) does not infringe and will not infringe any Third Party Rights.
+9.4 Debarred Persons.
+Patheon covenants that it will not in the performance of its obligations under this Agreement use the services of any person debarred or suspended under 21 U.S.C. §335(a) or (b) or comparable provisions under the laws and regulations of any other applicable jurisdiction. Patheon represents that it does not currently have, and covenants that it will not hire, as an officer or an employee any person who has been convicted of a felony under the laws of the United States for conduct relating to the regulation of any drug product under the Act. If Patheon or any officer, employee or agent of Patheon: (a) becomes debarred; or (b) receives notice of action or threat of action with respect to its debarment, during the term of this Agreement, Patheon agrees to notify Client immediately. If Patheon or any of its officers, employees or agents becomes debarred as set forth in clause (a) above or receives notice of action or threat of action as set forth in clause (b) above, Client will have the right to terminate this Agreement upon written notice to Patheon.
+9.5 Permits.
+Client will be solely responsible for obtaining or maintaining, on a timely basis, any permits or other regulatory approvals for the Products or the Specifications, including, without limitation, all marketing and post-marketing approvals.
+Patheon will maintain at all relevant times all governmental permits, licenses, approval, and authorities required to enable it to lawfully and properly perform the Manufacturing Services.
+9.6 No Warranty.
+NEITHER PARTY MAKES ANY WARRANTY OR REPRESENTATION OF ANY KIND, EITHER EXPRESSED OR IMPLIED, BY FACT OR LAW, OTHER THAN THOSE EXPRESSLY SET FORTH IN THIS AGREEMENT. WITHOUT LIMITING THE FOREGOING, NEITHER PARTY MAKES ANY WARRANTY OR REPRESENTATION OF FITNESS FOR A PARTICULAR PURPOSE NOR ANY WARRANTY OR REPRESENTATION OF MERCHANTABILITY FOR THE PRODUCTS.
+- 32 -
+Master Manufacturing Services Agreement
+ARTICLE 10
+REMEDIES AND INDEMNITIES
+10.1 Consequential Damages.
+Except for liability for breach by either Party of its obligations of Confidentiality under Article 11, under no circumstances whatsoever will either Party be liable to the other in contract, tort, negligence, breach of statutory duty, or otherwise for (i) any (direct or indirect) loss of profits, of production, of anticipated savings, of business, or goodwill or (ii) for any other liability, damage, costs, or expense of any kind incurred by the other Party of an indirect or consequential nature, regardless of any notice of the possibility of these damages. This Section 10.1 will not be deemed to limit either Party’s indemnification obligations under this Article 10.
+10.2 Limitation of Liability.
+(a) Active Materials. Except as expressly set forth in Section 2.2 and Section 6, under no circumstances will Patheon be responsible for any loss or damage to the Active Materials. Patheon’s maximum responsibility per Year for loss or damage to the Active Materials will not exceed the Maximum Credit Value set forth in Schedule D of a Product Agreement.
+(b) Maximum Liability. Subject to Section 10.2(c) and excluding Patheon’s indemnity obligations arising under Section 10.3, Patheon’s maximum liability to Client per Year under this Agreement or the Product Agreement for a single Product for any reason whatsoever, including, without limitation, any liability arising under Article 6 hereof or resulting from any and all breaches of its representations, warranties, or any other obligations under this Agreement or the applicable Product Agreement will not exceed on a per Product basis […***…].
+(c) Nothing contained in this Agreement will exclude or limit either Party’s liability for personal injury, death or fraudulent misrepresentation.
+10.3 Patheon Indemnity.
+(a) Patheon agrees to defend and indemnify Client, its Affiliates and licensees, and their respective directors, officers, employees, and agents (“Client Indemnitees”) against all losses, damages, costs, judgments, liability, fees and expenses (including reasonable attorneys’ fees) (collectively, “Losses”) incurred by any Client Indemnitee due to any suit, claim, demand, judgment or action brought by any Third Parties (other than Affiliates) (each, a “Claim”), including, without limitation any Claim of personal injury or property damage, to the extent that the injury or damage is the result of (a) a failure by Patheon or any of its Affiliates to perform the Manufacturing Services in accordance with the Specifications, cGMPs, and Applicable Laws, (b) Patheon’s breach of any of its obligations, representations or warranties under this Agreement, or (c) the negligence or willful misconduct of any Patheon Indemnitee except to the extent that the losses, damages, costs, claims, demands, judgments, and liability are due to the negligence or willful misconduct of any Client Indemnitee.
+(b) If a Claim occurs, Client will: (a) promptly notify Patheon of the Claim; (b) use commercially reasonable efforts to mitigate the effects of the Claim; (c) reasonably cooperate with Patheon in the defense of the claim; and (d) permit Patheon to control the defense and settlement of the claim, all at Patheon's cost and expense. Notwithstanding the foregoing, Patheon will not compromise or
+- 33 -
+Master Manufacturing Services Agreement
+settle any Claim for which a Client Indemnitee is requesting indemnification for any damages other than monetary damages without Client’s prior written consent, which will not be unreasonably withheld.
+10.4 Client Indemnity.
+(a) Client agrees to defend and indemnify Patheon and its Affiliates and their respective directors, officers, employees, and agents (“Patheon Indemnitees”) against all Losses, incurred by any Patheon Indemnitee due to any Claim of infringement or alleged infringement of any Third Party Rights in the Products, or any Claim of personal injury or property damage, in each case, to the extent that the Losses are the result of a breach of this Agreement by Client, including, without limitation, any representation or warranty contained herein, or the negligence or wilful misconduct of any Client Indemnitee, except to the extent that the Losses are due to the negligence or willful misconduct of any Patheon Indemnitee.
+(b) If a Claim occurs, Patheon will: (a) promptly notify Client of the Claim; (b) use commercially reasonable efforts to mitigate the effects of the Claim; (c) reasonably cooperate with Client in the defense of the Claim; and (d) permit Client to control the defense and settlement of the Claim, all at Client's cost and expense. Notwithstanding the foregoing, Client will not compromise or settle any Claim for which a Patheon Indemnitee is requesting indemnification for any damages other than monetary damages without Patheon’s prior written consent, which will not be unreasonably withheld.
+ARTICLE 11
+CONFIDENTIALITY
+11.1 Confidential Information.
+“Confidential Information” means any information disclosed by the Disclosing Party to the Recipient (whether disclosed in oral, written, electronic or visual form) that is non-public, confidential or proprietary including, without limitation, information relating to the Disclosing Party’s patent and trademark applications, process designs, process models, drawings, plans, designs, data, databases and extracts therefrom, formulae, methods, know-how and other intellectual property, its clients or client confidential information, finances, marketing, products and processes and all price quotations, manufacturing or professional services proposals, information relating to composition, proprietary technology, and all other information relating to manufacturing capabilities and operations. In addition, all analyses, compilations, studies, reports or other documents prepared by any Party's Representatives containing the Confidential Information will be considered Confidential Information. Samples or materials provided hereunder as well as any and all information derived from the approved analysis of the samples or materials will also constitute Confidential Information. For the purposes of this ARTICLE 11, a Party or its Representative receiving Confidential Information under this Agreement is a “Recipient,” and a Party or its Representative disclosing Confidential Information under this Agreement is the “Disclosing Party.”
+11.2 Use of Confidential Information.
+The Recipient will use the Confidential Information solely for the purpose of meeting its obligations under this Agreement. The Recipient will keep the Confidential Information strictly confidential and will not disclose the Confidential Information in any manner whatsoever, in whole or in part, other than to those of its Representatives who (i) have a need to know the Confidential Information for the purpose of this Agreement; (ii) have been advised of the confidential nature of the Confidential Information and (iii) have obligations of confidentiality and non-use to the Recipient no less restrictive than those of this Agreement. Additionally, Client will have the right to disclose Confidential Information
+- 34 -
+Master Manufacturing Services Agreement
+to sublicensees and/or other strategic partners or in connection with financings or similar transactions provided that the parties to whom Client discloses this information are bound by obligations of confidentiality and non-use no less restrictive than those of this Agreement. Recipient will protect the Confidential Information disclosed to it by using all reasonable precautions to prevent the unauthorized disclosure, dissemination or use of the Confidential Information, which precautions will in no event be less than those exercised by Recipient with respect to its own confidential or proprietary Confidential Information of a similar nature. The obligations of confidentiality and non-use set forth in this Article 11 will remain in effect for a period of seven years following the termination of this Agreement.
+11.3 Exclusions.
+The obligations of confidentiality will not apply to the extent that the information:
+(a) is or becomes publicly known through no breach of this Agreement or fault of the Recipient or its Representatives;
+(b) is in the Recipient's possession at the time of disclosure by the Disclosing Party other than as a result of the Recipient's breach of any legal obligation;
+(c) is or becomes known to the Recipient on a non-confidential basis through disclosure by sources, other than the Disclosing Party, having the legal right to disclose the Confidential Information, provided that the other source is not known by the Recipient to be bound by any obligations (contractual, legal, fiduciary, or otherwise) of confidentiality to the Disclosing Party with respect to the Confidential Information;
+(d) is independently developed by the Recipient without use of or reference to the Disclosing Party's Confidential Information as evidenced by Recipient’s written records; or
+(e) is expressly authorized for release by the written authorization of the Disclosing Party.
+Any combination of information which comprises part of the Confidential Information are not exempt from the obligations of confidentiality merely because individual parts of that Confidential Information were publicly known, in the Recipient’s possession, or received by the Recipient, unless the combination itself was publicly known, in the Recipient’s possession, or received by the Recipient.
+11.4 Photographs and Recordings.
+Neither Party will take any photographs or videos of the other Party’s facilities, equipment or processes, nor use any other audio or visual recording equipment (such as camera phones) while at the other Party’s facilities, without that Party’s express written consent.
+11.5 Permitted Disclosure.
+Notwithstanding any other provision of this Agreement, the Recipient may disclose Confidential Information of the Disclosing Party to the extent required, as advised by counsel, in response to a valid order of a court or other governmental body or as required by law, regulation or stock exchange rule. But the Recipient will advise the Disclosing Party in advance of the disclosure to the extent practicable and permissible by the order, law, regulation or stock exchange rule and any other applicable law, will reasonably cooperate with the Disclosing Party, if required, in seeking an appropriate protective order or other remedy, and will otherwise continue to perform its obligations of confidentiality set out
+- 35 -
+Master Manufacturing Services Agreement
+herein. If any public disclosure is required by law, the Parties will consult concerning the form of announcement prior to the public disclosure being made.
+11.6 Marking.
+The Disclosing Party agrees to use reasonable efforts to summarize in writing the content of any oral disclosure or other non-tangible disclosure of Confidential Information within 30 days of the disclosure, but failure to provide this summary will not affect the nature of the Confidential Information disclosed if the Confidential Information was identified as confidential or proprietary when disclosed orally or in any other non-tangible form.
+11.7 Return of Confidential Information.
+Upon the written request of the Disclosing Party, the Recipient will promptly return the Confidential Information to the Disclosing Party or, if the Disclosing Party directs, destroy all Confidential Information disclosed in or reduced to tangible form including any copies thereof and any summaries, compilations, analyses or other notes derived from the Confidential Information except for one copy which may be maintained by the Recipient for its records. The retained copy will remain subject to all confidentiality provisions contained in this Agreement.
+11.8 Remedies.
+The Parties acknowledge that monetary damages may not be sufficient to remedy a breach by either Party of this Agreement and agree that the non-breaching Party will be entitled to seek specific performance, injunctive and/or other equitable relief to prevent breaches of this Agreement and to specifically enforce the provisions hereof in addition to any other remedies available at law or in equity. These remedies will not be the exclusive remedies for breach of this Agreement but will be in addition to any and all other remedies available at law or in equity.
+ARTICLE 12
+DISPUTE RESOLUTION
+12.1 Commercial Disputes.
+If any dispute arises out of this Agreement or any Product Agreement (other than a dispute under Section 6.1(b) or a Technical Dispute, as defined herein), the Parties will first try to resolve it amicably. In that regard, any Party may send a notice of dispute to the other, and each Party will appoint, within […***…] Business Days from receipt of the notice of dispute, a single representative having full power and authority to resolve the dispute. The representatives will meet as necessary in order to resolve the dispute. If the representatives fail to resolve the matter within […***…] from their appointment, or if a Party fails to appoint a representative within the […***…] Business Day period set forth above, the dispute will immediately be referred to the Chief Operating Officer (or another officer as he/she may designate) of Patheon and the Chief Executive Officer of Client each Party who will meet and discuss as necessary to try to resolve the dispute amicably. Should the Parties fail to reach a resolution under this Section 12.1, the dispute will be referred to a court of competent jurisdiction in accordance with Section 13.16.
+- 36 -
+Master Manufacturing Services Agreement
+12.2 Technical Dispute Resolution.
+If a dispute arises (other than disputes under Sections 6.1(b) or 12.1) between the Parties that is exclusively related to technical aspects of the manufacturing, packaging, labelling, quality control testing, handling, storage, or other activities under this Agreement (a "Technical Dispute"), the Parties will make all reasonable efforts to resolve the dispute by amicable negotiations. In that regard, senior representatives of each Party will, as soon as possible and in any event no later than […***…] Business Days after a written request from either Party to the other, meet in good faith to resolve any Technical Dispute. If, despite this meeting, the Parties are unable to resolve a Technical Dispute within a reasonable time, and in any event within […***…] Business Days of the written request, the Technical Dispute will, at the request of either Party, be referred for determination to an expert in accordance with Exhibit A. If the Parties cannot agree that a dispute is a Technical Dispute, Section 12.1 will prevail. For greater clarity, the Parties agree that the release of the Products for sale or distribution under the applicable marketing approval for the Products will not by itself indicate compliance by Patheon with its obligations for the Manufacturing Services and further that nothing in this Agreement (including Exhibit A) will remove or limit the authority of the relevant qualified person (as specified by the Quality Agreement) to determine whether the Products are to be released for sale or distribution.
+ARTICLE 13
+MISCELLANEOUS
+13.1 Inventions.
+(a) For the term of this Agreement, Client hereby grants to Patheon a non-exclusive, paid-up, royalty-free, non-transferable license under Client’s Intellectual Property solely to the extent necessary for Patheon to perform the Manufacturing Services in accordance with this Agreement, and not for any other purpose.
+(b) All Inventions generated or derived by Patheon while performing the Manufacturing Services, to the extent relating specifically to the development, manufacture, use or sale of any Product that is the subject of the Manufacturing Services, and all Client Intellectual Property, will be the exclusive property of Client. Patheon hereby assigns, and agrees to assign, all of its right, title and interest in and to all such Inventions and Client Intellectual Property to Client and agrees to take all further acts reasonably required to evidence and/or perfect such assignment to Client, at Client’s expense. Patheon will notify Client in writing, as promptly as practicable, of all Inventions and Client Intellectual Property made, created, discovered, generated or derived by Patheon in the course of performing the Manufacturing Services. Patheon may retain one copy of records relating to Client Intellectual Property to the extent required under Applicable Laws.
+(c) All Patheon Intellectual Property will be the exclusive property of Patheon. Patheon hereby grants to Client a perpetual, irrevocable, non-exclusive, paid-up, royalty-free, transferable license, with the right to sublicense through multiple tiers, to use the Patheon Intellectual Property used by Patheon to perform the Manufacturing Services to enable Client to manufacture the Product(s).
+(d) Each Party will be solely responsible for the costs of filing, prosecution, and maintenance of patents and patent applications on its own Inventions.
+- 37 -
+Master Manufacturing Services Agreement
+13.2 Intellectual Property.
+All Client Intellectual Property will be owned by Client and all Patheon Intellectual Property will be owned by Patheon. Neither Party has, nor will it acquire, any interest in any of the other Party’s Intellectual Property unless otherwise expressly agreed to in writing or expressly set forth in this Agreement. Neither Party will use any Intellectual Property of the other Party, except as specifically authorized by the other Party or as required for the performance of its obligations under this Agreement.
+13.3 Insurance.
+Each Party will maintain commercial general liability insurance, including blanket contractual liability insurance covering the obligations of that Party under this Agreement through the term of this Agreement and for a period of three years thereafter. This insurance will have policy limits of not less than (i) $[…***…] for each occurrence for personal injury or property damage liability; and (ii) $[…***…] in the aggregate per annum for product and completed operations liability. If requested each Party will give the other a certificate of insurance evidencing the above and showing the name of the issuing company, the policy number, the effective date, the expiration date, and the limits of liability. Each Party will further provide the other Party a minimum of 30 days' written notice of a cancellation of, or material change in, the insurance. If a Party is unable to maintain the insurance policies required under this Agreement through no fault of its own, then the Party will forthwith notify the other Party in writing and the Parties will in good faith negotiate appropriate amendments to the insurance provision of this Agreement in order to provide adequate assurances.
+13.4 Independent Contractors.
+The Parties are independent contractors and this Agreement and any Product Agreement will not be construed to create between Patheon and Client any other relationship such as, by way of example only, that of employer-employee, principal agent, joint-venturer, co-partners, or any similar relationship, the existence of which is expressly denied by the Parties.
+13.5 No Waiver.
+Either Party's failure to require the other Party to comply with any provision of this Agreement or any Product Agreement will not be deemed a waiver of the provision or any other provision of this Agreement or any Product Agreement.
+13.6 Assignment.
+(a) Patheon may not assign this Agreement or any Product Agreement or any of its associated rights or obligations, or subcontract any of its rights or obligations, hereunder without the written consent of Client, this consent not to be unreasonably withheld. But Patheon may arrange for subcontractors to perform specific testing services arising under any Product Agreement without the consent of Client to the extent the subcontractors are specifically named and agreed in the Quality Agreement, provided that Patheon remains primarily liable to the Client for performance by Patheon’s subcontractors. Further it is specifically agreed that Patheon may subcontract any part of the Services under a Product Agreement to any of its Affiliates to the extent the Affiliates are specifically named and agreed in the applicable Product Agreement and in the Quality Agreement, provided that Patheon remains primarily liable to the Client for performance by Patheon’s Affiliates.
+(b) Subject to Section 8.2(e), Client may assign this Agreement or any Product Agreement or any of its associated rights or obligations without approval from Patheon. Client will give Patheon prior
+- 38 -
+Master Manufacturing Services Agreement
+written notice of any assignment, any assignee will covenant in writing with Patheon to be bound by the terms of this Agreement or the Product Agreement and Client will remain liable hereunder. If Client only assigns a portion of this Agreement or a Product Agreement to a Third Party, the partial assignment will be subject to Patheon’s cost review of the assigned Products and Patheon may terminate this Agreement or the Product Agreement or any assigned part thereof, on 18 months’ prior written notice to Client and the assignee if good faith discussions do not lead to agreement on amended Manufacturing Service fees within a reasonable time. But this time period will automatically be extended by an additional three months if, at 18 months after the notice, Client is working in good-faith to secure, and/or obtain required approvals for, another supplier.
+(c) Despite the foregoing provisions of this Section 13.6, either Party may assign this Agreement or any Product Agreement to any of its Affiliates or to a successor to or purchaser of all or substantially all of its business to which this Agreement relates, but the assignee must execute an agreement with the non-assigning Party whereby it agrees to be bound hereunder.
+13.7 Force Majeure.
+Neither Party will be liable for the failure to perform its obligations under this Agreement or any Product Agreement if the failure is caused by an event beyond that Party's reasonable control, including, but not limited to, strikes or other labor disturbances, lockouts, riots, quarantines, communicable disease outbreaks, wars, acts of terrorism, fires, floods, storms, interruption of or delay in transportation, lack of or inability to obtain fuel, power or compliance with any order or regulation of any government entity acting within colour of right (a "Force Majeure Event"). A Party claiming a right to excused performance under this Section 13.7 will immediately notify the other Party in writing of the extent of its inability to perform, which notice will specify the event beyond its reasonable control that prevents the performance. Neither Party will be entitled to rely on a Force Majeure Event to relieve it from an obligation to pay money (including any interest for delayed payment) which would otherwise be due and payable under this Agreement or any Product Agreement. If the performance of any obligation under this Agreement is delayed due to a Force Majeure Event for a continuous period of more than 60 days, the other Party may terminate this Agreement without penalty upon written notice to the other Party under such event. All Annual Minimums will be suspended for the period of a Force Majeure Event but will be re-instated if the Force Majeure Event is cured. If this Agreement or any Product Agreement is terminated due to a Force Majeure Event lasting longer than 60 days as set forth above, Client may request Patheon to reasonably assist in the transfer of the technology required to manufacture the Product to a third party supplier designated by Client. If so requested, Patheon will promptly initiate and complete the technology transfer at Client’s cost.
+13.8 Additional Product.
+Additional Products may be added to, or existing Products deleted from, any Product Agreement by amendments to the Product Agreement including Schedules A, B, C, and D as applicable.
+13.9 Notices.
+Unless otherwise agreed in a Product Agreement, any notice, approval, instruction or other written communication required or permitted hereunder will be sufficient if made or given to the other Party by personal delivery, by telecopy, facsimile communication, or confirmed receipt email or by sending the same by first class mail, postage prepaid to the respective addresses, telecopy or facsimile numbers or electronic mail addresses set forth below:
+- 39 -
+Master Manufacturing Services Agreement
+If to Client:
+ACADIA Pharmaceuticals Inc.
+3611 Valley Centre Drive, Suite 300
+San Diego, CA 92130
+Attention: […***…]
+Telecopier No.: […***…]
+Email address: […***…]
+With a copy to:
+ACADIA Pharmaceuticals Inc.
+3611 Valley Centre Drive, Suite 300
+San Diego, CA 92130
+Attention: […***…]
+Telecopier No.: […***…]
+Email address: […***…]
+If to Patheon:
+Patheon Pharmaceuticals Inc.
+2110 East Galbraith Road
+Cincinnati, OH 45237-1625
+Attention: […***…]
+Telecopier No.: […***…]
+Email address: […***…]
+With a copy to:
+Patheon Inc.
+Canterbury Place
+4815 Emperor Boulevard
+Research Triangle Park,
+NC 27703
+Attention: […***…]
+Telecopier No.: […***…]
+or to any other addresses, telecopy or facsimile numbers or electronic mail addresses given to the other Party in accordance with the terms of this Section 13.9. Notices or written communications made or given by personal delivery, telecopy, facsimile, or electronic mail will be deemed to have been sufficiently made or given when sent (receipt acknowledged), or if mailed, five days after being deposited in the United States, Canada, or European Union mail, postage prepaid or upon receipt, whichever is sooner, or one Business Day after being sent by overnight courier.
+- 40 -
+Master Manufacturing Services Agreement
+13.10 Severability.
+If any provision of this Agreement or any Product Agreement is determined by a court of competent jurisdiction to be invalid, illegal, or unenforceable in any respect, that determination will not impair or affect the validity, legality, or enforceability of the remaining provisions, because each provision is separate, severable, and distinct.
+13.11 Entire Agreement.
+This Agreement, and all Schedules hereto, together with the applicable Product Agreement and Quality Agreement, constitutes the full, complete, final and integrated agreement between the Parties relating to the subject matter hereof and supersedes all previous written or oral negotiations, commitments, agreements, transactions, or understandings concerning the subject matter hereof. Any modification, amendment, or supplement to this Agreement or any Product Agreement must be in writing and signed by authorized representatives of the Parties. In case of conflict, the prevailing order of documents will be this Agreement, the Product Agreement, and the Quality Agreement.
+13.12 Other Terms.
+No terms, provisions or conditions of any purchase order or other business form or written authorization used by Client or Patheon will have any effect on the rights, duties, or obligations of the Parties under or otherwise modify this Agreement or any Product Agreement, regardless of any failure of Client or Patheon to object to the terms, provisions, or conditions unless the document specifically refers to this Agreement or the applicable Product Agreement and is signed by the Parties.
+13.13 No Third Party Benefit or Right.
+For greater clarity, nothing in this Agreement or any Product Agreement will confer or be construed as conferring on any third party any benefit or the right to enforce any express or implied term of this Agreement or any Product Agreement.
+13.14 Execution in Counterparts.
+This Agreement and any Product Agreement may be executed in two or more counterparts, by original or facsimile signature, each of which will be deemed an original, but all of which together will constitute one and the same instrument.
+13.15 Use of Client Name.
+Patheon will not make any use of Client’s name, trademarks or logo or any variations thereof, alone or with any other word or words, without the prior written consent of Client, which consent will not be unreasonably withheld. Despite this, Client agrees that Patheon may include Client’s name and logo in customer lists or related marketing and promotional material for the purpose of identifying users of Patheon’s Manufacturing Services.
+13.16 Governing Law.
+This Agreement and any Product Agreement will be construed and enforced in accordance with the laws of the State of New York and the laws of the United States of America applicable therein and subject to the exclusive jurisdiction of the courts thereof. The UN Convention on Contracts for the International Sale of Goods will not apply to this Agreement or any Product Agreement.
+- 41 -
+Master Manufacturing Services Agreement
+IN WITNESS WHEREOF, the duly authorized representatives of the Parties have executed this Agreement as of the date first written above.
+PATHEON PHARMACEUTICALS INC.
+By: /s/ Francis P. McCune
+Name: Francis P. McCune
+Title: Secretary
+Acadia Pharmaceuticals Inc.
+By: /s/ Steve Davis
+Name: Steve Davis
+Title: Interim CEO
+- 42 -
+Master Manufacturing Services Agreement
+APPENDIX 1
+FORM OF PRODUCT AGREEMENT
+(Includes Schedules A to D)
+PRODUCT AGREEMENT
+This Product Agreement (this “Product Agreement”) is issued under the Master Manufacturing Services Agreement dated August 3, 2015 between Patheon Pharmaceuticals Inc., and ACADIA Pharmaceuticals Inc. (the “Master Agreement”), and is entered into [insert effective date] (the “Effective Date”), between Patheon Pharmaceuticals Inc., [or applicable Patheon Affiliate], a corporation existing under the laws of the State of Delaware [or applicable founding jurisdiction for Patheon Affiliate], having a principal place of business at 2110 East Galbraith Road, Cincinnati, OH 45237-1625 [or Patheon Affiliate address] (“Patheon”) and [insert Client name, legal entity, founding jurisdiction and address] (“Client”).
+The terms and conditions of the Master Agreement are incorporated herein except to the extent this Product Agreement expressly references the specific provision in the Master Agreement to be modified by this Product Agreement. All capitalized terms that are used but not defined in this Product Agreement will have the respective meanings given to them in the Master Agreement.
+The Schedules to this Product Agreement are incorporated into and will be construed in accordance with the terms of this Product Agreement.
+1. Product List and Specifications (See Schedule A attached hereto)
+2. Minimum Order Quantity, Annual Volume, and Price (See Schedule B attached hereto)
+3. Annual Stability Testing and Validation Activities (if applicable) (See Schedule C attached hereto)
+4. Active Materials, Active Materials Credit Value, and Maximum Credit Value (See Schedule D attached hereto)
+5. Yearly Forecasted Volume: (insert for sterile products if applicable under Section 4.2.1 of the Master Agreement)
+6. Territory: (insert the description of the Territory here)
+7. Manufacturing Site: (insert address of Patheon Manufacturing Site where the Manufacturing Services will be performed)
+8. Governing Law: (if applicable under Section 13.16 of the Master Agreement)
+9. Inflation Index: (if applicable under Section 4.2(a) of the Master Agreement for Products manufactured outside of the Unites States or Puerto Rico)
+10. Currency: (if applicable under Section 1.4 of the Master Agreement)
+Master Manufacturing Services Agreement
+11. Initial Set Exchange Rate: (if applicable under Section 4.2(d) of the Master Agreement)
+12. Initial Product Term: (if applicable under Section 8.1 of the Master Agreement)
+13. Notices: (if applicable under Section 13.9 of the Master Agreement)
+14. Other Modifications to the Master Agreement: (if applicable under Section 1.2 of the Master Agreement)
+________________________________________
+IN WITNESS WHEREOF, the duly authorized representatives of the Parties have executed this Product Agreement as of the Effective Date set forth above.
+PATHEON PHARMACEUTICALS INC. [or applicable Patheon Affiliate]
+By: _____________________________
+Name: ___________________________
+Title: _____________________________
+ACADIA PHARMACEUTICALS INC. [or applicable Client Affiliate]
+By: _____________________________
+Name: ___________________________
+Title: _____________________________
+- 2 -
+Master Manufacturing Services Agreement
+SCHEDULE A
+PRODUCT LIST AND SPECIFICATIONS
+Product List
+[insert product list]
+Specifications
+Prior to the start of commercial manufacturing of Product under this Agreement Client will give Patheon the originally executed copies of the Specifications as approved by the applicable Regulatory Authority or as most recently filed with such Regulatory Authority. If the Specifications received are subsequently amended, then Client will give Patheon the revised and originally executed copies of the revised Specifications. Upon acceptance of the revised Specifications, Patheon will give Client a signed and dated receipt indicating Patheon’s receipt of the revised Specifications.
+- 3 -
+Master Manufacturing Services Agreement
+SCHEDULE B
+MINIMUM ORDER QUANTITY, ANNUAL VOLUME, AND PRICE
+[Insert Price Table]
+Manufacturing Assumptions:
+Packaging Assumptions:
+Testing Assumptions:
+Costs Included in Unit Pricing
+[…***…]
+Master Manufacturing Services Agreement
+Costs Not Included in Unit Pricing
+[…***…]
+- 2 -
+Master Manufacturing Services Agreement
+[…***…]
+- 3 -
+Master Manufacturing Services Agreement
+SCHEDULE C
+ANNUAL STABILITY TESTING
+Patheon and Client will agree in writing on any stability testing to be performed by Patheon on the Products. This agreement will specify the commercial and Product stability protocols applicable to the stability testing and the fees payable by Client for this testing.
+[NTD: Schedule C should clearly indicate when and/or under what conditions Patheon’s responsibility to perform stability testing will end]
+Master Manufacturing Services Agreement
+SCHEDULE D
+ACTIVE MATERIALS
+Active Materials
+Supplier
+
+
+
+
+ACTIVE MATERIALS CREDIT VALUE
+The Active Materials Credit Value will be as follows:
+PRODUCT
+ACTIVE MATERIALS
+ACTIVE MATERIALS
+CREDIT VALUE
+Client’s actual cost for Active Materials not to exceed $_____per kilogram
+MAXIMUM CREDIT VALUE
+Patheon's liability for Active Materials calculated in accordance with Section 2.2 of the Master Agreement [for any Product] in a Year will not exceed, in the aggregate, the maximum credit value set forth below:
+PRODUCT
+MAXIMUM CREDIT VALUE
+[…***…]
+[End of Product Agreement]
+Master Manufacturing Services Agreement
+EXHIBIT A
+TECHNICAL DISPUTE RESOLUTION
+Technical Disputes which cannot be resolved by negotiation as provided in Section 12.2 will be resolved in the following manner:
+1. Appointment of Expert. Within […***…] Business Days after a Party requests under Section 12.2 that an expert be appointed to resolve a Technical Dispute, the Parties will jointly appoint a mutually acceptable expert with experience and expertise in the subject matter of the dispute. If the Parties are unable to so agree within the […***…] Business Day period, or in the event of disclosure of a conflict by an expert under Paragraph 2 hereof which results in the Parties not confirming the appointment of the expert, then an expert (willing to act in that capacity hereunder) will be appointed by an experienced arbitrator on the roster of the American Arbitration Association.
+2. Conflicts of Interest. Any person appointed as an expert will be entitled to act and continue to act as an expert even if at the time of his appointment or at any time before he gives his determination, he has or may have some interest or duty which conflicts or may conflict with his appointment if before accepting the appointment (or as soon as practicable after he becomes aware of the conflict or potential conflict) he fully discloses the interest or duty and the Parties will, after the disclosure, have confirmed his appointment.
+3. Not Arbitrator. No expert will be deemed to be an arbitrator and the provisions of the American Arbitration Act or of any other applicable statute (foreign or domestic) and the law relating to arbitration will not apply to the expert or the expert's determination or the procedure by which the expert reaches his determination under this Exhibit A.
+4. Procedure. Where an expert is appointed:
+(a) Timing. The expert will be so appointed on condition that (i) he promptly fixes a reasonable time and place for receiving representations, submissions or information from the Parties and that he issues the authorizations to the Parties and any relevant third party for the proper conduct of his determination and any hearing and (ii) he renders his decision (with full reasons) within […***…] Business Days (or another other date as the Parties and the expert may agree) after receipt of all information requested by him under Paragraph 4(b) hereof.
+(b) Disclosure of Evidence. The Parties undertake one to the other to give to any expert all the evidence and information within their respective possession or control as the expert may reasonably consider necessary for determining the matter before him which they will disclose promptly and in any event within […***…] Business Days of a written request from the relevant expert to do so.
+(c) Advisors. Each Party may appoint any counsel, consultants and advisors as it feels appropriate to assist the expert in his determination and so as to present their respective cases so that at all times the Parties will co-operate and seek to narrow and limit the issues to be determined.
+(d) Appointment of New Expert. If within the time specified in Paragraph 4(a) above the expert will not have rendered a decision in accordance with his appointment, a new expert may (at the request of either Party) be appointed and the appointment of the existing expert will thereupon cease for the purposes of determining the matter at issue between the Parties save this if the existing expert renders his decision with full reasons
+Master Manufacturing Services Agreement
+prior to the appointment of the new expert, then this decision will have effect and the proposed appointment of the new expert will be withdrawn.
+(e) Final and Binding. The determination of the expert will, except for fraud or manifest error, be final and binding upon the Parties.
+(f) Costs. Each Party will bear its own costs for any matter referred to an expert hereunder and, in the absence of express provision in the Agreement to the contrary, the costs and expenses of the expert will be shared equally by the Parties.
+For greater certainty, the release of the Products for sale or distribution under the applicable marketing approval for the Products will not by itself indicate compliance by Patheon with its obligations for the Manufacturing Services and further that nothing in this Agreement (including this Exhibit A) will remove or limit the authority of the relevant qualified person (as specified by the Quality Agreement) to determine whether the Products are to be released for sale or distribution.
+-
+Master Manufacturing Services Agreement
+EXHIBIT B
+MONTHLY ACTIVE MATERIALS INVENTORY REPORT
+TO: ACADIA PHARMACEUTICALS INC.
+FROM: PATHEON PHARMACEUTICALS INC. [or applicable Patheon Affiliate]
+RE: Active Materials monthly inventory report under Section 2.2(a) of the Master Manufacturing Services Agreement dated August 3, 2015 (the "Agreement")
+Reporting month:
+Active Materials on hand
+at beginning of month: kg (A)
+Active Materials on hand
+at end of month: kg (B)
+Quantity Received during month: kg (C)
+Quantity Dispensed during month: kg
+(A + C – B)
+Quantity Converted during month: kg
+(total Active Materials in Products produced
+and not rejected, recalled or returned)
+Capitalized terms used in this report have the meanings given to the terms in the Agreement.
+PATHEON PHARMACEUTICALS INC. DATE:
+[or applicable Patheon Affiliate]
+Per:
+Name:
+Title:
+Master Manufacturing Services Agreement
+EXHIBIT C
+REPORT OF ANNUAL ACTIVE MATERIALS INVENTORY RECONCILIATION
+AND CALCULATION OF ACTUAL ANNUAL YIELD
+TO: ACADIA PHARMACEUTICALS INC.
+FROM: PATHEON PHARMACEUTICALS INC. [or applicable Patheon Affiliate]
+RE: Active Materials annual inventory reconciliation report and calculation of Actual Annual Yield under Section 2.2(a) of the Master Manufacturing Services Agreement dated August 3, 2015 (the "Agreement")
+Reporting Year ending:
+Active Materials on hand
+at beginning of Year: kg (A)
+Active Materials on hand
+at end of Year: kg (B)
+Quantity Received during Year: kg (C)
+Quantity Dispensed during Year: kg (D)
+(A + C - B)
+Quantity Converted during Year: kg (E)
+(total Active Materials in Products produced
+and not rejected, recalled or returned)
+Active Materials Credit Value: $ / kg (F)
+Target Yield: % (G)
+Actual Annual Yield: % (H)
+Master Manufacturing Services Agreement
+((E ∕ D) * 100)
+Shortfall: $ (I)
+(((G – […***…]) - H) ∕ 100) * F * D (if a negative number, insert zero)
+Based on the foregoing reimbursement calculation Patheon will reimburse Client the amount of $ .
+Capitalized terms used in this report have the meanings given to the terms in the Agreement.
+DATE:
+PATHEON PHARMACEUTICALS INC.
+[or applicable Patheon Affiliate]
+Per:
+Name:
+Title:
+-
+Master Manufacturing Services Agreement
+EXHIBIT D
+EXAMPLE OF PRICE ADJUSTMENT DUE TO CURRENCY FLUCTUATION
+Section 4.2(d)
+Time period: 10/01/11 to 09/30/12.
+Time period: 10/01/11 to 09/30/12.
+Average (365 days):
+0.998
+-- "Set Exchange Rate"
+SAMPLE EXCHANGE CALCULATION
+Initial Exchange Rate:
+1.000
+CAD/USD
+Set Exchange Rate:
+0.998
+CAD/USD
+Initial Price:
+3.59
+Revised Price (FX):
+3.70
+(Material price and PPI adjustments)
+Calculation:
+[Revised Price (After FX)] = [Revised Price (Before FX)] X [Initial Exchange Rate] / [Set Exchange Rate]
+= 3.70 X [1.000 / 0.998]
+= 3.71
+-

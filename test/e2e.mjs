@@ -93,6 +93,22 @@ dt = await page.$eval('#drawer', e => e.textContent);
 ok(dt.includes('1 Nov 2027') && dt.includes('2 Oct 2027') && dt.includes('Who acts: Either party'), 'NDA paste ("term ... is one (1) year from"): term ends 1 Nov 2027, act by 2 Oct 2027, either party acts');
 await page.keyboard.press('Escape'); await page.waitForFunction(() => !document.querySelector('#drawer.on')); await new Promise(r => setTimeout(r, 350));
 await page.$eval('#setEdgar', b => b.click()); await page.waitForSelector('#queue li[data-id="c2"]');
+// group by party
+await page.$eval('#g-counterparty', b => b.click()); await new Promise(r => setTimeout(r, 200));
+let g = await page.evaluate(() => ({ heads: [...document.querySelectorAll('#queue li.grp')].map(l => l.textContent.replace(/\s+/g, ' ').trim()), rows: document.querySelectorAll('#queue li[data-id]').length, pressed: document.querySelector('#g-counterparty').getAttribute('aria-pressed') }));
+ok(g.heads.length >= 2 && g.rows === 10 && g.pressed === 'true' && g.heads.some(h => /Counterparty Purolite Corporation 1 agreement · next act-by 20 Apr 2027/.test(h)), `group by counterparty: ${g.heads.length} groups, 10 rows`);
+await page.$eval('#g-filer', b => b.click()); await new Promise(r => setTimeout(r, 200));
+g = await page.evaluate(() => [...document.querySelectorAll('#queue li.grp')].map(l => l.textContent.replace(/\s+/g, ' ').trim()));
+ok(g.some(h => /Party \(filer\) Kopin Corporation/.test(h)), 'group by party (filer) works');
+await page.$eval('#g-none', b => b.click()); await new Promise(r => setTimeout(r, 200));
+ok((await page.$$('#queue li.grp')).length === 0, 'grouping off restores the flat queue');
+// cross-referenced notice period (paste)
+await page.$eval('#paste', (e, v) => { e.value = v; }, 'This Services Agreement is entered into as of January 1, 2026 (the "Effective Date").\n7.1 Term. The term of this Agreement shall begin on January 1, 2026 and shall end January 1, 2029. Upon expiration of the Initial Term, this Agreement will automatically renew for successive one (1) year terms, unless either party provides the other with notice of its intent to terminate pursuant to Section 7.4.\n7.4 Termination for Convenience. Customer may terminate this Agreement for any or no reason upon three hundred sixty-five (365) days’ advance written notice.');
+await page.click('#addPaste'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));
+dt = await page.$eval('#drawer', e => e.textContent);
+ok(dt.includes('2 Jan 2028') && /Section 7\.4/.test(dt) && /Referenced from the renewal clause/.test(dt) && /NEEDS REVIEW|Needs review/i.test(dt), 'cross-referenced notice: reads Section 7.4 (365 days) -> act by 2 Jan 2028, flagged, both clauses quoted');
+await page.keyboard.press('Escape'); await page.waitForFunction(() => !document.querySelector('#drawer.on')); await new Promise(r => setTimeout(r, 350));
+await page.$eval('#setEdgar', b => b.click()); await page.waitForSelector('#queue li[data-id="c2"]');
 // links
 const links = await page.$$eval('a[href]', as => as.map(a => a.href));
 await page.click('#cards .card'); await new Promise(r => setTimeout(r, 450)); const dl2 = await page.$$eval('#drawer a[href]', as => as.map(a => a.href)); await page.click('#close'); await new Promise(r => setTimeout(r, 350));

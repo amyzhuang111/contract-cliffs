@@ -250,6 +250,19 @@ export function extract(lines) {
       res.notice = { period: d && !d.redacted && d.n != null ? { n: d.n, unit: d.unit, text: d.text } : null, confidence: nconf, needsReview: nreview, why: nwhy, source: src(cand) };
       break;
     }
+    // Cross-reference: "notice ... pursuant to / as set forth in Section 7.4" -> read the referenced section, flag for review.
+    if (!res.notice) for (const cand of [S[ri], S[ri + 1]].filter(Boolean)) {
+      const xr = cand.text.match(/(?:notice|notif)[^.]{0,160}?(?:pursuant\s+to|in\s+accordance\s+with|as\s+(?:set\s+forth|provided|described)\s+in|under)\s+(?:Section|§)\s*(\d+(?:\.\d+)*)/i);
+      if (!xr) continue;
+      const num = xr[1].replace(/\./g, '\\.');
+      const hi = S.findIndex(x => new RegExp(`^(?:Section\\s+)?${num}\\.?\\s`, 'i').test(x.text));
+      const sec = hi >= 0 ? [S[hi], S[hi + 1]].filter(Boolean) : [];
+      let found = null;
+      for (const x of sec) { const m = x.text.match(new RegExp(`((?:${NUMWORD_RE})?\\s*(?:\\(\\s*\\d+\\s*\\)|\\d+)?)\\s*(days?|months?)['’]?s?\\s+(?:prior\\s+|advance\\s+)?(?:written\\s+)?notice`, 'i')); const d = m && parseDuration(m[0]); if (d && d.n) { found = { d, x }; break; } }
+      if (found) res.notice = { period: { n: found.d.n, unit: found.d.unit, text: found.d.text }, confidence: 'medium', needsReview: true, why: `Act-by = end of term minus ${found.d.n} ${found.d.unit}(s). The renewal clause sends notice to Section ${xr[1]} by cross-reference; that section (quoted) gives ${found.d.text}. Confirm it governs non-renewal.`, source: src(found.x), via: src(cand) };
+      else res.notice = { period: null, confidence: 'none', needsReview: true, why: `The renewal clause defers the notice to Section ${xr[1]}${sec.length ? ', quoted here, which states no notice length' : ', which is not in this document'}. No act-by computed.`, source: sec.length ? src(sec[0]) : src(cand), via: src(cand) };
+      break;
+    }
     if (!res.notice) res.notice = { period: null, confidence: 'none', needsReview: true, why: 'Auto-renews, but no non-renewal notice period was found near the renewal clause.', source: src(s) };
     const nq = res.notice.source?.quote || '';
     res.notice.who = /either\s+party|each\s+party|either\s+of\s+the\s+parties/i.test(nq) ? 'Either party' : (nq.match(/\b([A-Z][A-Za-z&.]+(?:\s+[A-Z][A-Za-z&.]+)?)\s+(?:may|shall|must)\s+(?:give|provide|deliver|notify)/)?.[1] || 'Not stated');
@@ -333,16 +346,19 @@ export function schedule(x, asOf) {
     items.push({ type: 'Expired (all renewals used)', date: ymd(end), confidence: termConf === 'high' ? 'medium' : termConf, needsReview: termRev, why: `All ${maxR} permitted renewal(s) have run; the agreement expired on ${ymd(end)} unless it was amended or extended. No notice is due.`, source: x.renewal.source || x.term.source, status: 'past' });
     return items;
   }
-  items.push({ type: projected ? 'Current term ends (projected)' : 'Initial term ends', date: ymd(end), confidence: projected && termConf === 'high' ? 'medium' : termConf, needsReview: termRev || (x.renewal ? x.renewal.needsReview : false), why: x.term.why + projNote + (last ? ` Final possible expiry if all renewals run: ${ymd(last)}.` : ''), source: x.term.source, status: expired ? 'past' : '' });
+  // The term running on the as-of date can be earlier than the cycle the next decision applies to (notice already missed for it).
+  let kc = 0; if (x.renewal && rp) while (kc < k && endOf(kc) < as) kc++;
+  if (kc < k) items.push({ type: kc > 0 ? 'Current term ends (projected)' : 'Initial term ends', date: ymd(endOf(kc)), confidence: kc > 0 && termConf === 'high' ? 'medium' : termConf, needsReview: termRev || x.renewal.needsReview, why: `The term running on the as-of date. Its non-renewal deadline (${ymd(actByOf(endOf(kc)))}) has already passed, so it renews; the next decision below applies to the following term.`, source: x.term.source });
+  items.push({ type: kc < k ? 'Following term ends (projected)' : projected ? 'Current term ends (projected)' : 'Initial term ends', date: ymd(end), confidence: projected && termConf === 'high' ? 'medium' : termConf, needsReview: termRev || (x.renewal ? x.renewal.needsReview : false), why: x.term.why + projNote + (last ? ` Final possible expiry if all renewals run: ${ymd(last)}.` : ''), source: x.term.source, status: expired ? 'past' : '' });
   if (x.renewal) {
     if (!rp) items.push({ type: 'Auto-renewal', date: '', confidence: 'none', needsReview: true, why: x.renewal.why, source: x.renewal.source });
-    else items.push({ type: 'Auto-renewal', date: ymd(addDays(end, 1)), confidence: x.renewal.confidence, needsReview: x.renewal.needsReview, why: x.renewal.why, source: x.renewal.source, status: k >= maxR ? 'no further renewals' : '' });
+    else items.push({ type: 'Auto-renewal', date: ymd(addDays(endOf(kc), 1)), confidence: x.renewal.confidence, needsReview: x.renewal.needsReview, why: x.renewal.why, source: x.renewal.source, status: k >= maxR ? 'no further renewals' : '' });
     const nRev = x.notice?.needsReview || termRev || x.renewal.needsReview;
     if (x.notice?.date) items.push({ type: 'Non-renewal notice: act by', date: x.notice.date, actBy: true, confidence: x.notice.confidence, needsReview: x.notice.needsReview, why: x.notice.why, source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' });
     else if (actBy) {
       const c = [x.notice.confidence, termConf, x.renewal.confidence, projected ? 'medium' : 'high'];
       const conf = c.includes('none') ? 'none' : c.includes('low') ? 'low' : c.includes('medium') ? 'medium' : 'high';
-      items.push({ type: 'Non-renewal notice: act by', date: ymd(actBy), actBy: true, who: x.notice.who, confidence: conf, needsReview: nRev, why: `${x.notice.why} (${ymd(end)} − ${np.n} ${np.unit}(s)).${projNote}${x.warnings ? ' ' + x.warnings[0] : ''}`, source: x.notice.source, status: actBy < as ? 'past' : '' });
+      items.push({ type: 'Non-renewal notice: act by', date: ymd(actBy), actBy: true, who: x.notice.who, via: x.notice.via, confidence: conf, needsReview: nRev, why: `${x.notice.why} (${ymd(end)} − ${np.n} ${np.unit}(s)).${projNote}${x.warnings ? ' ' + x.warnings[0] : ''}`, source: x.notice.source, status: actBy < as ? 'past' : '' });
     } else items.push({ type: 'Non-renewal notice: act by', date: '', confidence: 'none', needsReview: true, why: x.notice?.why || 'No notice period found.', source: x.notice?.source || null });
   }
   return items;

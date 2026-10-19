@@ -54,6 +54,7 @@
   <div class="lab">The queue</div>
   <h2 id="qh">Act by</h2>
   <p class="sub">Soonest decision first. Act-by = end of the current term minus the notice period in the clause. Items that need review sit below the dated ones; dates already past sit last.</p>
+  <div class="row grpby" role="group" aria-label="Group the queue"><span class="lab">Group by</span><button id="g-none" aria-pressed="true">None</button><button id="g-counterparty" aria-pressed="false">Counterparty</button><button id="g-filer" aria-pressed="false">Party (filer)</button></div>
   <ol class="q" id="queue"></ol>
 </section>
 <section class="sec" aria-labelledby="ch">
@@ -66,7 +67,7 @@
   <hr class="hair" style="margin-bottom:28px">
   <div class="lab">Method</div>
   <p>Extraction is deterministic: regular expressions plus date and duration parsing (“sixty (60) days”, “one hundred and eighty (180) days”, “Eighty-Four (84) months”). No language model and no network call touches your documents; uploads stay in this browser tab. A term of N months “commencing on” a date ends the day before the anniversary; “until N years following” ends on the anniversary. When words and numerals disagree, or a value is redacted, the field is left blank and marked for review.</p>
-  <p>Accuracy, stated plainly: tuned on the 10 contracts above (all hand-checked). On 14 further EDGAR Exhibit 10 agreements it had never seen, the first pass got 2 of 14 act-by dates right, flagged 5 for review correctly, missed 6 where the clause was readable, and gave 1 wrong date (since fixed). After rule fixes: 8 dated (3 of those still marked for review), 6 correctly left blank and marked, 0 wrong. Those 14 now count as tuning data, not a test (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
+  <p>Accuracy, stated plainly: tuned on the 10 contracts above (all hand-checked). On a fresh blind set of 10 more EDGAR agreements, run once before any change: 3 act-by dates right, 6 correctly left blank for review, 1 missed, 0 wrong act-by dates, plus one wrong "current term" date that has since been fixed. An earlier set of 14 is now tuning data (first pass there: 2 right, 5 flagged, 6 missed, 1 wrong) (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
   <p>Real contracts are Exhibit 10 material agreements filed with the SEC, fetched from EDGAR with a declared User-Agent under SEC fair-access rules. Dates projected past the initial term assume the agreement was not terminated or amended. Not legal advice.</p>
   <p>Type: Bodoni Moda (headings and dates), Source Serif 4 (clauses) and Geist, all under the SIL Open Font License (<a href="/fonts/OFL-BodoniModa.txt">Bodoni Moda</a>, <a href="/fonts/OFL-SourceSerif4.txt">Source Serif 4</a>, <a href="/fonts/OFL-Geist.txt">Geist</a>). PDF reading by pdf.js (<a href="/vendor/LICENSE-pdfjs.txt">Apache 2.0</a>), DOCX by JSZip (<a href="/vendor/LICENSE-jszip.txt">MIT</a>). Built by Amy Zhuang · <a href="https://github.com/amyzhuang111/contract-cliffs">source</a>.</p>
 </footer>

@@ -8,7 +8,7 @@ const validDay = v => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(v || ''); ret
 let asOf = todayStr, asOfNote = '';
 if (params.has('asof')) { if (validDay(params.get('asof'))) asOf = params.get('asof'); else asOfNote = `Invalid as-of date "${params.get('asof').slice(0, 20)}", using today (${todayStr}).`; }
 $('#asof').value = asOf;
-let edgar = [], mine = [], set = 'edgar';
+let edgar = [], mine = [], set = 'edgar', groupBy = ['counterparty', 'filer'].includes(params.get('group')) ? params.get('group') : 'none';
 const current = () => set === 'edgar' ? edgar : mine;
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1]} ${y}`; };
 const STOP = /^(the|inc\.?|llc|corp\.?|corporation|company|co\.?|ltd\.?|limited|holdings|of|and|\(.*)$/i;
@@ -34,17 +34,22 @@ function render() {
   const next = rows.find(r => r.actBy && r.days >= 0);
   $('#stats').innerHTML = [['Contracts', cs.length], ['With an act-by date', dated], ['Need review', rows.filter(r => r.needsReview).length], ['Lapsed', rows.filter(r => r.days != null && r.days < 0).length], ['Next act-by', next ? fmt(next.actBy) : 'None']].map(([k, v]) => `<div><span class="lab">${k}</span><span class="sv">${esc(v)}</span></div>`).join('');
   $('#setnote').innerHTML = set === 'edgar' ? 'Real public contracts (SEC EDGAR). Ten Exhibit 10 agreements: supply, licence, data licence, cloud and managed services. Each card links to the filing it came from.' : 'Your documents. Processed only in this browser tab; nothing is uploaded.';
-  $('#queue').innerHTML = rows.map(r => { const past = r.days != null && r.days < 0;
+  const li = r => { const past = r.days != null && r.days < 0;
     return `<li data-id="${esc(r.id)}" role="button" class="${past ? 'past' : ''}${r.days != null && r.days >= 0 && r.days <= 90 ? ' soon' : ''}" tabindex="0">
     <span class="d">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
     <span class="n">${r.days == null ? '' : past ? `<span class="lapsed">Lapsed</span> · ${-r.days} days ago` : r.days === 0 ? 'today' : `in ${r.days} days`}</span>
     <span class="c"><b>${esc(r.name)}</b><div>${r.actBy ? esc(past ? r.label.replace(' by', ' was due') : r.label) : 'No act-by date computed'}</div></span>
-    <span class="s">${r.needsReview ? rv(r.item?.why) + '<br>' : ''}${esc(r.confidence)} confidence</span></li>`; }).join('');
+    <span class="s">${r.needsReview ? rv(r.item?.why) + '<br>' : ''}${esc(r.confidence)} confidence</span></li>`; };
+  // optional grouping by party: counterparty or filer (the public company)
+  ['none', 'counterparty', 'filer'].forEach(g => $('#g-' + g).setAttribute('aria-pressed', groupBy === g));
+  if (groupBy === 'none') $('#queue').innerHTML = rows.map(li).join('');
+  else { const key = r => (cs.find(c => c.id === r.id)?.[groupBy] || 'Not stated'); const groups = new Map(); rows.forEach(r => groups.set(key(r), [...(groups.get(key(r)) || []), r]));
+    $('#queue').innerHTML = [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0])).map(([k, rs]) => `<li class="grp" role="presentation"><span class="lab">${groupBy === 'filer' ? 'Party (filer)' : 'Counterparty'}</span> <b>${esc(k)}</b> <span class="gn">${rs.length} ${rs.length === 1 ? 'agreement' : 'agreements'}${rs.some(r => r.actBy && r.days >= 0) ? ' · next act-by ' + esc(fmt(rs.filter(r => r.actBy && r.days >= 0).sort((a, b) => a.days - b.days)[0].actBy)) : ''}</span></li>` + rs.map(li).join('')).join(''); }
   $('#cards').innerHTML = cs.map(c => { const r = rows.find(x => x.id === c.id);
     return `<button class="card" data-id="${esc(c.id)}"><div class="tile" aria-hidden="true">${esc(initials(c.name, c.counterparty))}</div>
     <div class="t">${esc(c.name)}</div><div class="m">${esc(c.kind || 'Uploaded')}${c.exhibit ? ' · ' + esc(c.exhibit) : ''}${c.filed ? ' · filed ' + esc(fmt(c.filed)) : ''}</div>
     <div class="a">${r?.actBy ? `${r.days < 0 ? '<span class="lapsed">Lapsed</span> · ' : ''}${esc(r.label)} ${esc(fmt(r.actBy))}` : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.item?.why)}</div>` : ''}</button>`; }).join('');
-  document.querySelectorAll('[data-id]').forEach(el => { el.onclick = () => openDrawer(el.dataset.id); el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(el.dataset.id); } }; });
+  document.querySelectorAll('[data-id]:not(.grp)').forEach(el => { el.onclick = () => openDrawer(el.dataset.id); el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(el.dataset.id); } }; });
 }
 let lastFocus = null;
 function openDrawer(id) {
@@ -61,7 +66,7 @@ function openDrawer(id) {
    ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(i.type)}</span>${i.status === 'past' ? '<span class="lapsed">Lapsed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(i.why)}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:#6B6B6B;font-family:var(--sans)">${(d => d < 0 ? -d + ' days ago' : 'in ' + d + ' days')(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
      <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} Confidence: ${esc(i.confidence)}.</p>
-     ${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}`;
+     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}`;
   $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on'); $('#drawer').scrollTop = 0; $('#close').focus({ preventScroll: true });
 }
 const closeDrawer = () => { if (!$('#drawer').classList.contains('on')) return; $('#drawer').classList.remove('on'); $('#drawer').setAttribute('aria-hidden', 'true'); $('#scrim').classList.remove('on'); if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true }); };
@@ -69,6 +74,7 @@ const closeDrawer = () => { if (!$('#drawer').classList.contains('on')) return; 
 $('#drawer').addEventListener('keydown', e => { if (e.key !== 'Tab') return; const f = [...$('#drawer').querySelectorAll('a[href],button')]; if (!f.length) return; const a = f[0], z = f[f.length - 1]; if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } });
 $('#close').onclick = closeDrawer; $('#scrim').onclick = closeDrawer; document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
 $('#asof').onchange = e => { if (validDay(e.target.value)) { asOf = e.target.value; asOfNote = ''; render(); } else { asOfNote = `As-of cleared or invalid; still using ${asOf}.`; e.target.value = asOf; render(); } };
+['none', 'counterparty', 'filer'].forEach(g => { $('#g-' + g).onclick = () => { groupBy = g; render(); }; });
 $('#setEdgar').onclick = () => { set = 'edgar'; render(); };
 $('#setMine').onclick = () => { set = 'mine'; render(); };
 function download(name, text, type) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }

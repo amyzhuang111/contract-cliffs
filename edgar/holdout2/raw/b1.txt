@@ -1,0 +1,858 @@
+EX-10.1
+2
+ea030636601ex10-1.htm
+POWER-AS-A-SERVICE AND COLOCATION SERVICES AGREEMENT, DATED AS OF AUGUST 20, 2026, BY AND BETWEEN POWER UPP USA, INC. AND CUENTAS, INC., TOGETHER WITH SERVICE ORDER NO. 1
+Exhibit 10.1
+POWER-AS-A-SERVICE
+AND COLOCATION SERVICES AGREEMENT
+This
+Power-as-a-Service and Colocation Services Agreement (this “Agreement”) is entered into as of August 20th, 2026 (the “Effective
+Date”), by and between Power Upp USA, Inc. (“PWRU”), a Florida corporation whose principal address is 2200 SW
+45th St, Ste 101, Fort Lauderdale, FL 33312, and Cuentas, Inc. (“Customer”), a Florida corporation whose principal
+address is 235 Lincoln Rd, Ste 210, Miami Beach, FL 33139. PWRU and Customer may each be referred to herein as a “Party”
+and collectively as “Parties.”
+1.
+Purpose
+This
+Agreement sets forth the terms under which PWRU shall provide to Customer: (a) Power-as-a- Service (“PaaS”), including the
+supply of generated electrical energy; and (b) onsite colocation hosting for Customer-provided equipment, in each case as further described
+in this Agreement and the applicable Service Order(s).
+2.
+Services
+2.1
+PaaS Services
+PWRU
+shall install, commission, operate, maintain, monitor, and manage modular power generation equipment at the service site designated in
+an applicable Service Order (the “Site”) for the purpose of supplying electrical energy to Customer.
+2.2
+Colocation Services
+PWRU
+shall provide colocation services for each Customer-provided and deployed 40-foot containerized equipment set consisting of two (2) containers
+together with a cooling tower (“Container Set”), including:
+●
+A
+non-exclusive right to occupy and use the designated portion of the Site for the permitted
+operation of the Container Set, consistent with standard colocation structures.
+●
+Physical
+site security including access control, perimeter protection, electric fence, and video monitoring.
+●
+Controlled
+access procedures, visitor management, and incident logging.
+●
+Site
+monitoring reasonably designed to deter unauthorized access, theft, vandalism, and tampering.
+2.3
+Exclusions
+Unless
+expressly stated in a Service Order, PWRU is not responsible for Customer-owned IT hardware, servers, network switching equipment, software,
+cybersecurity of Customer systems, digital asset custody, wallet security, mining pool arrangements, mining pool payouts, or data backup
+and recovery.
+3.
+Commercial Terms
+3.1
+One-Time Fees
+Customer
+shall pay the following one-time fees per 2.4 MW Hydro Container with power:
+Charge
+Item
+Amount
+Billing
+Basis
+ASIC
+Miners
+$500,000
+Customer-owned
+432 ASIC miners procured, staged, configured, and commissioned for Customer pursuant to the applicable Service Order or equipment
+schedule. Title to such ASIC miners shall pass to Customer only upon PWRU’s receipt of full payment in cleared funds, and any
+manufacturer or vendor warranty shall be passed through only to the extent assignable.
+Mobilization
+Fee
+Included
+PWRU-owned
+powered 40-foot Hydro Container Set (set of 2 with cooling tower), including securing power and co-location.
+Security
+Deposit
+$90,000
+Cash
+security deposit, subject to draw by PWRU as provided herein.
+The
+ASIC miner line item is a procurement and deployment charge only and does not constitute a representation or warranty by PWRU regarding
+digital asset production, hash rate economics, mining profitability, or future market value.
+3.2
+Recurring Charges
+Customer
+shall pay the following recurring monthly and usage-based charges:
+Charge
+Item
+Amount
+Billing
+Basis
+Colocation
+& Admin
+5%
++
+$2,500/mo
+Per
+40-foot Hydro Container Set with racks to house 432 ASIC miners. The 5% component shall mean five percent of Gross Mining Revenues
+attributable to the ASIC miners hosted under the applicable Service Order. “Gross Mining Revenues” means the gross value
+of all digital assets, fiat proceeds, pool distributions, rewards, incentives, fees, credits, or other consideration generated, earned,
+or received from operation of the Customer Equipment, valued in U.S. dollars at the time of receipt using the exchange rate or benchmark
+specified in the applicable Service Order.
+Capacity
+Fee
+Waived
+The
+Parties agree that the Minimum Utilization Requirement and take-or-pay obligation in Section 3.6 are in lieu of, and substitute for,
+any separate capacity reservation fee.
+Energy
+Charge
+$0.05/kWh
+Per
+kwh delivered to Customer’s ASIC miners, subject to adjustment under Section 3.3A
+Fuel
+Cost
+Included
+Included
+in Energy Charge, subject to fuel cost adjustment rights set forth herein.
+Taxes
+All
+applicable
+Pass-through
+as invoiced or imposed by law.
+Customer
+shall deliver with each monthly payment a written revenue statement, together with supporting mining pool, wallet, exchange, and settlement
+reports reasonably sufficient for PWRU to verify Gross Mining Revenues. PWRU shall have audit rights upon reasonable notice, not more
+than twice per calendar year unless a discrepancy greater than five percent (5%) is found.
+2
+3.3
+Taxes
+All
+sales, use, excise, gross receipts, utility, value-added, transaction, and similar taxes, assessments, duties, or governmental charges
+arising from or relating to the Services, other than taxes imposed on PWRU’s net income, shall be paid by Customer or reimbursed
+to PWRU if paid by PWRU.
+3.3
+A Price Adjustment
+(a)
+CPI Adjustment. Commencing on the first anniversary of the Service Commencement Date, and on each anniversary thereafter, the
+Energy Charge and the fixed monthly Colocation & Admin charge shall automatically increase by the percentage increase, if any, in
+the Consumer Price Index for All Urban Consumers (CPI-U), U.S. City Average, All Items, not seasonally adjusted, published by the U.S.
+Bureau of Labor Statistics for the most recently available twelve-month period, provided that each annual adjustment shall be not less
+than two percent (2%) and not more than six percent (6%).
+(b)
+Fuel Spike Adjustment. If PWRU’s actual delivered fuel cost basis for the applicable Site increases by more than twenty
+percent (20%) above the baseline fuel cost basis assumed as of the Effective Date, and such increase persists for thirty (30) consecutive
+days, PWRU may increase the Energy Charge by written notice to Customer in an amount reasonably necessary to recover the excess fuel
+cost above such twenty percent (20%) threshold. Such adjustment shall remain in effect only for so long as the qualifying fuel cost condition
+persists. PWRU shall provide reasonable backup supporting the adjustment calculation.
+3.4
+Billing and Payment
+PWRU
+shall invoice Customer monthly in arrears for Recurring Charges. One-Time Fees shall be due and payable by Customer prior to deployment
+unless otherwise stated in a Service Order. Payments shall be due within fifteen (15) days after Customer’s receipt of each undisputed
+invoice. Customer must notify PWRU in writing of any invoice dispute within ten (10) days after receipt of the applicable invoice, describing
+the basis in reasonable detail, and Customer shall timely pay all undisputed amounts. Overdue amounts shall accrue interest at the lesser
+of one and one-half percent (1.5%) per month or the maximum lawful rate. Customer shall not set off, withhold, recoup, or deduct any
+amount except as required by law.
+3.5
+Metering
+Energy
+charges shall be calculated based on metered kilowatt-hours delivered to Customer at the agreed delivery point. The applicable Service
+Order shall define the delivery point, metering ownership, calibration intervals, testing procedures, data hierarchy, and dispute procedure.
+3.6
+Minimum Utilization Requirement; Take-or-Pay
+(a)
+Contracted Demand. The Contracted Demand for the Services shall be 2,400 kWe (2.4 MWe) per Container Set regardless of the number
+of ASIC miners in service at any given time. Customer is solely responsible for maintaining a sufficient number of operational ASIC miners
+and spare units to ensure optimal power utilization and revenue generation.
+(b)
+Minimum Utilization. Customer shall maintain a Minimum Utilization Rate of at least eighty percent (80%) of the Contracted Demand,
+calculated monthly as the ratio of Actual Energy Delivered (in kWh) divided by the product of Contracted Demand (in kWe) multiplied by
+the total hours in the applicable calendar month (the “Minimum Utilization Requirement”). Actual Energy Delivered shall be
+measured by PWRU’s meter at the delivery point.
+3
+(c) Shortfall
+Charge. If Actual Energy Delivered is less than the Minimum Utilization Requirement in any month (a “Shortfall Month”),
+Customer shall pay the Energy Charge on the full quantity required to meet the Minimum Utilization Requirement as if such quantity had
+been delivered (the “Take-or-Pay Quantity”). The Take-or-Pay Quantity for a Shortfall Month shall be Contracted Demand multiplied
+by 0.80 multiplied by the hours in such month. The Parties acknowledge and agree that this take-or-pay obligation is absolute and applies
+regardless of any Customer-side equipment failure, miner underperformance, planned or unplanned Customer curtailment, maintenance of
+Customer Equipment, digital asset price movements, mining difficulty changes, pool performance, wallet or exchange disruptions, market
+conditions, Customer financing issues, or any other circumstance on the Customer side or in the market, except solely to the extent expressly
+excused under subsection (d) below.
+(d)
+Excused Shortfalls. The Minimum Utilization Requirement shall be reduced pro rata only for any period during which Services are
+interrupted due to: (i) a Force Majeure Event; (ii) a PWRU-caused outage exceeding eight (8) continuous hours; or (iii) scheduled site
+maintenance performed by PWRU and approved by Customer with at least five (5) business days’ prior notice. Customer shall remain
+obligated to pay the fixed Colocation & Admin charge without reduction.
+(e) Reporting.
+PWRU shall provide Customer a monthly utilization report within ten (10) days after month-end, showing Actual Energy Delivered, Minimum
+Utilization Rate, and any Take-or-Pay Quantity. Customer shall have ten (10) days to dispute the report in good faith, after which it
+shall be final absent manifest error.
+3.7
+Bitcoin Price Protection; Customer Suspension Right
+(a) BTC
+Downside Event. If the Closing Price of Bitcoin is below US$55,000 for fifteen (15) consecutive Trading Days, Customer may elect
+to suspend all or part of its mining operations under this Agreement and the applicable Service Order by providing Provider written notice
+(a “BTC Suspension”). The BTC Suspension will become effective fifteen (15) days from the date such notice is received by
+the Provider.
+(b) Suspension
+Fee and Payment Relief. Upon a mutual written agreement by both Parties, beginning on the effective date of a BTC Suspension and
+continuing for no more than one (1) calendar month (the “Suspension Period”), Customer shall elect to pay Provider solely
+a fixed suspension, equipment storage, reservation, and site-maintenance fee of US$7,500 (the “Suspension Fee”). During the
+Suspension Period, Customer will have no obligation to pay energy charges, demand charges, hosting or colocation charges, capacity-reservation
+charges, minimum-payment obligations, or other variable, usage-based, or operating charges attributable to the suspended operations.
+The Suspension Fee is Customer’s sole payment obligation for the suspended operations during the Suspension Period.
+(c) Preservation
+of Capacity. During the Suspension Period, Provider shall preserve Customer’s allocated site space and contracted electrical
+capacity; provided, however, that Provider will not be required to energize, operate, monitor, maintain, repair, insure, or otherwise
+service Customer equipment except to the extent expressly required elsewhere in this Agreement. Customer remains responsible for the
+security insurance, maintenance, and condition of its equipment, except to the extent any loss or damage results from Provider’s
+breach of this Agreement, gross negligence, or willful misconduct.
+(d) Resumption
+Before Expiration. Customer may resume all or part of the suspended operations at any time during the Suspension Period by giving
+Provider not less than five (5) Business Days’ prior written notice before the Suspension Period ends. Upon resumption, the applicable
+pricing and all other payment (a) obligations under this Agreement and the Service Order will recommence for the resumed operations
+as of the effective date of resumption.
+(e) Continuing
+Low BTC Price; Termination. If, as of the expiration of the Suspension Period, the Closing Price of Bitcoin remains below US$55,000,
+either Party may terminate this Agreement and the applicable Service Order by written notice to the other Party. Such termination will
+be effective upon receipt of the notice, or on another later date specified in the notice. Neither Party will owe an early-termination
+fee, liquidated damages, future minimum-payment obligation, or similar charge as a result of a termination under this Section; provided
+that Customer remains responsible for all undisputed amounts accrued through the effective date of termination, including any unpaid
+Suspension Fee and all expenses associated with the removal of Customer equipment.
+4
+(f) Extension
+Only by Written Agreement. The Parties may extend the Suspension Period or agree to a different commercial arrangement only in a
+written instrument signed by authorized representatives of both Parties. Absent such written agreement, neither Party is required to
+continue the Agreement or the applicable Service Order following the end of the Suspension Period.
+(g) Bitcoin
+Price Source. “Closing Price of Bitcoin” means the daily U.S. dollar closing price for Bitcoin reported by Coinbase at
+5:00 p.m. Eastern Time. If the selected source is unavailable or ceases publishing the relevant price, the Parties shall use a mutually
+agreed, nationally recognized digital-asset market-data source; pending agreement, the price published by Coinbase shall apply.
+4.
+Term and Service Orders
+4.1
+Term
+This
+Agreement shall commence on the Effective Date and continue for an initial term of thirty-six (36) months, unless earlier terminated
+in accordance with this Agreement. Thereafter, this Agreement shall automatically renew for successive twelve (12) month periods unless
+either Party gives at least ninety (90) days’ prior written notice of non-renewal.
+4.2
+Service Orders
+The
+Parties may execute one or more service orders, schedules, or deployment exhibits (each, a “Service Order”) identifying the
+Site, number of Container Sets, expected load profile, service commencement date, delivery point, number of ASIC miners, Gross Mining
+Revenues valuation benchmark, wallet/payment instructions, and any special technical or commercial provisions. If there is a conflict
+between this
+Agreement
+and a Service Order, this Agreement shall control except to the extent the Service Order expressly states that it amends a specific section
+of this Agreement solely for that Service Order.
+As
+further defined in Section 7.2, Colocation Services are a limited license to Customer’s use rights at the colocation site and shall
+not be construed as a lease.
+5.
+Operations
+5.1
+PWRU Responsibilities
+PWRU
+shall:
+●
+Install,
+operate, inspect, maintain, and repair the PWRU-owned generation equipment.
+●
+Provide
+fuel required to generate power, at PWRU’s cost, to the extent fuel is designated as
+included, subject to price adjustment rights in Section 3.3A.
+●
+Maintain
+all PWRU-owned electrical infrastructure up to the agreed delivery point, unless otherwise
+stated in a Service Order.
+●
+Maintain
+and service Customer’s ASIC miners only to the extent expressly stated in a Service
+Order and only if PWRU has access to Customer-provided spare ASIC miners, excluding any obligation
+to provide replacement parts unless separately agreed.
+5
+●
+Maintain
+commercially reasonable operating procedures and safety protocols.
+●
+Maintain
+the perimeter security systems described in this Agreement.
+●
+Use
+commercially reasonable efforts to minimize outages and respond to incidents.
+5.2
+Customer Responsibilities
+Customer
+shall:
+●
+Provide
+timely access to the Site and all Customer-controlled areas necessary for PWRU to perform
+the Services.
+●
+Use
+the Services only for lawful purposes and in compliance with applicable law.
+●
+Refrain
+from tampering with PWRU equipment, fencing, meters, cameras, or controls.
+●
+Maintain
+all permits, licenses, mining pool arrangements, exchange accounts, custody arrangements,
+and consents expressly allocated to Customer in a Service Order.
+●
+Provide
+PWRU read-only wallet, mining pool, exchange, or other reporting access reasonably necessary
+to verify Gross Mining Revenues and enforce PWRU’s payment rights.
+5.3
+Access Control
+Customer
+personnel may access the Site or Customer-designated colocation areas only in accordance with PWRU’s security and access procedures,
+including identification, escort, logging, and removal controls where applicable.
+6.
+Performance; Outages; Service Interruptions
+6.1
+Planned Maintenance
+PWRU
+may perform planned maintenance upon reasonable prior notice to Customer, except in emergencies. PWRU shall use commercially reasonable
+efforts to schedule planned outages during low- load windows where practicable.
+6.2
+Unplanned Outages
+PWRU
+shall use commercially reasonable efforts to restore service after an unplanned outage as promptly as practicable. Unless expressly stated
+in a Service Order, this Agreement does not include liquidated damages or service credits for outages.
+6.3
+Excused Performance
+A
+Party’s failure to perform shall be excused to the extent caused by a Force Majeure Event.
+7.
+Title; Risk; Site Rights
+7.1
+Ownership of Equipment
+All
+generators, powered containers, meters, controls, cameras, fencing, cabling, switchgear, and other equipment installed by or on behalf
+of PWRU shall remain the sole property of PWRU. Customer Equipment, including Customer-owned ASIC miners, shall remain the property of
+Customer.
+6
+7.2
+License; No Real Property Interest
+Customer’s
+right to use any designated colocation area, power services area, or related site portion is a limited, revocable contractual license
+solely for receipt of the Services and does not create a leasehold, easement, or other real property interest.
+7.3
+Risk of Loss; No Liability for Customer Equipment
+(a) PWRU
+shall bear the risk of loss to or damage of PWRU-owned equipment, except to the extent caused by Customer’s negligence, willful
+misconduct, unauthorized access, or breach of this Agreement.
+(b) Customer
+shall bear all risk of loss of, damage to, or theft of Customer Equipment, property, or materials located at or brought to the Site,
+and PWRU shall have no liability for any loss of, damage to, or theft of Customer Equipment except to the extent caused by PWRU’s
+gross negligence, willful misconduct, or fraud. Customer acknowledges that the Services are not insurance and that Customer is solely
+responsible for insuring Customer Equipment and digital asset-related risks.
+(c) PWRU’s
+security services are provided for deterrence only and do not constitute a warranty, guarantee, or insurance against loss, damage, or
+theft.
+8. Compliance; Safety; Security
+Each
+Party shall comply with applicable laws, codes, ordinances, and regulations relevant to its performance under this Agreement. PWRU’s
+physical security measures for the Site shall include access controls, perimeter protection, electric fencing, and continuous video monitoring,
+while Customer shall ensure its personnel comply with all entry, safety, and security procedures.
+9. Insurance and Credit Support
+(a) Customer
+Insurance Requirements. Customer shall procure and maintain, at its sole expense, during the Term:
+●
+Commercial
+general liability insurance with limits of at least $2,000,000 per occurrence and $4,000,000
+annual aggregate.
+●·
+Property
+insurance covering Customer Equipment against all risks of direct physical loss on an all-
+risk replacement cost basis.
+●
+Workers’
+compensation insurance as required by law, and employers’ liability insurance with
+limits of at least $1,000,000 per accident.
+(b) Additional
+Insured. Customer’s general liability and umbrella/excess policies shall name PWRU and its related parties as additional insureds
+on a primary and non-contributory basis with respect to claims arising out of Customer’s operations, Customer Equipment, or Customer’s
+acts or omissions at the Site.
+(c) Evidence
+of Coverage. Customer shall provide PWRU certificates of insurance and endorsements prior to Service commencement and upon renewal.
+Failure to maintain insurance constitutes a material breach.
+(d) PWRU
+Insurance. PWRU shall maintain commercial general liability insurance and property coverage for PWRU-owned equipment, but such insurance
+shall not cover Customer Equipment.
+(e) Waiver
+of Subrogation. Each Party waives all rights of subrogation or recovery against the other for loss or damage covered by its insurance.
+7
+(f) Security
+Deposit. The $90,000 security deposit shall secure Customer’s payment and performance obligations under this Agreement. PWRU
+may draw upon the security deposit for any unpaid charges, interest, taxes, damage caused by Customer, removal costs, storage charges,
+audit underpayments, or any other amounts due from Customer under this Agreement after any applicable notice and cure period. Customer
+shall replenish any drawn amount within five (5) business days after written notice from PWRU. Failure to timely replenish the security
+deposit shall constitute an Event of Default. Any undrawn balance of the security deposit shall be returned to Customer within sixty
+(60) days after expiration or termination of this Agreement, less any amounts reasonably reserved for unresolved claims or final invoice
+reconciliation.
+(g) Revenue
+Control and Credit Support. As additional credit support for Customer’s payment obligations, Customer shall, prior to
+Service commencement, establish and maintain throughout the Term one or more revenue control mechanisms reasonably acceptable to
+PWRU, which may include: (i) direct payment instructions from the applicable mining pool or digital asset administrator; (ii) a
+control agreement over a designated deposit account or wallet into which Gross Mining Revenues are remitted; (iii) automatic sweep
+instructions or waterfall arrangements directing PWRU’s earned amounts and any overdue amounts to PWRU before residual amounts
+are released to Customer; and/or (iv) a security interest, to the extent permitted by applicable law, in accounts, payment
+intangibles, digital asset proceeds, and receivables arising from the operation of Customer Equipment. Customer shall execute such
+control agreements, UCC financing statements, payment directions, and other instruments as PWRU may reasonably require to implement
+the foregoing. PWRU’s rights under this subsection are intended to permit recovery and clawback of amounts payable from Gross
+Mining Revenues and related proceeds. Failure to maintain such mechanisms shall constitute a material breach and Event of
+Default.
+10.
+Confidentiality
+Each
+Party shall keep confidential all non-public technical, commercial, pricing, operational, and security information disclosed by the other
+Party and shall use such information solely for purposes of this
+Agreement,
+except as required by law, court order, financing diligence, auditor review, or professional advisors bound by confidentiality obligations.
+11.
+Indemnification
+11.1
+By PWRU
+PWRU
+shall indemnify, defend, and hold harmless Customer and its managers, officers, employees, and agents from and against third-party claims,
+damages, liabilities, and reasonable costs arising from bodily injury, death, or tangible property damage to the extent caused by the
+negligence or willful misconduct of PWRU or its personnel.
+11.2
+By Customer
+Customer
+shall indemnify, defend, and hold harmless PWRU and its affiliates, officers, directors, employees, contractors, and agents from and
+against third-party claims, damages, liabilities, and reasonable costs arising from bodily injury, death, or tangible property damage
+to the extent caused by the negligence, willful misconduct, unauthorized acts, or breach of this Agreement by Customer or its personnel.
+Customer shall also indemnify PWRU against claims arising from Customer Equipment, digital asset operations, mining pool activities,
+wallet arrangements, exchange accounts, or the loss of, damage to, or theft of Customer Equipment, except to the extent caused by PWRU’s
+gross negligence, willful misconduct, or fraud.
+12.
+Limitation of Liability
+Except
+for a Party’s indemnification obligations, confidentiality breaches, gross negligence, willful misconduct, fraud, unpaid amounts,
+or unauthorized use of or damage to the other Party’s property, neither Party shall be liable to the other for consequential, incidental,
+special, exemplary, punitive, or indirect damages, including lost profits, lost revenue, digital asset losses, lost mining rewards, loss
+of business opportunity, or loss of data, arising out of or relating to this Agreement. In addition, PWRU’s aggregate liability
+under this Agreement shall not exceed the total Recurring Charges actually paid or payable by Customer under the applicable Service Order
+during the twelve (12) months preceding the event giving rise to the claim.
+8
+13.
+Default and Remedies
+13.1
+Events of Default
+Each
+of the following constitutes an Event of Default:
+●
+Failure
+to pay any undisputed amount when due, continuing for ten (10) days after written notice.
+●
+Failure
+to provide or replenish the security deposit or requisite credit support within required
+time.
+●
+Material
+breach of this Agreement not cured within thirty (30) days after written notice.
+●
+Repeated
+unauthorized access, tampering, or security violations by Customer or its personnel.
+●
+Insolvency,
+assignment for the benefit of creditors, or commencement of bankruptcy proceedings by or
+against a Party that are not dismissed within sixty (60) days.
+13.2
+Remedies
+Upon
+an Event of Default, the non-defaulting Party may suspend performance, deny access to affected service areas to the extent commercially
+reasonable and legally permitted, suspend release of Gross Mining Revenues subject to any applicable control arrangement, draw on the
+security deposit, terminate applicable Service Order or this Agreement, and pursue all other remedies available at law or in equity.
+Customer
+shall remain liable following termination for all accrued amounts, all unpaid take-or-pay amounts through the effective date of termination,
+removal and storage costs, and any underpayments revealed by an audit.
+14.
+Force Majeure
+“Force
+Majeure Event” means an event beyond the reasonable control of the affected Party that prevents or materially delays performance,
+including acts of God, hurricanes, floods, fire, explosion, war, terrorism, sabotage, epidemic, labor disruption, acts of government,
+utility failure not caused by the affected Party, fuel transportation interruption not caused by the affected Party, and similar causes.
+A Force Majeure Event does not include lack of funds, change in market prices, improved alternative supply opportunities, mining difficulty
+changes, reduced mining profitability, or inability to pay.
+15.
+Dispute Resolution; Governing Law
+This
+Agreement shall be governed by and construed in accordance with the laws of the State of Florida, without regard to conflicts of law
+principles. The state and federal courts located in Miami-Dade County, Florida shall have exclusive jurisdiction over any dispute arising
+from or relating to this Agreement, and each Party irrevocably submits to such jurisdiction and venue.
+16.
+Miscellaneous
+●
+Independent
+Contractors. The Parties are independent contractors, and nothing in this Agreement creates
+a partnership, joint venture, fiduciary relationship, landlord-tenant relationship, or agency.
+●
+Assignment.
+Neither Party may assign this Agreement without the other Party’s prior written
+consent, except to an affiliate or in connection with a merger, sale of substantially all
+assets, or financing transaction, provided the assignee assumes the assigning Party’s
+obligations.
+●
+Notices.
+Formal notices under this Agreement shall be in writing and delivered by recognized overnight
+courier, certified mail, or email with confirmation of receipt to the addresses set forth
+below or such other address as a Party may designate by notice.
+9
+●
+Entire
+Agreement. This Agreement, together with all Service Orders and any related equipment
+schedule or credit support documents, constitutes the entire agreement between the Parties
+regarding the subject matter and supersedes prior proposals, discussions, and understandings.
+●
+Amendments.
+No amendment shall be effective unless in writing and signed by both Parties.
+●
+Counterparts;
+Electronic Signatures. This Agreement may be executed in counterparts and by electronic
+signature, each of which shall be deemed an original and together shall constitute one instrument.
+17.
+Notice Addresses
+If
+to PWRU:
+Power Upp
+USA, Inc.
+Attn:
+Matt Inan
+2200 SW 45th St., Suite 101
+Fort Lauderdale, FL
+33312
+Email:
+matt.inan@yesilglobal.com
+If
+to Customer:
+Cuentas, Inc.
+Attn:
+Shalom Arik Maimon
+235 Lincoln Rd, Suite 210
+Miami Beach, Florida 33139
+Email: arik@cuentas.com
+[REMAINDER
+OF PAGE INTENTIONALLY BLANK]
+10
+18. Signatures
+IN
+WITNESS WHEREOF, the Parties have caused this Agreement to be executed by their duly authorized representatives as of the Effective Date.
+POWER
+UPP USA, INC.
+By:
+/s/ Matthew Inan
+Name:
+Matthew Inan
+Title:
+President
+Date:
+9/20/2026
+CUENTAS, INC.
+By:
+/s/ Shalom Arik Maimon
+Name:
+Shalom Arik Maimon
+Title:
+CEO
+Date:
+9/20/2026
+[SIGNATURE
+PAGE TO THIS POWER-AS-A-SERVICE AND COLOCATION SERVICES AGREEMENT]
+11
+SERVICE
+ORDER NO. 1
+Under
+the Power-as-a-Service and Colocation Services Agreement
+This
+Service Order No. 1 (“Service Order”) is entered into effective as of August 20th, 2026 (the “Service Order Effective
+Date”), by and between Power Upp USA, Inc. (“PWRU”) and Cuentas, Inc. (“Customer”), pursuant
+to that certain Power-as-a-Service and Colocation Services Agreement between the parties dated August 20th, 2026 (the “Agreement”).
+Capitalized terms used but not defined in this Service Order have the meanings given to them in the Agreement.
+If
+there is a conflict between this Service Order and the Agreement, the Agreement shall control except to the extent this Service Order
+expressly modifies a specific provision of the Agreement solely for the purposes of this Service Order.
+1. Site and Scope
+1.1 Site
+The
+Site for this Service Order is PWRU’s West Texas powered-land project site located at 441 County Road 332, Seminole, TX 79360 together
+with related access, staging, interconnection, colocation, security, and service areas made available by PWRU for the Services (the “Site”).
+1.2 Scope of Services
+Subject
+to the Agreement and this Service Order, PWRU shall provide to Customer:
+●
+Power-as-a-Service
+for up to ten (10) Container Sets, each with a Contracted Demand of 2,400 kWe (2.4
+MWe); and
+●
+Colocation
+services for Customer-owned ASIC miners and related Customer Equipment associated with each
+such Container Set.
+1.3 Aggregate Contracted Demand
+The
+aggregate maximum Contracted Demand under this Service Order, when all ten (10) Container Sets are deployed, shall be 24,000 kWe (24.0
+MWe).
+2. Container Sets and ASIC Miners
+2.1 Container Configuration
+For
+purposes of this Service Order, each “Container Set” shall consist of:
+●
+one
+powered 40-foot hydro container configuration rated for 2.4 MWe of Contracted Demand, or
+such equivalent deployed modular hydro-cooled configuration as determined by PWRU;
+●
+associated
+racks, cooling interfaces, electrical distribution components, controls, and site integration
+components; and
+12
+●
+Customer-owned
+ASIC miners staged for operation in such Container Set.
+2.2 ASIC Miner Quantity
+Each
+Container Set is expected to house approximately 420 ASIC miners, subject to final engineering, rack density, thermal design,
+and equipment selection. Accordingly, the anticipated total ASIC miner quantity across ten (10) Container Sets is approximately 4,200
+ASIC miners.
+2.3 Final Equipment Schedule
+The
+exact make, model, manufacturer, firmware, batch, serial-number schedule, and final quantity of ASIC miners -including any spares for
+each Container Set shall be identified in one or more equipment schedules, deployment notices, or invoices issued under the Agreement.
+Deviations in available and functioning miner count shall be the Customer’s responsibility and shall not relieve Customer of its
+take- or-pay obligations due for the Contracted Demand allocated to a Container Set regardless of actual usage.
+3. Deployment Schedule
+3.1 Staged Deployment Plan
+The
+Parties acknowledge and agree that deployment under this Service Order shall occur on a staged basis of one (1) Container Set every
+ninety (90) days following the Service Commencement Date for the first deployed Container Set, unless accelerated or otherwise adjusted
+by mutual written agreement.
+3.2 Target Delivery Milestones
+The
+target deployment schedule is as follows:
+Container Set
+Target Deployment Milestone
+Incremental Contracted Demand
+Cumulative Contracted Demand
+1
+Service Commencement Date
+2.4 MWe
+2.4 MWe
+2
+90 days after Set 1 deployment
+2.4 MWe
+4.8 MWe
+3
+180 days after Set 1 deployment
+2.4 MWe
+7.2 MWe
+4
+270 days after Set 1 deployment
+2.4 MWe
+9.6 MWe
+5
+360 days after Set 1 deployment
+2.4 MWe
+12.0 MWe
+6
+450 days after Set 1 deployment
+2.4 MWe
+14.4 MWe
+7
+540 days after Set 1 deployment
+2.4 MWe
+16.8 MWe
+8
+630 days after Set 1 deployment
+2.4 MWe
+19.2 MWe
+9
+720 days after Set 1 deployment
+2.4 MWe
+21.6 MWe
+10
+810 days after Set 1 deployment
+2.4 MWe
+24.0 MWe
+3.3 Service Commencement Date by Container Set
+Each
+Container Set shall have its own Service Commencement Date, which shall occur on the date when PWRU notifies Customer that the applicable
+Container Set is installed, energized, commissioned, and available for delivery of power and colocation services, provided Customer has
+satisfied all prerequisites applicable to that Container Set, including payment of required fees, delivery of ASIC miners, insurance
+compliance, credit support compliance, and required documentation.
+3.4 Delay by Customer
+If
+deployment of any Container Set is delayed due to Customer’s failure to timely deliver ASIC miners, make payments, maintain credit
+support, provide required info, complete wallet or mining pool setup, satisfy regulatory requirements allocated to Customer, or otherwise
+perform its obligations, then PWRU may defer the deployment milestone or, at PWRU’s election upon written notice, deem the applicable
+Container Set commercially reserved for Customer and begin charging the applicable fixed monthly Colocation & Admin fee and take-or-pay
+obligations beginning on the later of: (i) scheduled deployment milestone; or (ii) fifteen (15) days after PWRU’s written notice
+of readiness for that Container Set.
+13
+3.5 Delay by PWRU
+If
+PWRU is unable to deploy a scheduled Container Set due solely to PWRU-caused delays unrelated to Force Majeure, fuel supply disruptions,
+interconnection delays, governmental delays, title/site control issues, or Customer-caused issues, the corresponding milestone shall
+be extended day-by-day until the applicable Container Set is ready for service. Customer’s obligations for such delayed Container
+Set shall begin only upon its actual Service Commencement Date, except as otherwise provided in Section 3.4.
+4. Commercial Terms for this Service Order
+4.1 One-Time Fees Per Container Set
+For
+each deployed Container Set, Customer shall pay the following one-time charges in accordance with the Agreement:
+●
+ASIC
+Miners: $500,000 per Container Set for 432 Customer-owned ASIC miners procured, staged,
+configured, and commissioned for Customer;
+●
+Mobilization
+Fee: Included;
+●
+Security
+Deposit Allocation: $90,000 per Container Set, unless otherwise agreed in writing or
+consolidated by PWRU across multiple Container Sets.
+4.2 Aggregate One-Time Fees for Full Ten-Set Deployment
+If
+all ten (10) Container Sets are deployed, the anticipated aggregate commercial values are as follows:
+Charge
+Item
+Amount
+per Container Set
+Aggregate
+for 10 Container Sets
+ASIC
+Miners
+$500,000
+$5,000,000
+Security
+Deposit
+$90,000
+$900,000
+Mobilization
+Fee
+Included
+Included
+4.3 Recurring Charges Per Container Set
+For
+each Container Set from its applicable Service Commencement Date forward, Customer shall pay:
+●
+Colocation
+& Admin: 5% of Gross Mining Revenues attributable to the applicable Container Set,
+plus $2,500 per month per Container Set;
+●
+Capacity
+Fee: Waived, with the Parties acknowledging that the take-or-pay obligation is in lieu
+of a separate capacity reservation fee;
+●
+Energy
+Charge: $0.05/kWh, subject to adjustment under the Agreement;
+●
+Taxes:
+All applicable pass-through taxes.
+4.4 Billing by Container Set
+PWRU
+may invoice Customer separately by Container Set, in the aggregate for all deployed Container Sets, or in such combined format as PWRU
+reasonably determines, provided the invoice identifies the deployed Container Sets and the basis for the charges.
+14
+5. Contracted Demand and Take-or-Pay by Container Set
+5.1 Contracted Demand
+For
+each Container Set deployed under this Service Order, the Contracted Demand shall be 2,400 kWe. Customer’s Minimum Utilization
+Requirement and take-or-pay obligation shall apply separately to each deployed Container Set from its Service Commencement Date and may
+be aggregated by PWRU for invoice presentation.
+5.2 No Relief for Customer-Side or Market Circumstances
+For
+avoidance of doubt, Customer’s take-or-pay obligations under the Agreement shall apply to each deployed Container Set regardless
+of Customer Equipment issues, miner downtime, thermal issues, networking issues, mining pool issues, digital asset pricing, mining difficulty,
+profitability, curtailment decisions, custody issues, or other Customer-side or market-side circumstances, except only as expressly excused
+under the Agreement.
+6. Revenue Reporting and Revenue Control
+6.1 Gross Mining Revenue Reporting
+Customer
+shall provide monthly revenue reports by Container Set or by a mutually agreed allocation methodology sufficient to enable PWRU to determine
+Gross Mining Revenues attributable to each deployed Container Set. If digital asset proceeds are pooled across multiple Container Sets,
+Customer shall allocate such proceeds on a commercially reasonable basis consistent with the actual performance of the hosted ASIC miners.
+6.2 Revenue Control Arrangements
+As
+a condition precedent to the Service Commencement Date of the first Container Set, and thereafter as a continuing obligation, Customer
+shall establish revenue control arrangements acceptable to PWRU sufficient to permit remittance and, where applicable, clawback of amounts
+payable to PWRU from Gross Mining Revenues attributable to the Customer Equipment operated under this Service Order.
+7. Site Rules and Operations
+7.1 Access and Security
+Customer’s
+access to the Site shall be subject to PWRU’s security, escort, access-control, and operational procedures. Customer shall not
+access areas outside those designated by PWRU and shall comply with all safety, security, and operating instructions.
+7.2 Operating Protocols
+PWRU
+shall determine the reasonable site operating protocols, deployment sequencing, container placement, cable routing, energized work restrictions,
+security measures, and maintenance windows necessary for safe and efficient operation of the Site. Customer shall cooperate with such
+protocols.
+7.3 Customer Equipment
+Customer
+shall be responsible for all Customer Equipment introduced to the Site, including compliance with any agreed technical specifications,
+shipping and delivery timing, and any required spares inventory. Customer acknowledges that minor adjustments to container layout, rack
+count, miner count, or cooling configuration may be required during final engineering and commissioning and shall not constitute a breach
+so long as the Contracted Demand and essential commercial purpose are substantially preserved.
+15
+8. Term of this Service Order
+This
+Service Order shall commence on the Service Order Effective Date and continue coterminously with the Agreement unless earlier terminated
+in accordance with the Agreement. With respect to each Container Set, the recurring charges and take-or-pay obligations shall begin on
+the applicable Service Commencement Date for that Container Set and continue for the remainder of the Term unless otherwise agreed in
+writing.
+9. Conditions Precedent
+PWRU
+shall have no obligation to commence services for any Container Set until the following conditions precedent have been satisfied or waived
+by PWRU in writing:
+●
+receipt
+of all one-time fees and deposit amounts then due for such Container Set;
+●
+execution
+of the Agreement, this Service Order, and any required equipment schedule or credit support
+documents;
+●
+delivery
+of insurance certificates and endorsements required under the Agreement;
+●
+establishment
+of acceptable revenue control / payment control arrangements;
+●
+delivery
+or confirmed availability of the ASIC miners and related Customer Equipment for the applicable
+Container Set; and
+●
+completion
+of any other commercially reasonable prerequisites identified by PWRU in writing for that
+deployment phase.
+10. Miscellaneous
+This
+Service Order forms part of, and is governed by, the Agreement. Except as expressly modified herein, all terms and conditions of the
+Agreement remain unchanged and in full force and effect.
+Signatures
+IN
+WITNESS WHEREOF, the Parties have executed this Service Order by their duly authorized representatives.
+POWER UPP USA,
+By:
+/s/ Matthew Inan
+Name:
+Matthew Inan
+Title:
+President
+Date:
+9/20/2026
+CUENTAS,
+INC.
+By:
+/s/ Shalom Arik Maimon
+Name:
+Shalom Arik Maimon
+Title:
+CEO
+Date:
+9/20/2026
+[SIGNATURE
+PAGE TO THIS SERVICE ORDER NO. 1]
+16

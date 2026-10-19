@@ -1,0 +1,58 @@
+## b1
+  Effective date | 2026-08-20 | high  | lines 8–12 | This Power-as-a-Service and Colocation Services Agreement (this “Agreement”) is entered into as of August 20th, 2026 (the “Effective Date”),
+  Initial term ends | 2029-08-19 | high  | lines 237–239 | This Agreement shall commence on the Effective Date and continue for an initial term of thirty-six (36) months, unless earlier terminated in
+  Auto-renewal | 2029-08-20 | high  | lines 239–240 | Thereafter, this Agreement shall automatically renew for successive twelve (12) month periods unless either Party gives at least ninety (90)
+  Non-renewal notice: act by | 2029-05-21 | high  | lines 239–240 | Thereafter, this Agreement shall automatically renew for successive twelve (12) month periods unless either Party gives at least ninety (90)
+  pay monthly | lines 150–151
+  pay within 15 days | lines 152–153
+  pay within 10 days | lines 153–154
+  pay within 60 days | lines 394–396
+## b2
+  Term / expiry | - | low REVIEW | lines 256–257 | This Agreement will commence on the Effective Date and will continue for one (1) year, unless earlier terminated in accordance with the term
+  Non-renewal notice: act by | - | none REVIEW | lines 257–258 | After the Initial Term, this Agreement will automatically renew for successive one (1)-year periods (each, a "Renewal Term"), unless either 
+  tfc notice length not stated | lines 271–272 (b) If Custodian suspends or restricts Client's access to the Custodial Services or deactivates, terminates or cancels C
+## b3
+  Term / expiry | - | none REVIEW | lines 346–349 | If Client forecasts [***] volume for [***] during the term of a Product Agreement (excluding the registration period), then the parties may 
+  Non-renewal notice: act by | - | none REVIEW | line 346 | This Agreement will automatically renew after the Initial Term for twelve (12) Month periods if there is a Product Agreement in effect, unle
+## b4
+  Term / expiry | - | none REVIEW |  | 
+  pay within  | line 276
+  pay within  | line 276
+  tfc notice length not stated | line 147 (b) If Custodian suspends or restricts Client’s access to the Custodial Services or deactivates, terminates or cancels C
+## b5
+  Effective date | 2022-06-01 | high  | lines 11–14 | This Management Services Agreement (this “Agreement”), dated as of June 1, 2022 (the “Effective Date”), is by and between Thunderra LLC, a D
+  Term / expiry | - | low REVIEW | lines 537–539 | At all times during the Term of this Agreement and for a period of three years thereafter, Service Provider shall procure and maintain, at i
+  Non-renewal notice: act by | - | none REVIEW | lines 262–264 | Upon expiration of the Initial Term, this Agreement shall automatically renew for additional successive one-year terms unless either party p
+  pay monthly | lines 325–326
+  pay within 30 days | lines 345–347
+  tfc 60 days' notice | lines 270–271 Either party, in its sole discretion, may terminate this Agreement at any time without cause, by providing at least 60 d
+## b6
+  Effective date | 2023-04-04 | medium REVIEW | lines 4–5 | MASTER HOSTING SERVICES AGREEMENT BETWEEN SPHERE 3D CORP. AND REBEL MINING COMPANY, LLC DATED APRIL 4, 2023 Exhibit
+  Term / expiry | - | low REVIEW | lines 868–872 | The obligations to protect Confidential Information as set forth in this Agreement shall remain in place during the term of this Agreement a
+  Non-renewal notice: act by | - | none REVIEW | lines 442–444 | Term of the Master HSA, unless either Party issues a written notice of non-renewal within thirty (30) days prior to the expiration of the In
+  pay within 5 days | lines 523–527
+  pay within 30 days | lines 527–529
+## b7
+  Effective date | 2024-01-01 | high  | lines 8–10 | SERVICES AGREEMENT (“Agreement”), dated as of January 01, 2024 (“Effective Date”), is entered into by and between ARMSTRONG LOGISTICS INC, a
+  Term / expiry | - | none REVIEW |  | 
+  pay within 60 days | lines 175–177
+  pay within 30 days of receipt of invoice | lines 213–228
+  tfc notice length not stated | lines 229–231 Either Party may terminate this Agreement without cause upon delivery to the other of a written Notice of Termination wh
+## b8
+  Current term ends (projected) | 2028-12-31 | medium  | line 637 | This Agreement will become effective as of the Effective Date and will continue until December 31, 2020 (the "Initial Term"), unless termina
+  Auto-renewal | 2029-01-01 | high  | line 637 | This Agreement will automatically renew after the Initial Term for successive terms of two Years each if there is a Product Agreement in eff
+  Non-renewal notice: act by | 2026-12-31 | medium  | line 637 | This Agreement will automatically renew after the Initial Term for successive terms of two Years each if there is a Product Agreement in eff
+  pay within 45 days | line 525
+  pay within 45 days | line 525
+  pay within 30 days | lines 655–657
+  pay within 30 days | line 657
+## b9
+  Effective date | 2024-07-17 | high  | lines 10–15 | This Manufacturing Services Agreement (Agreement) is entered into as of July 17, 2024 (the Effective Date) between Alliance Medical Products
+  Initial term ends | 2029-07-16 | high REVIEW | line 335 | This Agreement shall become effective on the Effective Date and, unless earlier terminated in accordance with this Agreement, shall continue
+  Auto-renewal | - | none REVIEW | line 337 | This Agreement shall automatically renew for consecutive two (2) year periods each, unless one of the Parties notifies the other of its elec
+  Non-renewal notice: act by | 2027-07-16 | none REVIEW | line 337 | This Agreement shall automatically renew for consecutive two (2) year periods each, unless one of the Parties notifies the other of its elec
+  pay within 30 days | line 192
+## b10
+  Term / expiry | - | none REVIEW | line 526 | If Client forecasts zero volume for [***] period during the term of this Agreement (the “Zero Forecast Period”), then Patheon will have the 
+  Non-renewal notice: act by | - | none REVIEW | line 606 | This Agreement will automatically renew after the Initial Term for successive terms of one Year each (each a “Renewal Term”), unless either 
+  pay within 5 days | line 686

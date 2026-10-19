@@ -210,3 +210,28 @@ test('invalid calendar dates in text are noted, not rolled over', () => {
   const x = extract(['This Agreement is entered into as of February 30, 2026 (the "Effective Date").']);
   assert.equal(x.effective, null); assert.ok(x.reviewNotes.some(n => n.includes('February 30, 2026')));
 });
+
+// ---- blind holdout 2 fixes + cross-references (Oct 19 evening)
+test('current term vs following term: Cerus shows the running term (2027-04-20) separately from the term the decision governs', () => {
+  const s = schedule(C.c1.x, AS);
+  assert.equal(s.find(i => i.type.startsWith('Current term')).date, '2027-04-20');
+  assert.equal(s.find(i => i.type.startsWith('Following term')).date, '2029-04-20');
+  assert.equal(s.find(i => i.type === 'Auto-renewal').date, '2027-04-21');
+  assert.equal(get('c1', 'Non-renewal').date, '2027-04-20');
+});
+test('holdout2 b8 (Acadia/Patheon): current term ends 2026-12-31, not 2028', () => {
+  const x = extract(fs.readFileSync(new URL('../edgar/holdout2/raw/b8.txt', import.meta.url), 'utf8').split('\n'));
+  const s = schedule(x, AS);
+  assert.equal(s.find(i => i.type.startsWith('Current term')).date, '2026-12-31');
+  assert.equal(s.find(i => i.type.startsWith('Non-renewal')).date, '2026-12-31');
+});
+test('cross-referenced notice: Amwell (h3) reads Section 7.4 (365 days), flagged, quoting the referenced section', () => {
+  const x = H('h3'); assert.equal(x.notice.period.n, 365); assert.equal(x.notice.needsReview, true);
+  assert.match(x.notice.source.quote, /^7\.4|three hundred sixty-five/); assert.ok(x.notice.via.quote.includes('Section 7.4'));
+  assert.equal(act('h3').date, '2028-01-02');
+});
+test('cross-reference to a missing section -> flagged, no date', () => {
+  const x = extract(['This Agreement is entered into as of January 1, 2026 (the "Effective Date").', 'The term of this Agreement shall commence on the Effective Date and continue for one (1) year.', 'It shall automatically renew for successive one (1) year terms unless a party gives notice of non-renewal pursuant to Section 12.3.']);
+  const a = schedule(x, '2026-02-01').find(i => i.type.startsWith('Non-renewal'));
+  assert.equal(a.date, ''); assert.equal(a.needsReview, true); assert.match(a.why, /Section 12\.3/);
+});

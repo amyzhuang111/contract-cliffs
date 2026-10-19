@@ -1,6 +1,6 @@
 // Runs the extractor on held-out EDGAR exhibits (never used for tuning). Usage: node edgar/holdout/run.mjs
 import fs from 'node:fs'; import { extract, schedule } from '../../public/extract.js';
-const dir = new URL('./raw/', import.meta.url);
+const dir = new URL(process.argv[2] ? '../' + process.argv[2] + '/raw/' : './raw/', import.meta.url);
 for (const l of fs.readFileSync(new URL('urls.txt', dir), 'utf8').trim().split('\n')) {
   const [id] = l.split(' '); const lines = fs.readFileSync(new URL(id + '.txt', dir), 'utf8').split('\n');
   const x = extract(lines);
