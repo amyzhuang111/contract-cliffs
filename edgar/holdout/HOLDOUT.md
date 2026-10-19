@@ -58,3 +58,6 @@ Fresh set: the first 10 commercial Exhibit 10 services, manufacturing, custody, 
 **First pass, honest numbers: 3 right (1 of them flagged), 6 flagged correctly, 1 missed, 0 wrong act-by dates; 1 wrong secondary date (b8 current-term end).**
 
 Fix (wrong dates only): the schedule now shows the term running on the as-of date ("Current term ends") separately from the term the next decision governs ("Following term ends"), and the next auto-renewal date comes from the running term. The same bug was showing Cerus (c1) as "current term ends 2029-04-20"; it now shows 2027-04-20. b5 stays missed by design: only rules that produced wrong dates were changed.
+
+### Holdout 2 after the test-lead re-run fixes (Oct 19, ~6:30 PM ET; not blind any more)
+The first-pass numbers above stay the published blind score. After the fixes (`edgar/holdout2/results-after-rerun-fixes.txt`): b5 is now dated (act by 2027-05-02, matching the independent recompute); b9's renewal ("consecutive two (2) year periods") is read, so its act-by is no longer shown with "none" confidence; b8's effective date ("made as of August 3, 2015") is picked up and its conditional renewal ("if there is a Product Agreement in effect") is flagged for review. No act-by date changed for b1–b4, b6–b8 or b10. The holdout set can now be viewed on the site ("Blind holdout (10)").

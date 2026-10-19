@@ -22,9 +22,14 @@ await page.waitForSelector('#queue li');
 ok(await page.$eval('#setEdgar', b => b.textContent.trim() === 'Real public contracts (SEC EDGAR)' && b.getAttribute('aria-pressed') === 'true'), 'real set is loaded and labelled');
 ok((await page.$$('#queue li[data-id]')).length === 10, 'queue has 10 rows');
 ok((await page.$$('#cards .card')).length === 10, '10 contract cards');
-const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 2 need review/.test(st), 'counts: ' + st);
-const order = await page.$$eval('#queue li', ls => ls.map(l => l.dataset.id || 'H:' + l.textContent.trim()));
-ok(order.join(',') === 'H:Missed · deadline passed,c7,H:Resolve first · needs review, no date,c13,c8,H:Upcoming · 31–90 days,c5,H:Upcoming · 91–365 days,c1,c6,c3,H:Upcoming · over a year,c4,c12,c2', 'priority order on the page: ' + order.join(','));
+const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 4 need review · 1 missed window/.test(st), 'counts: ' + st);
+const order = await page.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('lgrp') ? 'LAPSED' : 'H:' + l.textContent.trim())));
+ok(order.join(',') === 'H:Missed · notice window passed, not yet renewed,c3,H:Resolve first · needs review, no date,c13,c8,H:Upcoming · 31–90 days,c5,H:Upcoming · 91–365 days,c1,c6,H:Upcoming · over a year,c4,c12,c2,LAPSED', 'priority order on the page: ' + order.join(','));
+ok(/^Why it’s here Notice window missed 30 days ago · renews 19 Nov 2026/.test(await page.$eval('#queue li[data-id="c3"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'F1: Dragonfly shows the missed notice window at the top');
+ok(await page.$eval('#queue li.lgrp details', e => !e.open) && /Lapsed \(1\)/.test(await page.$eval('#queue li.lgrp summary', e => e.textContent)), 'F9: lapsed rows collapsed under "Lapsed (1)"');
+{ const st = await page.$eval('#status', e => e.textContent); const sv = await page.$$eval('#stats > div', ds => Object.fromEntries(ds.map(d => [d.querySelector('.lab').textContent, d.querySelector('.sv').textContent])));
+  ok(st.includes(sv['Need review'] + ' need review'), `F3: status line and stats strip agree on need-review (${sv['Need review']})`); }
+ok(!(await page.$$eval('#queue li[data-id]', ls => ls.filter(l => /\d{4}/.test(l.querySelector('.d').textContent) && /^none confidence/.test(l.querySelector('.s').textContent.trim().split('\n').pop().trim())).length)), 'F6: no dated row shows "none" confidence');
 const why5 = await page.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim()); ok(why5 === 'Why it’s here Act in 58 days · missing it locks in 2 more years', 'row reason: ' + why5);
 ok(/Missed first/.test(await page.$eval('#rule', e => e.textContent)) && /Priority rule/i.test(await page.$eval('.rule .lab', e => e.textContent)), 'Priority rule note is shown');
 ok(/two cycles out/.test(await page.$eval('#queue li[data-id="c1"]', e => e.textContent)), 'Cerus reason calls out notice longer than renewal');
@@ -52,7 +57,7 @@ ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []
 await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Diligence packet') && (pk.match(/<section>/g) || []).length === 10, 'diligence packet export');
 // as-of control
 await page.$eval('#asof', e => { e.value = '2027-01-01'; e.dispatchEvent(new Event('change')); });
-ok(/Cerus/.test(await page.$eval('#queue li[data-id]:not([data-id="c7"]):not([data-id="c13"]):not([data-id="c8"])', e => e.textContent)), 'as-of 2027-01-01 moves Cerus / Purolite to the top of the upcoming rows');
+ok(/Cerus/.test(await page.$eval('#queue li[data-id]:not(.missed):not([data-id="c7"]):not([data-id="c13"]):not([data-id="c8"])', e => e.textContent)), 'as-of 2027-01-01 moves Cerus / Purolite to the top of the upcoming rows');
 await page.$eval('#asof', e => { e.value = '2026-10-19'; e.dispatchEvent(new Event('change')); });
 // paste path
 await page.type('#paste', 'This Agreement is entered into as of January 5, 2026 (the "Effective Date"). The Initial Term shall commence on the Effective Date and continue for one (1) year. This Agreement shall automatically renew for successive one (1) year terms unless either party provides written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
@@ -70,6 +75,7 @@ ok(rvs.length >= 2 && rvs.every(r => r.t === 'Needs review' && r.fs === '12px' &
 ok(rvs.every(r => /^ · \S/.test(r.rs) && r.rcol === TOK.mute), 'each label is followed by a grey reason: ' + rvs.map(r => r.rs.trim()).join(' | '));
 const nd = await page.$$eval('#queue li .d', ds => ds.filter(d => !/\d{4}/.test(d.textContent)).map(d => ({ t: d.textContent.trim(), c: getComputedStyle(d.querySelector('.nd') || d).color })));
 ok(nd.length === 2 && nd.every(x => x.t === 'No date found' && x.c === TOK.mute), 'undated rows read "No date found" in grey, no dash');
+await page.$eval('#queue li.lgrp details', e => { e.open = true; });
 const c7 = await page.$eval('#queue li[data-id="c7"]', e => e.textContent.replace(/\s+/g, ' ')); ok(/Lapsed/.test(c7) && /31 May 2024/.test(c7) && /Expired \d+ days ago · all renewals used/.test(c7) && !/send non-renewal/i.test(c7), 'Synacor / Qwest row: Lapsed, Expired 31 May 2024 (all renewals used), no send-notice line');
 await page.click('#cards .card[data-id="c7"]'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 350));
 const c7d = await page.$eval('#drawer', e => e.textContent); ok(/Expired \(all renewals used\)/i.test(c7d) && !/Auto-renewal/i.test(c7d) && !/Non-renewal notice/i.test(c7d), 'Synacor drawer: expired, no auto-renewal or notice rows');
@@ -112,6 +118,12 @@ g = await page.evaluate(() => [...document.querySelectorAll('#queue li.grp')].ma
 ok(g.some(h => /Party \(filer\) Kopin Corporation/.test(h)), 'group by party (filer) works');
 await page.$eval('#g-none', b => b.click()); await new Promise(r => setTimeout(r, 200));
 ok((await page.$$('#queue li.grp')).length === 0, 'grouping off restores the flat queue');
+await page.$eval('#g-counterparty', b => b.click()); await new Promise(r => setTimeout(r, 200));
+{ const h0 = await page.$eval('#queue li.grp', l => l.textContent); ok(/Keystone RV/.test(h0), 'F10: groups sorted by priority (first group holds the top row, Keystone RV)'); }
+await page.$eval('#g-none', b => b.click());
+await page.$eval('#setHoldout', b => b.click()); await page.waitForFunction(() => document.querySelectorAll('#cards .card').length === 10 && /Blind holdout/.test(document.querySelector('#setnote').textContent), { timeout: 15000 });
+{ const t = await page.$eval('#queue', e => e.textContent); ok(/Management services/.test(t) && (await page.$$('#queue li[data-id]')).length === 10, 'holdout set is live: 10 blind EDGAR contracts in the queue'); }
+await page.$eval('#setEdgar', b => b.click()); await new Promise(r => setTimeout(r, 200));
 // cross-referenced notice period (paste)
 await page.$eval('#paste', (e, v) => { e.value = v; }, 'This Services Agreement is entered into as of January 1, 2026 (the "Effective Date").\n7.1 Term. The term of this Agreement shall begin on January 1, 2026 and shall end January 1, 2029. Upon expiration of the Initial Term, this Agreement will automatically renew for successive one (1) year terms, unless either party provides the other with notice of its intent to terminate pursuant to Section 7.4.\n7.4 Termination for Convenience. Customer may terminate this Agreement for any or no reason upon three hundred sixty-five (365) days’ advance written notice.');
 await page.click('#addPaste'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));

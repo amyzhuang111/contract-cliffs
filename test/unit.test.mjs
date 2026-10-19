@@ -111,7 +111,7 @@ test('every dated item quotes a clause that exists verbatim at its line range', 
 });
 test('queue order as of 2026-10-19', () => {
   const q = buildQueue(Object.values(C), AS);
-  assert.deepEqual(q.map(r => r.id), ['c7', 'c13', 'c8', 'c5', 'c1', 'c6', 'c3', 'c4', 'c12', 'c2']);
+  assert.deepEqual(q.map(r => r.id), ['c3', 'c13', 'c8', 'c5', 'c1', 'c6', 'c4', 'c12', 'c2', 'c7']);
   assert.equal(q.filter(r => r.actBy).length, 8);
 });
 test('as-of control moves the queue', () => { const q = buildQueue(Object.values(C), '2027-01-01').filter(r => r.section === 'upcoming'); assert.equal(q[0].id, 'c1'); });
@@ -215,7 +215,8 @@ test('invalid calendar dates in text are noted, not rolled over', () => {
 test('current term vs following term: Cerus shows the running term (2027-04-20) separately from the term the decision governs', () => {
   const s = schedule(C.c1.x, AS);
   assert.equal(s.find(i => i.type.startsWith('Current term')).date, '2027-04-20');
-  assert.equal(s.find(i => i.type.startsWith('Following term')).date, '2029-04-20');
+  assert.equal(s.find(i => i.type.startsWith('First term you can still stop')).date, '2029-04-20');
+  assert.match(s.find(i => i.type.startsWith('First term you can still stop')).why, /term ending 2028-04-20 renews automatically/);
   assert.equal(s.find(i => i.type === 'Auto-renewal').date, '2027-04-21');
   assert.equal(get('c1', 'Non-renewal').date, '2027-04-20');
 });
@@ -239,7 +240,7 @@ test('cross-reference to a missing section -> flagged, no date', () => {
 // ---- explicit priority rule
 test('priority: sections, windows, reasons', () => {
   const q = buildQueue(Object.values(C), AS);
-  assert.deepEqual(q.map(r => r.section), ['missed', 'resolve', 'resolve', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming']);
+  assert.deepEqual(q.map(r => r.section), ['missed', 'resolve', 'resolve', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'upcoming', 'lapsed']);
   const by = Object.fromEntries(q.map(r => [r.id, r]));
   assert.equal(by.c5.why, 'Act in 58 days · missing it locks in 2 more years');
   assert.match(by.c1.why, /^Act in 183 days · missing it locks in 1 more year · notice is longer than the renewal/);
@@ -260,7 +261,53 @@ test('priority: inside a window, worse-to-miss beats sooner', () => {
   const d = mk('D-30day-1yr', 'November 20, 2025', 'one (1) year', 'thirty (30) days'); // act-by 2026-10-20 (next 30 days)
   assert.equal(buildQueue([b, d], '2026-10-19')[0].id, 'D-30day-1yr');
   // notice longer than renewal outranks a longer lock-in in the same window
-  const e = mk('E-notice-gt-renewal', 'December 1, 2025', 'six (6) month', 'eight (8) months'); // 8 months' notice on 6-month renewals; next act-by 2027-03-30
+  const e = mk('E-notice-gt-renewal', 'June 1, 2026', 'six (6) month', 'eight (8) months'); // 8 months' notice on 6-month renewals; next act-by 2027-03-30
   const q2 = buildQueue([b, e], '2026-10-19');
   assert.equal(q2[0].window, q2[1].window); assert.equal(q2[0].id, 'E-notice-gt-renewal'); assert.equal(q2[0].noticeLong, true);
+});
+
+// ---- test-lead re-run fixes (F1–F11)
+const T = (...l) => extract(l);
+const base3 = (notice, renew = 'successive one (1) year periods') => T('This Agreement is entered into as of November 20, 2025 (the "Effective Date").', 'The term of this Agreement shall commence on the Effective Date and continue for one (1) year.', `It shall automatically renew for ${renew} unless either party gives ${notice} prior written notice of non-renewal.`);
+test('F1 missed notice window: shown at the top until the renewal date passes, then rolls forward', () => {
+  const x = base3('at least sixty (60) days');
+  const r = buildQueue([{ id: 'm', name: 'M', x }, { id: 'c5', name: C.c5.name, x: C.c5.x }], AS)[0];
+  assert.equal(r.id, 'm'); assert.equal(r.section, 'missed');
+  assert.deepEqual(r.missed, { actBy: '2026-09-20', renews: '2026-11-20' });
+  assert.match(r.why, /^Notice window missed 29 days ago · renews 20 Nov 2026/);
+  const after = buildQueue([{ id: 'm', name: 'M', x }], '2026-11-20')[0];
+  assert.equal(after.section, 'upcoming'); assert.equal(after.actBy, '2027-09-20');
+  const c3 = buildQueue([{ id: 'c3', name: 'D', x: C.c3.x }], AS)[0];
+  assert.match(c3.why, /^Notice window missed 30 days ago · renews 19 Nov 2026/);
+});
+test('F2 business-day notice: computed skipping weekends, flagged, never called redacted', () => {
+  const x = base3('at least ten (10) business days');
+  assert.equal(x.notice.period.business, true); assert.doesNotMatch(x.notice.why, /redact/i); assert.match(x.notice.why, /holidays are not modelled/);
+  const a = schedule(x, '2026-01-10').find(i => i.actBy);
+  assert.equal(a.date, '2026-11-05'); // term ends Thu 19 Nov 2026; 10 weekdays back
+  assert.equal(a.needsReview, true); assert.notEqual(a.confidence, 'high');
+  const y = base3('at least [***] days'); assert.match(y.notice.why, /redacted/);
+});
+test('F6 confidence: a dated act-by is never "none"; cross-referenced notice is medium + needs review', () => {
+  for (const c of Object.values(C)) for (const r of buildQueue([c], AS)) if (r.actBy) assert.notEqual(r.confidence, 'none', c.id);
+  const x = T('This Agreement is entered into as of January 15, 2026 (the "Effective Date").', 'The term of this Agreement shall commence on the Effective Date and continue for one (1) year.', 'It shall automatically renew for successive one (1) year periods unless a party gives notice of non-renewal pursuant to Section 9.2.', '9.2 Notices. Any notice of non-renewal requires forty-five (45) days prior written notice.');
+  const a = schedule(x, AS).find(i => i.actBy);
+  assert.equal(a.date, '2026-11-30'); assert.equal(a.confidence, 'medium'); assert.equal(a.needsReview, true);
+});
+test('F5 b5 "until third anniversary" (no "the")', () => {
+  const x = T('This Agreement is entered into as of June 1, 2022 (the "Effective Date").', 'This Agreement shall commence as of the Effective Date and shall continue thereafter until third anniversary of the Effective Date (the "Initial Term").', 'It shall automatically renew for successive one (1) year periods unless either party gives at least thirty (30) days prior written notice of non-renewal.');
+  assert.equal(x.term.end, '2025-06-01'); assert.equal(schedule(x, AS).find(i => i.actBy).date, '2027-05-02');
+});
+test('F8 conditional renewal is flagged; F11 "made as of" effective date', () => {
+  const x = T('THIS AGREEMENT is made as of August 3, 2015 (the “Effective Date”).', 'This Agreement will continue until December 31, 2020 (the "Initial Term").', 'This Agreement will automatically renew after the Initial Term for successive terms of two Years each if there is a Product Agreement in effect, unless either Party gives written notice at least 24 months prior to the end of the then-current term.');
+  assert.equal(x.effective.date, '2015-08-03'); assert.equal(x.renewal.needsReview, true); assert.match(x.renewal.why, /conditional \("if there is a Product Agreement in effect"\)/);
+});
+test('F9/F3 lapsed rows sort last; review count has one definition', () => {
+  const q = buildQueue(Object.values(C), AS);
+  assert.equal(q.at(-1).section, 'lapsed');
+  assert.equal(q.filter(r => r.needsReview).length, q.filter(r => r.needsReview).length);
+});
+test('b9 consecutive renewal periods are read (no "none" confidence)', () => {
+  const x = T('This Agreement is entered into as of July 17, 2024 (the "Effective Date").', 'The term of this Agreement shall commence on the Effective Date and continue for five (5) years.', 'This Agreement shall automatically renew for consecutive two (2) year periods each, unless one of the Parties notifies the other of its election not to renew this Agreement at least twenty-four (24) months prior to the end of the Initial Period.');
+  assert.equal(x.renewal.period.n, 2); assert.equal(x.renewal.confidence, 'high');
 });
