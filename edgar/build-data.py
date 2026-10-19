@@ -13,10 +13,9 @@ META=[
  ("c13","ARK / Eightco","Master Services Agreement","Eightco Holdings Inc.","ARK Capital Markets LLC","EX-10.103","2026-08-07","Services"),
 ]
 urls=dict(l.split() for l in open('edgar/raw/urls.txt'))
-out=[]; os.makedirs('public/data/text',exist_ok=True); os.makedirs('edgar/contracts',exist_ok=True)
+out=[]; os.makedirs('public/data/text',exist_ok=True)
 for cid,short,title,filer,cp,ex,filed,kind in META:
   lines=open(f'edgar/raw/{cid}.txt').read().split('\n')
-  shutil.copy(f'edgar/raw/{cid}.htm',f'edgar/contracts/{cid}.htm')
   out.append(dict(id=cid,name=short,title=title,filer=filer,counterparty=cp,exhibit=ex,filed=filed,kind=kind,url=urls[cid],lines=lines))
 json.dump(out,open('public/data/edgar.json','w'),ensure_ascii=False)
 with open('edgar/SOURCES.md','w') as f:

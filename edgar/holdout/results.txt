@@ -21,7 +21,7 @@
   Non-renewal notice: act by | - | none REVIEW | line 53 | Upon expiration of the Initial Term, this Agreement will automatically renew for successive one (1) year terms (each an “Extension Term”, an
   tfc 365 days' notice | line 56 Elevance Health may terminate this Agreement or any one or all Statements of Work issued hereunder, in whole or in part,
 ## h4
-  Effective date | 2020-08-01 | medium REVIEW | lines 13–15 | WHEREAS, WAVELO and DISH (each individually a “Party”, and collectively, the “Parties”) entered into the Mobile Virtual Network Enabler (“MV
+  Effective date | 2025-01-01 | medium REVIEW | line 11 | This Sixth Amendment to the Mobile Virtual Network Enabler Master Services Agreement (“Sixth Amendment”) is entered into as of the date of t
   Term / expiry | - | none REVIEW |  | 
 ## h5
   Effective date | 2023-11-08 | high  | line 9 | This Manufacturing Supply Agreement (the “Agreement”), dated as of November 8, 2023 (the “Effective Date”), is entered into by and between A

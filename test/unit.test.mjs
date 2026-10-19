@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, toSentences, addMonths, ymd, norm } from '../public/extract.js';
+import { extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, toSentences, addMonths, ymd, norm, nextFixed } from '../public/extract.js';
 
 const D = JSON.parse(fs.readFileSync(new URL('../public/data/edgar.json', import.meta.url)));
 const C = Object.fromEntries(D.map(c => [c.id, { ...c, x: extract(c.lines) }]));
@@ -81,10 +81,14 @@ test('c6 Vivos MSA: 31 Jul 2026, 12 months, 60 days', () => {
   assert.equal(C.c6.x.term.end, '2027-07-30'); const a = get('c6', 'Non-renewal'); assert.equal(a.date, '2027-05-31'); assert.equal(a.needsReview, false);
   assert.ok(a.source.quote.includes('at least sixty (60) days prior to the end of the then-current term'));
 });
-test('c7 Synacor/Qwest: through 31 May 2022, max two 1-yr renewals, 90 days -> past, shown honestly', () => {
+test('c7 Synacor/Qwest: through 31 May 2022, max two 1-yr renewals used -> Expired 31 May 2024, no notice line', () => {
   assert.equal(C.c7.x.term.end, '2022-05-31'); assert.equal(C.c7.x.renewal.max, 2);
-  const a = get('c7', 'Non-renewal'); assert.equal(a.date, '2024-03-02'); assert.equal(a.status, 'past');
-  assert.equal(get('c7', 'Current term').date, '2024-05-31');
+  const s = schedule(C.c7.x, AS); const e = s.find(i => i.type.startsWith('Expired'));
+  assert.equal(e.date, '2024-05-31'); assert.equal(e.status, 'past');
+  assert.ok(!s.some(i => i.type.startsWith('Non-renewal') || i.type.startsWith('Auto-renewal')));
+  assert.equal(get('c7', 'Non-renewal'), undefined);
+  // before the last cycle ran out, the notice line still exists
+  assert.equal(schedule(C.c7.x, '2024-01-01').find(i => i.type.startsWith('Non-renewal')).date, '2024-03-02');
 });
 test('c8 Patheon/Vaxcyte: fifteen years; notice redacted -> blank act-by', () => {
   assert.equal(C.c8.x.term.end, '2040-09-24'); assert.equal(C.c8.x.renewal.period.n, 3);
@@ -113,9 +117,9 @@ test('queue order as of 2026-10-19', () => {
 test('as-of control moves the queue', () => { const q = buildQueue(Object.values(C), '2027-01-01'); assert.equal(q[0].id, 'c1'); });
 test('exports', () => {
   const cs = Object.values(C);
-  const csv = toCSV(cs, AS); assert.match(csv.split('\r\n')[0], /^contract,filer,counterparty,item,date/);
+  const csv = toCSV(cs, AS); assert.match(csv.split('\r\n')[0], /^contract,filer,counterparty,item,who_acts,date/);
   assert.ok(csv.includes('2030-01-26')); assert.ok(csv.includes('https://www.sec.gov/Archives/edgar/data/771266/'));
-  const ics = toICS(cs, AS); assert.equal((ics.match(/BEGIN:VEVENT/g) || []).length, 8); assert.ok(ics.includes('DTSTART;VALUE=DATE:20261216'));
+  const ics = toICS(cs, AS); assert.equal((ics.match(/BEGIN:VEVENT/g) || []).length, 7); assert.ok(!ics.includes('20240302')); assert.ok(ics.includes('DTSTART;VALUE=DATE:20261216'));
   assert.ok(ics.split('\r\n').every(l => l.length <= 75));
   const p = toPacket(cs, AS); assert.ok(p.includes('Diligence packet')); assert.equal((p.match(/<section>/g) || []).length, 10);
   assert.ok(!/example\.com/.test(csv + ics + p));
@@ -165,4 +169,44 @@ test('payments name the trigger', () => {
   assert.ok(H('h2').payments.some(p => p.rule === 'within 30 days of invoice'));
   const late = extract(['Customer shall pay each invoice within thirty (30) days after receipt of invoice. Late payments bear interest at 1.5% per month.']);
   assert.equal(late.payments[0].rule, 'within 30 days of receipt of invoice');
+});
+
+// ---- product review fixes (Oct 19)
+test('term phrasings: "shall be N months" and "is N from"', () => {
+  const a = extract(['This Agreement is entered into as of January 15, 2026 (the "Effective Date").', 'The initial term of this Agreement shall be twelve (12) months commencing on the Effective Date.']);
+  assert.equal(a.term.end, '2027-01-14');
+  const b = extract(['This Agreement is entered into as of March 1, 2026 (the "Effective Date").', 'The term of this Agreement is one (1) year from the Effective Date.']);
+  assert.equal(b.term.end, '2027-02-28');
+});
+test('NDA paste: term, auto-renewal and notice', () => {
+  const x = extract(['MUTUAL NONDISCLOSURE AGREEMENT', 'This Mutual Nondisclosure Agreement is entered into as of November 2, 2026 (the "Effective Date") by and between Acme Corp. and Beta LLC.', 'The term of this Agreement is one (1) year from the Effective Date. This Agreement shall automatically renew for successive one (1) year periods unless either party gives written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.']);
+  const s = schedule(x, '2026-11-03');
+  assert.equal(s.find(i => /term ends/.test(i.type)).date, '2027-11-01');
+  assert.equal(s.find(i => i.type.startsWith('Non-renewal')).date, '2027-10-02');
+  assert.equal(x.notice.who, 'Either party');
+});
+test('leap-year anchor: effective 29 Feb 2024, 1-yr term, yearly renewal -> 28 Feb 2027, flagged', () => {
+  const x = extract(['This Agreement is made effective as of February 29, 2024 (the "Effective Date").', 'The term of this Agreement shall commence on the Effective Date and continue for one (1) year.', 'It shall automatically renew for successive one (1) year periods unless either party gives notice at least thirty (30) days prior to the end of the then-current term.']);
+  assert.equal(x.term.end, '2025-02-28'); assert.equal(x.term.needsReview, true);
+  const s = schedule(x, '2026-03-15');
+  assert.equal(s.find(i => /term ends/.test(i.type)).date, '2027-02-28');
+  assert.equal(s.find(i => i.type.startsWith('Non-renewal')).date, '2027-01-29');
+});
+test('c4 Tradeweb effective date is the 1 Nov 2025 Amendment Date, not the 2023 Master Agreement date', () => {
+  assert.equal(C.c4.x.effective.date, '2025-11-01'); assert.equal(C.c4.x.effective.needsReview, false);
+  assert.ok(C.c4.x.effective.source.quote.includes('effective as of November 1, 2025'));
+  assert.equal(C.c4.x.effective.source.lineStart, 12);
+});
+test('Cerus: notice longer than renewal period is called out', () => {
+  assert.match(C.c1.x.warnings[0], /longer than each renewal/); assert.match(get('c1', 'Non-renewal').why, /two cycles ahead/);
+  assert.equal(C.c6.x.warnings, undefined);
+});
+test('fixed payment schedule gives the next calendar date', () => {
+  assert.equal(nextFixed('1st of November, February, May and August', '2026-10-19'), '2026-11-01');
+  assert.equal(nextFixed('1st of November, February, May and August', '2026-11-02'), '2027-02-01');
+  assert.equal(nextFixed('within 30 days', '2026-10-19'), '');
+});
+test('invalid calendar dates in text are noted, not rolled over', () => {
+  const x = extract(['This Agreement is entered into as of February 30, 2026 (the "Effective Date").']);
+  assert.equal(x.effective, null); assert.ok(x.reviewNotes.some(n => n.includes('February 30, 2026')));
 });
