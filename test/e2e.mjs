@@ -48,7 +48,7 @@ await page.$eval('#asof', e => { e.value = '2026-10-19'; e.dispatchEvent(new Eve
 // paste path
 await page.type('#paste', 'This Agreement is entered into as of January 5, 2026 (the "Effective Date"). The Initial Term shall commence on the Effective Date and continue for one (1) year. This Agreement shall automatically renew for successive one (1) year terms unless either party provides written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
 await page.click('#addPaste'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));
-ok((await page.$eval('#drawer', e => e.textContent)).includes('4 Dec 2026'), 'pasted contract: act-by 4 Dec 2026');
+ok((await page.$eval('#drawer', e => e.textContent)).includes('5 Dec 2026'), 'pasted contract: act-by 5 Dec 2026 (term ends 4 Jan 2027 minus 30 days)');
 await page.click('#close'); await new Promise(r => setTimeout(r, 350)); await page.click('#setEdgar');
 // links
 const links = await page.$$eval('a[href]', as => as.map(a => a.href));
