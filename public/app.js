@@ -23,7 +23,7 @@ const reason = shortReason;
 // Plain confidence words instead of high/medium/low/none
 const sure = c => c === 'high' ? 'Sure' : c === 'none' ? 'Can’t tell' : 'Check this';
 const TYPE = t => t;
-const rv = why => `<span class="rv">Needs review</span><span class="rvw"> · ${esc(reason(why))}</span>`;
+const rv = tag => `<span class="rv">Needs review</span><span class="rvw"> · ${esc(tag)}</span>`;
 // "Cerus / Purolite" -> "CP"; otherwise first letters of the counterparty name
 const initials = (name, fallback) => /\s\/\s/.test(name || '') ? name.split(/\s\/\s/).slice(0, 2).map(p => initials0(p)[0] || '').join('') : initials0(fallback || name);
 async function loadEdgar() {
@@ -53,7 +53,7 @@ function render() {
     <span class="d">${r.missed ? `<span class="rn">Renews</span> ${esc(fmt(r.missed.renews))}` : r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
     <span class="n">${r.days == null ? '' : r.missed ? `in ${daysBetween(asOf, r.missed.renews)} days` : past ? `<span class="lapsed">Expired</span> · ${-r.days} days ago` : r.days === 0 ? 'today' : `in ${r.days} days`}</span>
     <span class="c"><b>${esc(r.name)}</b><div class="why-here"><span class="wl">Why it’s here</span> ${esc(r.why)}</div></span>
-    <span class="s">${r.needsReview ? rv(r.item?.why) + '<br>' : ''}${esc(sure(r.confidence))}</span></li>`; };
+    <span class="s">${r.needsReview ? rv(r.tag) + '<br>' : ''}${esc(sure(r.confidence))}</span></li>`; };
   // optional grouping by party: counterparty or filer (the public company)
   ['none', 'counterparty', 'filer'].forEach(g => $('#g-' + g).setAttribute('aria-pressed', groupBy === g));
   const head = r => r.section === 'missed' ? 'Missed · deadline passed, not yet renewed' : r.section === 'due' ? 'Due within 30 days' : r.section === 'resolve' ? 'Resolve first · needs review, no date' : 'Later · ' + WINDOWS[r.window][2];
@@ -61,11 +61,11 @@ function render() {
   const lapsedBlock = rs => rs.length ? `<li class="lgrp" role="presentation"><details><summary><span class="lab">Expired (${rs.length})</span> <span class="gn">expired, nothing left to decide</span></summary><ul class="q">${rs.map(li).join('')}</ul></details></li>` : '';
   if (groupBy === 'none') { let last = ''; $('#queue').innerHTML = rows.filter(r => r.section !== 'lapsed').map(r => { const h = head(r); const out = (h !== last ? `<li class="sh" role="presentation"><span class="lab">${esc(h)}</span></li>` : '') + li(r); last = h; return out; }).join('') + lapsedBlock(lapsedRows); }
   else { const key = r => (cs.find(c => c.id === r.id)?.[groupBy] || 'Not stated'); const groups = new Map(); rows.forEach(r => groups.set(key(r), [...(groups.get(key(r)) || []), r]));
-    $('#queue').innerHTML = [...groups.entries()].map(([k, rs]) => [k, rs, rows.indexOf(rs[0])]).sort((a, b) => a[2] - b[2]).map(([k, rs]) => [k, rs]).map(([k, rs]) => `<li class="grp" role="presentation"><span class="lab">${groupBy === 'filer' ? 'Company that filed it' : 'Counterparty'}</span> <b>${esc(k)}</b> <span class="gn">${rs.length} ${rs.length === 1 ? 'agreement' : 'agreements'}${rs.some(r => r.actBy && r.days >= 0) ? ' · next deadline ' + esc(fmt(rs.filter(r => r.actBy && r.days >= 0).sort((a, b) => a.days - b.days)[0].actBy)) : ''}</span></li>` + rs.map(li).join('')).join(''); }
+    $('#queue').innerHTML = [...groups.entries()].map(([k, rs]) => [k, rs, rows.indexOf(rs[0])]).sort((a, b) => a[2] - b[2]).map(([k, rs]) => [k, rs]).map(([k, rs]) => `<li class="grp" role="presentation"><span class="lab">${groupBy === 'filer' ? 'Company that filed it' : 'Other company'}</span> <b>${esc(k)}</b> <span class="gn">${rs.length} ${rs.length === 1 ? 'agreement' : 'agreements'}${rs.some(r => r.actBy && r.days >= 0) ? ' · next deadline ' + esc(fmt(rs.filter(r => r.actBy && r.days >= 0).sort((a, b) => a.days - b.days)[0].actBy)) : ''}</span></li>` + rs.map(li).join('')).join(''); }
   $('#cards').innerHTML = cs.map(c => { const r = rows.find(x => x.id === c.id);
     return `<button class="card" data-id="${esc(c.id)}"><div class="tile" aria-hidden="true">${esc(initials(c.name, c.counterparty))}</div>
     <div class="t">${esc(c.name)}</div><div class="m">${esc(c.kind || 'Uploaded')}${c.filed ? ' · filed ' + esc(fmt(c.filed)) : ''}</div>
-    <div class="a">${r?.actBy ? (r.missed ? `Renews ${esc(fmt(r.missed.renews))} · send-notice deadline missed` : `${r.days < 0 ? '<span class="lapsed">Expired</span> · ' : ''}${esc(r.label)} ${esc(fmt(r.actBy))}`) : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.item?.why)}</div>` : ''}</button>`; }).join('');
+    <div class="a">${r?.actBy ? (r.missed ? `Renews ${esc(fmt(r.missed.renews))} · send-notice deadline missed` : `${r.days < 0 ? '<span class="lapsed">Expired</span> · ' : ''}${esc(r.label)} ${esc(fmt(r.actBy))}`) : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.tag)}</div>` : ''}</button>`; }).join('');
   document.querySelectorAll('[data-id]:not(.grp)').forEach(el => { el.onclick = () => openDrawer(el.dataset.id); el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(el.dataset.id); } }; });
 }
 let lastFocus = null;
@@ -80,7 +80,7 @@ function openDrawer(id) {
    <p class="why" style="color:var(--mute);font-size:13px">${esc(c.title || c.fileName || '')}${c.filer ? ` · filed by ${esc(c.filer)}` : ''}${c.filed ? ` on ${esc(fmt(c.filed))}` : ''}${c.counterparty ? ` · counterparty ${esc(c.counterparty)}` : ''}</p>
    ${c.url ? `<p style="font-size:13px"><a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">Open the filing on SEC EDGAR ↗</a></p>` : ''}
    ${c.x.reviewNotes.map(n => `<p class="note">${esc(n)}</p>`).join('')}
-   ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(i.why)}</div>` : ''}
+   ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(reason(i.why))}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? -d + ' days ago' : 'in ' + d + ' days')(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
      <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} ${esc(sure(i.confidence))}.</p>
      ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}`;

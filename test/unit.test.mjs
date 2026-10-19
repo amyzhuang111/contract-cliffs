@@ -245,8 +245,8 @@ test('priority: sections, windows, reasons', () => {
   assert.equal(by.c5.why, 'Deadline in 58 days · miss it and it renews for 2 more years');
   assert.match(by.c1.why, /^Deadline in 183 days · miss it and it renews for 1 more year · notice is longer than the renewal/);
   assert.match(by.c7.why, /^Expired 871 days ago · all renewals used/);
-  assert.equal(by.c8.why, 'No date found · resolve first: redacted in the public filing');
-  assert.equal(by.c13.why, 'No date found · resolve first: redacted in the public filing');
+  assert.equal(by.c8.why, 'No date found · resolve first: blacked out in the public copy');
+  assert.equal(by.c13.why, 'No date found · resolve first: blacked out in the public copy');
   assert.match(PRIORITY_RULE, /1\) Missed/); assert.match(PRIORITY_RULE, /2\) Due within 30 days/);
 });
 test('priority: inside a window, worse-to-miss beats sooner', () => {
@@ -286,7 +286,7 @@ test('F2 business-day notice: computed skipping weekends, flagged, never called 
   const a = schedule(x, '2026-01-10').find(i => i.actBy);
   assert.equal(a.date, '2026-11-05'); // term ends Thu 19 Nov 2026; 10 weekdays back
   assert.equal(a.needsReview, true); assert.notEqual(a.confidence, 'high');
-  const y = base3('at least [***] days'); assert.match(y.notice.why, /redacted/);
+  const y = base3('at least [***] days'); assert.match(y.notice.why, /blacked out/);
 });
 test('F6 confidence: a dated act-by is never "none"; cross-referenced notice is medium + needs review', () => {
   for (const c of Object.values(C)) for (const r of buildQueue([c], AS)) if (r.actBy) assert.notEqual(r.confidence, 'none', c.id);
@@ -359,11 +359,20 @@ test('exports show Dragonfly as MISSED with the renewal date', () => {
   const csv = toCSV([C.c3], AS); assert.match(csv, /MISSED send-notice deadline,[^\n]*2026-09-19,-30,[^\n]*renews automatically on 2026-11-19/);
   const p = toPacket([C.c3], AS); assert.match(p, /MISSED/); assert.match(p, /Renews 2026-11-19/);
 });
-export const BANNED = /act-by|ambiguous drafting|computable expiry|Notice window missed|negotiated exit|Exhibit 10|Party \(filer\)|Contract lifecycle|diligence|\b(?:high|medium|low|none) confidence|Confidence: (?:high|medium|low|none)/i;
+export const BANNED = /ambiguous|= end of term|act-by|ambiguous drafting|computable expiry|Notice window missed|negotiated exit|Exhibit 10|Party \(filer\)|Contract lifecycle|diligence|\b(?:high|medium|low|none) confidence|Confidence: (?:high|medium|low|none)/i;
 test('no banned jargon in CSV, .ics or audit pack (SEC set and test set)', () => {
   for (const set of [Object.values(C), Object.values(TS)]) {
     const csv = toCSV(set, AS); const conf = csv.split('\r\n').slice(1).filter(Boolean).map(l => l.match(/,(Sure|Check this|Can’t tell|high|medium|low|none),(yes|no),/)?.[1]);
     assert.ok(conf.every(c => ['Sure', 'Check this', 'Can’t tell'].includes(c)), 'CSV confidence words: ' + [...new Set(conf)]);
     for (const [name, out] of [['csv', csv], ['ics', toICS(set, AS)], ['pack', toPacket(set, AS)]]) { const m = out.match(BANNED) || out.match(/\bAct by\b/); assert.equal(m, null, `${name}: "${m?.[0]}"`); }
   }
+});
+
+// ---- 5a223ac review: plain review tags
+test('review tags: no formulas, no "ambiguous", plain redaction wording, Acadia condition', () => {
+  const all = [...buildQueue(Object.values(C), AS), ...buildQueue(Object.values(TS), AS)];
+  for (const r of all) if (r.needsReview) { assert.doesNotMatch(r.tag, /=|ambiguous|\d+ (?:day|month|year)\(s\)|redacted/i, r.id + ': ' + r.tag); }
+  assert.equal(all.find(r => r.id === 'b8').tag, 'renewal depends on a condition; confirm it holds');
+  assert.equal(all.find(r => r.id === 'c8').tag, 'blacked out in the public copy');
+  assert.equal(all.find(r => r.id === 'c3').tag, 'unclear which term the notice counts from');
 });

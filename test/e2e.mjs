@@ -35,7 +35,7 @@ ok(/1\) Missed/.test(await page.$eval('#rule', e => e.textContent)) && /Priority
 for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setViewport({ width: w, height: w === 1440 ? 900 : 812 }); await pf.goto(BASE + '/', { waitUntil: 'networkidle0' }); await pf.waitForSelector('#queue li[data-id]');
   const m = await pf.evaluate(() => { const r = document.querySelector('#queue li[data-id]').getBoundingClientRect(); return { top: r.top, bottom: r.bottom, rowsTop: [...document.querySelectorAll('#queue li[data-id]')].filter(x => x.offsetParent && x.getBoundingClientRect().top < innerHeight).length, sw: document.documentElement.scrollWidth, lede: !!document.querySelector('.lede').offsetHeight, steps: document.querySelectorAll('.steps li').length, over: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1 && getComputedStyle(e).position !== 'fixed' && !e.closest('.drawer')).length }; });
   if (w === 1440) { ok(m.top < 900, `first screen: first queue row top at ${Math.round(m.top)}px < 900 at 1440x900`); ok(m.bottom <= 900, `first screen: first queue row fully visible (bottom ${Math.round(m.bottom)}px)`); ok(m.rowsTop >= 3, `first screen: ${m.rowsTop} queue rows start within 1440x900`); }
-  else { ok(m.top < 812, `phone: first queue row starts at ${Math.round(m.top)}px, inside the first 375x812 screen`); ok(await pf.$eval('#how', e => !e.open), 'phone: How it works is collapsed'); }
+  else { ok(m.bottom < 812, `phone: whole first queue row (name + date) fits above 812px (top ${Math.round(m.top)}, bottom ${Math.round(m.bottom)})`); ok(await pf.$eval('#how', e => !e.open), 'phone: How it works is collapsed'); }
   if (w === 375) ok(m.sw <= 375 && m.over === 0 && m.lede && m.steps === 3 && true, `375: nothing breaks (scrollWidth ${m.sw}, ${m.over} overflowing elements, hero + 3 steps shown)`);
   await pf.close(); }
 { const lede = await page.$eval('.lede', e => e.textContent.replace(/\s+/g, ' ').trim());
@@ -90,7 +90,7 @@ ok(csv && csv.startsWith('contract,filer,counterparty,item,who_acts,date') && cs
 await page.click('#exIcs'); const ics = await waitFile(/\.ics$/);
 ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []).length === 8 && ics.includes('DTSTART;VALUE=DATE:20261216') && !ics.includes('20240302'), 'ICS export: 7 upcoming send-notice deadlines + 1 MISSED renewal event (no expired Synacor event)');
 await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Audit pack') && (pk.match(/<section>/g) || []).length === 10, 'audit pack export');
-{ const BANNED_CS = /\bAct by\b/; const BANNED = /act-by|ambiguous drafting|computable expiry|Notice window missed|negotiated exit|Exhibit 10|Party \(filer\)|Contract lifecycle|diligence|\b(?:high|medium|low|none) confidence|Confidence: (?:high|medium|low|none)/i;
+{ const BANNED_CS = /\bAct by\b/; const BANNED = /ambiguous|= end of term|redacted in the public filing|act-by|ambiguous drafting|computable expiry|Notice window missed|negotiated exit|Exhibit 10|Party \(filer\)|Contract lifecycle|diligence|\b(?:high|medium|low|none) confidence|Confidence: (?:high|medium|low|none)/i;
   const texts = { csv, ics, pack: pk };
   texts.page = await page.evaluate(() => { document.querySelectorAll('details').forEach(d => d.open = true); return document.body.innerText; });
   for (const id of ['c3', 'c13', 'c4']) { await page.$eval(`#cards .card[data-id="${id}"]`, b => b.click()); await new Promise(r => setTimeout(r, 300)); texts['drawer-' + id] = await page.$eval('#drawer', e => e.innerText); await page.keyboard.press('Escape'); await new Promise(r => setTimeout(r, 250)); }
@@ -156,7 +156,7 @@ await page.$eval('#setEdgar', b => b.click()); await page.waitForSelector('#queu
 // group by party
 await page.$eval('#g-counterparty', b => b.click()); await new Promise(r => setTimeout(r, 200));
 let g = await page.evaluate(() => ({ heads: [...document.querySelectorAll('#queue li.grp')].map(l => l.textContent.replace(/\s+/g, ' ').trim()), rows: document.querySelectorAll('#queue li[data-id]').length, pressed: document.querySelector('#g-counterparty').getAttribute('aria-pressed') }));
-ok(g.heads.length >= 2 && g.rows === 10 && g.pressed === 'true' && g.heads.some(h => /Counterparty Purolite Corporation 1 agreement · next deadline 20 Apr 2027/.test(h)), `group by counterparty: ${g.heads.length} groups, 10 rows`);
+ok(g.heads.length >= 2 && g.rows === 10 && g.pressed === 'true' && g.heads.some(h => /Other company Purolite Corporation 1 agreement · next deadline 20 Apr 2027/.test(h)), `group by counterparty: ${g.heads.length} groups, 10 rows`);
 await page.$eval('#g-filer', b => b.click()); await new Promise(r => setTimeout(r, 200));
 g = await page.evaluate(() => [...document.querySelectorAll('#queue li.grp')].map(l => l.textContent.replace(/\s+/g, ' ').trim()));
 ok(g.some(h => /Company that filed it Kopin Corporation/.test(h)), 'group by company that filed it works');
