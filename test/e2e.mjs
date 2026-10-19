@@ -83,7 +83,7 @@ await (await page.$('#file')).uploadFile(fx('c12-reborn-supply.generated.docx'))
 dt = await page.$eval('#drawer', e => e.textContent);
 ok(dt.includes('10 Jun 2028') && /¶ \d+/.test(dt), 'DOCX upload: act-by 10 Jun 2028 cited by paragraph');
 await page.click('#close'); await new Promise(r => setTimeout(r, 350));
-await page.click('[data-sample$=".pdf"]'); await page.waitForFunction(() => document.querySelectorAll('#cards .card').length === 3 && document.querySelector('#drawer.on h3')?.textContent.includes('c6-vivos'), { timeout: 20000 }); await new Promise(r => setTimeout(r, 400));
+const n0 = (await page.$$('#cards .card')).length; await page.$eval('[data-sample$=".pdf"]', b => b.click()); await page.waitForFunction(n => document.querySelectorAll('#cards .card').length === n + 1 && document.querySelector('#drawer.on h3')?.textContent.includes('c6-vivos'), { timeout: 20000 }, n0); await new Promise(r => setTimeout(r, 400));
 { const sd = await page.$eval('#drawer', e => [e.className, e.querySelector('h3')?.textContent, [...e.querySelectorAll('.loc span')].map(x => x.textContent).slice(0, 4).join('|')].join(' / ')); ok(sd.includes('p. 2, lines 25–26'), 'sample PDF link runs the same upload path from the live site' + (sd.includes('p. 2, lines 25–26') ? '' : ': ' + sd)); }
 await page.keyboard.press('Escape'); await page.waitForFunction(() => !document.querySelector('#drawer.on')); await new Promise(r => setTimeout(r, 400)); await page.$eval('#setEdgar', b => b.click()); await page.waitForSelector('#queue li[data-id="c2"]');
 // live NDA paste (typical SaaS/NDA wording)
