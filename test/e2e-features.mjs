@@ -89,8 +89,8 @@ for (const w of [1440, 375]) {
     const st = await status(p), steps = await p.evaluate(() => [...new Set(window.__steps)]);
     ok(/^Read 4 files: 3 added, 1 not added \(notes\.txt\)\. 3 contracts in the queue\.$/.test(st), `${w}: bulk drop reports the result: ${st}`);
     ok(['File 1 of 4', 'File 2 of 4', 'File 3 of 4', 'File 4 of 4'].every(k => steps.some(s => s.startsWith(k))), `${w}: progress shows File n of 4 for each file`);
-    const pf = await p.$$eval('#portfolio .pf', ds => ds.map(d => d.innerText.replace(/\s+/g, ' ').trim()));
-    ok(pf.join('|') === 'DUE IN 30 DAYS 0|DUE IN 31 TO 90 DAYS 0|DUE IN 91 TO 365 DAYS 2|LATER 1|CAN’T TELL 0', `${w}: portfolio summary ${pf.join(', ')}`);
+    const pf = await p.$$eval('#portfolio .big', ds => ds.map(d => d.querySelector('.bl').textContent + ' ' + d.querySelector('.sv').textContent));
+    ok(pf.join('|') === 'Act this month 0|Coming up this year 2|Needs a human look 0', `${w}: portfolio summary ${pf.join(', ')}`);
     await p.evaluate(() => document.querySelector('#portfolio').scrollIntoView({ block: 'start' })); await sleep(300); await shot(p, 'f4-portfolio', w);
     // F5 audit CSV from the same queue
     await p.click('#lqAudit'); const csv = (await lastDl(p)).buf.toString().trim().split('\r\n');

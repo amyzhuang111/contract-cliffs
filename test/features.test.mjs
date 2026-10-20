@@ -106,7 +106,7 @@ test('F4: portfolio counts are exclusive and add up to the total', () => {
   const demo = portfolio(buildQueue([E.c5, E.c2, E.c3], AS));
   assert.deepEqual([demo.d30, demo.d90, demo.d365, demo.later, demo.missed], [0, 1, 1, 1, 1]); // Star Brands in 58 days; Dragonfly missed, next Sep 2027; StableX 2030
   assert.equal(portfolio([]).total, 0);
-  const h = stripHtml(portfolio([])); assert.equal((h.match(/ zero"/g) || []).length, 7); assert.ok(!/Expired/.test(h));
+  const h = stripHtml(portfolio([])); assert.equal((h.match(/ zero"/g) || []).length, 3); assert.ok(!/expired|past due/.test(h));
 });
 
 // F5

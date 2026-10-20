@@ -202,10 +202,19 @@ export const rowLabel = r => [bucketLabel(bucket(r)), ...flagsOf(r).map(f => FLA
 export function portfolio(rows) {
   const o = Object.fromEntries([...BUCKETS, ...FLAGS].map(([k]) => [k, 0])); for (const r of rows) { o[bucket(r)]++; for (const f of flagsOf(r)) o[f]++; } o.total = rows.length; return o;
 }
-// Strip HTML: the groups (Past due and Expired only when there is one), then the flags as a separate "of these" row.
-// Zero counts are never drawn in a highlight colour.
-export const stripHtml = pf => BUCKETS.filter(([k]) => !['passed', 'expired'].includes(k) || pf[k]).map(([k, l], i) => `<div class="pf ${k}${pf[k] ? '' : ' zero'}" style="--i:${i}"><span class="lab">${l}</span><span class="sv">${pf[k]}</span></div>`).join('')
-  + `<p class="pfflags lab">Of these: ${FLAGS.map(([k, l]) => `<span class="pfx ${k}${pf[k] ? '' : ' zero'}">${l.toLowerCase()} <span class="sv">${pf[k]}</span></span>`).join(' · ')}</p>`;
+// Summary: three big numbers, then the full breakdown in one small line. The breakdown adds up to the total.
+// Act this month = past due or due within 30 days, whatever the review status. Needs a human look = needs review or no date.
+export const summaryOf = pf => ({ act: pf.passed + pf.d30, year: pf.d90 + pf.d365, human: pf.review + pf.cant });
+const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
+export function stripHtml(pf) {
+  const s = summaryOf(pf);
+  const tile = (k, n, l, c) => `<div class="big ${k}${n ? '' : ' zero'}"><span class="sv">${n}</span><span class="bl">${l}</span><span class="bc">${c}</span></div>`;
+  const parts = [pf.passed && `${pf.passed} past due`, `${pf.d30} within 30 days`, `${pf.d90} in 31 to 90 days`, `${pf.d365} in 91 to 365 days`, `${pf.later} later`, `${pf.cant} with no date found`, pf.expired && `${pf.expired} expired`].filter(Boolean);
+  return tile('act', s.act, 'Act this month', 'Send-notice date within 30 days or already past')
+    + tile('year', s.year, 'Coming up this year', 'Send-notice date 31 to 365 days from today')
+    + tile('human', s.human, 'Needs a human look', `${pf.review} to review, ${pf.cant} with no date found`)
+    + `<p class="pfflags">All ${pf.total} by next deadline: ${parts.join(', ')}.${pf.missed ? ` ${plural(pf.missed, 'contract', 'contracts')} had an earlier send-notice date missed.` : ''}</p>`;
+}
 
 // ---------- F5: audit CSV, one row per contract ----------
 const cell = v => { const s = String(v ?? ''); return /[",\r\n]/.test(s) || /^[=+\-@\t\r]/.test(s) ? '"' + (/^[=+\-@\t\r]/.test(s) ? "'" : '') + s.replace(/"/g, '""') + '"' : s; };

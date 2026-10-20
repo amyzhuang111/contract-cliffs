@@ -652,3 +652,13 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 
 /* Can't tell is neutral grey; #EBFF0A is for Needs review only */
 .portfolio .cant .sv,.pflist .cant .ps,.tl-foot .cantnote{color:#888}.tag.cttag{background:transparent;border:1px solid #888;color:#888}
+
+/* Summary: three big numbers and one small line */
+.portfolio{grid-template-columns:repeat(3,minmax(0,1fr))}
+.portfolio .big{background:var(--bg,#000);padding:16px;display:flex;flex-direction:column;gap:4px}
+.portfolio .big .sv{font:500 48px/52px var(--font-sans);color:var(--fg)}
+.portfolio .big .bl{font:500 17px/24px var(--font-sans);color:var(--fg)}
+.portfolio .big .bc{font-size:14px;line-height:20px;color:var(--mute)}
+.portfolio .big.act .sv{color:var(--danger)}.portfolio .big.zero .sv{color:var(--mute)}
+.portfolio .pfflags{font:400 14px/20px var(--font-sans);color:var(--body);text-transform:none}
+@media (max-width:480px){.portfolio{grid-template-columns:1fr}.portfolio .big{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 12px}.portfolio .big .sv{font-size:40px;line-height:44px}.portfolio .big .bc{flex-basis:100%}}

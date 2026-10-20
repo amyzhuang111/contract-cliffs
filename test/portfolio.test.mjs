@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { htmlToLines, extract, buildQueue } from '../public/extract.js';
 import { rowsFor, pfStatus, sortRows, timelineHtml, listHtml, pos, confWord, END } from '../public/portfolio.js';
-import { portfolio, BUCKETS, FLAGS, stripHtml } from '../public/features.js';
+import { portfolio, BUCKETS, FLAGS, stripHtml, summaryOf } from '../public/features.js';
 const AS = '2026-10-19';
 const P = JSON.parse(fs.readFileSync(new URL('../public/data/portfolio.json', import.meta.url)));
 const ut = fs.readFileSync(new URL('./unit.test.mjs', import.meta.url), 'utf8');
@@ -52,7 +52,9 @@ test('portfolio: status, sorting and timeline', () => {
   for (let y = 2027; y <= 2030; y++) assert.match(t, new RegExp(`<span class="lab">${y}</span>`));
   assert.match(t, /3 after 2030, not on the line/); assert.match(t, /Can’t tell: 4, no date/);
   const leg = [...t.matchAll(/<i class="dot (\w+)"><\/i>([^<]+)/g)].map(m => m[2]); assert.deepEqual(leg, ['Due in 30 days', 'Due in 31 to 90 days', 'Due in 91 to 365 days', 'Later', 'Needs review']); // same names as the strip
-  const sh = stripHtml(portfolio(buildQueue(cs, AS))); assert.match(sh, /class="pf d30"[^>]*><span class="lab">Due in 30 days<\/span><span class="sv">2</); assert.ok(!/pf passed|pf expired/.test(sh)); assert.match(sh, /needs review <span class="sv">3<\/span>/);
+  const pf = portfolio(buildQueue(cs, AS)); assert.deepEqual(summaryOf(pf), { act: 2, year: 9, human: 7 }); // Glacier and urban-gro count as act-now despite review / missed
+  const sh = stripHtml(pf); assert.deepEqual([...sh.matchAll(/<span class="sv">(\d+)<\/span><span class="bl">([^<]+)/g)].map(m => m[2] + ' ' + m[1]), ['Act this month 2', 'Coming up this year 9', 'Needs a human look 7']);
+  assert.match(sh, /All 25 by next deadline: 2 within 30 days, 1 in 31 to 90 days, 8 in 91 to 365 days, 10 later, 4 with no date found\. 4 contracts had an earlier send-notice date missed\./);
   const l = listHtml(rows, AS); assert.equal((l.match(/<li /g) || []).length, 25); assert.equal((l.match(/href="https:\/\/www\.sec\.gov\//g) || []).length, 25);
   assert.ok(!/—/.test(t + l));
   assert.equal(confWord({ needsReview: false, confidence: 'high' }), 'Clear');
