@@ -48,10 +48,11 @@ test('portfolio: status, sorting and timeline', () => {
   const names = sortRows(rows, 'name', -1).map(r => r.c.name.toLowerCase()); assert.deepEqual(names, names.slice().sort().reverse());
   assert.equal(pos(AS, AS), 0); assert.equal(pos(END, AS), 1); assert.equal(pos('2044-07-26', AS), 1);
   const t = timelineHtml(rows, AS); const marks = [...t.matchAll(/class="mk ([\w ]+)"/g)].map(m => m[1]);
-  assert.equal(marks.length, rows.filter(r => r.actBy && r.actBy <= END && r.days >= 0).length); assert.equal(marks.length, 18); assert.equal(marks.filter(m => /\breview\b/.test(m)).length, rows.filter(r => r.needsReview && r.actBy && r.actBy <= END).length);
-  for (let y = 2027; y <= 2030; y++) assert.match(t, new RegExp(`<span class="lab">${y}</span>`));
-  assert.match(t, /3 after 2030, not on the line/); assert.match(t, /Can’t tell: 4, no date/);
-  const leg = [...t.matchAll(/<i class="dot (\w+)"><\/i>([^<]+)/g)].map(m => m[2]); assert.deepEqual(leg, ['Due in 30 days', 'Due in 31 to 90 days', 'Due in 91 to 365 days', 'Later', 'Needs review']); // same names as the strip
+  assert.equal(marks.length, 11); assert.equal(marks.filter(m => /\bnow\b/.test(m)).length, 2); assert.equal(marks.filter(m => /\bgrey\b/.test(m)).length, 9); assert.equal(marks.filter(m => /\breview\b/.test(m)).length, 2); // Glacier and Purple; 12 months: act-now red, the rest grey
+  assert.deepEqual([...t.matchAll(/<span class="lab">([A-Z][a-z]{2} \d{4})<\/span>/g)].map(m => m[1]), ['Jan 2027', 'Apr 2027', 'Jul 2027', 'Oct 2027']); assert.match(t, /class="tk today"[^>]*><span class="lab">Today/);
+  assert.deepEqual([...t.matchAll(/<span class="tlt"[^>]*>([^<]+)/g)].map(m => m[1]), ['22 Oct 2026 · Glacier Bancorp / Glacier Bank', '17 Nov 2026 · urban-gro / Richard Akright', '1 Dec 2026 · F. Scott Anthony / Coca-Cola Consolidated', '6 Feb 2027 · Z Squared / Mzhci']);
+  assert.match(t, /10 more after 19 Oct 2027/); assert.match(t, /4 with no date found/);
+  const leg = [...t.matchAll(/<i class="dot (\w+)"><\/i>([^<]+)/g)].map(m => m[2]); assert.deepEqual(leg, ['Act this month', 'Later', 'Needs review']); // matches the summary's words
   const pf = portfolio(buildQueue(cs, AS)); assert.deepEqual(summaryOf(pf), { act: 2, year: 9, human: 7 }); // Glacier and urban-gro count as act-now despite review / missed
   const sh = stripHtml(pf); assert.deepEqual([...sh.matchAll(/<span class="sv">(\d+)<\/span><span class="bl">([^<]+)/g)].map(m => m[2] + ' ' + m[1]), ['Act this month 2', 'Coming up this year 9', 'Needs a human look 7']);
   assert.match(sh, /All 25 by next deadline: 2 within 30 days, 1 in 31 to 90 days, 8 in 91 to 365 days, 10 later, 4 with no date found\. 4 contracts had an earlier send-notice date missed\./);

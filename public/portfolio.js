@@ -1,6 +1,6 @@
 // Portfolio view (button on every URL): 25 real public contracts from test/fixtures, bundled in /data/portfolio.json.
 // Every row's date is the tool's own output; the bundle only holds fixtures whose hand-checked answer matches it.
-import { extract, buildQueue, daysBetween, dayWord } from './extract.js';
+import { extract, buildQueue, daysBetween, dayWord, ymd, addDays } from './extract.js';
 import { bucket, flagsOf, rowLabel, BUCKETS, FLAGS } from './features.js';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -19,13 +19,20 @@ export function sortRows(rows, by, dir = 1) {
   const und = r => (by === 'date' || by === 'days') && !r.actBy ? 1 : 0;
   return rows.slice().sort((a, b) => { const x = k(a), y = k(b); return und(a) - und(b) || (x < y ? -1 : x > y ? 1 : 0) * dir || a.c.name.localeCompare(b.c.name); });
 }
-export function timelineHtml(rows, asOf) {
-  const y0 = +asOf.slice(0, 4); const ticks = []; for (let y = y0 + 1; y <= 2030; y++) { const x = pos(y + '-01-01', asOf); ticks.push(`<span class="tk" style="left:${(x * 100).toFixed(2)}%"><span class="lab">${y}</span></span>`); }
-  const dated = rows.filter(r => r.actBy && r.days != null && r.days >= 0);
-  const later = dated.filter(r => r.actBy > END).length, none = rows.filter(r => !r.actBy).length;
-  const marks = dated.filter(r => r.actBy <= END).map((r, k) => `<a class="${mkClass(r)}" href="#pf-${esc(r.id)}" style="left:${(pos(r.actBy, asOf) * 100).toFixed(2)}%;--i:${k}" title="${esc(r.c.name)}: send by ${esc(fmt(r.actBy))} (${esc(r.st.label)})" aria-label="${esc(r.c.name)}: send by ${esc(fmt(r.actBy))}, ${esc(r.st.label)}"></a>`).join('');
-  return `<div class="tl-track" role="group" aria-label="Send-by dates from today to the end of 2030"><span class="tk today" style="left:0"><span class="lab">Today</span></span>${ticks.join('')}${marks}</div>
-  <p class="lab tl-foot">${BUCKETS.filter(([k]) => !['cant', 'expired'].includes(k) && (k !== 'passed' || dated.some(r => r.st.bucket === 'passed'))).map(([k, l]) => `<span><i class="dot ${k}"></i>${l}</span>`).join('')}<span><i class="dot ring"></i>Needs review</span>${later ? `<span>${later} after 2030, not on the line</span>` : ''}${none ? `<span class="cantnote">Can’t tell: ${none}, no date, not on the line</span>` : ''}</p>`;
+// Timeline of the next 12 months: a Today line, quarter ticks, act-now in one strong colour, everything else grey,
+// and the soonest few labelled by company and date. Markers have a 24px hit area.
+export const tlEnd = asOf => ymd(addDays(new Date(asOf + 'T00:00:00Z'), 365));
+export function timelineHtml(rows, asOf, nLabels = 4) {
+  const end = tlEnd(asOf), P = d => (pos(d, asOf, end) * 100).toFixed(2);
+  const ticks = []; let [y, m] = asOf.split('-').map(Number); m = Math.floor((m - 1) / 3) * 3 + 3; // next quarter start (0-based month)
+  for (;;) { if (m > 11) { m -= 12; y++; } const d = `${y}-${String(m + 1).padStart(2, '0')}-01`; if (d > end) break; ticks.push(`<span class="tk" style="left:${P(d)}%"><span class="lab">${MON[m]} ${y}</span></span>`); m += 3; }
+  const dated = rows.filter(r => r.actBy && r.days != null && r.days >= 0).sort((a, b) => a.actBy < b.actBy ? -1 : a.actBy > b.actBy ? 1 : 0);
+  const on = dated.filter(r => r.actBy <= end), after = dated.length - on.length, none = rows.filter(r => !r.actBy).length;
+  const now = r => ['passed', 'd30'].includes(r.st.bucket);
+  const marks = on.map((r, k) => `<a class="mk ${now(r) ? 'now' : 'grey'}${r.st.flags.includes('review') ? ' review' : ''}" href="#pf-${esc(r.id)}" style="left:${P(r.actBy)}%;--i:${k}" title="${esc(r.c.name)}: send notice by ${esc(fmt(r.actBy))}" aria-label="${esc(r.c.name)}: send notice by ${esc(fmt(r.actBy))}, ${esc(r.st.label)}"></a>`).join('');
+  const labels = on.slice(0, nLabels).map((r, k) => { const x = +P(r.actBy); return `<span class="tlab${now(r) ? ' now' : ''}" style="left:${x}%;top:${k * 24}px;--t:${k * 24}px"><span class="tlt"${x > 55 ? ' data-right=""' : ''}>${esc(fmt(r.actBy))} · ${esc(r.c.name)}</span></span>`; }).join('');
+  return `<div class="tl-track" role="group" aria-label="Send-notice dates in the next 12 months">${labels}<span class="tk today" style="left:0"><span class="lab">Today</span></span>${ticks.join('')}${marks}</div>
+  <p class="tl-foot"><span><i class="dot now"></i>Act this month</span><span><i class="dot grey"></i>Later</span><span><i class="dot ring"></i>Needs review</span>${after ? `<span>${after} more after ${esc(fmt(end))}</span>` : ''}${none ? `<span class="cantnote">${none} with no date found</span>` : ''}</p>`;
 }
 export function listHtml(rows, asOf) {
   return rows.map((r, k) => `<li id="pf-${esc(r.id)}" class="pr ${r.st.bucket} ${r.st.flags.join(' ')}" style="--i:${k}">
