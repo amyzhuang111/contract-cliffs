@@ -755,3 +755,5 @@ body.has-any .weekstrip{display:none}
 .pfweek .wk-also{display:none;font:400 14px/20px var(--font-sans);color:var(--body);margin:8px 0 0}
 @media (max-width:480px){.pfweek .wk-also{display:block}}
 @media (max-width:480px){#pfh{display:none}} /* the headline counts the top-3 cards, which phones do not show; This week and the Also line carry it there */
+.weekstrip .wp{display:none}
+@media (max-width:480px){.weekstrip{margin:8px 0 8px}.weekstrip .wp{display:block;color:var(--mute);font-style:italic;padding-left:18px;font-size:14px;line-height:18px}.weekstrip li{line-height:20px}}
