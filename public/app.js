@@ -1,6 +1,6 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, usHoliday, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
 import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, clampWarn, ctxOf, setCtx, ctxLine, planAction, splitFiles, isDrive, DRIVE_BLOCKED, sheetsTSV, sheetCSV, mailtoList } from '/team.js';
-import { shownDay, movedNote, windowOf, windowNote, statusOf, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
+import { shownDay, movedNote, splitParty, missedLabel, missedDay, missedCdate, windowOf, windowNote, statusOf, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -146,15 +146,13 @@ $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $
 $('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf, cxOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
 // One list for Sheets and email: every live row, soonest first, pinned first.
 // One list for the spreadsheet, CSV, Sheets and email: every live row, sorted as the app sorts (pinned first, then urgency).
-// Counterparty from an 'A / B' name, only when it splits cleanly into two non-empty parts
-const splitParty = n => { const p = String(n || '').split(' / '); return p.length === 2 && p[0].trim() && p[1].trim() && !/\//.test(p[1]) ? p[1].trim() : ''; };
 const STATUS_SHORT = r => r.missed ? 'Missed' : r.days != null && r.days < 0 ? 'Passed' : !r.actBy ? 'No date found' : r.days <= 30 ? 'Due in 30 days' : r.days <= 90 ? 'Due in 90 days' : r.days <= 365 ? 'Due this year' : 'Later';
 const listItems = (cs = current()) => { const byId = new Map(cs.map(c => [c.id, c]));
   return order(buildQueue(cs, asOf)).filter(r => r.section !== 'lapsed').map(r => { const c = byId.get(r.id); const x = ctxOf(team, c); const w = windowOf(r); const date0 = w?.day || r.actBy || ''; const rv = renewView(c, r);
     const renewOn = rv ? rv.on : '';
     const sendBy = !r.actBy ? '' : w ? w.day : r.safe && !r.safe.passed ? r.safe.date : r.actBy;
-    const action = renewOn ? `Renews ${fmt(renewOn)}; reminder only, nothing to send (plan: renew)` : !r.actBy ? 'No date found; a person needs to read the clause' : r.missed ? `Missed ${fmt(r.missed.actBy)}. Next: send notice by ${fmt(sendBy)}` : w ? `Send notice on ${fmt(w.day)}` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(r.actBy)}` : `Ends ${fmt(r.actBy)}`;
-    const todo = rv ? `Renews ${fmt(rv.on)} (${rv.days <= 0 ? 'today' : 'in ' + dayWord(rv.days)}); nothing to send` : !r.actBy ? 'Read the clause: no date found' : r.missed ? `Missed; next notice by ${fmt(sendBy)}` : w ? `Send notice on ${fmt(w.day)} (two readings)` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(r.safe && !r.safe.passed ? r.safe.date : r.actBy)}` : `Ends ${fmt(r.actBy)}; plan the replacement`;
+    const action = renewOn ? `Renews ${fmt(renewOn)}; reminder only, nothing to send (plan: renew)` : !r.actBy ? 'No date found; a person needs to read the clause' : r.missed ? `${missedLabel(r)}. Next: send notice by ${fmt(sendBy)}` : w ? `Send notice on ${fmt(w.day)}` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(sendBy)}` : `Ends ${fmt(r.actBy)}`;
+    const todo = rv ? `Renews ${fmt(rv.on)} (${rv.days <= 0 ? 'today' : 'in ' + dayWord(rv.days)}); nothing to send` : !r.actBy ? 'Read the clause: no date found' : r.missed ? `${missedLabel(r)}; next notice by ${fmt(sendBy)}` : w ? `Send notice on ${fmt(w.day)} (two readings)` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(r.safe && !r.safe.passed ? r.safe.date : r.actBy)}` : `Ends ${fmt(r.actBy)}; plan the replacement`;
     const why = [rv ? lastLine(rv) + '.' : w ? `This date satisfies both readings of "${w.quote}"; check with counsel which reading applies.` : r.safe && !r.safe.passed && r.safe.date !== r.actBy ? r.safe.note.replace(/ · /g, ', ').replace(/([^.])$/, '$1.') : '', r.needsReview && !w ? `Needs review: ${r.tag || 'check the clause'}.` : ''].filter(Boolean).join(' ');
     const status = rv ? 'Renewing' : STATUS_SHORT(r); const days = sendBy ? daysBetween(asOf, sendBy) : '';
     const date = renewOn || date0;
@@ -213,7 +211,7 @@ const lastLine = v => (offDay(v.last) ? s0 => `${s0}. ${offDay(v.last)}, so chec
 const lastLine0 = v => v.within ? `Last day to change your mind: ${fmt(v.last)}, the date that satisfies both readings of ${v.quote ? `"${v.quote}"` : 'the notice clause'}. Check with counsel which reading applies` : `Last day to change your mind: ${fmt(v.last)}`;
 function chip(r, rv) {
   if (rv) return `<span class="chip ${rv.days <= 30 ? 'u30' : rv.days <= 90 ? 'u90' : 'u365'}">${rv.days <= 0 ? 'Renews today' : `Renews in ${dayWord(rv.days)}`}</span>`;
-  if (r.missed) { const ago = daysBetween(r.missed.actBy, asOf); return `<span class="chip passed">Passed ${dayWord(ago)} ago</span>`; }
+  if (r.missed) { const ago = daysBetween(missedDay(r), asOf); return `<span class="chip passed">Passed ${dayWord(ago)} ago</span>`; }
   if (r.section === 'lapsed' || r.days == null) return '';
   if (r.days < 0) return `<span class="chip passed">Passed ${dayWord(-r.days)} ago</span>`;
   const cls = r.days <= 30 ? 'u30' : r.days <= 90 ? 'u90' : 'u365'; const w = windowOf(r);
@@ -243,7 +241,7 @@ function card(c, r) {
   if (rv) { kicker = 'Renews'; hero = esc(fmt(rv.on)); sub = esc(rv.within ? `${lastLine(rv)}.` : `${lastLine0(rv)}, the last day to send a non-renewal notice${offDay(rv.last) ? `. ${offDay(rv.last)}, so check the notices clause allows delivery that day` : ''}.`); }
   else if (r.missed) {
     kicker = 'Send-notice date passed'; cls = 'passed';
-    hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(r.missed.actBy))}</span>`;
+    hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(missedDay(r)))}</span>${missedCdate(r) ? `<span class="cdate">${esc(missedCdate(r))}</span>` : ''}`;
     sub = esc(`It renews on ${fmt(r.missed.renews)}${more ? ` for ${more}` : ''}.${ex ? ' ' + ex.text : ''}`);
   } else if (r.section === 'lapsed') { kicker = 'No action needed'; cls = 'expired'; hero = `Expired ${esc(fmt(r.actBy))}`; sub = r.label === 'Send-notice deadline' ? 'The send-notice date has passed; check whether it renewed.' : 'No automatic renewal left.'; }
   else if (r.actBy && /Send-notice/.test(r.label) && windowOf(r)) { kicker = windowOf(r).label; hero = esc(fmt(windowOf(r).day)); sub = esc(cons); }
@@ -280,10 +278,10 @@ function card(c, r) {
 }
 function row(c, r) {
   const passed = !!r.missed || r.section === 'lapsed'; const rv = renewView(c, r);
-  const d = r.missed ? r.missed.actBy : shownDay(r);
+  const d = r.missed ? missedDay(r) : shownDay(r);
   const cons = r.missed ? `Renews ${fmt(r.missed.renews)}. Next: send notice by ${sendBy(r)}.` : r.section === 'lapsed' ? 'Expired. No action needed.' : r.item?.initialOnlyPassed ? `Send-notice date passed ${fmt(r.item.prevActBy)}. Now renews every ${days(r.item.renewEvery.n, r.item.renewEvery.unit)}; no later non-renewal notice.` : !r.actBy ? (r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No date found.') : /Send-notice/.test(r.label) ? (renewsFor(c) ? `or it renews for ${renewsFor(c)}.` : 'or it renews automatically.') : r.renewHint ? 'Renewal wording found but not read; check it.' : 'No automatic renewal.';
   return `<li class="lrow${newIds.has(c.id) ? ' new' : ''}" data-id="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(c.name)}: show the answer">
-    ${rv ? `<div class="ld"><span class="rdate">${esc(fmt(rv.on))}</span><span class="lab">Renews · ${weekday(rv.on)}</span><span class="rsafe">${esc(lastLine(rv))}</span></div>` : `<div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? (windowOf(r) ? windowOf(r).label : 'Send notice by') : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${windowNote(r) && !passed ? `<span class="rsafe">${esc(windowNote(r))}</span>` : r.safe && !passed ? `<span class="rsafe">${shownDay(r) !== r.actBy ? esc(movedNote(r)) : `Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe`}</span>` : ''}</div>`}
+    ${rv ? `<div class="ld"><span class="rdate">${esc(fmt(rv.on))}</span><span class="lab">Renews · ${weekday(rv.on)}</span><span class="rsafe">${esc(lastLine(rv))}</span></div>` : `<div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? (windowOf(r) ? windowOf(r).label : 'Send notice by') : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${missedCdate(r) ? `<span class="rsafe">${esc(missedCdate(r))}</span>` : ''}${windowNote(r) && !passed ? `<span class="rsafe">${esc(windowNote(r))}</span>` : r.safe && !passed ? `<span class="rsafe">${shownDay(r) !== r.actBy ? esc(movedNote(r)) : `Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe`}</span>` : ''}</div>`}
     <div class="lc">${chip(r, rv)}</div>
     <div class="ln"><span class="rname">${isPinned(team, c) ? '<span class="pin">Pinned</span> ' : ''}${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(rv ? 'Plan: renew. Nothing to send; this is a reminder of the renewal date.' : cons)}</span>${(x => x ? `<span class="rctx">${esc([x.owner && 'Owner: ' + x.owner, x.plan && 'Plan: ' + x.plan].filter(Boolean).join(' · '))}</span>` : '')(cxOf(c))}</div>
     <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">Filing ↗</a>` : ''}</span>${rv ? '' : gcal(c, r)}</div>

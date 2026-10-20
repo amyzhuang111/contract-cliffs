@@ -599,13 +599,18 @@ export function usHolidays(y) {
 // Name of the US federal holiday observed on this day, or ''. Checks the next year too (New Year's Day on a Saturday is observed on 31 Dec).
 export const usHoliday = day => { const y = +day.slice(0, 4); return usHolidays(y).get(day) || usHolidays(y + 1).get(day) || ''; };
 const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+// A fixed-date holiday observed on another day (1 Jan 2028 is a Saturday, so New Year's Day is observed on Fri 31 Dec 2027)
+const FIXED = { "New Year's Day": '01-01', Juneteenth: '06-19', 'Independence Day': '07-04', 'Veterans Day': '11-11', 'Christmas Day': '12-25' };
+export const holidayPhrase = day => { const h = usHoliday(day); if (!h) return ''; return FIXED[h] && day.slice(5) !== FIXED[h] ? `the observed ${h} holiday` : h; };
+// A missed date, said as the send day it really was; a moved one names the contract date too: "Missed Fri 16 Oct 2026 (contract date Sun 18 Oct)"
+export const missedText = d => { const s = safeSendBy(d); if (!s.changed) return `Missed ${fmtD(d)}`; const W = x => ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][new Date(x + 'T00:00:00Z').getUTCDay()]; return `Missed ${W(s.date)} ${fmtD(s.date)} (contract date ${W(d)} ${fmtD(d).replace(/ \d{4}$/, d.slice(0, 4) === s.date.slice(0, 4) ? '' : ' ' + d.slice(0, 4))})`; };
 // Last safe business day on or before a contract deadline: steps back over Saturdays, Sundays and US federal holidays.
 // Returns { date, changed, reason } where reason names why the contract date is not a business day.
 // forward: for "within N days prior" windows the day opens the window, so a weekend or holiday moves to the NEXT business day.
 export function safeSendBy(day, forward = false) {
   if (typeof day !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(day) || isNaN(new Date(day + 'T00:00:00Z')) || ymd(new Date(day + 'T00:00:00Z')) !== day) return { date: '', changed: false, reason: '' };
   const wd = new Date(day + 'T00:00:00Z').getUTCDay();
-  const reason = wd === 0 || wd === 6 ? `Falls on a ${WD[wd]}` : usHoliday(day) ? `Falls on ${usHoliday(day)} (US federal holiday)` : '';
+  const reason = wd === 0 || wd === 6 ? `Falls on a ${WD[wd]}` : usHoliday(day) ? `Falls on ${holidayPhrase(day)} (US federal holiday)` : '';
   let d = new Date(day + 'T00:00:00Z');
   while ([0, 6].includes(d.getUTCDay()) || usHoliday(ymd(d))) d = addDays(d, forward ? 1 : -1);
   return { date: ymd(d), changed: ymd(d) !== day, reason };
@@ -853,7 +858,7 @@ export const fold = l => { const enc = new TextEncoder(); const o = []; let cur 
 export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
   const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Contract Cliffs//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Contract Cliffs send-notice deadlines'];
   for (const c of contracts) for (const i of schedule(c.x, asOf)) {
-    if (i.missed) { const r = schedule(c.x, asOf).find(t => t.missedWindow)?.missedWindow; if (r) { const d = r.renews.replace(/-/g, ''); const n = ymd(addDays(new Date(r.renews + 'T00:00:00Z'), 1)).replace(/-/g, ''); L.push('BEGIN:VEVENT', `UID:${c.id}-renews-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`, fold(`SUMMARY:${icsEsc('MISSED: ' + c.name + ' renews today (send-notice deadline missed)')}`), fold(`DESCRIPTION:${icsEsc(i.why)}`), ...(c.url ? [fold(`URL:${c.url}`)] : []), 'END:VEVENT'); } continue; }
+    if (i.missed) { const r = schedule(c.x, asOf).find(t => t.missedWindow)?.missedWindow; if (r) { const d = r.renews.replace(/-/g, ''); const n = ymd(addDays(new Date(r.renews + 'T00:00:00Z'), 1)).replace(/-/g, ''); L.push('BEGIN:VEVENT', `UID:${c.id}-renews-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`, fold(`SUMMARY:${icsEsc('MISSED: ' + c.name + ' renews today (send-notice deadline missed)')}`), fold(`DESCRIPTION:${icsEsc(missedText(i.date) + '. ' + i.why)}`), ...(c.url ? [fold(`URL:${c.url}`)] : []), 'END:VEVENT'); } continue; }
     if (!i.actBy || !i.date || i.status === 'past') continue;
     if (i.within && i.termEnd) { // "within N days prior": the event is the day the window opens; reminders only on or after it
       const sw = safeSendBy(i.date, true); const day = i.date; const d = day.replace(/-/g, ''); const n = ymd(addDays(new Date(day + 'T00:00:00Z'), 1)).replace(/-/g, ''); const left = daysBetween(day, i.termEnd); const per = `${i.notice?.n} ${i.notice?.unit}${i.notice?.n === 1 ? '' : 's'}`;

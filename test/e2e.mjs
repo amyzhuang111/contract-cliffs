@@ -102,7 +102,7 @@ ok(csv && csv.startsWith('\ufeffContract,Counterparty,Send notice by,Days left,S
   const wb = new ExcelJS.Workbook(); await wb.xlsx.load(fs.readFileSync(path.join(dl, f))); const ws = wb.getWorksheet('Deadlines'); const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const d2s = d => `${d.getUTCDate()} ${M[d.getUTCMonth()]} ${d.getUTCFullYear()}`; const bad = []; let n = 0, dragon = '', aebi = '';
   for (let r = 3; r <= ws.rowCount; r++) { const c = ws.getCell(r, 3).value, todo = String(ws.getCell(r, 8).value || ''), name = String(ws.getCell(r, 1).value || ''); const m = todo.match(/(?:notice by|notice on) (\d{1,2} \w{3} \d{4})/); if (!m) continue; n++; if (!(c instanceof Date) || d2s(c) !== m[1]) bad.push(`${name}: ${c instanceof Date ? d2s(c) : c} vs ${m[1]}`); if (/Dragonfly/.test(name)) dragon = todo; if (/Aebi/.test(name)) aebi = todo; }
-  ok(n >= 5 && !bad.length && dragon === 'Missed; next notice by 17 Sep 2027' && (!aebi || /1 Oct 2027/.test(aebi)), `xlsx: dates agree in all ${n} rows with a send date (Dragonfly "${dragon}", Aebi "${aebi}")${bad.length ? ' BAD ' + bad.join('; ') : ''}`); }
+  ok(n >= 5 && !bad.length && dragon === 'Missed Fri 18 Sep 2026 (contract date Sat 19 Sep); next notice by 17 Sep 2027' && (!aebi || /1 Oct 2027/.test(aebi)), `xlsx: dates agree in all ${n} rows with a send date (Dragonfly "${dragon}", Aebi "${aebi}")${bad.length ? ' BAD ' + bad.join('; ') : ''}`); }
 await page.click('#exIcs'); const ics = await waitFile(/\.ics$/);
 ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []).length === 8 && ics.includes('DTSTART;VALUE=DATE:20261216') && !ics.includes('20240302'), 'ICS export: 7 upcoming send-notice deadlines + 1 MISSED renewal event (no expired Synacor event)');
 await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Audit pack') && (pk.match(/<section>/g) || []).length === 10, 'audit pack export');
@@ -113,7 +113,7 @@ await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.i
   const hits = Object.entries(texts).map(([k, v]) => [k, ((v || '').match(BANNED) || (v || '').match(BANNED_CS))?.[0]]).filter(([, m]) => m);
   ok(hits.length === 0, 'jargon sweep: no banned terms in the page, drawers, CSV, .ics or audit pack' + (hits.length ? ' ' + JSON.stringify(hits) : ''));
   ok(fs.readdirSync(dl).some(n => /^audit-pack-.*\.html$/.test(n)) && !fs.readdirSync(dl).some(n => /diligence/.test(n)), 'audit pack downloads as audit-pack-*.html');
-  ok(/MISSED: Dragonfly/.test(ics) && /DTSTART;VALUE=DATE:20261119/.test(ics) && /<b>MISSED<\/b>[^<]*<\/td><td>Renews 2026-11-19/.test(pk) && /,Missed( · review)?,[^\n]*Missed; next notice by/.test(csv), 'exports mark Dragonfly MISSED with the 19 Nov 2026 renewal');
+  ok(/MISSED: Dragonfly/.test(ics) && /DTSTART;VALUE=DATE:20261119/.test(ics) && /<b>MISSED<\/b>[^<]*<\/td><td>Renews 2026-11-19/.test(pk) && /,Missed( · review)?,[^\n]*Missed[^;\n]*; next notice by/.test(csv), 'exports mark Dragonfly MISSED with the 19 Nov 2026 renewal');
   await page.evaluate(() => { document.querySelectorAll('details').forEach(d => d.open = false); if (matchMedia('(min-width: 821px)').matches) document.getElementById('how').open = true; }); }
 // as-of control
 await page.$eval('#asof', e => { e.value = '2027-01-01'; e.dispatchEvent(new Event('change')); });

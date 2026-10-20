@@ -10,7 +10,7 @@ async function fresh(q = '/', w = 1440) { const p = await browser.newPage(); awa
 const status = p => p.$eval('#status', e => e.textContent);
 const big = p => p.$eval('#answer', e => e.hidden ? '' : [...e.querySelectorAll('.aleft > .lab, .hero-date, .wd, .cons, .next, .chip')].map(x => x.textContent.trim()).join(' | '));
 const waitStatus = (p, re, t = 20000) => p.waitForFunction(r => new RegExp(r).test(document.querySelector('#status').textContent), { timeout: t }, re.source);
-const DF = /^Send-notice date passed \| Passed19 Sep 2026 \| It renews on 19 Nov 2026 for 12 more months\. \| Next: send notice by Fri 17 Sep 2027 · in 333 days \| Passed 30 days ago$/;
+const DF = /^Send-notice date passed \| Passed18 Sep 2026Contract date Sat 19 Sep 2026 \| It renews on 19 Nov 2026 for 12 more months\. \| Next: send notice by Fri 17 Sep 2027 · in 333 days \| Passed 31 days ago$/;
 
 const noJargon = p => p.evaluate(() => { const d = document.querySelector('#drawer'); return [...document.body.querySelectorAll('*')].filter(e => e.offsetParent && !d.contains(e) && [...e.childNodes].some(n => n.nodeType === 3 && /edgar|confidence|calibrat/i.test(n.textContent))).map(e => e.textContent.trim().slice(0, 60)).concat([...document.querySelectorAll('[aria-label]')].filter(e => !d.contains(e) && /edgar|confidence|calibrat/i.test(e.getAttribute('aria-label'))).map(e => e.getAttribute('aria-label'))); });
 // 1. empty first screen: three things, nothing preloaded

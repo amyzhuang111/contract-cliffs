@@ -31,7 +31,7 @@ test('portfolio: the mix, one bucket per contract, buckets add up to 25', () => 
   for (const [k] of BUCKETS) assert.equal(n(k), pf[k], k); // row labels match the strip
   assert.equal(rows.filter(r => r.needsReview).length, 8); // 8 of 25 need review
   assert.equal(rows.filter(r => r.conf === 'Can’t tell').length, 4); assert.ok(rows.filter(r => r.conf === 'Check').length >= 5); assert.ok(rows.filter(r => r.conf === 'Clear').length >= 5);
-  assert.equal(rows.find(r => /urban-gro/.test(r.c.name)).st.label, 'Missed 18 Oct 2026, next deadline 17 Nov 2026'); // next date in 29 days
+  assert.equal(rows.find(r => /urban-gro/.test(r.c.name)).st.label, 'Missed Fri 16 Oct 2026 (contract date Sun 18 Oct), next deadline 17 Nov 2026'); // next date in 29 days
   assert.equal(rows.find(r => /Glacier/.test(r.c.name)).st.label, 'Due in 30 days · needs review'); // 3 days left, still counted as urgent
   for (const [f] of FLAGS) assert.equal(rows.filter(r => r.st.flags.includes(f)).length, pf[f], f);
 });
@@ -77,8 +77,23 @@ test('This week: from the data, with the next one when nothing is due', async ()
   const { thisWeek, weekHtml } = await import('../public/portfolio.js');
   const txt = h => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
   const a = thisWeek(rowsFor(cs, '2026-10-19'), '2026-10-19'); assert.deepEqual(a.due.map(r => [r.c.name, r.actBy]), [['Glacier Bancorp / Glacier Bank', '2026-10-22']]); assert.equal(a.next, null);
-  assert.equal(txt(weekHtml(rowsFor(cs, '2026-10-19'), '2026-10-19')), 'This week (19 Oct to 25 Oct 2026): 1 contract needs notice sent Glacier Bancorp / Glacier Bank Send non-renewal notice by Thu 22 Oct 2026 · 3 days left · Needs review Draft notice Also this month: urban-gro (missed 18 Oct, next 17 Nov)');
-  const { alsoLine } = await import('../public/portfolio.js'); assert.equal(alsoLine(rowsFor(cs, '2026-10-19'), '2026-10-19'), 'Also this month: urban-gro (missed 18 Oct, next 17 Nov)'); assert.equal(alsoLine([], '2026-10-19'), 'Nothing else is due this month.');
+  assert.equal(txt(weekHtml(rowsFor(cs, '2026-10-19'), '2026-10-19')), 'This week (19 Oct to 25 Oct 2026): 1 contract needs notice sent Glacier Bancorp / Glacier Bank Send non-renewal notice by Thu 22 Oct 2026 · 3 days left · Needs review Draft notice Also this month: urban-gro (missed Fri 16 Oct, contract date Sun 18 Oct; next 17 Nov)');
+  const { alsoLine } = await import('../public/portfolio.js'); assert.equal(alsoLine(rowsFor(cs, '2026-10-19'), '2026-10-19'), 'Also this month: urban-gro (missed Fri 16 Oct, contract date Sun 18 Oct; next 17 Nov)'); assert.equal(alsoLine([], '2026-10-19'), 'Nothing else is due this month.');
   const b = thisWeek(rowsFor(cs, '2026-10-23'), '2026-10-23'); assert.equal(b.due.length, 0); assert.equal(b.next.c.name, 'urban-gro / Richard Akright');
-  assert.equal(txt(weekHtml(rowsFor(cs, '2026-10-23'), '2026-10-23')), 'Nothing is due this week (23 Oct to 29 Oct 2026). The next one: urban-gro / Richard Akright Missed 18 Oct 2026. Send non-renewal notice by Tue 17 Nov 2026 · 25 days left Draft notice');
+  assert.equal(txt(weekHtml(rowsFor(cs, '2026-10-23'), '2026-10-23')), 'Nothing is due this week (23 Oct to 29 Oct 2026). The next one: urban-gro / Richard Akright Missed Fri 16 Oct 2026 (contract date Sun 18 Oct). Send non-renewal notice by Tue 17 Nov 2026 · 25 days left Draft notice');
+});
+
+test('missed dates are said as the send day, with the contract date when it moved; observed holidays are named as such; audit CSV counts to the send day', async () => {
+  const { missedText, safeSendBy } = await import('../public/extract.js'); const { auditCSV } = await import('../public/features.js');
+  assert.equal(missedText('2026-10-18'), 'Missed Fri 16 Oct 2026 (contract date Sun 18 Oct)');
+  assert.equal(missedText('2026-07-04'), 'Missed Thu 2 Jul 2026 (contract date Sat 4 Jul)');
+  assert.equal(missedText('2026-10-22'), 'Missed 22 Oct 2026');
+  assert.equal(safeSendBy('2027-12-31').reason, "Falls on the observed New Year's Day holiday (US federal holiday)");
+  assert.equal(safeSendBy('2026-12-25').reason, 'Falls on Christmas Day (US federal holiday)');
+  const rows = rowsFor(cs, AS); const L = auditCSV(cs, AS).trim().split('\r\n'); const H = L[0].split(',');
+  assert.ok(H.includes('days_to_send_by'));
+  const get = n => L.find(l => l.startsWith(n)); assert.match(get('Manako'), /^Manako \/ TaoWeave,TaoWeave,2027-03-28,2027-03-26,158,/);
+  assert.match(get('Haverhill'), /,2027-12-31,2027-12-30,437,/);
+  assert.equal(L.slice(1).filter(l => /^[^,]+ \/ [^,]+,,/.test(l)).length, 0, 'counterparty filled from a clean A / B name');
+  const ug = rows.find(r => r.c.name.startsWith('urban-gro')); assert.match(get('urban-gro'), /,2026-11-17,2026-11-17,29,2026-10-19,"Missed Fri 16 Oct 2026 \(contract date Sun 18 Oct\): send-notice deadline passed/); void ug;
 });

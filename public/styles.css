@@ -794,3 +794,4 @@ body.has-any .weekstrip{display:none}
 .dz-done{display:block;width:100%;box-sizing:border-box;clear:both}
 #tWarnMsg{grid-column:1/-1;margin:-8px 0 0}
 .pfstatus{margin:-28px 0 40px}.pfstatus:empty{display:none}
+.hero-date .cdate{display:block;font:400 14px/20px var(--font-mono);color:var(--muted);margin-top:6px}

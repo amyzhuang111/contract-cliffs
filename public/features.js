@@ -1,7 +1,7 @@
 import { signerLines } from './team.js';
 // Product features layered on the extractor: calendar links and alarms, notice letter (.docx), more obligations,
 // portfolio summary, per-contract audit CSV and safe local storage. Pure functions; no network, no invented data.
-import { twoReadings, fold, csvCell, usHoliday, usHolidays, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
+import { twoReadings, fold, csvCell, usHoliday, usHolidays, toSentences, locLabel, trimQuote, safeSendBy, holidayPhrase, missedText, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
 
 const txt = l => typeof l === 'string' ? l : (l?.text ?? '');
 const norm = s => String(s ?? '').replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\s+/g, ' ').trim();
@@ -25,12 +25,17 @@ const SHORTH = { 'Thanksgiving Day': 'Thanksgiving', 'Christmas Day': 'Christmas
 const WD3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 // The day notice actually goes out (shown in the app and the spreadsheet): a weekend or holiday deadline moves back
 // to the business day before; a 'within' date and a moved day that has already passed keep the contract date.
+// Counterparty from an 'A / B' name, only when it splits cleanly into two non-empty parts
+export const splitParty = n => { const p = String(n || '').split(' / '); return p.length === 2 && p[0].trim() && p[1].trim() && !/\//.test(p[1]) ? p[1].trim() : ''; };
+export const missedDay = r => r?.missed ? safeSendBy(r.missed.actBy).date || r.missed.actBy : '';
+export const missedCdate = r => { const d = r?.missed?.actBy; if (!d || missedDay(r) === d) return ''; const t = new Date(d + 'T00:00:00Z'); return `Contract date ${WD3[t.getUTCDay()]} ${t.getUTCDate()} ${MON3[t.getUTCMonth()]} ${d.slice(0, 4)}`; };
+export const missedLabel = r => r?.missed ? missedText(r.missed.actBy) : '';
 export const shownDay = r => r?.safe && !r.safe.passed && !r.safe.within && r.safe.date ? r.safe.date : r?.actBy || '';
 export const movedNote = r => { if (!r?.actBy || shownDay(r) === r.actBy) return ''; const t = new Date(r.actBy + 'T00:00:00Z'); return `Contract date ${WD3[t.getUTCDay()]} ${t.getUTCDate()} ${MON3[t.getUTCMonth()]} ${r.actBy.slice(0, 4)} ${r.safe.reason[0].toLowerCase() + r.safe.reason.slice(1)}`; };
 export function sendByNote(actBy, asOf, forward = false) {
   const sb = safeSendBy(actBy, forward); if (!sb.changed) return '';
   const wd = new Date(actBy + 'T00:00:00Z').getUTCDay(), h = usHoliday(actBy);
-  const why = wd === 0 || wd === 6 ? `Falls on a ${['Sunday', '', '', '', '', '', 'Saturday'][wd]}` : `Falls on ${SHORTH[h] || h}`;
+  const why = wd === 0 || wd === 6 ? `Falls on a ${['Sunday', '', '', '', '', '', 'Saturday'][wd]}` : `Falls on ${holidayPhrase(actBy) !== h ? holidayPhrase(actBy) : SHORTH[h] || h}`;
   const d = sendDay(actBy, asOf || sb.date, forward), dt = new Date(d + 'T00:00:00Z');
   return `${why}. ${forward ? 'Send notice on or after' : 'Send by'} ${WD3[dt.getUTCDay()]} ${dt.getUTCDate()} ${MON3[dt.getUTCMonth()]}${d.slice(0, 4) !== (asOf || d).slice(0, 4) ? ' ' + d.slice(0, 4) : ''}`;
 }
@@ -270,10 +275,10 @@ const cell = csvCell;
 export function statusOf(r) { return r.missed ? 'Missed: send-notice deadline passed, not yet renewed' : r.section === 'lapsed' ? 'Expired' : r.days != null && r.days < 0 ? 'Passed' : !r.actBy ? 'Needs review: no date found' : r.days <= 30 ? 'Due within 30 days' : r.days <= 90 ? 'Due within 90 days' : r.days <= 365 ? 'Due within 365 days' : 'Later than 365 days'; }
 export function auditCSV(contracts, asOf, ctxOf = () => null) {
   const rows = buildQueue(contracts, asOf); const byId = new Map(contracts.map(c => [c.id, c]));
-  const head = ['contract', 'counterparty', 'deadline', 'send_by_business_day', 'days_from_as_of', 'as_of', 'status', 'needs_review', 'review_reason', 'confidence', 'evidence_location', 'evidence_quote', 'source', 'owner', 'plan', 'note'];
+  const head = ['contract', 'counterparty', 'deadline', 'send_by_business_day', 'days_to_send_by', 'as_of', 'status', 'needs_review', 'review_reason', 'confidence', 'evidence_location', 'evidence_quote', 'source', 'owner', 'plan', 'note'];
   const out = [head.join(',')];
-  for (const r of rows) { const c = byId.get(r.id); const d = r.missed ? r.missed.actBy : r.actBy;
-    out.push([c.name, c.counterparty || '', d || '', d ? (!r.missed && windowOf(r) ? windowOf(r).day : sendDay(d, asOf)) : '', d ? daysBetween(asOf, d) : '', asOf, statusOf(r), r.needsReview ? 'yes' : 'no', r.needsReview ? r.tag || '' : '', sure(r.confidence), r.item?.source?.location || '', norm(r.item?.source?.quote || ''), c.url || c.fileName || '', ...(x => [x?.owner || '', x?.plan || '', x?.note || ''])(ctxOf(c))].map(cell).join(',')); }
+  for (const r of rows) { const c = byId.get(r.id); const d = r.actBy; const sd = r.actBy ? (!r.missed && windowOf(r)?.day) || shownDay(r) : ''; // a missed row: its next deadline, as in the app; the missed day is in status
+    out.push([c.name, c.counterparty || splitParty(c.name), d || '', sd, sd ? daysBetween(asOf, sd) : '', asOf, r.missed ? `${missedText(r.missed.actBy)}: send-notice deadline passed, not yet renewed` : statusOf(r), r.needsReview ? 'yes' : 'no', r.needsReview ? r.tag || '' : '', sure(r.confidence), r.item?.source?.location || '', norm(r.item?.source?.quote || ''), c.url || c.fileName || '', ...(x => [x?.owner || '', x?.plan || '', x?.note || ''])(ctxOf(c))].map(cell).join(',')); }
   return out.join('\r\n') + '\r\n';
 }
 

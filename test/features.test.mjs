@@ -112,10 +112,10 @@ test('F4: portfolio counts are exclusive and add up to the total', () => {
 // F5
 test('F5: audit CSV has one row per contract with deadline, quote, confidence and status', () => {
   const csv = auditCSV([E.c5, E.c3, E.c2], AS).trim().split('\r\n');
-  assert.equal(csv[0], 'contract,counterparty,deadline,send_by_business_day,days_from_as_of,as_of,status,needs_review,review_reason,confidence,evidence_location,evidence_quote,source,owner,plan,note');
+  assert.equal(csv[0], 'contract,counterparty,deadline,send_by_business_day,days_to_send_by,as_of,status,needs_review,review_reason,confidence,evidence_location,evidence_quote,source,owner,plan,note');
   assert.equal(csv.length, 4);
   const star = csv.find(l => l.startsWith('Star Brands')); assert.match(star, /,2026-12-16,2026-12-16,58,2026-10-19,Due within 90 days,no,,/); assert.match(star, /lines 24–29,"If not otherwise terminated/); assert.match(star, /sec\.gov/);
-  assert.match(csv.find(l => l.startsWith('Dragonfly')), /,2026-09-19,.*Missed: send-notice deadline passed/);
+  assert.match(csv.find(l => l.startsWith('Dragonfly')), /,2027-09-19,2027-09-17,333,2026-10-19,"Missed Fri 18 Sep 2026 \(contract date Sat 19 Sep\): send-notice deadline passed/);
   const evil = auditCSV([{ ...E.c5, id: 'z', name: '=HYPERLINK("x")' }], AS); assert.match(evil, /^contract[^\n]*\r\n"'=HYPERLINK\(""x""\)"/);
   assert.equal(statusOf({ actBy: '', days: null }), 'Needs review: no date found');
 });
@@ -165,8 +165,8 @@ test('CSV guard: numbers stay numbers in both exports; formulas and dash-text ar
   for (const n of ['-2', '-108', '-12', '0', '42', '-3.5']) assert.equal(csvCell(n), n);
   assert.equal(csvCell(-108), '-108');
   for (const [i, o] of [['=cmd|calc!A1', `"'=cmd|calc!A1"`], ['+1+1', `"'+1+1"`], ['@SUM(A1)', `"'@SUM(A1)"`], ['-x', `"'-x"`], ['-2+3', `"'-2+3"`], ['\tx', `"'\tx"`]]) assert.equal(csvCell(i), o, i);
-  // audit export: a missed row's negative days_from_as_of is a plain number
-  const missed = { ...E.c3 }; const csv = auditCSV([missed], '2027-10-01');
+  // audit export: a passed row's negative days_to_send_by is a plain number (a missed row counts to its next deadline, as the app does)
+  const missed = { ...E.c3 }; const csv = auditCSV([E.c7], '2027-10-01');
   const neg = csv.split('\r\n')[1]?.split(',').find(v => /^"?'?-\d+"?$/.test(v)); assert.ok(neg && /^-\d+$/.test(neg), String(neg));
   assert.ok(!/"'-\d+"/.test(csv));
   const main = toCSV([missed], '2027-10-01'); assert.ok(!/"'-\d+"/.test(main));

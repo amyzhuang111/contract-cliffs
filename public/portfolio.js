@@ -2,7 +2,7 @@ import { planAction } from './team.js';
 // Portfolio view (button on every URL): 25 real public contracts from test/fixtures, bundled in /data/portfolio.json.
 // Every row's date is the tool's own output; the bundle only holds fixtures whose hand-checked answer matches it.
 import { extract, buildQueue, daysBetween, dayWord, ymd, addDays } from './extract.js';
-import { bucket, flagsOf, rowLabel, BUCKETS, FLAGS, sendByNote, windowNote, windowOf, shownDay, movedNote } from './features.js';
+import { bucket, flagsOf, rowLabel, BUCKETS, FLAGS, sendByNote, windowNote, windowOf, shownDay, movedNote, missedLabel } from './features.js';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${MON[+m - 1]} ${y}`; };
@@ -10,7 +10,7 @@ export const END = '2030-12-31';
 // status used for colour and sorting; needs review wins (it is the only state drawn in #EBFF0A)
 // Plain status words. A missed row reads as one phrase, with years: "Missed 18 Oct 2026, next deadline 17 Nov 2026".
 export function pfStatus(r, asOf = r.asOf) { const b = bucket(r), f = flagsOf(r);
-  const label = r.missed && r.actBy ? `Missed ${fmt(r.missed.actBy)}, next deadline ${fmt(r.actBy)}${f.includes('review') ? ' · needs review' : ''}` : b === 'cant' ? 'No date found' : rowLabel(r); // Can't tell is shown once, in the Confidence column
+  const label = r.missed && r.actBy ? `${missedLabel(r)}, next deadline ${fmt(shownDay(r))}${f.includes('review') ? ' · needs review' : ''}` : b === 'cant' ? 'No date found' : rowLabel(r); // Can't tell is shown once, in the Confidence column
   return { key: b, bucket: b, flags: f, label }; }
 const mkClass = r => ['mk', r.st.bucket, ...r.st.flags].join(' ');
 export const confWord = r => r.needsReview && !r.actBy ? 'Can’t tell' : r.needsReview || r.confidence !== 'high' ? 'Check' : 'Clear';
@@ -82,7 +82,7 @@ export function thisWeek(rows, asOf) {
 export function actionOf(r) {
   const w = windowOf(r); const day = w ? w.day : (r.safe && !r.safe.passed ? r.safe.date : r.actBy);
   const verb = w ? `${w.label} ${fmtW(w.day)}` : `Send non-renewal notice by ${fmtW(day)}`;
-  return { day, text: (r.missed ? `Missed ${fmt(r.missed.actBy)}. ` : '') + verb, left: r.days === 0 ? 'today' : `${dayWord(daysBetween(r.asOf, day))} left`, review: !!r.needsReview };
+  return { day, text: (r.missed ? `${missedLabel(r)}. ` : '') + verb, left: r.days === 0 ? 'today' : `${dayWord(daysBetween(r.asOf, day))} left`, review: !!r.needsReview };
 }
 export function weekHtml(rows, asOf, linkFor = () => '', planOf = () => '') {
   const t = thisWeek(rows, asOf); const span = `${+asOf.slice(8)} ${MON[+asOf.slice(5, 7) - 1]} to ${fmt(t.end)}`;
@@ -98,5 +98,5 @@ export function alsoLine(rows, asOf) {
   const rest = byUrgency(rows).filter(r => ['passed', 'd30'].includes(r.st.bucket) && !wk.includes(r.id));
   const sh = d => `${+d.slice(8)} ${MON[+d.slice(5, 7) - 1]}`;
   if (!rest.length) return 'Nothing else is due this month.';
-  return 'Also this month: ' + rest.map(r => `${r.c.name.split(' / ')[0]} (${r.missed ? `missed ${sh(r.missed.actBy)}, next ${sh(r.actBy)}` : `send by ${sh(r.actBy)}`})`).join('; ');
+  return 'Also this month: ' + rest.map(r => `${r.c.name.split(' / ')[0]} (${r.missed ? `${missedLabel(r).replace(/^Missed/, 'missed').replace(/(\d{1,2} [A-Z][a-z]{2}) \d{4}/, '$1').replace(/ \((contract date [^)]*)\)/, ', $1')}; next ${sh(shownDay(r))}` : `send by ${sh(r.actBy)}`})`).join('; ');
 }
