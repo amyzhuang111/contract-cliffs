@@ -790,3 +790,4 @@ body.has-any .weekstrip{display:none}
 .lq-tools a.tl{display:inline-flex;align-items:center}
 .lq-plug{display:flex;flex-wrap:wrap;gap:0 24px;margin:4px 0 0}.lq-plug .tl{display:inline-flex;align-items:center;min-height:44px}
 @media (max-width:480px){.dz-folder{display:none}.lq-plug{gap:0 16px}}
+.dz-done{margin:8px 0 0;color:var(--ink);font:400 13px/18px var(--mono);text-transform:uppercase}

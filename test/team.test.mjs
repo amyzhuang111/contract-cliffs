@@ -88,3 +88,8 @@ test('plug in: email draft is short and says when it was cut', () => {
   const l = mailtoList(IT(60), { asOf: AS }); assert.ok(l.url.length <= MAILTO_MAX && l.shown < 60 && l.shown > 3);
   assert.match(decodeURIComponent(l.url), new RegExp(`${60 - l.shown} more not shown: the list is too long for an email link\\. Use Export CSV for all of them\\.$`));
 });
+test('progress: reading files adds no fixed delay', () => {
+  const src = fs.readFileSync(new URL('../public/app.js', import.meta.url), 'utf8'); const st = src.slice(src.indexOf('async function stage('), src.indexOf('const busyDone'));
+  assert.ok(st.length > 50 && !/setTimeout\(r, [1-9]/.test(st), 'stage() must not wait a fixed time'); assert.match(src, /const GUIDED_PACE = params\.get\('demo'\) === '1' \? 250 : 0;/);
+  assert.match(src, /Done\. Read \$\{word\(added\)\}/);
+});

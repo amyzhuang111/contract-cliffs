@@ -292,7 +292,8 @@ function live(cs) {
 const STEPS = ['Reading 1 of 3: extracting text', '2 of 3: finding term and renewal clauses', '3 of 3: computing the send-notice date'];
 const show = id => ['pasteBox', 'busy', 'dzErr'].forEach(k => { $('#' + k).hidden = k !== id; }) || ($('.dz-idle').hidden = !!id);
 let bulk = null; // { i, n } while several files are read
-async function stage(i, name) { show('busy'); $('#drop').classList.remove('err'); $('#busyName').textContent = (bulk ? `File ${bulk.i} of ${bulk.n} · ` : '') + 'Reading ' + name.replace(/\.[a-z0-9]+$/i, ''); $('#busyStep').textContent = STEPS[i - 1]; const f = bulk ? (bulk.i - 1 + i / 3) / bulk.n : i / 3; $('#busyBar').style.width = Math.round(f * 100) + '%'; $('#busy .bar').setAttribute('aria-valuenow', String(Math.round(f * 100))); await new Promise(r => setTimeout(r, 250)); }
+async function stage(i, name) { show('busy'); $('#drop').classList.remove('err'); $('#busyName').textContent = (bulk ? `File ${bulk.i} of ${bulk.n} · ` : '') + 'Reading ' + name.replace(/\.[a-z0-9]+$/i, ''); $('#busyStep').textContent = STEPS[i - 1]; const f = bulk ? (bulk.i - 1 + i / 3) / bulk.n : i / 3; $('#busyBar').style.width = Math.round(f * 100) + '%'; $('#busy .bar').setAttribute('aria-valuenow', String(Math.round(f * 100))); await new Promise(r => requestAnimationFrame(() => setTimeout(r, GUIDED_PACE))); } // let the step paint; your files get no added delay
+const GUIDED_PACE = params.get('demo') === '1' ? 250 : 0; // the guided walkthrough keeps its pacing unchanged
 const busyDone = () => { show(null); };
 function dzError(msg) { show('dzErr'); $('#drop').classList.add('err'); $('#dzErrHint').textContent = msg; }
 const plainErr = m => /no text layer/.test(m) ? 'This PDF is a scanned image. Paste the text instead.' : /unsupported/.test(m) ? 'File type not supported. Use PDF, Word or text.' : 'The file could not be opened. Try another copy, or paste the text instead.';
@@ -341,9 +342,13 @@ async function addFiles(all) {
   for (let k = 0; k < files.length; k++) { const f = files[k]; if (many) bulk = { i: k + 1, n: files.length };
     try { $('#status').textContent = (many ? `File ${k + 1} of ${files.length}: ` : '') + 'Reading ' + f.name + '…'; await stage(1, f.name); if (await addDoc(f.name, await readFile(f))) added++; else failed.push(f.name); } catch (err) { failed.push(f.name); dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + f.name + ': ' + plainErr(err.message || ''); } }
   bulk = null;
-  if (many) { busyDone(); $('#drop').classList.remove('err'); $('#status').textContent = `Read ${files.length} files: ${added} added${failed.length ? `, ${failed.length} not added (${failed.join(', ').slice(0, 160)})` : ''}. ${mine.length} contracts in the queue.${skipNote}`; }
+  const word = n => `${n} ${n === 1 ? 'contract' : 'contracts'}`;
+  if (many) { busyDone(); $('#drop').classList.remove('err'); $('#status').textContent = `Read ${word(added)}.${failed.length ? ` ${failed.length} ${failed.length === 1 ? 'file' : 'files'} not added (${failed.join(', ').slice(0, 160)}).` : ''} ${word(mine.length)} in the queue.${skipNote}`; }
   else if (skipNote) $('#status').textContent += skipNote;
+  if (added) done(`Done. Read ${word(added)}${many ? ` of ${files.length} files` : ''}.`);
 }
+// A short confirmation in the drop zone once the files are read (the work itself is not slowed down).
+let doneT = 0; const done = t => { const d = $('#dzDone'); d.textContent = t; d.hidden = false; clearTimeout(doneT); doneT = setTimeout(() => { d.hidden = true; }, 4000); };
 $('#file').onchange = async e => { await addFiles([...e.target.files]); e.target.value = ''; };
 $('#folder').onchange = async e => { await addFiles([...e.target.files]); e.target.value = ''; };
 $('#folderBtn').onclick = e => { e.stopPropagation(); $('#folder').click(); };

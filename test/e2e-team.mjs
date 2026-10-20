@@ -81,9 +81,14 @@ for (const w of [1440, 375]) {
   // 3. plugging in: folder, many files, Drive link, all-in-one calendar, Sheets, email, coming next
   { const p = await fresh('/?asof=2026-10-19', w);
     ok(await p.evaluate(() => { const i = document.querySelector('#folder'); return i.webkitdirectory && i.multiple && /Choose folder/.test(document.querySelector('#folderBtn').textContent); }), `${w}: Choose folder button with a webkitdirectory input`);
+    await p.evaluate(() => { window.__seen = []; window.__t0 = performance.now(); new MutationObserver(() => { const t = document.querySelector('#busyName').textContent + ' | ' + document.querySelector('#status').textContent; if (window.__seen[window.__seen.length - 1] !== t) window.__seen.push(t); if (/^Read \d+ contracts/.test(document.querySelector('#status').textContent) && !window.__t1) window.__t1 = performance.now(); }).observe(document.body, { subtree: true, childList: true, characterData: true }); });
     await (await p.$('#folder')).uploadFile(fx('folder-drop')); // a real directory, with a subfolder, a .png and a .DS_Store
-    await waitStatus(p, /^Read 3 files/, 30000); const st = await status(p);
-    ok(/^Read 3 files: 3 added\./.test(st) && /Skipped 2 files that are not PDF, Word, text or HTML\./.test(st), `${w}: a folder of files is read at once, other files skipped and counted (${st.slice(0, 90)})`);
+    await waitStatus(p, /^Read 3 contracts/, 30000); const st = await status(p);
+    ok(/^Read 3 contracts\. 3 contracts in the queue\./.test(st) && /Skipped 2 files that are not PDF, Word, text or HTML\./.test(st), `${w}: a folder of files is read at once, other files skipped and counted (${st.slice(0, 90)})`);
+    { const seen = await p.evaluate(() => window.__seen); const ms = await p.evaluate(() => window.__t1 - window.__t0);
+      ok([1, 2, 3].every(n => seen.some(t => t.includes(`File ${n} of 3`))) && seen.findIndex(t => t.includes('File 3 of 3')) < seen.findIndex(t => / \| Read 3 contracts/.test(t)), `${w}: real progress, file 1, 2 and 3 of 3, then done`);
+      ok(ms < 6000, `${w}: no added delay: 3 files read in ${Math.round(ms)} ms`);
+      ok(await p.evaluate(() => !document.querySelector('#dzDone').hidden && document.querySelector('#dzDone').textContent === 'Done. Read 3 contracts of 3 files.'), `${w}: brief "Read 3 contracts" confirmation in the drop zone`); }
     ok(await p.evaluate(() => document.querySelectorAll('#lq .lrow').length === 2 && !document.querySelector('#answer').hidden), `${w}: all 3 land in the answer and the queue`);
     await shot(p, 'folder', w);
     // the whole list in one .ics, with the import how-to
@@ -103,7 +108,7 @@ for (const w of [1440, 375]) {
   // many files dropped at once
   { const p = await fresh('/?asof=2026-10-19', w);
     await drop(p, [['c3-dragonfly.edgar.txt', f64('c3-dragonfly.edgar.txt'), 'text/plain'], ['armlogi.htm', f64('armlogi-goldensee-ex10-11.edgar.htm'), 'text/html']]);
-    await waitStatus(p, /^Read 2 files/, 30000); ok(/^Read 2 files: 2 added\./.test(await status(p)), `${w}: many files dropped at once are all read`);
+    await waitStatus(p, /^Read 2 contracts/, 30000); ok(/^Read 2 contracts\./.test(await status(p)), `${w}: many files dropped at once are all read`);
     await p.ctx.close(); }
   // Drive link: the browser is refused (CORS or sign-in); say so and never pretend
   for (const how of ['abort', 'signin']) { const p = await fresh('/?asof=2026-10-19', w);

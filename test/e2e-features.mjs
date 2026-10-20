@@ -85,9 +85,9 @@ for (const w of [1440, 375]) {
   { const p = await fresh('/?asof=2026-10-19', w);
     await p.evaluate(() => { window.__steps = []; new MutationObserver(() => window.__steps.push(document.querySelector('#busyName').textContent)).observe(document.querySelector('#busyName'), { childList: true, characterData: true, subtree: true }); });
     await drop(p, [['dragonfly.txt', f64('c3-dragonfly.edgar.txt'), 'text/plain'], ['vivos.pdf', f64('c6-vivos-msa.generated.pdf'), 'application/pdf'], ['reborn.docx', f64('c12-reborn-supply.generated.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'], ['notes.txt', Buffer.from('shopping list: eggs, milk').toString('base64'), 'text/plain']]);
-    await waitStatus(p, /^Read 4 files/, 40000);
+    await waitStatus(p, /^Read 3 contracts/, 40000);
     const st = await status(p), steps = await p.evaluate(() => [...new Set(window.__steps)]);
-    ok(/^Read 4 files: 3 added, 1 not added \(notes\.txt\)\. 3 contracts in the queue\.$/.test(st), `${w}: bulk drop reports the result: ${st}`);
+    ok(/^Read 3 contracts\. 1 file not added \(notes\.txt\)\. 3 contracts in the queue\.$/.test(st), `${w}: bulk drop reports the result: ${st}`);
     ok(['File 1 of 4', 'File 2 of 4', 'File 3 of 4', 'File 4 of 4'].every(k => steps.some(s => s.startsWith(k))), `${w}: progress shows File n of 4 for each file`);
     const pf = await p.$$eval('#portfolio .big', ds => ds.map(d => d.querySelector('.bl').textContent + ' ' + d.querySelector('.sv').textContent));
     ok(pf.join('|') === 'Act this month 0|Next 12 months 2|Needs a human look 1', `${w}: portfolio summary ${pf.join(', ')}`);
