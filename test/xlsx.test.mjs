@@ -6,7 +6,7 @@ import { SHEET_COLS, MAIN_COLS, sheetCSV, sheetsTSV } from '../public/team.js';
 export const ITEMS = [
   { name: 'Star Brands / Schwazze', counterparty: 'Schwazze', sendBy: '2026-11-10', days: 21, status: 'Due in 30 days', plan: 'cancel', owner: 'Ana Ruiz', todo: 'Send notice by 10 Nov 2026', note: '=HYPERLINK("http://x") switch vendor', why: '', link: 'https://www.sec.gov/Archives/edgar/data/1/x.htm', review: false, urgent: true },
   { name: 'Goldensee / Armstrong Logistic', counterparty: 'Armstrong', sendBy: '2027-06-20', days: 243, status: 'Renewing · review', plan: 'renew', owner: '', todo: 'Renews 21 Jul 2027 (in 274 days); nothing to send', note: '', why: 'Last day to change your mind: 20 Jun 2027, the date that satisfies both readings of "within one month before". Check with counsel which reading applies. It is a Sunday, so check the notices clause allows delivery that day.', link: '', review: true, reason: 'two readings', urgent: false },
-  { name: 'Dragonfly Energy / Keystone RV', counterparty: '+Keystone', sendBy: '2027-09-17', days: 333, status: 'Missed · review', plan: '', owner: '', todo: 'Missed; next notice by 17 Sep 2027', note: '', why: '', link: '', review: true, reason: 'check the clause', urgent: true },
+  { name: 'Dragonfly Energy / Keystone RV', counterparty: '+Keystone', sendBy: '2027-09-17', days: 333, status: 'Missed · review', plan: '', owner: '', todo: 'Missed; next notice by 17 Sep 2027', note: '', why: '', link: '', review: true, reason: 'check the clause', urgent: false },
   { name: 'Quiet Co', counterparty: '', sendBy: '2027-12-01', days: 407, status: 'Later', plan: '', owner: '', todo: 'Send notice by 1 Dec 2027', note: '', why: '', link: '', review: false, urgent: false },
 ];
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'xl-')); const FILE = path.join(tmp, 'deadlines.xlsx');
@@ -25,8 +25,8 @@ test('xlsx: real date and number cells shown as D MMM YYYY; no ISO text anywhere
   assert.equal(typeof ws.getCell('D3').value, 'number'); assert.equal(ws.getCell('D3').value, 21);
   ws.eachRow(r => r.eachCell(c => { if (typeof c.value === 'string') assert.ok(!/\b\d{4}-\d{2}-\d{2}\b/.test(c.value), c.address); }));
 });
-test('xlsx: fills (red for due in 30 days or missed, yellow for review, red wins), autofilter, print setup, widths', () => {
-  assert.equal(argb(ws.getCell('A3')), RED); assert.equal(argb(ws.getCell('A4')), YELLOW); assert.equal(argb(ws.getCell('A5')), RED); assert.equal(argb(ws.getCell('A6')), undefined);
+test('xlsx: fills (red only for action due within 30 days, a missed row far off is not red; yellow for review, red wins), autofilter, print setup, widths', () => {
+  assert.equal(argb(ws.getCell('A3')), RED); assert.equal(argb(ws.getCell('A4')), YELLOW); assert.equal(argb(ws.getCell('A5')), YELLOW, 'missed, next deadline in 333 days: not red'); assert.equal(argb(ws.getCell('A6')), undefined);
   assert.equal(fillOf({ urgent: true, review: true }), RED);
   assert.equal(ws.autoFilter, 'A2:K6');
   assert.equal(ws.pageSetup.orientation, 'landscape'); assert.equal(ws.pageSetup.fitToWidth, 1); assert.equal(ws.pageSetup.fitToHeight, 0); assert.equal(ws.pageSetup.fitToPage, true);
@@ -36,7 +36,7 @@ test('xlsx: fills (red for due in 30 days or missed, yellow for review, red wins
   assert.equal(ws.getCell('I3').alignment.wrapText, true); assert.equal(ws.getCell('H3').alignment.wrapText, true); assert.equal(ws.getColumn(8).width, 46);
   for (const k of [1, 2, 5, 8]) assert.equal(ws.getCell(3, k).alignment.wrapText, true, `column ${k} wraps`);
   // every row is at least lines x 15pt for its visible wrapped cells; clean rows 1 line, rows with a Note or Why 2
-  const fits = (sh, cols, extra) => { for (let n = 3; n <= sh.rowCount; n++) { const row = sh.getRow(n); let need = extra && (row.getCell(9).text || row.getCell(10).text) ? 2 : 1;
+  const fits = (sh, cols, extra) => { for (let n = 3; n <= sh.rowCount; n++) { const row = sh.getRow(n); let need = extra && (row.getCell(9).text || row.getCell(10).text) ? Math.min(3, Math.max(2, linesFor(row.getCell(10).text, sh.getColumn(10).width))) : 1;
     for (const k of cols) { const c = row.getCell(k); if (c.alignment?.wrapText) need = Math.max(need, linesFor(c.text, sh.getColumn(k).width)); }
     assert.ok(row.height >= need * 15, `${sh.name} row ${n}: ${row.height}pt for ${need} lines`); if (extra) assert.ok(row.height <= need * 15 + 3, `${sh.name} row ${n} not taller than it needs`); } };
   fits(ws, [1, 2, 3, 4, 5, 6, 7, 8], true); assert.equal(ws.getRow(6).height, 18, 'clean row is 1 line'); assert.ok(ws.getRow(4).height >= 33, 'row with a Why is 2 lines');
@@ -45,7 +45,7 @@ test('xlsx: fills (red for due in 30 days or missed, yellow for review, red wins
   for (let n = 3; n <= rv0.rowCount; n++) { const row = rv0.getRow(n); assert.ok(row.height >= linesFor(row.getCell(9).text, 60) * 15, 'Why fits in full, no cap'); }
 });
 test('xlsx: hyperlink, formula guard, renew row agrees with the card, Needs a human look and About', async () => {
-  const l = ws.getCell('K3').value; assert.equal(l.hyperlink, 'https://www.sec.gov/Archives/edgar/data/1/x.htm');
+  const l = ws.getCell('K3').value; assert.equal(l.hyperlink, 'https://www.sec.gov/Archives/edgar/data/1/x.htm'); assert.equal(l.text, 'Filing ↗'); assert.equal(ws.getRow(4).height, 48, 'long Why gets 3 lines');
   assert.equal(ws.getCell('I3').value, "'=HYPERLINK(\"http://x\") switch vendor"); assert.equal(ws.getCell('B5').value, "'+Keystone");
   ws.eachRow(r => r.eachCell(c => assert.ok(!c.formula, 'no formula cells')));
   assert.equal(ws.getCell('H4').value, 'Renews 21 Jul 2027 (in 274 days); nothing to send'); assert.match(ws.getCell('J4').value, /satisfies both readings of "within one month before"/);

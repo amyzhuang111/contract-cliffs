@@ -131,7 +131,7 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w); co
   const M = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 }; const dd = s => { const [d, m, y] = s.split(' '); return Date.UTC(+y, M[m], +d); }; const AS = Date.UTC(2026, 9, 20);
   const bad = rowsD.filter(r => { const n = Math.round((dd(r.d) - AS) / 864e5); return n >= 0 ? !new RegExp(`^${n} days? left$`, 'i').test(r.chip) : false; });
   ok(!bad.length, `${w}: every countdown counts to the printed date` + (bad.length ? ': ' + JSON.stringify(bad) : ''));
-  const sx = rowsD.find(r => /StableX/.test(r.t)); ok(sx && sx.d === '26 Jan 2030' && /^1194 days left$/i.test(sx.chip) && /Saturday/i.test(sx.lab) && sx.safe === 'Send by Fri 25 Jan 2030 to be safe', `${w}: StableX 26 Jan 2030 (Saturday) = 1194 days from 20 Oct 2026, safe day Fri 25 Jan 2030: ` + JSON.stringify(sx));
+  const sx = rowsD.find(r => /StableX/.test(r.t)); ok(sx && sx.d === '25 Jan 2030' && /^1193 days left$/i.test(sx.chip) && /Friday/i.test(sx.lab) && sx.safe === 'Contract date Sat 26 Jan 2030 falls on a Saturday', `${w}: StableX shows the send day Fri 25 Jan 2030 = 1193 days from 20 Oct 2026, with the contract date Sat 26 Jan 2030 under it: ` + JSON.stringify(sx));
   // same confidence word on card and row
   const ids = await p.$$eval('#lq li[data-id]', ls => ls.map(l => [l.dataset.id, l.querySelector('.lt .tag').textContent]));
   const cardTag0 = await p.$eval('#answer .conf .tag', e => e.textContent); const mism = [];
@@ -202,8 +202,8 @@ const CARDS = [
   ['industrious-ex10-1.edgar.htm', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. Industrious can also end it on 120 days' notice for any reason \(lines 252–254\)\. \| 42 days left$/, 'Industrious Nyc 776 6th Avenue / Gelteq'],
   ['industrious-ex10-1.pdftotext.txt', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. Industrious can also end it on 120 days' notice for any reason \(lines 228–230\)\. \| 42 days left$/, 'Industrious / Member'],
   ['newgenivf-agency-ex10-2.generated.docx', /^Send notice by \| No date found \| The start date is set by an event and is not in the document\.$/, 'PredicXion Group / NewGenIVF Group'],
-  ['naturesmiracle-du-ex10-1.pdftotext.txt', /^Send notice by \| 1 Jan 2029 \| Monday \| or it renews for 1 more year\. \| 805 days left$/, 'Nature’s Miracle Holding Incorporated / Jinlong Frank Du'],
-  ['driven-omelia-amend3-ex10-2.edgar.htm', /^Send notice by \| 4 Apr 2027 \| Sunday \| or it renews for 12 more months\. \| 167 days left$/, 'Driven Brands Shared Services / Scott O’Melia'],
+  ['naturesmiracle-du-ex10-1.pdftotext.txt', /^Send notice by \| 29 Dec 2028 \| Friday \| or it renews for 1 more year\. \| 802 days left$/, 'Nature’s Miracle Holding Incorporated / Jinlong Frank Du'],
+  ['driven-omelia-amend3-ex10-2.edgar.htm', /^Send notice by \| 2 Apr 2027 \| Friday \| or it renews for 12 more months\. \| 165 days left$/, 'Driven Brands Shared Services / Scott O’Melia'],
   ['natvision-ex10-1.edgar.htm', /^Send notice by \| 1 May 2028 \| Monday \| or it renews for 1 more month\. \| 560 days left \| One-sided extension right: Customer can extend the agreement an additional calendar quarter on its own\./, 'Essilor / National Vision'],
 ];
 for (const [f, re, name] of CARDS) { const p = await fresh('/?asof=2026-10-19'); await (await p.$('#file')).uploadFile(fx(f)); await waitStatus(p, /^Read /);

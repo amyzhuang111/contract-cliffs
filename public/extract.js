@@ -819,6 +819,8 @@ export function buildQueue(contracts, asOf) {
   for (const row of rows) if (row.safe?.twoReadings || (row.item?.within && row.actBy && !row.missed)) { row.tag = 'two readings'; row.needsReview = true; }
   for (const row of rows) { if (row.confidence !== 'high') continue; const c = contracts.find(c => c.id === row.id); const why = c && sureGate(c.x, row, asOf);
     if (why) { row.confidence = 'medium'; row.needsReview = true; row.calibration = why; row.tag = row.tag && !/^confirm against the clause$/.test(row.tag) ? row.tag + '; also ' + why : why; } }
+  // Days left count to the day notice actually goes out: a weekend or holiday deadline moves back to the business day before
+  for (const row of rows) if (row.safe && !row.safe.passed && !row.safe.within && row.days != null && row.days >= 0) row.days = daysBetween(asOf, row.safe.date);
   const sec = { missed: 0, due: 1, resolve: 2, upcoming: 3, lapsed: 4 };
   rows.sort((a, b) => sec[a.section] - sec[b.section]
     || (a.section === 'missed' ? a.missed.renews.localeCompare(b.missed.renews) : 0)

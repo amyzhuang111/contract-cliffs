@@ -23,6 +23,10 @@ export function sendDay(actBy, asOf, forward = false) {
 // Weekends and US federal holidays (computed by rule for any year, observed dates included).
 const SHORTH = { 'Thanksgiving Day': 'Thanksgiving', 'Christmas Day': 'Christmas Day' };
 const WD3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+// The day notice actually goes out (shown in the app and the spreadsheet): a weekend or holiday deadline moves back
+// to the business day before; a 'within' date and a moved day that has already passed keep the contract date.
+export const shownDay = r => r?.safe && !r.safe.passed && !r.safe.within && r.safe.date ? r.safe.date : r?.actBy || '';
+export const movedNote = r => { if (!r?.actBy || shownDay(r) === r.actBy) return ''; const t = new Date(r.actBy + 'T00:00:00Z'); return `Contract date ${WD3[t.getUTCDay()]} ${t.getUTCDate()} ${MON3[t.getUTCMonth()]} ${r.actBy.slice(0, 4)} ${r.safe.reason[0].toLowerCase() + r.safe.reason.slice(1)}`; };
 export function sendByNote(actBy, asOf, forward = false) {
   const sb = safeSendBy(actBy, forward); if (!sb.changed) return '';
   const wd = new Date(actBy + 'T00:00:00Z').getUTCDay(), h = usHoliday(actBy);

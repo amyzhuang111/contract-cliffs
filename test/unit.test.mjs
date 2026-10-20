@@ -431,7 +431,7 @@ test('htmlToLines matches the totext.py method', () => {
 test('day counts are exact calendar days to the printed date', async () => {
   const { daysBetween } = await import('../public/extract.js');
   for (const [a, b, n] of [['2026-10-20', '2030-01-26', 1194], ['2026-10-19', '2030-01-26', 1195], ['2026-10-20', '2030-01-25', 1193], ['2026-10-20', '2026-12-16', 57], ['2026-10-19', '2026-12-16', 58], ['2026-10-20', '2027-09-19', 334], ['2026-10-20', '2027-09-17', 332], ['2026-09-19', '2026-10-20', 31], ['2026-10-20', '2026-10-20', 0], ['2027-02-28', '2028-02-29', 366], ['2026-03-07', '2026-03-09', 2], ['2026-10-31', '2026-11-02', 2]]) assert.equal(daysBetween(a, b), n, `${a} -> ${b}`);
-  const r = buildQueue([C.c2], '2026-10-20')[0]; assert.equal(r.actBy, '2030-01-26'); assert.equal(r.days, 1194); assert.equal(r.safe.date, '2030-01-25');
+  const r = buildQueue([C.c2], '2026-10-20')[0]; assert.equal(r.actBy, '2030-01-26'); assert.equal(r.days, 1193, 'days count to the moved send day'); assert.equal(r.safe.date, '2030-01-25');
 });
 
 // ---- independent review of 7593ee9: real unseen EDGAR exhibits ----

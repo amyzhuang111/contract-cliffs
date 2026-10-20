@@ -70,7 +70,7 @@ test('portfolio: default order is by urgency and the opening sentence count matc
   assert.equal(firstSentence(rows.filter(r => r.st.bucket !== 'd30')), 'Nothing is due this month. These 3 are next.');
 });
 test('portfolio: a send-notice date on a weekend or holiday says when to send', () => {
-  const l = listHtml(rowsFor(cs, AS), AS); assert.match(l, /<span class="psafe">Falls on a Sunday\. Send by Fri 2 Jul 2027<\/span>/);
+  const l = listHtml(rowsFor(cs, AS), AS); assert.match(l, /<span class="pd">2 Jul 2027<span class="psafe">Contract date Sun 4 Jul 2027 falls on a Sunday<\/span>/);
 });
 
 test('This week: from the data, with the next one when nothing is due', async () => {

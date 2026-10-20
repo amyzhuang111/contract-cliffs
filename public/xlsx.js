@@ -27,10 +27,10 @@ function rowOut(ws, n, i, cols, widths, { fit = [], extra = false } = {}) {
   cols.forEach((key, k) => { const c = r.getCell(k + 1), x = val[key]; if (x !== null && x !== '' && x !== undefined) c.value = g(x);
     c.alignment = { vertical: 'top', ...(key === 'days' ? { horizontal: 'right' } : { wrapText: !['sendBy', 'link'].includes(key) }) };
     if (key === 'sendBy') c.numFmt = 'd mmm yyyy'; if (key === 'days') c.numFmt = '0';
-    if (key === 'link') { if (i.link) c.value = { text: g(i.link.replace(/^https?:\/\//, '').slice(0, 80)), hyperlink: i.link }; c.font = { color: { argb: 'FF1F4E99' }, underline: true }; } });
+    if (key === 'link') { if (i.link) c.value = { text: 'Filing ↗', hyperlink: i.link }; c.font = { color: { argb: 'FF1F4E99' }, underline: true }; } });
   const f = fillOf(i); if (f) cols.forEach((_, k) => { r.getCell(k + 1).fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: f } }; });
   // height from the wrapped line count of the columns that should show in full; a row with a Note or Why gets at least 2 lines
-  const lines = Math.max(extra && (i.note || i.why) ? 2 : 1, ...cols.map((key, k) => fit.includes(key) && r.getCell(k + 1).alignment.wrapText ? linesFor(r.getCell(k + 1).text, widths[k]) : 1));
+  const lines = Math.max(extra && (i.note || i.why) ? Math.min(3, Math.max(2, linesFor(i.why, widths[KEYS.indexOf('why')] || 40))) : 1, ...cols.map((key, k) => fit.includes(key) && r.getCell(k + 1).alignment.wrapText ? linesFor(r.getCell(k + 1).text, widths[k]) : 1));
   r.height = LINE * lines + 3;
 }
 function frame(ws, last, widths = WIDTH, ncol = SHEET_COLS.length) {
@@ -47,7 +47,7 @@ export const ABOUT = asOf => [
   ['A Renew plan means nothing is sent: What to do shows the renewal date, and Send notice by is the last day to change your mind.'],
   [''],
   ['Colours'],
-  ['Soft red: due within 30 days, or the notice date was missed. Yellow: needs a person to check. A row that is both is red, because the deadline comes first; it is still listed on the Needs a human look sheet.'],
+  ['Soft red: notice is due within 30 days. A missed row still says Missed in Status, but it only turns red once its next deadline is that close. Rows run by days left, soonest first. Yellow: needs a person to check. A row that is both is red, because the deadline comes first; it is still listed on the Needs a human look sheet.'],
   [''],
   ['About the data'],
   ['Contracts are read in your browser and nothing is uploaded. If you used the sample contracts, they are public SEC filings standing in for your own.'],
