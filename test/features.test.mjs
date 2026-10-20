@@ -126,8 +126,8 @@ test('F6: saved data is parsed safely', () => {
   assert.deepEqual(parseSaved('{not json'), { docs: [], error: 'corrupt' });
   assert.deepEqual(parseSaved('{"a":1}'), { docs: [], error: 'corrupt' });
   const ok = { name: 'A', lines: ['x', { text: 'y' }] };
-  assert.deepEqual(parseSaved(JSON.stringify([ok, null, { name: 2 }, { name: 'B', lines: [5] }])), { docs: [ok], error: 'partial' });
-  assert.deepEqual(parseSaved(JSON.stringify([ok])), { docs: [ok], error: '' });
+  assert.deepEqual(parseSaved(JSON.stringify([ok, null, { name: 2 }, { name: 'B', lines: [5] }])), { docs: [ok], error: 'partial', bad: 3 });
+  assert.deepEqual(parseSaved(JSON.stringify([ok])), { docs: [ok], error: '', bad: 0 });
 });
 
 // Review fixes

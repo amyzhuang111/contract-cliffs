@@ -227,5 +227,5 @@ export function parseSaved(raw) {
   let v; try { v = JSON.parse(raw); } catch { return { docs: [], error: 'corrupt' }; }
   if (!Array.isArray(v)) return { docs: [], error: 'corrupt' };
   const docs = v.filter(m => m && typeof m === 'object' && typeof m.name === 'string' && Array.isArray(m.lines) && m.lines.length && m.lines.every(l => typeof l === 'string' || (l && typeof l.text === 'string')));
-  return { docs, error: docs.length < v.length ? 'partial' : '' };
+  return { docs, error: docs.length < v.length ? 'partial' : '', bad: v.length - docs.length };
 }

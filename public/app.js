@@ -332,8 +332,14 @@ const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(mine.m
 $('#remember').checked = remember();
 $('#remember').onchange = e => { if (e.target.checked) { localStorage.setItem('cc-remember', '1'); save(); $('#status').textContent = 'Saved on this device. Untick to delete.'; } else { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); $('#status').textContent = 'Deleted from this device.'; } };
 let storeNote = '';
-try { const raw = localStorage.getItem(STORE_KEY); if (raw != null && (remember() || parseSaved(raw).error === 'corrupt')) { const { docs, error } = parseSaved(raw); if (remember()) for (const m of docs) { try { mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch {} }
-  if (error === 'corrupt') { localStorage.removeItem(STORE_KEY); storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; } else if (error === 'partial') storeNote = 'Some saved contracts could not be read and were skipped.'; } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
+// Saved data is only ever written while Remember is ticked, so anything in it was opted in. Load the readable entries,
+// drop only the unreadable ones (rewriting the store without them) and say so plainly.
+try { const raw = localStorage.getItem(STORE_KEY); if (raw != null) { const { docs, error, bad } = parseSaved(raw); let failed = 0;
+  for (const m of docs) { try { mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch { failed++; } }
+  const dropped = (bad || 0) + failed, kept = docs.length - failed;
+  if (error === 'corrupt' || (dropped && !kept)) { localStorage.removeItem(STORE_KEY); localStorage.removeItem('cc-remember'); $('#remember').checked = false; storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; }
+  else { if (!remember()) { localStorage.setItem('cc-remember', '1'); $('#remember').checked = true; }
+    if (dropped) { save(); storeNote = `${dropped} saved ${dropped === 1 ? 'entry' : 'entries'} could not be read and ${dropped === 1 ? 'was' : 'were'} removed. ${kept} saved ${kept === 1 ? 'contract' : 'contracts'} kept.`; } } } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
 $('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
 // Portfolio view: behind a button on every URL. Nothing loads until it is clicked.
 let pfSort = 'date', pfDir = 1, pfRows = null;
