@@ -66,7 +66,7 @@ export function mailtoList(items, { to = '', asOf = '' } = {}) {
   const subject = `Contract notice deadlines as of ${asOf}`;
   const lines = items.map(i => `${i.date || 'No date'}: ${i.name}. ${i.action}${i.plan ? ` (plan: ${i.plan})` : ''}${i.owner ? `, owner ${i.owner}` : ''}`);
   const url = body => `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  const head = `${items.length} contract${items.length === 1 ? '' : 's'}, soonest first:\n\n`;
+  const head = `${items.length} contract${items.length === 1 ? '' : 's'}, ${items.some(i => i.pinned) ? 'pinned first, then soonest' : 'soonest first'}:\n\n`;
   let k = lines.length; const tail = n => n < lines.length ? `\n\n${lines.length - n} more not shown: the list is too long for an email link. Use Export CSV for all of them.` : '';
   while (k > 0 && url(head + lines.slice(0, k).join('\n') + tail(k)).length > MAILTO_MAX) k--;
   return { url: url(head + lines.slice(0, k).join('\n') + tail(k)), shown: k, total: lines.length };

@@ -110,3 +110,8 @@ test("'within' send-by date in every export equals the Send notice on date (Arml
   assert.ok(!/2027-06-17/.test(toPacket([ARM], AS)) && /2027-06-20/.test(toPacket([ARM], AS)));
   const csv3 = toCSV([E.c5], AS); assert.match(csv3, /2026-12-16/); // other clause types unchanged
 });
+test('copy: no doubled full stop after Inc.; email says pinned first when pins lead', () => {
+  assert.match(decodeURIComponent(mailtoList([{ ...IT(1)[0], pinned: true }, IT(2)[1]], { asOf: AS }).url), /2 contracts, pinned first, then soonest:/);
+  assert.match(decodeURIComponent(mailtoList(IT(2), { asOf: AS }).url), /2 contracts, soonest first:/);
+  const src = fs.readFileSync(new URL('../public/app.js', import.meta.url), 'utf8'); assert.match(src, /const stop = t => \/\[\.!\?\]\$\/\.test\(t\)/);
+});

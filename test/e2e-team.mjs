@@ -35,6 +35,7 @@ for (const w of [1440, 375]) {
     ok(await p.evaluate(() => !!document.querySelector('#teamBox summary') && /Set up for your team/.test(document.querySelector('#teamBox summary').textContent) && document.querySelector('#tWarn').value === '30'), `${w}: setup panel is there, warning days default to 30`);
     await add3(p); await setup(p);
     ok(await p.evaluate(() => localStorage.getItem('cc-team') === null && localStorage.getItem('cc-team-ok') === null), `${w}: setup is not stored without consent`);
+    await type(p, '#tCompany', 'General Intuition, Inc.'); ok(/General Intuition, Inc\. /.test(await p.$eval('#tStatus', e => e.textContent)) && !/Inc\.\./.test(await p.$eval('#tStatus', e => e.textContent)), `${w}: one full stop after Inc.`); await type(p, '#tCompany', 'General Intuition');
     ok(/Stan Yushenko, VP Ops, General Intuition/.test(await p.$eval('#tStatus', e => e.textContent)) && /45, 14 and 7 days/.test(await p.$eval('#tStatus', e => e.textContent)) && /The calendar timezone, America\/Chicago, is passed to your calendar app; the reminders are all-day, so they fire in your device's time\./.test(await p.$eval('#tStatus', e => e.textContent)) && !/Reminders go off[^.]* in America/.test(await p.$eval('#tStatus', e => e.textContent)), `${w}: status says what was applied`);
     await shot(p, 'setup', w);
     await p.evaluate(() => document.querySelector('#answerLetter').click()); await p.waitForSelector('#letterText');
@@ -48,6 +49,8 @@ for (const w of [1440, 375]) {
     const last = await p.evaluate(() => [...document.querySelectorAll('#lq .lrow')].pop()?.dataset.id);
     await p.evaluate(id => { const n = [...document.querySelectorAll('#lq .lrow')].find(l => l.dataset.id === id).querySelector('.rname').textContent; const b = [...document.querySelectorAll('#tPins label')].find(l => n.includes(l.textContent.trim())); b.querySelector('input').click(); }, last);
     ok(await p.evaluate(id => { const f = document.querySelector('#lq .lrow'); return f.dataset.id === id && /Pinned/.test(f.querySelector('.rname').textContent); }, last), `${w}: a pinned contract moves to the top of the queue`);
+    await p.evaluate(() => { document.addEventListener('click', e => { if (e.target.closest('a[href^="mailto:"]')) e.preventDefault(); }); document.querySelector('#exMail').click(); });
+    ok(/3 contracts, pinned first, then soonest:/.test(decodeURIComponent(await p.$eval('#exMail', a => a.href))), `${w}: email list says pinned first, then soonest`);
     // opt-in storage
     await p.evaluate(() => document.querySelector('#tSave').click());
     ok(await p.evaluate(() => localStorage.getItem('cc-team-ok') === '1' && JSON.parse(localStorage.getItem('cc-team')).company === 'General Intuition' && JSON.parse(localStorage.getItem('cc-team')).pins.length === 1), `${w}: ticking Save stores the setup and pins`);
