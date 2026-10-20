@@ -52,7 +52,6 @@
       <p class="busy-step" id="busyStep"></p>
       <div class="bar" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100"><span id="busyBar"></span></div>
     </div>
-    <p class="dz-done" id="dzDone" role="status" aria-live="polite" hidden></p>
     <div class="dz-err" id="dzErr" hidden>
       <p class="dz-big">Couldn’t read this file</p>
       <p class="dz-errhint" id="dzErrHint"></p>
@@ -61,6 +60,7 @@
     <input id="file" type="file" multiple hidden accept=".pdf,.docx,.txt,.htm,.html,text/plain,text/html,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Upload contracts (PDF, Word, text or HTML)">
     <input id="folder" type="file" webkitdirectory multiple hidden aria-label="Choose a folder of contracts">
   </div>
+  <p class="dz-done" id="dzDone" role="status" aria-live="polite" hidden></p>
   <p class="proof">Reads the term, the renewal and the notice period · quotes the exact clause · your files stay in your browser</p>
   <div class="btnrow">
     <button id="tryOne" class="btn-primary">Try a real SEC contract →</button>

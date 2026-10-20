@@ -93,6 +93,8 @@ for (const w of [1440, 375]) {
       ok([1, 2, 3].every(n => seen.some(t => t.includes(`File ${n} of 3`))) && seen.findIndex(t => t.includes('File 3 of 3')) < seen.findIndex(t => / \| Read 3 contracts/.test(t)), `${w}: real progress, file 1, 2 and 3 of 3, then done`);
       ok(ms < 6000, `${w}: no added delay: 3 files read in ${Math.round(ms)} ms`);
       ok(await p.evaluate(() => !document.querySelector('#dzDone').hidden && document.querySelector('#dzDone').textContent === 'Done. Read 3 contracts of 3 files.'), `${w}: brief "Read 3 contracts" confirmation in the drop zone`); }
+    { const g = await p.evaluate(() => { const d = document.querySelector('#dzDone').getBoundingClientRect(), z = document.querySelector('#drop').getBoundingClientRect(); return { w: d.width, top: d.top, zb: z.bottom, zw: z.width, h: d.height }; });
+      ok(g.top >= g.zb - 1 && g.w >= g.zw - 1 && g.h <= 40, `${w}: Done message on its own full-width line under the drop zone (${Math.round(g.w)}px wide, ${Math.round(g.h)}px tall)`); }
     ok(await p.evaluate(() => document.querySelectorAll('#lq .lrow').length === 2 && !document.querySelector('#answer').hidden), `${w}: all 3 land in the answer and the queue`);
     await shot(p, 'folder', w);
     // the whole list in one .ics, with the import how-to
