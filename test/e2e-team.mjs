@@ -56,6 +56,10 @@ for (const w of [1440, 375]) {
     await p.evaluate(() => { document.querySelector('#teamBox').open = true; document.querySelector('#tSave').click(); });
     ok(await p.evaluate(() => localStorage.getItem('cc-team') === null && localStorage.getItem('cc-team-ok') === null), `${w}: unticking Save deletes the setup`);
     await p.ctx.close(); }
+  // corrupt saved setup: cleared with a plain message
+  { const p = await fresh('/?asof=2026-10-19', w); await p.evaluate(() => { localStorage.setItem('cc-team', '{bad json'); localStorage.setItem('cc-team-ok', '1'); }); await p.reload({ waitUntil: 'networkidle0' });
+    ok(await p.evaluate(() => document.querySelector('#teamBox').open && /^Your saved setup could not be read and was cleared\./.test(document.querySelector('#tStatus').textContent) && localStorage.getItem('cc-team') === null && localStorage.getItem('cc-team-ok') === null), `${w}: corrupt saved setup is cleared with a plain message`);
+    await p.ctx.close(); }
   // 2. per-contract context: owner, plan and note; the plan changes the action; exports carry it
   { const p = await fresh('/?asof=2026-10-19', w); await add3(p);
     const acts = () => p.evaluate(() => [...document.querySelectorAll('#answer .acts > *')].map(e => e.id + ':' + e.className.split(' ')[0]));

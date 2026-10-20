@@ -14,10 +14,10 @@ let edgar = [], mine = [], set = params.get('set') === 'sec' ? 'edgar' : params.
 let holdout = [];
 const current = () => set === 'edgar' ? edgar : set === 'holdout' ? holdout : mine;
 // Team setup: applied at once; written to this browser only after the user ticks "Save this setup".
-let team = normTeam(null);
+let team = normTeam(null); let teamNote = '';
 const teamSaved = () => { try { return localStorage.getItem(TEAM_OK) === '1'; } catch { return false; } };
 const saveTeam = () => { if (teamSaved()) try { localStorage.setItem(TEAM_KEY, JSON.stringify(team)); } catch {} };
-try { if (teamSaved()) { const { team: t } = parseTeam(localStorage.getItem(TEAM_KEY)); if (t) team = t; else { localStorage.removeItem(TEAM_KEY); localStorage.removeItem(TEAM_OK); } } else localStorage.removeItem(TEAM_KEY); } catch {}
+try { if (teamSaved()) { const { team: t } = parseTeam(localStorage.getItem(TEAM_KEY)); if (t) team = t; else { localStorage.removeItem(TEAM_KEY); localStorage.removeItem(TEAM_OK); teamNote = 'Your saved setup could not be read and was cleared. Fill it in again, then tick Save to keep it.'; } } else localStorage.removeItem(TEAM_KEY); } catch {}
 const renewOf = cs => Object.fromEntries(buildQueue(cs, asOf).map(r => [r, cs.find(c => c.id === r.id)]).filter(([r, c]) => c && ctxOf(team, c).plan === 'renew' && r.item?.termEnd && !r.missed).map(([r, c]) => [c.id, { name: c.name, termEnd: r.item.termEnd }]));
 const icsOpts = (cs = current()) => ({ days: alarmDays(team.warnDays), calName: team.calName, tz: team.tz, renew: renewOf(cs) });
 const cxOf = c => { const x = ctxOf(team, c); return x.owner || x.plan || x.note ? x : null; };
@@ -435,17 +435,18 @@ tf.tz.innerHTML = [...new Set([team.tz, ...TZS, localTz].filter(Boolean))].map(z
 const fillTeam = () => { tf.company.value = team.company; tf.name.value = team.signer.name; tf.title.value = team.signer.title; tf.email.value = team.signer.email; tf.warn.value = team.warnDays; tf.cal.value = team.calName; tf.tz.value = team.tz; $('#tSave').checked = teamSaved(); };
 function teamStatus() {
   const s = team.signer; const who = s.name ? `Letters are signed by ${s.name}${s.title ? ', ' + s.title : ''}${team.company ? ', ' + team.company : ''}.` : team.company ? `Letters come from ${team.company}.` : 'Add a name to sign the letters.';
-  const d = alarmDays(team.warnDays); $('#tStatus').textContent = `${who} Reminders go off ${d.join(', ').replace(/, (\d+)$/, ' and $1')} days before each deadline, in ${team.tz}. ${team.pins.length ? team.pins.length + ' pinned.' : ''} ${teamSaved() ? 'Saved on this device.' : 'Not saved: tick the box to keep it.'}`.replace(/\s+/g, ' ').trim();
+  const d = alarmDays(team.warnDays); $('#tStatus').classList.toggle('err', !!teamNote); $('#tStatus').textContent = (teamNote ? teamNote + ' ' : '') + `${who} Reminders go off ${d.join(', ').replace(/, (\d+)$/, ' and $1')} days before each deadline, in ${team.tz}. ${team.pins.length ? team.pins.length + ' pinned.' : ''} ${teamSaved() ? 'Saved on this device.' : 'Not saved: tick the box to keep it.'}`.replace(/\s+/g, ' ').trim();
   const all = [...current().map(c => ({ c })), ...(pfRows || []).map(r => ({ c: r.c }))];
   $('#tPins').innerHTML = all.length ? all.map(({ c }) => `<li><label><input type="checkbox" data-pin="${esc(ckey(c))}"${isPinned(team, c) ? ' checked' : ''}> ${esc(c.name)}</label></li>`).join('') : '<li class="status">Add contracts first, then pin the ones that matter most.</li>';
   document.querySelectorAll('#tPins [data-pin]').forEach(b => b.onchange = () => { const k = b.dataset.pin; team.pins = b.checked ? [...new Set([...team.pins, k])] : team.pins.filter(p => p !== k); teamChanged(); });
 }
 function teamChanged() { saveTeam(); render(); renderPf(); teamStatus(); }
-const readTeam = () => { team = normTeam({ ...team, company: tf.company.value, signer: { name: tf.name.value, title: tf.title.value, email: tf.email.value }, warnDays: tf.warn.value, calName: tf.cal.value, tz: tf.tz.value }); saveTeam(); render(); renderPf(); teamStatus(); };
+const readTeam = () => { teamNote = ''; team = normTeam({ ...team, company: tf.company.value, signer: { name: tf.name.value, title: tf.title.value, email: tf.email.value }, warnDays: tf.warn.value, calName: tf.cal.value, tz: tf.tz.value }); saveTeam(); render(); renderPf(); teamStatus(); };
 Object.values(tf).forEach(i => i.addEventListener(i.tagName === 'SELECT' ? 'change' : 'input', readTeam));
 $('#tSave').onchange = e => { try { if (e.target.checked) { localStorage.setItem(TEAM_OK, '1'); saveTeam(); } else { localStorage.removeItem(TEAM_OK); localStorage.removeItem(TEAM_KEY); } } catch {} teamStatus(); };
 $('#teamBox').addEventListener('toggle', teamStatus);
 fillTeam(); teamStatus();
+if (teamNote) { $('#teamBox').open = true; teamStatus(); }
 if (params.get('demo') === '1') { document.body.classList.add('guided'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
 new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared|Drive blocks)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 if (set === 'edgar') loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
