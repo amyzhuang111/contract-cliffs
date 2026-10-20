@@ -1,7 +1,7 @@
 // Portfolio view (button on every URL): 25 real public contracts from test/fixtures, bundled in /data/portfolio.json.
 // Every row's date is the tool's own output; the bundle only holds fixtures whose hand-checked answer matches it.
 import { extract, buildQueue, daysBetween, dayWord, ymd, addDays } from './extract.js';
-import { bucket, flagsOf, rowLabel, BUCKETS, FLAGS, sendByNote, windowNote } from './features.js';
+import { bucket, flagsOf, rowLabel, BUCKETS, FLAGS, sendByNote, windowNote, windowOf } from './features.js';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${MON[+m - 1]} ${y}`; };
@@ -64,4 +64,27 @@ export function top3Html(rows) {
   return byUrgency(rows).slice(0, 3).map(r => { const now = ['passed', 'd30'].includes(r.st.bucket);
     const note = [r.actBy && (r.item?.within ? '' : sendByNote(r.actBy, r.asOf)) && esc((r.item?.within ? '' : sendByNote(r.actBy, r.asOf))), windowNote(r) && esc(windowNote(r)), r.missed && `Missed ${esc(fmt(r.missed.actBy))}`, r.st.flags.includes('review') && '<span class="rvnote">Needs review</span>'].filter(Boolean).join(' · ');
     return `<li class="t3${now ? ' now' : ''}"><a href="#pf-${esc(r.id)}"><span class="t3n">${esc(r.c.name)}</span><span class="t3a">${r.item?.within ? 'Send notice on or after' : 'Send notice by'} ${esc(fmt(r.actBy))}</span><span class="t3d">${r.days === 0 ? 'Today' : `${dayWord(r.days)} left`}</span>${note ? `<span class="t3x">${note}</span>` : ''}</a></li>`; }).join('');
+}
+
+// "This week": every contract whose send-notice date falls in the 7 days from the as-of date, soonest first.
+// If none, the next one. Everything comes from the rows; nothing is added.
+const WD = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const fmtW = d => `${WD[new Date(d + 'T00:00:00Z').getUTCDay()]} ${fmt(d)}`;
+export function thisWeek(rows, asOf) {
+  const end = ymd(addDays(new Date(asOf + 'T00:00:00Z'), 6));
+  const dated = rows.filter(r => r.actBy && r.days != null && r.days >= 0 && r.section !== 'lapsed').sort((a, b) => a.days - b.days || a.c.name.localeCompare(b.c.name));
+  const due = dated.filter(r => r.actBy <= end);
+  return { from: asOf, end, due, next: due.length ? null : dated[0] || null };
+}
+export function actionOf(r) {
+  const w = windowOf(r); const day = w ? w.day : (r.safe && !r.safe.passed ? r.safe.date : r.actBy);
+  const verb = w ? `${w.label} ${fmtW(w.day)}` : `Send non-renewal notice by ${fmtW(day)}`;
+  return { day, text: (r.missed ? `Missed ${fmt(r.missed.actBy)}. ` : '') + verb, left: r.days === 0 ? 'today' : `${dayWord(daysBetween(r.asOf, day))} left`, review: !!r.needsReview };
+}
+export function weekHtml(rows, asOf, linkFor = () => '') {
+  const t = thisWeek(rows, asOf); const span = `${+asOf.slice(8)} ${MON[+asOf.slice(5, 7) - 1]} to ${fmt(t.end)}`;
+  const item = r => { const a = actionOf(r); const g = linkFor(r);
+    return `<li class="wk-i" data-id="${esc(r.id)}"><span class="wk-n">${esc(r.c.name)}</span><span class="wk-a">${esc(a.text)} · ${esc(a.left)}${a.review ? ' · <span class="rvnote">Needs review</span>' : ''}</span><span class="wk-b">${g ? `<a class="btn-secondary sm" href="${esc(g)}" target="_blank" rel="noopener">Add to calendar</a>` : ''}<button class="btn-secondary sm" type="button" data-letter="${esc(r.id)}">Draft notice</button></span></li>`; };
+  if (t.due.length) return `<p class="wk-h">This week (${esc(span)}): ${t.due.length === 1 ? '1 contract needs' : `${t.due.length} contracts need`} notice sent</p><ul class="wk-l">${t.due.map(item).join('')}</ul>`;
+  return `<p class="wk-h">Nothing is due this week (${esc(span)}).${t.next ? ' The next one:' : ''}</p>${t.next ? `<ul class="wk-l">${item(t.next)}</ul>` : ''}`;
 }

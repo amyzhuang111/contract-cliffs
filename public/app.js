@@ -99,8 +99,8 @@ function obligationsHtml(c) {
   return `<section class="obl" aria-label="More obligations"><h4 class="lab">More obligations</h4>${ob.map(o => `<div class="it ob-${o.key}"><div class="top"><span class="lab">${esc(o.label)}</span></div>${!o.found ? '<p class="why nd">Not found in this document.</p>' : o.items ? o.items.map(i => `${i.summary ? `<p class="why">${esc(i.summary)}</p>` : ''}${q(i)}`).join('') : `<p class="why">${esc(o.summary)}</p>${q(o)}${o.extra.map(a => `<p class="why">${esc(a.label)}:</p>${q(a)}`).join('')}`}</div>`).join('')}</section>`;
 }
 // F2: draft non-renewal letter, shown in the drawer with .docx download and Copy
-function openLetter(id) {
-  const c = current().find(x => x.id === id); if (!c) return;
+function openLetter(id, given) {
+  const c = given || current().find(x => x.id === id); if (!c) return;
   const r = buildQueue([c], asOf)[0]; const t = letter(c, r, asOf);
   if (!$('#drawer').classList.contains('on')) lastFocus = document.activeElement;
   $('#dbody').innerHTML = `<div class="lab">Draft letter · ${esc(c.name)}</div><h3>Non-renewal notice (draft)</h3><p class="note">DRAFT. Check every line against the contract before sending. Anything in [CAPITALS, FILL IN] is for you to fill in; the note after it says what the contract did or did not give.</p><div class="row lbtns"><button class="btn-primary sm" id="letterDocx">Download .docx</button><button class="btn-secondary sm" id="letterCopy">Copy</button></div><pre class="letter" id="letterText">${esc(t)}</pre>`;
@@ -353,6 +353,8 @@ let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
   $('#pfCount').textContent = pfRows.length; $('#pfFirst').textContent = P.firstSentence(pfRows); $('#pfTop3').innerHTML = P.top3Html(pfRows);
+  $('#pfWeek').innerHTML = P.weekHtml(pfRows, asOf, r => gcalLink({ name: r.c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: r.c.url, note: exitNote(r.c)?.text, within: windowOf(r), windowNote: windowNote(r) }));
+  document.querySelectorAll('#pfWeek [data-letter]').forEach(b => { b.onclick = () => { const r = pfRows.find(x => x.id === b.dataset.letter); if (r) openLetter(r.id, r.c); }; });
   $('#pfSub').textContent = `Stand-ins for a company's own agreements: ${pfRows.length} public contracts filed with the SEC (supply, manufacturing, licence, services, colocation and network deals, plus a few executive and consulting agreements), each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
   $('#pfStrip').innerHTML = stripHtml(portfolio(pfRows));
   $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);

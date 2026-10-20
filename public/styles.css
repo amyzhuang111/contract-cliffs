@@ -742,3 +742,13 @@ body:not(.has-any) .cliff-strip{display:none}
 body.has-any .weekstrip{display:none}
 .weekstrip .wm{display:none}
 @media (max-width:480px){.weekstrip{grid-template-columns:1fr;gap:0;margin:12px 0 16px}.weekstrip li{border:0;padding:0}.weekstrip .wt{display:none}.weekstrip .wm{display:inline;color:var(--mute)}}
+/* This week: the answer at the top of the portfolio */
+.pfweek{border:1px solid var(--rule);padding:12px 16px;margin:8px 0 16px}
+.pfweek .wk-h{font:500 18px/24px var(--font-sans);color:var(--fg);margin:0 0 8px;text-transform:none}
+.pfweek .wk-l{list-style:none;margin:0;padding:0}
+.pfweek .wk-i{display:grid;grid-template-columns:1fr auto;gap:4px 16px;align-items:center;padding:4px 0}
+.pfweek .wk-n{font:500 16px/22px var(--font-sans);color:var(--fg)}
+.pfweek .wk-a{grid-column:1;font:400 14px/20px var(--font-sans);color:var(--body)}
+.pfweek .wk-b{grid-column:2;grid-row:1 / span 2;display:flex;gap:8px}
+@media (max-width:480px){.pfweek{padding:8px 12px}.pfweek .wk-h{font-size:16px;line-height:22px}.pfweek .wk-i{grid-template-columns:1fr}.pfweek .wk-b{grid-column:1;grid-row:auto}}
+@media (max-width:480px){#pfTop3{display:none}} /* on phones the This week box is the act-now answer */
