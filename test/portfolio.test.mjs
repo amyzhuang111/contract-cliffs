@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { htmlToLines, extract, buildQueue } from '../public/extract.js';
 import { rowsFor, pfStatus, sortRows, timelineHtml, listHtml, pos, confWord, END } from '../public/portfolio.js';
-import { portfolio, BUCKETS, stripHtml } from '../public/features.js';
+import { portfolio, BUCKETS, FLAGS, stripHtml } from '../public/features.js';
 const AS = '2026-10-19';
 const P = JSON.parse(fs.readFileSync(new URL('../public/data/portfolio.json', import.meta.url)));
 const ut = fs.readFileSync(new URL('./unit.test.mjs', import.meta.url), 'utf8');
@@ -26,17 +26,20 @@ for (const c of cs) test(`portfolio ${c.file}: output equals expected ${c.expect
 test('portfolio: the mix, one bucket per contract, buckets add up to 25', () => {
   const rows = rowsFor(cs, AS); const n = k => rows.filter(r => r.st.bucket === k).length;
   const pf = portfolio(buildQueue(cs, AS));
-  assert.deepEqual(pf, { passed: 4, d30: 0, d90: 1, d365: 4, later: 9, review: 3, cant: 4, expired: 0, total: 25 });
+  assert.deepEqual(pf, { passed: 0, d30: 2, d90: 1, d365: 8, later: 10, cant: 4, expired: 0, review: 3, missed: 4, total: 25 });
   assert.equal(BUCKETS.reduce((a, [k]) => a + pf[k], 0), pf.total);
   for (const [k] of BUCKETS) assert.equal(n(k), pf[k], k); // row labels match the strip
   assert.equal(rows.filter(r => r.needsReview).length, 7); // 7 of 25 need review
   assert.equal(rows.filter(r => r.conf === 'Can’t tell').length, 4); assert.ok(rows.filter(r => r.conf === 'Check').length >= 5); assert.ok(rows.filter(r => r.conf === 'Clear').length >= 5);
-  assert.equal(rows.find(r => /urban-gro/.test(r.c.name)).st.label, 'Passed');
+  assert.equal(rows.find(r => /urban-gro/.test(r.c.name)).st.label, 'Due in 30 days · earlier date missed'); // next date in 29 days
+  assert.equal(rows.find(r => /Glacier/.test(r.c.name)).st.label, 'Due in 30 days · needs review'); // 3 days left, still counted as urgent
+  for (const [f] of FLAGS) assert.equal(rows.filter(r => r.st.flags.includes(f)).length, pf[f], f);
 });
 test('portfolio: status, sorting and timeline', () => {
   assert.equal(pfStatus({ needsReview: true, actBy: '' }).label, 'Can’t tell');
-  assert.equal(pfStatus({ missed: {}, actBy: '2027-01-01', needsReview: true }).key, 'passed');
-  assert.equal(pfStatus({ actBy: '2026-11-01', days: 13, needsReview: true }).label, 'Needs review');
+  assert.equal(pfStatus({ actBy: '2026-10-21', days: 2, needsReview: true }).bucket, 'd30');
+  assert.equal(pfStatus({ missed: {}, actBy: '2026-11-15', days: 27, needsReview: true }).label, 'Due in 30 days · needs review · earlier date missed');
+  assert.equal(pfStatus({ actBy: '2026-11-01', days: 13, needsReview: true }).label, 'Due in 30 days · needs review');
   assert.equal(pfStatus({ actBy: '2026-11-01', days: 13 }).label, 'Due in 30 days');
   const rows = rowsFor(cs, AS);
   const byDate = sortRows(rows, 'date').map(r => r.actBy).filter(Boolean); assert.deepEqual(byDate, byDate.slice().sort());
@@ -44,11 +47,11 @@ test('portfolio: status, sorting and timeline', () => {
   for (const by of ['date', 'days']) for (const d of [1, -1]) { const o = sortRows(rows, by, d); const i = o.findIndex(r => !r.actBy); assert.ok(i > 0 && o.slice(i).every(r => !r.actBy), by + d); }
   const names = sortRows(rows, 'name', -1).map(r => r.c.name.toLowerCase()); assert.deepEqual(names, names.slice().sort().reverse());
   assert.equal(pos(AS, AS), 0); assert.equal(pos(END, AS), 1); assert.equal(pos('2044-07-26', AS), 1);
-  const t = timelineHtml(rows, AS); const marks = [...t.matchAll(/class="mk (\w+)"/g)].map(m => m[1]);
-  assert.equal(marks.length, rows.filter(r => r.actBy && r.actBy <= END && r.days >= 0).length); assert.equal(marks.length, 18);
+  const t = timelineHtml(rows, AS); const marks = [...t.matchAll(/class="mk ([\w ]+)"/g)].map(m => m[1]);
+  assert.equal(marks.length, rows.filter(r => r.actBy && r.actBy <= END && r.days >= 0).length); assert.equal(marks.length, 18); assert.equal(marks.filter(m => /\breview\b/.test(m)).length, rows.filter(r => r.needsReview && r.actBy && r.actBy <= END).length);
   for (let y = 2027; y <= 2030; y++) assert.match(t, new RegExp(`<span class="lab">${y}</span>`));
   assert.match(t, /3 after 2030, not on the line/); assert.match(t, /4 with no date/);
-  const sh = stripHtml(portfolio(buildQueue(cs, AS))); assert.match(sh, /class="pf d30 zero"/); assert.ok(!/pf review zero|pf expired/.test(sh));
+  const sh = stripHtml(portfolio(buildQueue(cs, AS))); assert.match(sh, /class="pf d30"[^>]*><span class="lab">Due in 30 days<\/span><span class="sv">2</); assert.ok(!/pf passed|pf expired/.test(sh)); assert.match(sh, /needs review <span class="sv">3<\/span>/);
   const l = listHtml(rows, AS); assert.equal((l.match(/<li /g) || []).length, 25); assert.equal((l.match(/href="https:\/\/www\.sec\.gov\//g) || []).length, 25);
   assert.ok(!/—/.test(t + l));
   assert.equal(confWord({ needsReview: false, confidence: 'high' }), 'Clear');

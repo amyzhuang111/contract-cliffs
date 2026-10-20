@@ -185,21 +185,27 @@ export function docx(text) {
 }
 
 // ---------- F4: portfolio summary ----------
-// One bucket per contract, so the strip adds up to the total and matches each row's label.
-export const BUCKETS = [['passed', 'Passed'], ['d30', 'Due in 30 days'], ['d90', 'Due in 31 to 90 days'], ['d365', 'Due in 91 to 365 days'], ['later', 'Later'], ['review', 'Needs review'], ['cant', 'Can’t tell'], ['expired', 'Expired']];
+// One deadline group per contract, by its next send-by date, so the groups add up to the total. Review status and an
+// earlier missed date are flags on top of the group: they never hide how soon the next deadline is.
+export const BUCKETS = [['passed', 'Past due'], ['d30', 'Due in 30 days'], ['d90', 'Due in 31 to 90 days'], ['d365', 'Due in 91 to 365 days'], ['later', 'Later'], ['cant', 'Can’t tell'], ['expired', 'Expired']];
+export const FLAGS = [['review', 'Needs review'], ['missed', 'Earlier date missed']];
 export function bucket(r) {
   if (r.section === 'lapsed') return 'expired';
   if (!r.actBy) return 'cant';
-  if (r.missed || (r.days != null && r.days < 0)) return 'passed';
-  if (r.needsReview) return 'review';
+  if (r.days != null && r.days < 0) return 'passed';
   return r.days <= 30 ? 'd30' : r.days <= 90 ? 'd90' : r.days <= 365 ? 'd365' : 'later';
 }
+// Flags apply to dated rows only; a row with no date is already counted under Can't tell.
+export const flagsOf = r => r.section === 'lapsed' || !r.actBy ? [] : [r.needsReview && 'review', r.missed && 'missed'].filter(Boolean);
 export const bucketLabel = k => BUCKETS.find(b => b[0] === k)[1];
+export const rowLabel = r => [bucketLabel(bucket(r)), ...flagsOf(r).map(f => FLAGS.find(x => x[0] === f)[1].toLowerCase())].join(' · ');
 export function portfolio(rows) {
-  const o = Object.fromEntries(BUCKETS.map(([k]) => [k, 0])); for (const r of rows) o[bucket(r)]++; o.total = rows.length; return o;
+  const o = Object.fromEntries([...BUCKETS, ...FLAGS].map(([k]) => [k, 0])); for (const r of rows) { o[bucket(r)]++; for (const f of flagsOf(r)) o[f]++; } o.total = rows.length; return o;
 }
-// Strip HTML; Expired only when there is one. Zero counts are never drawn in the highlight colour.
-export const stripHtml = pf => BUCKETS.filter(([k]) => k !== 'expired' || pf.expired).map(([k, l], i) => `<div class="pf ${k}${pf[k] ? '' : ' zero'}" style="--i:${i}"><span class="lab">${l}</span><span class="sv">${pf[k]}</span></div>`).join('');
+// Strip HTML: the groups (Past due and Expired only when there is one), then the flags as a separate "of these" row.
+// Zero counts are never drawn in a highlight colour.
+export const stripHtml = pf => BUCKETS.filter(([k]) => !['passed', 'expired'].includes(k) || pf[k]).map(([k, l], i) => `<div class="pf ${k}${pf[k] ? '' : ' zero'}" style="--i:${i}"><span class="lab">${l}</span><span class="sv">${pf[k]}</span></div>`).join('')
+  + `<p class="pfflags lab">Of these: ${FLAGS.map(([k, l]) => `<span class="pfx ${k}${pf[k] ? '' : ' zero'}">${l.toLowerCase()} <span class="sv">${pf[k]}</span></span>`).join(' · ')}</p>`;
 
 // ---------- F5: audit CSV, one row per contract ----------
 const cell = v => { const s = String(v ?? ''); return /[",\r\n]/.test(s) || /^[=+\-@\t\r]/.test(s) ? '"' + (/^[=+\-@\t\r]/.test(s) ? "'" : '') + s.replace(/"/g, '""') + '"' : s; };

@@ -100,12 +100,11 @@ test('F2: .docx is a valid zip that Word can open (unzip and XML check)', () => 
 // F4
 test('F4: portfolio counts are exclusive and add up to the total', () => {
   const rows = buildQueue(Object.values(E), AS); const p = portfolio(rows);
-  assert.deepEqual(p, { passed: 1, d30: 0, d90: 1, d365: 2, later: 2, review: 1, cant: 2, expired: 1, total: 10 });
+  assert.deepEqual(p, { passed: 0, d30: 0, d90: 1, d365: 3, later: 3, cant: 2, expired: 1, review: 2, missed: 1, total: 10 });
   assert.equal(BUCKETS.reduce((a, [k]) => a + p[k], 0), 10);
   for (const r of rows) assert.ok(BUCKETS.some(([k]) => k === bucket(r)));
   const demo = portfolio(buildQueue([E.c5, E.c2, E.c3], AS));
-  assert.deepEqual([demo.d30, demo.d90, demo.d365, demo.passed], [0, 1, 0, 1]); // Star Brands in 58 days; Dragonfly passed; StableX 2030
-  assert.equal(demo.later, 1);
+  assert.deepEqual([demo.d30, demo.d90, demo.d365, demo.later, demo.missed], [0, 1, 1, 1, 1]); // Star Brands in 58 days; Dragonfly missed, next Sep 2027; StableX 2030
   assert.equal(portfolio([]).total, 0);
   const h = stripHtml(portfolio([])); assert.equal((h.match(/ zero"/g) || []).length, 7); assert.ok(!/Expired/.test(h));
 });

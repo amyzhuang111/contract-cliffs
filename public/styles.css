@@ -547,7 +547,7 @@ pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--f
 .tl-track .tk.today{border-left-color:var(--fg)}.tl-track .tk.today .lab{left:0;color:var(--fg)}
 .tl-track .mk{position:absolute;bottom:6px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--accent);border:1px solid #000}
 .tl-track .mk:nth-child(odd){bottom:22px}
-.mk.passed,.dot.passed{background:var(--danger)}.mk.soon,.dot.soon{background:var(--fg)}.mk.later,.dot.later{background:var(--accent)}.mk.review,.dot.review{background:#EBFF0A}
+.mk.passed,.dot.passed,.mk.d30,.dot.d30{background:var(--danger)}.mk.d90,.dot.d90{background:var(--fg)}.mk.d365,.dot.d365{background:var(--accent)}.mk.later,.dot.later{background:#4f6170}.mk.review,.dot.ring{box-shadow:0 0 0 2px #EBFF0A}.dot.ring{background:transparent}
 .tl-foot{display:flex;flex-wrap:wrap;gap:8px 20px;margin:36px 0 0;color:var(--mute)}
 .tl-foot .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:middle}
 .pfsort{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 12px}
@@ -643,3 +643,6 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 .tl-track .tk.today{height:56px}
 .tl-track .tk.today .lab{top:-18px}
 .copyq,#letterDocx,#letterCopy,button.lnk{min-height:24px;min-width:24px;display:inline-flex;align-items:center}
+
+.pfflags{grid-column:1/-1;margin:0;padding:8px 12px;background:var(--bg,#000)}.pfflags .review .sv{color:#EBFF0A}.pfflags .missed .sv{color:var(--danger)}.pfflags .zero .sv{color:var(--mute)}
+.portfolio .review .sv,.portfolio .cant .sv{color:inherit}
