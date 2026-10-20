@@ -115,3 +115,12 @@ birchtech-macpherson-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/72
 expeditors-wall-ex10-20.edgar.htm https://www.sec.gov/Archives/edgar/data/746515/000119312526208834/expd-ex10_20.htm
 unionbank-weidley-ex10-6.edgar.htm https://www.sec.gov/Archives/edgar/data/706863/000070686326000029/a123125ex106-employagree.htm
 immunic-tardio-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1280776/000128077626000010/tardioemployagmta05.htm
+# 5a7dc15 blind test 3 (n*), now tuning data (sec.gov, fetched Oct 19, 2026)
+constellation-fink-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/16918/000119312526048815/d31913dex101.htm
+baxter-hider-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/10456/000162828025048897/bax-20250930xex101.htm
+lsb-bemis-cic-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/60714/000119312526016955/lxu-ex10_2.htm
+medallion-haley-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1000209/000119312526010406/mfin-ex10_2.htm
+dlh-parker-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/785557/000078555725000141/exhibit101.htm
+fmbank-michael-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/740806/000165495425014119/fmbm_ex101.htm
+solarwind-pickett-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/95572/000121390025116815/ea026673301ex10-1_kinrg.htm
+timken-boldea-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/98362/000009836225000142/tkr93025exhibit104.htm

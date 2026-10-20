@@ -786,3 +786,25 @@ test('7e1cb4e #5 any-time exit on N days: Sera and Polar have no renewal deadlin
   for (const f of ['sera-consulting-ex10-2', 'polarpower-lu2-ex10-7']) { const r = fx(f + '.edgar.htm').r; assert.equal(r.actBy, ''); assert.equal(r.tag, "can be ended any time on 30 days' notice, so no renewal deadline"); }
   assert.equal(fx('kingfish-matthews-ex10-1.edgar.htm').r.actBy, '2027-04-16'); assert.equal(fx('btcs-allen-ex10-1.edgar.htm').r.actBy, '2027-12-23');
 });
+// ---- 5a7dc15 follow-up (hand-worked as of 2026-10-19) ----
+test('5a7dc15 #1 Pickett: "up to a maximum of ten (10) additional years" caps at 10 yearly renewals, never "expired" while renewing', () => {
+  const g = fx('solarwind-pickett-ex10-1.edgar.htm'); assert.equal(g.x.renewal.max, 10); assert.equal(g.r.expired, false); assert.equal(g.r.missed.actBy, '2026-10-02'); assert.equal(g.r.actBy, '2027-10-02');
+  const L = docxLines(new URL('./fixtures/solarwind-pickett-ex10-1.generated.docx', import.meta.url).pathname); const x = extract(L); assert.equal(buildQueue([{ id: 'd', name: 'd', lines: L, x }], AS)[0].actBy, '2027-10-02');
+});
+test('5a7dc15 guard: an expiry more than a year ago after renewals is never Clear', () => {
+  const L = ['This Agreement is dated as of January 1, 2015 (the “Effective Date”) between Alpha Corp. and Beta LLC.', 'The term of this Agreement shall continue until December 31, 2016.', 'This Agreement shall automatically renew for up to two (2) successive one-year periods unless either party gives notice at least 60 days prior to the end of the then-current term.'];
+  const x = extract(L), r = buildQueue([{ id: 'a', name: 'a', lines: L, x }], AS)[0]; assert.equal(r.expired, true); assert.notEqual(r.confidence, 'high'); assert.equal(r.needsReview, true);
+});
+test('5a7dc15 #2 passed deadline before a renewal date that has not come yet is shown as missed (Constellation, LSB, F&M)', () => {
+  for (const [f, m, n] of [['constellation-fink-ex10-1', '2026-09-01', '2027-09-01'], ['lsb-bemis-cic-ex10-1', '2026-10-17', '2027-10-17'], ['fmbank-michael-ex10-1', '2026-10-02', '2027-10-02']]) { const r = fx(f + '.edgar.htm').r; assert.equal(r.missed?.actBy, m, f); assert.equal(r.actBy, n, f); }
+});
+test('5a7dc15 #3 DLH "commencing on the Effective Date … and terminating on September 30, 2028" → 2 Jul 2028', () => { assert.equal(fx('dlh-parker-ex10-1.edgar.htm').r.actBy, '2028-07-02'); });
+test('5a7dc15 #4 Timken "not later than September 30 of the immediately preceding year" → missed 30 Sep 2026, next 30 Sep 2027, Check', () => {
+  const r = fx('timken-boldea-ex10-1.edgar.htm').r; assert.equal(r.missed.actBy, '2026-09-30'); assert.equal(r.actBy, '2027-09-30'); assert.notEqual(r.confidence, 'high');
+});
+test('5a7dc15 #5 party names', () => {
+  assert.equal(partiesFromPreamble(fx('constellation-fink-ex10-1.edgar.htm').L), 'Constellation / Nicholas I. Fink');
+  assert.equal(partiesFromPreamble(fx('lsb-bemis-cic-ex10-1.edgar.htm').L), 'LSB Industries / Scott D. Bemis');
+  assert.equal(partiesFromPreamble(fx('medallion-haley-ex10-2.edgar.htm').L), 'David Justin Haley / Medallion');
+  assert.equal(fx('baxter-hider-ex10-1.edgar.htm').r.actBy, '2027-08-19');
+});

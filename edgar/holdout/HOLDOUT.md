@@ -99,3 +99,21 @@ Answers were worked out by hand from each filing before running the tool. Source
 | Chart / Belling | HTML | no deadline (no notice clause) | no date | right |
 | Hain Celestial / Lewis | PDF | 12 Jun 2028 | 11 Jun 2028, Check | right (day-before convention) |
 | Haley (Jan 2026 A&R) | DOCX | ambiguous renewal wording | no date | right to leave blank |
+
+## Blind test 4, October 2026 (13 unseen agreements through the browser; no code changes after)
+
+| Filing | Input | Hand answer (as of 19 Oct 2026) | Card | Result |
+|---|---|---|---|---|
+| Dominari / Ledwick | DOCX | 30 Jun 2027 | 21 Jun 2027, Check (HTML copy gives 30 Jun) | **wrong** at Check (DOCX path) |
+| 1st Source / Murphy | HTML | passed 30 Sep 2026; next 30 Sep 2027 | no date | missed, flagged |
+| Quaker / Carvalho CIC | HTML | 1 Jul 2027 (18 months before the calendar year) | no date | missed, flagged |
+| First Commonwealth CoC | PDF | 31 Dec 2026 (12 months before 31 Dec 2027) | no date | missed, flagged |
+| Lazarus revolving credit | text | 1 Mar 2027 | 1 Mar 2027 | right |
+| American Woodmark / Mason | HTML | 1 Nov 2026 (Sunday; send by Fri 30 Oct) | "Ends on 31 Dec 2026, no automatic renewal" | **wrong**: "one additional calendar year … each January 1" read as one renewal |
+| Photronics / Rivera | PDF | 2 Nov 2027 | 2 Nov 2027 | right |
+| Vail Resorts / Katz | DOCX | 27 Jul 2028 | no date | missed, flagged |
+| Perma-Pipe / Sagr | HTML | 30 Dec 2026 | no date | missed, flagged |
+| DTE CIC template | HTML | no date (blank date) | no date | right |
+| Carriage Services / Franch | DOCX | 31 Jan 2027 | 31 Jan 2027, Check | right |
+| Trex severance template | HTML | no date (blank date) | no date | right |
+| Puget Sound Energy plan | PDF | 1 Nov 2027 | 1 Nov 2027 | right |

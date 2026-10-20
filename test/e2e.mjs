@@ -27,7 +27,7 @@ await page.waitForSelector('#queue li');
 ok(await page.$eval('#setEdgar', b => b.textContent.trim() === 'Try with 10 real SEC contracts' && b.getAttribute('aria-pressed') === 'true'), 'real set is loaded and labelled');
 ok((await page.$$('#queue li[data-id]')).length === 10, 'queue has 10 rows');
 ok((await page.$$('#cards .card')).length === 10, '10 contract cards');
-const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 4 need review · 1 missed deadline/.test(st), 'counts: ' + st);
+const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 5 need review · 1 missed deadline/.test(st), 'counts: ' + st);
 const order = await page.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('lgrp') ? 'LAPSED' : 'H:' + l.textContent.trim())));
 ok(order.join(',') === 'H:Missed · deadline passed, not yet renewed,c3,H:Resolve first · needs review, no date,c13,c8,H:Later · 31–90 days,c5,H:Later · 91–365 days,c1,c6,H:Later · over a year,c4,c12,c2,LAPSED', 'priority order on the page: ' + order.join(','));
 ok(/^Why it’s here MISSED: send-notice deadline passed 30 days ago · renews 19 Nov 2026/.test(await page.$eval('#queue li[data-id="c3"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'F1: Dragonfly shows the missed notice window at the top');
@@ -64,7 +64,7 @@ for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setV
   ok(vis, 'clarity: the list comes before the add/export controls');
   const d3 = await page.$eval('#queue li[data-id="c3"] .d', e => e.textContent.replace(/\s+/g, ' ').trim()), n3 = await page.$eval('#queue li[data-id="c3"] .n', e => e.textContent.trim());
   ok(d3 === 'Renews 19 Nov 2026' && n3 === 'in 31 days', `missed row headline is the renewal date (${d3} · ${n3})`);
-  ok(/Need review/.test(await page.$eval('.revlist', e => e.textContent)) && (await page.$$('.revlist .lnk')).length === 4, 'Need review stat names its 4 contracts');
+  ok(/Need review/.test(await page.$eval('.revlist', e => e.textContent)) && (await page.$$('.revlist .lnk')).length === 5, 'Need review stat names its 5 contracts');
   await page.$eval('.revlist .lnk', b => b.click()); await new Promise(r => setTimeout(r, 400)); ok(await page.$eval('#drawer', e => e.classList.contains('on')), 'need-review name opens its drawer'); await page.keyboard.press('Escape'); await new Promise(r => setTimeout(r, 300));
   const tops = await page.$$eval('#stats > div', ds => ds.map(d => Math.round(d.getBoundingClientRect().top))); ok(tops.length === 6 && new Set(tops).size === 1, `stats strip: all 6 figures on one line at desktop (${tops.length})`);
 }
