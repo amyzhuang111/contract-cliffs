@@ -72,3 +72,21 @@ insight-azagury-ex10-3.edgar.htm https://www.sec.gov/Archives/edgar/data/932696/
 corcept-curant-ex10-24.edgar.htm https://www.sec.gov/Archives/edgar/data/1088856/000162828026011091/cort2025ex1024xcurantmaste.htm
 argent-splash-license-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1553788/000173112226000917/e7760_ex10-1.htm
 wuxi-viridian-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1590750/000159075026000018/aexxwuxibioviridiancomme.htm
+# ab9a38e: reviewer blind batch (sec.gov) + 14-exhibit generic sweep (EDGAR full-text search "shall automatically renew", filed Apr–Oct 2026), fetched Oct 19, 2026
+simwon-mstech-ex10-14.edgar.htm https://www.sec.gov/Archives/edgar/data/1698506/000121390026108356/ea027003218ex10-14.htm
+industrious-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1920092/000121390025059880/ea024510101ex10-24_gelteq.htm
+altech-ex10-6.edgar.htm https://www.sec.gov/Archives/edgar/data/2067715/000118518525001051/altechdigex10-6.htm
+heartsciences-simpson-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1468492/000121390026072722/ea029612701ex10-1.htm
+whitefiber-tabar-ex10-4.edgar.htm https://www.sec.gov/Archives/edgar/data/2042022/000121390026084223/ea029977501ex10-4.htm
+zsquared-mzhci-ex10-4.edgar.htm https://www.sec.gov/Archives/edgar/data/1759186/000168316826003426/zsquared_ex1004.htm
+cineverse-mccabe-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1173204/000119312526157226/cnvs-ex10_1.htm
+amfusion-jrms-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/96664/000107997326001073/ex10x1.htm
+heritage-ludwig-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/849145/000119312526349109/hgbl-ex10_1.htm
+tenax-staab-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/34956/000119312526168521/d81080dex101.htm
+niki-freeburg-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1734005/000121390026109016/ea030830701ex10-1.htm
+xti-schneiderman-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1529113/000121390026090951/ea030244201ex10-2.htm
+niki-mireskandari-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1734005/000121390026097705/ea030429001ex10-2.htm
+strattec-becker-ex10-7.edgar.htm https://www.sec.gov/Archives/edgar/data/933034/000119312526374333/strt-ex10_7.htm
+bluejay-lovell-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1704287/000121390026098071/ea030486401ex10-1.htm
+bitdigital-galaxy-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1710350/000121390026061574/ea029203101ex10-1.htm
+xpel-psa-ex10-5.edgar.htm https://www.sec.gov/Archives/edgar/data/1767258/000176725826000043/exhibit105.htm

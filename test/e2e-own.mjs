@@ -185,5 +185,23 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
   ok(ab.h === 'About this tool' && !ab.rem && !ab.how && !ab.howLink, `${w}: About panel: heading "About this tool", no Remember, no "( how )", no empty How it works block`);
   ok(ab.ts === 'Test set: 10 unseen SEC contracts. First blind pass: 3 dates right, 6 correctly left blank for review, 1 missed, 0 wrong. Rules adjusted after.', `${w}: test-set line adds up to 10 (3 + 6 + 1 + 0)`);
   await p.close(); }
+// 17. reviewer ab9a38e: real VerifyMe, Simwon, Altech, Industrious, National Vision filings through the UI (card headline, as of 2026-10-19)
+const CARDS = [
+  ['verifyme-pentant-ex10-3.edgar.htm', /^Send-notice date passed \| Passed1 Apr 2025 \| Now renews every 3 months; the contract gives no non-renewal notice for later periods\. Check the termination section\./, 'VerifyMe / Pentant'],
+  ['simwon-mstech-ex10-14.generated.docx', /^Send-notice date passed \| Passed30 Sep 2026 \| It renews on 1 Jan 2027 for 1 more year\. \| Next: send notice by Thu 30 Sep 2027 · in 346 days \| Passed 19 days ago$/, 'MS Autotech / Simwon America'],
+  ['simwon-mstech-ex10-14.edgar.htm', /^Send-notice date passed \| Passed30 Sep 2026 \| It renews on 1 Jan 2027 for 1 more year\. \| Next: send notice by Thu 30 Sep 2027/, 'MS Autotech / Simwon America'],
+  ['altech-ex10-6.generated.pdf', /^Send notice by \| 18 Dec 2026 \| Friday \| or it renews for 1 more year\. \| 60 days left$/, 'Altech Hong Kong / Alliance Technology Global'],
+  ['altech-ex10-6.edgar.htm', /^Send notice by \| 18 Dec 2026 \| Friday \| or it renews for 1 more year\. \| 60 days left$/, 'ALTECH / ALLIANCE'],
+  ['industrious-ex10-1.edgar.htm', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. \| 42 days left$/, 'Industrious Nyc 776 6th Avenue / Gelteq'],
+  ['industrious-ex10-1.pdftotext.txt', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. \| 42 days left$/, 'Industrious / Member'],
+  ['natvision-ex10-1.edgar.htm', /^Send notice by \| 1 May 2028 \| Monday \| or it renews for 1 more month\. \| 560 days left \| One-sided extension right: Customer can extend the agreement an additional calendar quarter on its own\./, 'Essilor / National Vision'],
+];
+for (const [f, re, name] of CARDS) { const p = await fresh('/?asof=2026-10-19'); await (await p.$('#file')).uploadFile(fx(f)); await waitStatus(p, /^Read /);
+  const b = await big(p); const c = await p.$eval('#answer', e => ({ name: e.querySelector('.iname').textContent, all: e.innerText }));
+  ok(re.test(b) && c.name === name && !/may not auto-renew/i.test(c.all), `${f}: ${c.name} · ${b}`);
+  if (/verifyme/.test(f)) ok(/Renews \(no later notice window\)/.test(c.all), 'VerifyMe card shows the renewal note');
+  await p.close(); }
+{ const p = await fresh('/?asof=2026-10-19'); await p.click('#pasteBtn'); await p.$eval('#paste', e => { e.value = 'Term. This Agreement shall commence on 18 January 2022 and shall continue for a period of one (1) year, ending on 17 January 2023. The Agreement will automatically extend on an annual basis until further notice, unless written notice of termination is provided by either party at least 30 days prior to the end of the current term.'; });
+  await p.click('#addPaste'); await waitStatus(p, /^Read Pasted/); ok(await p.$eval('#answer .iname', e => e.textContent) === 'Unnamed contract (Pasted text 1)', 'no parties found: "Unnamed contract (Pasted text 1)", never a bare file name'); await p.close(); }
 ok(errors.length === 0, 'no page errors' + (errors.length ? ': ' + errors.join(' | ') : ''));
 await browser.close(); console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

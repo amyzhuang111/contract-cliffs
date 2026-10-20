@@ -33,3 +33,14 @@ More unseen exhibits from the independent review of a882e8b (verbatim, fetched O
 | argent-splash-ex10-1.edgar.htm | Splash Beverage Group 8-K (0001731122-26-000917), EX-10.1 licence agreement ("by and between:" with a colon): https://www.sec.gov/Archives/edgar/data/1553788/000173112226000917/e7760_ex10-1.htm |
 
 Expected (independent reviewer's hand calculation): Nanochem 6 Jan 2030 minus 180 days = 2029-07-10; Argent 5 Jul 2046 minus 12 months = 2045-07-05. Names: "Nanochem / party withheld in filing", "Argent Biopharma / Splash Beverage Group".
+
+Reviewer ab9a38e blind batch (verbatim sec.gov HTML, fetched Oct 19, 2026; URLs in SOURCES.txt) and the reviewer's derived copies:
+
+| file | what it is |
+|---|---|
+| simwon-mstech-ex10-14.edgar.htm / altech-ex10-6.edgar.htm / industrious-ex10-1.edgar.htm | verbatim filings (Simwon/MS Autotech EX-10.14, Altech EX-10.6, Industrious/Gelteq EX-10.24) |
+| simwon-mstech-ex10-14.generated.docx | **generated** by the reviewer from the same HTML (DOCX upload path) |
+| altech-ex10-6.generated.pdf | **generated** by the reviewer (Chrome print-to-PDF of the same HTML) |
+| *.pdftotext.txt | the reviewer's plain-text copy of each filing (PDF-style line breaks), used for the paste path and the line-split test |
+
+Expected (hand-worked, as of 2026-10-19): Altech 18 Dec 2026; Simwon missed 30 Sep 2026, renews 1 Jan 2027, next 30 Sep 2027 (Check, template brackets); Industrious 30 Nov 2026 (Check, dates from the table); VerifyMe "Send-notice date passed 1 Apr 2025 · now renews every 3 months".

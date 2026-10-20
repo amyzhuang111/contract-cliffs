@@ -1,0 +1,119 @@
+Exhibit 10.6
+ALTECH Service Agreement
+for
+Alliance Technology Global
+Limited
+Reference: A22-012
+Prepared by ALTECH
+January 2022
+The information in this statement
+of work may not be disclosed outside of Customer and may not be duplicated, used or disclosed in whole or in part for any purpose other
+than to evaluate the proposal, provided that if a contract is awarded to ALTECH as a result of or in connection with the submission of
+this proposal. Customer will have the right to duplicate, use or disclose the information to the extent provided by the contract. This
+restriction does not limit the right of Customer to use information contained in this proposal if it is obtained from another source without
+restriction. ALTECH retains ownership of this proposal.
+1
+This Services
+Agreement (the “Agreement”) is made on 18 January 2022 (the “ Effective Date ”). This Agreement states the
+terms and conditions that govern the contractual agreement between
+Altech
+Hong Kong Limited having its principal place of business at Workstation 12, Unit 608-613, Level 6, Core C, Cyberport 3, 100 Cyberport
+Road, Hong Kong , (“ ALTECH ”), and
+Alliance
+Technology Global Limited having its principal place of business at Unit 3701, 37/F, Tower 2, Lippo Centre, 89 Queensway, Admiralty,
+Hong Kong , (“ ALLIANCE ”) who agrees to be bound by this Agreement.
+WHEREAS ,
+the ALTECH requires comprehensive outsourced development and business support services to enhance operational efficiency and effectiveness;
+and ALLIANCE possesses the expertise and resources necessary to provide such services, including software development and technical
+support;
+NOW, THEREFORE,
+in consideration of the mutual covenants, terms and conditions contained herein, and other good and valuable consideration the receipt
+and sufficiency of which is hereby acknowledged, ALTECH and ALLIANCE (individually, each a “ Party ” and
+collectively, the “ Parties ”) hereby agree as follows:
+SCOPE OF WORK.
+In
+General. Pursuant to the terms and conditions of this Agreement, ALTECH agrees to use its best efforts to provide the services
+and complete the work agreed upon and described herein, in order to deliver the Project as described in the Agreement
+ALLIANCE will function
+as a dedicated resource for the ALTECH , providing comprehensive support and development services tailored to meet the ALTECH
+'s operational needs. The primary responsibilities include:
+ALLIANCE will handle all
+aspects of software development, including the design, development, and implementation of custom applications that align with the ALTECH 's
+business objectives. This includes creating user-friendly interfaces and ensuring a seamless user experience. ALLIANCE will also
+be responsible for ongoing maintenance, which encompasses regular updates, bug fixes, and performance optimizations to ensure that all
+software solutions remain effective and efficient.
+In addition to development, ALLIANCE
+will offer extensive technical support services. This includes providing 24/7 assistance via multiple channels such as phone and email
+to resolve any technical issues that may arise. ALLIANCE will diagnose and troubleshoot problems related to software applications,
+hardware, and network connectivity, ensuring minimal disruption to the ALTECH 's operations. Proactive system monitoring will be
+conducted to maintain optimal performance and security, with regular reports on system health and incident resolutions provided to the
+ALTECH .
+Through this arrangement, ALLIANCE
+will act as an integral extension of the ALTECH 's team, ensuring that all development work and technical support needs are met
+efficiently and effectively.
+ALTECH and ALLIANCE Confidential
+2
+FEES AND TERMS OF PAYMENT.
+The ALTECH shall pay the ALLIANCE a fee calculated
+by the day rate, pursuit to the following scheme:
+Year of Experience
+Description of Roles
+Day Rate / HKD
+More than 7 years
+Senior IT Grade
+2,050
+3 – 6 years
+Semi-senior IT Grade
+1,750
+Less than 3 years
+Junior IT Grade
+1,550
+In consideration
+for the services to be provided under this contract, the ALTECH shall make an advance payment to ALLIANCE . This advance
+payment shall be due and payable upon execution of this contract. ALLIANCE shall record a corresponding fees and invoice ALTECH
+on a monthly basis based on agreed fees. The parties agree to reconcile the account on a monthly basis, and additional funds will
+be called upon when the advance payment is fully utilized
+TERM AND TERMINATION.
+a. Term. This Agreement shall commence on 18 January 2022 and shall continue
+for a period of one (1) year, ending on 17 January 2023. The Agreement will automatically extend on an annual basis until further notice,
+unless written notice of termination is provided by either party at least 30 days prior to the end of the current term.
+b. Termination. In the event of any material breach of this Agreement
+by either party, the non-breaching party may terminate this Agreement immediately by providing written notice to the other party.
+APPLICABLE LAW.
+This Agreement
+and the interpretation of its terms shall be governed by and construed in accordance with the laws of the Hong Kong Special Administrative
+Region of the People’s Republic of China.
+CONFIDENTIALITY.
+Both parties agree to maintain the confidentiality
+of any proprietary information exchanged during the term of this Agreement. This includes, but is not limited to, business plans, technical
+data, and customer information.
+ENTIRE AGREEMENT.
+This Agreement constitutes the entire understanding
+between the parties and supersedes all prior agreements, whether written or oral.
+AMENDMENTS.
+Any amendments to this Agreement must be made in writing
+and signed by both parties.
+ALTECH and ALLIANCE Confidential
+3
+IN WITNESS WHEREOF, the parties hereto
+have executed this Services Agreement as of the date first above written.
+Altech Hong Kong Limited
+Alliance Technology Global Limited
+/s/ Kei Ho Kevin LAM
+/s/ Kwok Wai BOW
+By:
+By:
+Name:
+Kevin Lam
+Name:
+Jason Bow
+Title:
+Director
+Title:
+Director
+Date:
+18 January 2022
+Date:
+18 January 2022
+ALTECH and ALLIANCE Confidential
+4

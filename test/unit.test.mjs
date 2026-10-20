@@ -561,7 +561,7 @@ test('B4 letter-of-credit renewal is not the agreement\'s clause', () => {
 const EXPECT2 = {
   'angiodynamics-ex10-1': '2027-09-03', 'arrow-demarco-ex10-1': ['2027-01-02', '2026-12-31'], 'atlasclear-ex10-3': '2028-07-21', 'cffi-ex10-40': '2027-01-15',
   'dnow-ex10-2': '2027-09-07', 'fibk-lee-ex10-1': '2027-06-16', 'firstfoundation-ex10-1': '2027-09-17', 'glacier-ex10-l': '2026-10-22', 'gormanrupp-ex10-1': '2027-10-01',
-  'hornbeck-ex10-1': '2031-10-02', 'photronics-ex10-1': ['2027-07-10', '2027-07-09'], 'rekor-ex10-1': ['2028-04-01', '2028-03-31'], 'renasant-ex10-1': '2028-06-26',
+  'hornbeck-ex10-1': '2031-10-02', 'photronics-ex10-1': ['2027-07-10', '2027-07-09'], 'rekor-ex10-1': ['2028-04-01', '2028-03-31'], 'renasant-ex10-1': ['2028-08-06', '2028-08-04'], // ab9a38e: term runs from the defined Start Date (5 Oct 2026; movable by agreement → Check), not the signing date
   'smenergy-ex10-1': ['2026-11-01', '2026-10-30'], 'xponential-ex10-1': ['2026-11-14', '2026-11-13'],
   // flagged, no date: letter of credit; "date hereof" undated; merger "Effective Time" not dated; Effective Date not dated in the filing
   'dirtt-ex10-1': '', 'idexx-ex10-56': '', 'psb-ex10-3': '', 'thirdcoast-ex10-1': '', 'westrock-ex10-15': '',
@@ -618,4 +618,87 @@ for (const [f, e] of Object.entries(EXPECT3)) test(`batch3 ${f} → ${(Array.isA
 });
 test('batch3 review flags: conditional extension, blank MSA date, Production Commencement Date', () => {
   for (const f of ['splash-lupvindol-ex10-1', 'greendot-separation-ex10-1', 'fsi-nanochem-supply-ex10-4']) assert.equal(fx(f + '.edgar.htm').r.needsReview, true, f);
+});
+// ---- reviewer ab9a38e: all 11 fixes (real sec.gov fixtures; hand-worked as of 2026-10-19; sources in test/fixtures/SOURCES.txt) ----
+const fxt = f => { const L = fs.readFileSync(new URL('./fixtures/' + f, import.meta.url), 'utf8').split(/\r?\n/); const x = extract(L); return { L, x, r: buildQueue([{ id: 'f', name: 'f', lines: L, x }], AS)[0] }; };
+test('ab9a38e #1 Altech: "commence on 18 January 2022 ... ending on 17 January 2023" (DMY), annual, 30 days → Fri 18 Dec 2026', () => {
+  for (const g of [fx('altech-ex10-6.edgar.htm'), fxt('altech-ex10-6.pdftotext.txt')]) {
+    assert.equal(g.x.term.start, '2022-01-18'); assert.equal(g.x.term.end, '2023-01-17'); assert.equal(g.r.actBy, '2026-12-18'); assert.equal(g.r.needsReview, false);
+  }
+  assert.equal(ymd(parseDate('commence on 18 January 2022').date), '2022-01-18');
+});
+test('ab9a38e #2 VerifyMe: initial-only notice passed → item carries the passed date and renewal length, never "no renewal"', () => {
+  const { x, r } = fx('verifyme-pentant-ex10-3.edgar.htm');
+  assert.ok(x.renewal); assert.equal(r.item.initialOnlyPassed, true); assert.equal(r.item.prevActBy, '2025-04-01'); assert.deepEqual(r.item.renewEvery, { n: 3, unit: 'month' }); assert.ok(r.item.source?.quote);
+});
+test('ab9a38e #3 Simwon: "[2024.08.07] to [2024.12.31]" template dates, yearly, 3 months → missed 30 Sep 2026, next 30 Sep 2027 (Check)', () => {
+  for (const g of [fx('simwon-mstech-ex10-14.edgar.htm'), fxt('simwon-mstech-ex10-14.pdftotext.txt')]) {
+    assert.equal(g.x.term.start, '2024-08-07'); assert.equal(g.x.term.end, '2024-12-31'); assert.equal(g.x.term.confidence, 'medium'); assert.equal(g.x.renewal.period.n, 1);
+    assert.equal(g.r.missed.actBy, '2026-09-30'); assert.equal(g.r.missed.renews, '2027-01-01'); assert.equal(g.r.actBy, '2027-09-30'); assert.equal(g.r.needsReview, true); assert.match(g.r.tag, /template/);
+  }
+  assert.equal(ymd(parseDate('[2024.08.07]').date), '2024-08-07');
+});
+test('ab9a38e #7 term length only from the term section: non-solicit / non-compete lengths are never quoted', () => {
+  const g = fx('industrious-ex10-1.edgar.htm'); assert.doesNotMatch(g.x.term.source.quote, /solicit/i);
+  const t = extract(['This Agreement is made effective as of March 1, 2026 (the "Effective Date").', 'Member will not, during the Term of this Agreement and for a period of one (1) year thereafter, solicit the employment of any employee of the Company.', 'The covenant not to compete will remain in effect for six (6) months following the date of the settlement agreement.']);
+  assert.equal(t.term, null); assert.match(schedule(t, AS).find(i => i.type === 'Term / expiry').why, /No term length found/);
+});
+test('ab9a38e #9 Industrious: dates from the label/value table, renewals equal to the Initial Term, 2 full calendar months → 30 Nov 2026 (Check)', () => {
+  for (const g of [fx('industrious-ex10-1.edgar.htm'), fxt('industrious-ex10-1.pdftotext.txt')]) {
+    assert.equal(g.x.term.start, '2025-02-01'); assert.equal(g.x.term.end, '2025-07-31'); assert.equal(g.x.term.confidence, 'medium');
+    assert.deepEqual([g.x.renewal.period.n, g.x.renewal.period.unit], [6, 'month']); assert.equal(g.x.notice.period.full, true);
+    assert.equal(g.r.actBy, '2026-11-30'); assert.equal(g.r.needsReview, true);
+  }
+});
+test('ab9a38e #10 National Vision: one-sided extension right noted, date unchanged (1 May 2028, Clear)', () => {
+  const g = fx('natvision-ex10-1.edgar.htm'); assert.equal(g.r.actBy, '2028-05-01'); assert.equal(g.r.confidence, 'high'); assert.match(g.x.extension.note, /^One-sided extension right: Customer can extend the agreement an additional calendar quarter/);
+  assert.equal(fx('douglas-lease-ex10-1.edgar.htm').x.extension, undefined);
+});
+test('ab9a38e #11 party names: no "following parties:", no list numbers, no generic roles', () => {
+  assert.equal(partiesFromPreamble(fx('simwon-mstech-ex10-14.edgar.htm').L), 'MS Autotech / Simwon America');
+  assert.equal(partiesFromPreamble(fxt('simwon-mstech-ex10-14.pdftotext.txt').L), 'MS Autotech / Simwon America');
+  assert.equal(partiesFromPreamble(fxt('industrious-ex10-1.pdftotext.txt').L), 'Industrious / Member');
+  assert.equal(partiesFromPreamble(fxt('altech-ex10-6.pdftotext.txt').L), 'Altech Hong Kong / Alliance Technology Global');
+});
+// #5 / #8: every fixture gives the same dates whatever the line split (block tags, re-wrapped at 72 and at 140 characters, one line per sentence-ish chunk)
+const rewrap = (L, w) => L.flatMap(l => { const out = []; let cur = ''; for (const wd of String(typeof l === 'string' ? l : l.text).split(' ')) { if (cur && (cur + ' ' + wd).length > w) { out.push(cur); cur = wd; } else cur = cur ? cur + ' ' + wd : wd; } if (cur) out.push(cur); return out; });
+const sigOf = L => schedule(extract(L), AS).map(i => i.type + ':' + (i.date || '-')).join(' | ');
+test('ab9a38e #5/#8 line-break independence: every fixture, two different line splits, identical dates', () => {
+  const sets = [];
+  for (const f of fs.readdirSync(new URL('./fixtures/', import.meta.url))) {
+    if (f.endsWith('.edgar.htm')) sets.push([f, htmlToLines(fs.readFileSync(new URL('./fixtures/' + f, import.meta.url), 'utf8'))]);
+    else if (f.endsWith('.txt') && f !== 'SOURCES.txt') sets.push([f, fs.readFileSync(new URL('./fixtures/' + f, import.meta.url), 'utf8').split(/\r?\n/)]);
+  }
+  for (const c of [...D, ...JSON.parse(fs.readFileSync(new URL('../public/data/holdout.json', import.meta.url)))]) sets.push([c.id, c.lines]);
+  assert.ok(sets.length >= 100, 'fixture count ' + sets.length);
+  for (const [f, L] of sets) { const a = sigOf(L); assert.equal(sigOf(rewrap(L, 72)), a, f + ' (wrapped at 72)'); assert.equal(sigOf(rewrap(L, 140)), a, f + ' (wrapped at 140)'); }
+});
+test('ab9a38e #8 quotes map back to their line numbers after joining lines', () => {
+  const L = rewrap(htmlToLines(fs.readFileSync(new URL('./fixtures/altech-ex10-6.edgar.htm', import.meta.url), 'utf8')), 60); const x = extract(L);
+  const txt = norm(L.slice(x.term.source.lineStart - 1, x.term.source.lineEnd).join(' ')); assert.ok(txt.includes('ending on 17 January 2023'));
+});
+// ---- ab9a38e generic sweep: 14 new EDGAR auto-renewal exhibits (full-text search, filed Apr–Oct 2026; SOURCES.txt). Hand-worked as of 2026-10-19 from each clause. ----
+const EXPECT_SWEEP_AB9 = {
+  'amfusion-jrms-ex10-1': ['2027-07-10', '2027-07-09'],   // 12 months from "the date hereof" (10 Aug 2026) → 9 Aug 2027; −30 days. Check (date hereof).
+  'bitdigital-galaxy-ex10-1': ['2027-03-12'],             // 1 year from the date hereof (27 Mar 2026) → 26 Mar 2027; −10 Business Days.
+  'bluejay-lovell-ex10-1': ['2028-06-02'],                // 2 years from 1 Sep 2026 → 31 Aug 2028; −90 days.
+  'cineverse-mccabe-ex10-1': ['2028-01-01', '2027-12-30'],// "from April 20th, 2026 (the Effective Date) to March 31st, 2028"; −90 days (Sat, New Year's Day).
+  'heritage-ludwig-ex10-1': ['2027-07-01'],               // ends on July 31, 2027; notice of nonrenewal ≥30 days, in a separate clause → Check.
+  'strattec-becker-ex10-7': ['2027-09-11', '2027-09-10'], // 11 Nov 2024 – 10 Nov 2025, yearly; ≥60 days: 11 Sep 2026 passed → renews 11 Nov 2026.
+  'tenax-staab-ex10-1': ['2027-02-10'],                   // Start Date 11 May 2026, "until the one-year anniversary" → 11 May 2027; −90 days.
+  'xti-schneiderman-ex10-2': ['2028-08-11'],              // "continue for the Initial Term" = table "Three (3) Years" from 10 Nov 2025; −90 days. Check.
+  'zsquared-mzhci-ex10-4': ['2027-02-06', '2027-02-05'],  // 4 months from 8 Dec 2025, renews every 4 months; 60 days: 8 Oct 2026 passed → renews 8 Dec 2026.
+  // no date, flagged: term starts at a merger closing; Commencement Date never dated; renewal subject to re-election; renewal belongs to another agreement
+  'heartsciences-simpson-ex10-1': [''], 'niki-freeburg-ex10-1': [''], 'niki-mireskandari-ex10-2': [''], 'whitefiber-tabar-ex10-4': [''], 'xpel-psa-ex10-5': [''],
+};
+for (const [f, [act, safe]] of Object.entries(EXPECT_SWEEP_AB9)) test(`sweep ab9a38e ${f} → ${act || 'flagged, no date'}`, () => {
+  const { r } = fx(f + '.edgar.htm'); assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); if (!act) assert.equal(r.needsReview, true);
+});
+test('sweep ab9a38e missed windows: Strattec and Z Squared', () => {
+  assert.deepEqual(fx('strattec-becker-ex10-7.edgar.htm').r.missed, { actBy: '2026-09-11', renews: '2026-11-11' });
+  assert.deepEqual(fx('zsquared-mzhci-ex10-4.edgar.htm').r.missed, { actBy: '2026-10-08', renews: '2026-12-08' });
+});
+test('sweep ab9a38e party names', () => {
+  assert.equal(partiesFromPreamble(fx('xti-schneiderman-ex10-2.edgar.htm').L), 'Drone Nerds / Jeremy Schneiderman');
+  assert.equal(partiesFromPreamble(fx('heartsciences-simpson-ex10-1.edgar.htm').L), 'Heartsciences / Andrew Simpson');
 });

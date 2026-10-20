@@ -120,7 +120,7 @@ async function addDoc(name, lines, meta = {}) {
   await stage(3, name);
   const id = 'u' + (++n); const base = name.replace(/\.[a-z0-9]+$/i, '');
   const parties = meta.name ? '' : partiesFromPreamble(lines);
-  mine.push({ id, name: (meta.name || parties || base).slice(0, 60), fileName: name, counterparty: meta.counterparty || (parties ? parties.split(' / ')[1] || '' : ''), filer: meta.filer || '', kind: meta.kind || 'Your contract', url: meta.url || '', title: meta.title || '', exhibit: meta.exhibit || '', filed: meta.filed || '', secId: meta.secId || '', lines, x });
+  mine.push({ id, name: (meta.name || parties || `Unnamed contract (${name})`).slice(0, 60), fileName: name, counterparty: meta.counterparty || (parties ? parties.split(' / ')[1] || '' : ''), filer: meta.filer || '', kind: meta.kind || 'Your contract', url: meta.url || '', title: meta.title || '', exhibit: meta.exhibit || '', filed: meta.filed || '', secId: meta.secId || '', lines, x });
   newIds.add(id); setTimeout(() => { newIds.delete(id); document.querySelector(`#lq li[data-id="${id}"]`)?.classList.remove('new'); }, 4000);
   set = 'mine'; busyDone(); render();
   if (mine.length === 1) requestAnimationFrame(() => { const h = document.querySelector('#answer .hero-date'); if (h && h.getBoundingClientRect().bottom > innerHeight - 8) $('#answer').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
@@ -169,7 +169,8 @@ function card(c, r) {
   } else if (r.section === 'lapsed') { kicker = 'No action needed'; cls = 'expired'; hero = `Expired ${esc(fmt(r.actBy))}`; sub = r.label === 'Send-notice deadline' ? 'The send-notice date has passed; check whether it renewed.' : 'No automatic renewal left.'; }
   else if (r.actBy && /Send-notice/.test(r.label)) { kicker = r.needsReview ? 'Send notice by (best reading)' : 'Send notice by'; hero = esc(fmt(r.actBy)); sub = esc(cons); }
   else if (r.actBy) { kicker = 'Ends on'; hero = esc(fmt(r.actBy)); sub = 'No automatic renewal. Plan the replacement before then.'; }
-  else { kicker = 'Send notice by'; cls = 'nodate'; hero = 'No date found'; sub = esc(r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No renewal or term clause found. It may not auto-renew.'); }
+  else if (r.item?.initialOnlyPassed) { const it0 = r.item; kicker = 'Send-notice date passed'; cls = 'passed'; hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(it0.prevActBy))}</span>`; sub = esc(`Now renews every ${days(it0.renewEvery.n, it0.renewEvery.unit)}; the contract gives no non-renewal notice for later periods. Check the termination section.`); }
+  else { kicker = 'Send notice by'; cls = 'nodate'; hero = 'No date found'; sub = esc(r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : c.x.renewal ? 'An automatic renewal clause was found, but no date could be worked out. Check the clause.' : 'No renewal or term clause found. It may not auto-renew.'); }
   const it = r.item || {};
   const math = it.termEnd && it.notice && r.actBy ? `Term ends ${fmt(it.termEnd)}${it.renewed ? ` (assumes it renewed ${it.renewed === 1 ? 'once' : it.renewed + ' times'} and was never amended)` : ''}. Minus ${days(it.notice.n, it.notice.unit)} = ${fmt(r.actBy)}.` : '';
   const quoteHtml = src?.quote ? mark(esc(showQuote(src.quote)), [c.x.notice?.period?.text, c.x.renewal?.period?.text, (showQuote(src.quote).match(/automatically renew\w*/i) || [])[0]]) : '';
@@ -187,7 +188,7 @@ function card(c, r) {
       <div class="ident"><p class="iname">${esc(c.name)}</p><p class="lab meta">${meta}</p></div>
     </div><div class="aright">
       <p class="lab">From the contract</p>
-      ${c.x.renewalNote ? `<p class="cons rnote">${esc(c.x.renewalNote)}</p>` : ''}
+      ${c.x.renewalNote ? `<p class="cons rnote">${esc(c.x.renewalNote)}</p>` : ''}${r.item?.initialOnlyPassed ? `<p class="cons rnote">${esc('Renews (no later notice window): ' + r.item.why)}</p>` : ''}${c.x.extension ? `<p class="cons rnote">${esc(c.x.extension.note)}</p>` : ''}
       ${quoteHtml ? `<blockquote class="aq">“${quoteHtml}”</blockquote>` : '<p class="cons">No clause with a date was found.</p>'}
       <p class="prov lab">${src?.location ? `<span>${esc(src.location)}</span><span class="dot">·</span>` : ''}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">Open on SEC EDGAR ↗</a><span class="dot">·</span>` : ''}${src?.quote ? `<button class="tl copyq" type="button">Copy clause</button>` : ''}</p>
       <p class="conf"><span class="lab">Confidence:</span> ${confTag(r)[1] === 'rvtag' ? `<span class="cw">${esc(cw)}</span>` : `<span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span>`} <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
@@ -199,7 +200,7 @@ function card(c, r) {
 function row(c, r) {
   const passed = !!r.missed || r.section === 'lapsed';
   const d = r.missed ? r.missed.actBy : r.actBy;
-  const cons = r.missed ? `Renews ${fmt(r.missed.renews)}. Next: send notice by ${sendBy(r)}.` : r.section === 'lapsed' ? 'Expired. No action needed.' : !r.actBy ? (r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No date found.') : /Send-notice/.test(r.label) ? (renewsFor(c) ? `or it renews for ${renewsFor(c)}.` : 'or it renews automatically.') : 'No automatic renewal.';
+  const cons = r.missed ? `Renews ${fmt(r.missed.renews)}. Next: send notice by ${sendBy(r)}.` : r.section === 'lapsed' ? 'Expired. No action needed.' : r.item?.initialOnlyPassed ? `Send-notice date passed ${fmt(r.item.prevActBy)}. Now renews every ${days(r.item.renewEvery.n, r.item.renewEvery.unit)}; no later non-renewal notice.` : !r.actBy ? (r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No date found.') : /Send-notice/.test(r.label) ? (renewsFor(c) ? `or it renews for ${renewsFor(c)}.` : 'or it renews automatically.') : 'No automatic renewal.';
   return `<li class="lrow${newIds.has(c.id) ? ' new' : ''}" data-id="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(c.name)}: show the answer">
     <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? 'Send notice by' : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
