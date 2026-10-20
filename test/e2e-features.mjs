@@ -90,7 +90,7 @@ for (const w of [1440, 375]) {
     ok(/^Read 4 files: 3 added, 1 not added \(notes\.txt\)\. 3 contracts in the queue\.$/.test(st), `${w}: bulk drop reports the result: ${st}`);
     ok(['File 1 of 4', 'File 2 of 4', 'File 3 of 4', 'File 4 of 4'].every(k => steps.some(s => s.startsWith(k))), `${w}: progress shows File n of 4 for each file`);
     const pf = await p.$$eval('#portfolio .pf', ds => ds.map(d => d.innerText.replace(/\s+/g, ' ').trim()));
-    ok(pf.join('|') === 'DUE IN 30 DAYS 0|DUE IN 90 DAYS 0|DUE IN 365 DAYS 1|PASSED 1|NEEDS REVIEW 1', `${w}: portfolio summary ${pf.join(', ')}`);
+    ok(pf.join('|') === 'PASSED 1|DUE IN 30 DAYS 0|DUE IN 31 TO 90 DAYS 0|DUE IN 91 TO 365 DAYS 1|LATER 1|NEEDS REVIEW 0|CAN’T TELL 0', `${w}: portfolio summary ${pf.join(', ')}`);
     await p.evaluate(() => document.querySelector('#portfolio').scrollIntoView({ block: 'start' })); await sleep(300); await shot(p, 'f4-portfolio', w);
     // F5 audit CSV from the same queue
     await p.click('#lqAudit'); const csv = (await lastDl(p)).buf.toString().trim().split('\r\n');
@@ -98,6 +98,9 @@ for (const w of [1440, 375]) {
     await p.evaluate(() => document.querySelector('#lqAudit').scrollIntoView({ block: 'center' })); await shot(p, 'f5-audit', w);
     await p.ctx.close(); }
   // F6 storage
+  { const p = await fresh('/?asof=2026-10-19', w); await p.evaluate(() => localStorage.setItem('cc-docs', '{broken')); await p.reload({ waitUntil: 'networkidle0' }); await sleep(300);
+    ok(/could not be read and were cleared/.test(await status(p)) && await p.evaluate(() => localStorage.getItem('cc-docs') === null && !document.querySelector('#remember').checked), `${w}: corrupt saved data with Remember off: plain message, cleared`);
+    await p.ctx.close(); }
   { const p = await fresh('/?asof=2026-10-19', w); await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden);
     await p.evaluate(() => { document.querySelector('#about').open = true; document.querySelector('#remember').click(); });
     await p.click('#trySecond'); await waitStatus(p, /2 contracts/);

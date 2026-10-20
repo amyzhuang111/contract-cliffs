@@ -28,7 +28,7 @@ for (const w of [1440, 375]) {
 { const p = await fresh('/?demo=1&asof=2026-10-19');
   ok(await p.evaluate(() => document.activeElement?.id === 'tryOne' && getComputedStyle(document.querySelector('#about')).display === 'none'), '?demo=1 focuses the one-click button and hides the extras');
   const t0 = Date.now(); await p.waitForFunction(() => !document.querySelector('#answer').hidden, { timeout: 2500 }).catch(() => {}); const dt = Date.now() - t0; await sleep(1200); // U1: ?demo=1 runs the real SEC sample by itself
-  const b = await big(p); ok(/^Send notice by \| 16 Dec 2026 \| Wednesday \| or it renews for 24 more months\. \| 58 days left$/.test(b) && dt < 2000, `?demo=1 auto-runs and shows Star Brands/Schwazze's deadline in ${dt} ms: ${b}`);
+  const b = await big(p); ok(/^Send notice by \| 16 Dec 2026 \| Wednesday \| or it renews for 24 more months\. After the first twenty four \(24\) consecutive months, either party can also end it on 30 days' notice for any reason \(lines 100–101\)\. \| 58 days left$/.test(b) && dt < 2000, `?demo=1 auto-runs and shows Star Brands/Schwazze's deadline in ${dt} ms: ${b}`);
   ok(await p.$eval('#answer', e => /“.{40,}/.test(e.querySelector('blockquote.aq')?.textContent || '') && !!e.querySelector('a[href*="sec.gov"]') && /lines 24–29/.test(e.textContent) && !!e.querySelector('.aq mark')), 'answer card: clause quoted beside the date with operative words marked, line ref and EDGAR link');
   ok(await p.$eval('#liveQ', e => e.hidden) && await p.$eval('#prompt', e => !e.hidden && e.getBoundingClientRect().height >= 72 && /Add StableX \/ Kopin/.test(e.textContent)), 'no queue with one contract, just the add-another prompt');
   ok(p.reqs.filter(u => /edgar\.json/.test(u)).length === 1, 'SEC data fetched only after the click');
@@ -192,8 +192,8 @@ const CARDS = [
   ['simwon-mstech-ex10-14.edgar.htm', /^Send-notice date passed \| Passed30 Sep 2026 \| It renews on 1 Jan 2027 for 1 more year\. \| Next: send notice by Thu 30 Sep 2027/, 'MS Autotech / Simwon America'],
   ['altech-ex10-6.generated.pdf', /^Send notice by \| 18 Dec 2026 \| Friday \| or it renews for 1 more year\. \| 60 days left$/, 'Altech Hong Kong / Alliance Technology Global'],
   ['altech-ex10-6.edgar.htm', /^Send notice by \| 18 Dec 2026 \| Friday \| or it renews for 1 more year\. \| 60 days left$/, 'ALTECH / ALLIANCE'],
-  ['industrious-ex10-1.edgar.htm', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. \| 42 days left$/, 'Industrious Nyc 776 6th Avenue / Gelteq'],
-  ['industrious-ex10-1.pdftotext.txt', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. \| 42 days left$/, 'Industrious / Member'],
+  ['industrious-ex10-1.edgar.htm', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. Industrious can also end it on 120 days' notice for any reason \(lines 252–254\)\. \| 42 days left$/, 'Industrious Nyc 776 6th Avenue / Gelteq'],
+  ['industrious-ex10-1.pdftotext.txt', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. Industrious can also end it on 120 days' notice for any reason \(lines 228–230\)\. \| 42 days left$/, 'Industrious / Member'],
   ['newgenivf-agency-ex10-2.generated.docx', /^Send notice by \| No date found \| The start date is set by an event and is not in the document\.$/, 'PredicXion Group / NewGenIVF Group'],
   ['naturesmiracle-du-ex10-1.pdftotext.txt', /^Send notice by \| 1 Jan 2029 \| Monday \| or it renews for 1 more year\. \| 805 days left$/, 'Nature’s Miracle Holding Incorporated / Jinlong Frank Du'],
   ['driven-omelia-amend3-ex10-2.edgar.htm', /^Send notice by \| 4 Apr 2027 \| Sunday \| or it renews for 12 more months\. \| 167 days left$/, 'Driven Brands Shared Services / Scott O’Melia'],

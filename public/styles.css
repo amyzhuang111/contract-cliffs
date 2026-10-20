@@ -528,12 +528,12 @@ a.gcal{font:400 var(--t-label) var(--font-mono);text-transform:uppercase;color:v
 .obl .nd{color:var(--mute)}
 pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--font-mono);color:var(--fg);background:var(--card);padding:16px;margin:16px 0 0;border:1px solid var(--rule)}
 .lbtns{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
-.portfolio{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:0 0 12px}
+.portfolio{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:0 0 12px}
 .portfolio:empty{display:none}
 .portfolio .pf{background:var(--bg,#000);padding:10px 12px;display:flex;flex-direction:column;gap:4px}
 .portfolio .sv{font:500 24px/28px var(--font-sans);font-variant-numeric:tabular-nums;color:var(--fg)}
-.portfolio .p .sv{color:var(--danger)}.portfolio .r .sv{color:var(--highlight)}
-@media (max-width:480px){.portfolio{grid-template-columns:repeat(3,minmax(0,1fr))}.portfolio .sv{font-size:20px}}
+.portfolio .passed .sv{color:var(--danger)}.portfolio .review .sv,.portfolio .cant .sv{color:var(--highlight)}.portfolio .zero .sv{color:var(--mute)}
+@media (max-width:480px){.portfolio{grid-template-columns:repeat(2,minmax(0,1fr))}.portfolio .sv{font-size:20px}}
 /* ---------- portfolio view (?demo=1 only) ---------- */
 .pfload{margin:24px 0 0;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
 .pfnote{font:400 var(--t-label) var(--font-mono);color:var(--mute);margin:0}
@@ -568,7 +568,7 @@ pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--f
 }
 @keyframes pf-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes pf-pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
-@media (max-width:480px){.pfv .portfolio .pf:last-child{grid-column:span 2}}
+@media (max-width:480px){.pfv .portfolio .pf:last-child:nth-child(odd){grid-column:span 2}}
 
 /* ---- R1–R5 (6577573 re-score) ---- */
 /* R1 slide plays after its strip has appeared; label upright */
@@ -639,3 +639,7 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 @media (max-width:480px){.cliff-mark::after{left:auto;right:8px;text-align:right}}
 /* C5 follow-up: with the 380px right column the 120px date needs 720px; below 1600px wide it sets at 112px so it clears the quote */
 @media (min-width:1200px) and (max-width:1599px){body.has-one .hero-date{font-size:112px;line-height:104px}}
+/* review fixes: Today label above the line so the first year label fits; every control at least 24px */
+.tl-track .tk.today{height:56px}
+.tl-track .tk.today .lab{top:-18px}
+.copyq,#letterDocx,#letterCopy,button.lnk{min-height:24px;min-width:24px;display:inline-flex;align-items:center}

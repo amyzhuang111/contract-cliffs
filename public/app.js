@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { withAlarms, gcalLink, letter, docx, obligations, portfolio, auditCSV, parseSaved, STORE_KEY } from '/features.js';
+import { withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -89,7 +89,7 @@ function openDrawer(id) {
    ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(reason(i.why))}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? dayWord(-d) + ' ago' : 'in ' + dayWord(d))(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
      <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} ${esc(sure(i.confidence))}.</p>
-     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}<div class="lettr"><button class="btn-secondary sm" id="drawerLetter">Draft notice letter</button></div>${obligationsHtml(c)}`;
+     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(showQuote(i.via.quote).slice(0, 220))}${showQuote(i.via.quote).length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}<div class="lettr"><button class="btn-secondary sm" id="drawerLetter">Draft notice letter</button></div>${obligationsHtml(c)}`;
   $('#drawerLetter').onclick = () => openLetter(id);
   $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on'); $('#drawer').scrollTop = 0; $('#close').focus({ preventScroll: true });
 }
@@ -121,7 +121,7 @@ function download(name, text, type) { const a = document.createElement('a'); a.h
 const tag = () => (set === 'edgar' ? 'sec-edgar' : 'my-docs') + '-asof-' + asOf;
 const guard = f => () => { if (!current().length) { $('#status').textContent = 'Nothing to export yet: add a contract first.'; return; } f(); };
 $('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf), 'text/csv'));
-$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z')), 'text/calendar'));
+$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), Object.fromEntries(current().map(c => [c.id, exitNote(c)?.text]).filter(e => e[1]))), 'text/calendar'));
 $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
 $('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
 $('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf), 'text/html'));
@@ -152,7 +152,7 @@ const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','
 const WDAY = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const weekday = d => WDAY[new Date(d + 'T00:00:00Z').getUTCDay()];
 // Display-only clean-up of a quoted clause. The stored quote (used for copy and the audit pack) is untouched.
-export const showQuote = q => String(q || '').replace(/[\u200b\u200c\u200d\ufeff]/g, '').replace(/\s+/g, ' ').replace(/“\s+/g, '“').replace(/\s+”/g, '”').replace(/\b([A-Z]) (?=[A-Z]{2,}\b)/g, '$1').trim();
+export const showQuote = q => String(q || '').replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\s+/g, ' ').replace(/“\s+/g, '“').replace(/\s+”/g, '”').replace(/\b([A-Z]) (?=[A-Z]{2,}\b)/g, '$1').trim();
 const mark = (html, phrases) => phrases.filter(Boolean).reduce((h, p) => { const e = esc(showQuote(p)); return e && h.includes(e) ? h.replace(e, `<mark>${e}</mark>`) : h; }, html);
 const order = rows => { // 1 passed but renewing, 2 dated soonest first, 3 no date, 4 expired; ties by name
   const rank = r => r.missed ? 0 : r.section === 'lapsed' ? 3 : r.actBy ? 1 : 2;
@@ -177,15 +177,15 @@ function oneThing(r) {
 const sendBy = r => { const d = r.safe?.date || r.actBy; return `${weekday(d).slice(0, 3)} ${fmt(d)}`; };
 const days = (n, u) => `${n} ${u}${+n === 1 ? '' : 's'}`;
 const renewsFor = c => { const p = c.x.renewal?.period; return p ? `${p.n} more ${p.unit}${p.n > 1 ? 's' : ''}` : ''; };
-const gcal = (c, r) => { if (!r.actBy || r.section === 'lapsed' || (r.days != null && r.days < 0) || !/send-notice/i.test(r.label || '')) return ''; const u = gcalLink({ name: c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: c.url }); return u ? `<a class="gcal" href="${esc(u)}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ''; };
+const gcal = (c, r) => { if (!r.actBy || r.section === 'lapsed' || (r.days != null && r.days < 0) || !/send-notice/i.test(r.label || '')) return ''; const u = gcalLink({ name: c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: c.url, note: exitNote(c)?.text }); return u ? `<a class="gcal" href="${esc(u)}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ''; };
 function card(c, r) {
-  const more = renewsFor(c); const cons = more ? `or it renews for ${more}.` : 'or it renews automatically.';
+  const more = renewsFor(c); const ex = exitNote(c); const cons = (more ? `or it renews for ${more}.` : 'or it renews automatically.') + (ex ? ' ' + ex.text : '');
   const src = r.item?.source; const [cw, seg] = confWord(r.confidence);
   let kicker, hero, sub = '', cls = '';
   if (r.missed) {
     kicker = 'Send-notice date passed'; cls = 'passed';
     hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(r.missed.actBy))}</span>`;
-    sub = `It renews on ${fmt(r.missed.renews)}${more ? ` for ${more}` : ''}.`;
+    sub = esc(`It renews on ${fmt(r.missed.renews)}${more ? ` for ${more}` : ''}.${ex ? ' ' + ex.text : ''}`);
   } else if (r.section === 'lapsed') { kicker = 'No action needed'; cls = 'expired'; hero = `Expired ${esc(fmt(r.actBy))}`; sub = r.label === 'Send-notice deadline' ? 'The send-notice date has passed; check whether it renewed.' : 'No automatic renewal left.'; }
   else if (r.actBy && /Send-notice/.test(r.label)) { kicker = r.needsReview ? 'Send notice by (best reading)' : 'Send notice by'; hero = esc(fmt(r.actBy)); sub = esc(cons); }
   else if (r.actBy) { kicker = 'Ends on'; hero = esc(fmt(r.actBy)); sub = r.renewHint ? 'No automatic renewal was read, but the document mentions renewal or extension. Check the clause before relying on this date.' : 'No automatic renewal. Plan the replacement before then.'; }
@@ -235,7 +235,7 @@ function live(cs) {
   const top = rows.find(r => r.id === expanded) || rows.find(r => r.id === cs[0].id) || rows[0];
   $('#answer').innerHTML = card(byId.get(top.id), top);
   $('#answerMore').onclick = () => openDrawer(top.id); $('#answerLetter').onclick = () => openLetter(top.id);
-  $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(top.item.source.quote).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
+  $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(showQuote(top.item.source.quote)).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
   const rest = rows.filter(r => r !== top); const exp = rest.filter(r => r.section === 'lapsed'), act = rest.filter(r => r.section !== 'lapsed');
   $('#lqh').textContent = (matchMedia('(max-width:480px)').matches ? `Queue · ${cs.length} contracts · 1 open above` : `Queue · ${cs.length} contracts · by send-notice date · 1 open above`);
   const sum = []; const pas = rows.filter(r => r.missed || (r.days != null && r.days < 0 && r.section !== 'lapsed')).length; if (pas) sum.push(`<span class="p">${pas} passed</span>`);
@@ -243,7 +243,7 @@ function live(cs) {
   const later = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days > 90).length; if (later) sum.push(`${later} later`);
   const nod = rows.filter(r => !r.actBy).length; if (nod) sum.push(`${nod} no date`); const ex = rows.filter(r => r.section === 'lapsed').length; if (ex) sum.push(`${ex} expired`);
   $('#lqSum').innerHTML = sum.join(' · ');
-  const pf = portfolio(rows); $('#portfolio').innerHTML = [['Due in 30 days', pf.d30, 'u30'], ['Due in 90 days', pf.d90, 'u90'], ['Due in 365 days', pf.d365, 'u365'], ['Passed', pf.passed, 'p'], ['Needs review', pf.review, 'r']].map(([k, v, c]) => `<div class="pf ${c}"><span class="lab">${k}</span><span class="sv">${v}</span></div>`).join('');
+  $('#portfolio').innerHTML = stripHtml(portfolio(rows));
   $('#lq').innerHTML = act.map(r => row(byId.get(r.id), r)).join('');
   $('#lqExpired').innerHTML = exp.length ? `<button class="tl" id="showExp">${exp.length} expired · ${shownExpired ? 'Hide' : 'Show'}</button>${shownExpired ? `<ol class="lq">${exp.map(r => row(byId.get(r.id), r)).join('')}</ol>` : ''}` : '';
   $('#showExp')?.addEventListener('click', () => { shownExpired = !shownExpired; render(); });
@@ -332,22 +332,21 @@ const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(mine.m
 $('#remember').checked = remember();
 $('#remember').onchange = e => { if (e.target.checked) { localStorage.setItem('cc-remember', '1'); save(); $('#status').textContent = 'Saved on this device. Untick to delete.'; } else { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); $('#status').textContent = 'Deleted from this device.'; } };
 let storeNote = '';
-try { if (remember()) { const { docs, error } = parseSaved(localStorage.getItem(STORE_KEY)); for (const m of docs) { try { mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch {} }
+try { const raw = localStorage.getItem(STORE_KEY); if (raw != null && (remember() || parseSaved(raw).error === 'corrupt')) { const { docs, error } = parseSaved(raw); if (remember()) for (const m of docs) { try { mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch {} }
   if (error === 'corrupt') { localStorage.removeItem(STORE_KEY); storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; } else if (error === 'partial') storeNote = 'Some saved contracts could not be read and were skipped.'; } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
 $('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
-// Demo mode: straight to the one-click state.
-// Portfolio view: ?demo=1 only, behind a button. Never on the plain URL.
+// Portfolio view: behind a button on every URL. Nothing loads until it is clicked.
 let pfSort = 'date', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
   $('#pfCount').textContent = pfRows.length;
   $('#pfSub').textContent = `Stand-ins for a company's own agreements: ${pfRows.length} public contracts filed with the SEC (licence, supply, services and network deals, plus some executive and consulting agreements), each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
-  const pf = portfolio(pfRows); $('#pfStrip').innerHTML = [['Due in 30 days', pf.d30, 'u30'], ['Due in 90 days', pf.d90, 'u90'], ['Due in 365 days', pf.d365, 'u365'], ['Passed', pf.passed, 'p'], ['Needs review', pf.review, 'r']].map(([k, v, c], i) => `<div class="pf ${c}" style="--i:${i}"><span class="lab">${k}</span><span class="sv">${v}</span></div>`).join('');
+  $('#pfStrip').innerHTML = stripHtml(portfolio(pfRows));
   $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);
   $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf);
   document.querySelectorAll('.pfsort [data-sort]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.sort === pfSort)); b.onclick = () => { pfDir = pfSort === b.dataset.sort ? -pfDir : 1; pfSort = b.dataset.sort; $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf); document.querySelectorAll('.pfsort [data-sort]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.sort === pfSort))); }; });
 }
-if (params.get('demo') === '1') { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
+{ $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
   try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
   catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
 if (params.get('demo') === '1') { document.body.classList.add('demo'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }

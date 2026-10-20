@@ -1,9 +1,9 @@
 // Product features layered on the extractor: calendar links and alarms, notice letter (.docx), more obligations,
 // portfolio summary, per-contract audit CSV and safe local storage. Pure functions; no network, no invented data.
-import { toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
+import { fold, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
 
 const txt = l => typeof l === 'string' ? l : (l?.text ?? '');
-const norm = s => String(s ?? '').replace(/[\u200b\u200c\u200d\ufeff]/g, '').replace(/\s+/g, ' ').trim();
+const norm = s => String(s ?? '').replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\s+/g, ' ').trim();
 // Location label for lines a..b (0-based, inclusive), same format as the extractor (page/line, ¶ for DOCX).
 export function locOf(lines, a, b = a) {
   const A = lines[a] || {}, B = lines[b] || {};
@@ -18,26 +18,40 @@ export function sendDay(actBy, asOf) {
   return sb.changed && sb.date < asOf && actBy >= asOf ? asOf : sb.date;
 }
 export const ALARM_DAYS = [30, 14, 7];
+const icsText = t => String(t).replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
 const ALARM = (n, name) => ['BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:-P${n}D`, `DESCRIPTION:${n} days to the send-notice deadline: ${name}`, 'END:VALARM'];
-// Give every send-notice event alarms at 30, 14 and 7 days before it (replaces any existing alarms on that event).
-export function withAlarms(ics) {
-  const L = ics.split('\r\n'); const out = []; let inEv = false, inAl = false, name = '', summary = false;
-  for (const l of L) {
-    if (l === 'BEGIN:VEVENT') { inEv = true; name = ''; summary = false; }
-    if (inEv && l.startsWith('SUMMARY:')) { summary = true; name = l.slice(8); }
-    else if (inEv && summary && l.startsWith(' ')) { name += l.slice(1); }
-    else if (inEv) summary = false;
+// Unfold, give every send-notice event alarms at 30, 14 and 7 days (replacing any others), add the early-exit note
+// to its description (notes: contract id -> text), then fold again by octets.
+export function withAlarms(ics, notes = {}) {
+  const L = ics.replace(/\r\n[ \t]/g, '').split('\r\n'); const out = []; let inEv = false, inAl = false, name = '', id = '';
+  for (let l of L) {
+    if (l === 'BEGIN:VEVENT') { inEv = true; name = ''; id = ''; }
+    if (inEv && l.startsWith('SUMMARY:')) name = l.slice(8);
+    if (inEv && l.startsWith('UID:')) id = (l.match(/^UID:(.+?)-(?:renews-)?\d{8}@contract-cliffs$/) || [])[1] || '';
+    if (inEv && l.startsWith('DESCRIPTION:') && !inAl && notes[id]) l += icsText(' ' + notes[id]);
     if (l === 'BEGIN:VALARM') { inAl = true; continue; }
     if (inAl) { if (l === 'END:VALARM') inAl = false; continue; }
     if (l === 'END:VEVENT' && inEv) { inEv = false; if (/^Send-notice deadline/.test(name)) for (const n of ALARM_DAYS) out.push(...ALARM(n, name.replace(/^Send-notice deadline: /, ''))); }
     out.push(l);
   }
-  return out.join('\r\n');
+  return out.map(l => fold(l.replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, ''))).join('\r\n');
 }
-export function gcalLink({ name, actBy, asOf, quote = '', location = '', url = '' }) {
+// Early exit: a termination-for-convenience right with a notice length, e.g. "after the first 24 months either party
+// may terminate on 30 days' notice". Returns { text, quote, location } or null. Never invents a period.
+export const cleanQuote = q => norm(q).replace(/\s+(?:[a-z]|[ivx]{1,4}|\d{1,2})[.)]$/, '');
+export function exitNote(c) {
+  const t = (c.x?.other || []).find(p => p.notice && p.notice.n && p.source?.quote); if (!t) return null;
+  const q = cleanQuote(t.source.quote);
+  const who = /\beither\s+party\b|\beach\s+party\b/i.test(q) ? 'either party' : t.who && !/^party$/i.test(t.who) ? t.who : 'one party';
+  const after = q.match(/\bfirst\s+((?:[a-z-]+\s+){0,3}\(\d+\)\s*(?:consecutive\s+)?(?:calendar\s+)?(?:months?|years?))[^.;]{0,40}?,?\s*after\s+which/i)?.[1] || q.match(/\bafter\s+the\s+(?:first|initial)\s+((?:[a-z-]+\s+){0,3}\(\d+\)\s*(?:consecutive\s+)?(?:calendar\s+)?(?:months?|years?))/i)?.[1] || (/\bafter\s+the\s+Initial\s+Term\b/i.test(q) ? 'Initial Term' : '');
+  const dur = `${t.notice.n} ${t.notice.unit}${t.notice.n === 1 ? '' : 's'}`;
+  const text = `${after ? `After the first ${after.replace(/^Initial Term$/, 'term')}, ` : ''}${who} can also end it on ${dur}' notice for any reason (${t.source.location}).`.replace(/^./, m => m.toUpperCase()).replace(/days' /, "days' ").replace(/(\d) day' /, "$1 day's ");
+  return { text, quote: q, location: t.source.location, who, after, notice: dur };
+}
+export function gcalLink({ name, actBy, asOf, quote = '', location = '', url = '', note = '' }) {
   const d = sendDay(actBy, asOf); if (!d) return '';
   const end = ymd(addDays(new Date(d + 'T00:00:00Z'), 1));
-  const q = norm(quote); const details = [`Last day to send non-renewal notice: ${actBy}.`, d !== actBy ? `Event is on ${d}, the last business day you can safely send it.` : '', location ? `Clause (${location}): "${q.length > 600 ? q.slice(0, 600) + '...' : q}"` : '', url ? `Source: ${url}` : '', 'Made with Contract Cliffs. Check the clause before relying on this date.'].filter(Boolean).join('\n');
+  const q = norm(quote); const details = [`Last day to send non-renewal notice: ${actBy}.`, d !== actBy ? `Event is on ${d}, the last business day you can safely send it.` : '', location ? `Clause (${location}): "${q.length > 600 ? q.slice(0, 600) + '...' : q}"` : '', note || '', url ? `Source: ${url}` : '', 'Made with Contract Cliffs. Check the clause before relying on this date.'].filter(Boolean).join('\n');
   return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Send non-renewal notice: ' + name) + '&dates=' + DAY(d) + '/' + DAY(end) + '&details=' + encodeURIComponent(details);
 }
 
@@ -114,11 +128,11 @@ export function letter(c, r, asOf) {
   const parties = String(c.name || '').includes(' / ') ? c.name.split(' / ').map(s => s.trim()) : [];
   const nc = noticeClause(c.lines); const q = r?.item?.source;
   const addr = nc?.addresses?.length ? nc.addresses.map(a => `${a.to}: ${a.text} (notices clause, ${a.location})`) : [`${FILL} (no notice address found in the notices clause${nc?.ref ? `; it points to the "${nc.ref}"` : ''})`];
-  const sendBy = r?.actBy ? fmtLong(r.actBy) : FILL;
+  const sendBy = r?.actBy ? fmtLong(r.actBy) : FILL; const ex = exitNote(c);
   const L = [
     'DRAFT. NOT SENT. CHECK EVERY LINE AGAINST THE CONTRACT BEFORE USE. NOT LEGAL ADVICE.',
     '',
-    `Date: ${FILL}`,
+    `Date: ${FILL} (the day you send it; today is ${fmtLong(asOf)})`,
     `Parties to the agreement: ${parties.length ? parties.join(' and ') : FILL}`,
     `From: ${FILL} (your company, name, title and address)`,
     `To: ${FILL} (the other party${parties.length ? ': ' + parties.join(' or ') : ''})`,
@@ -134,6 +148,7 @@ export function letter(c, r, asOf) {
     '',
     q?.quote ? `Renewal clause (${q.location}): "${norm(q.quote)}"` : `Renewal clause: ${FILL} (no renewal clause found)`,
     '',
+    ...(ex ? [`Note: ${ex.text} If that option fits better, it may be quicker than waiting for the term to end. Termination clause (${ex.location}): "${ex.quote}"`, ''] : []),
     r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${FILL} (no date could be worked out from the contract).`,
     '',
     'Please confirm receipt of this notice in writing.',
@@ -151,9 +166,9 @@ export function zip(files) {
   const enc = new TextEncoder(); const parts = [], cen = []; let off = 0;
   for (const [name, data] of files) {
     const n = enc.encode(name), d = typeof data === 'string' ? enc.encode(data) : data, crc = crc32(d);
-    const h = new DataView(new ArrayBuffer(30)); h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint32(14, crc, true); h.setUint32(18, d.length, true); h.setUint32(22, d.length, true); h.setUint16(26, n.length, true);
+    const h = new DataView(new ArrayBuffer(30)); h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint16(12, 0x21, true); h.setUint32(14, crc, true); h.setUint32(18, d.length, true); h.setUint32(22, d.length, true); h.setUint16(26, n.length, true);
     parts.push(new Uint8Array(h.buffer), n, d);
-    const cd = new DataView(new ArrayBuffer(46)); cd.setUint32(0, 0x02014b50, true); cd.setUint16(4, 20, true); cd.setUint16(6, 20, true); cd.setUint16(8, 0x0800, true); cd.setUint32(16, crc, true); cd.setUint32(20, d.length, true); cd.setUint32(24, d.length, true); cd.setUint16(28, n.length, true); cd.setUint32(42, off, true);
+    const cd = new DataView(new ArrayBuffer(46)); cd.setUint32(0, 0x02014b50, true); cd.setUint16(4, 20, true); cd.setUint16(6, 20, true); cd.setUint16(8, 0x0800, true); cd.setUint16(14, 0x21, true); cd.setUint32(16, crc, true); cd.setUint32(20, d.length, true); cd.setUint32(24, d.length, true); cd.setUint16(28, n.length, true); cd.setUint32(42, off, true);
     cen.push(new Uint8Array(cd.buffer), n); off += 30 + n.length + d.length;
   }
   const size = cen.reduce((a, b) => a + b.length, 0); const e = new DataView(new ArrayBuffer(22)); e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, size, true); e.setUint32(16, off, true);
@@ -170,10 +185,21 @@ export function docx(text) {
 }
 
 // ---------- F4: portfolio summary ----------
-export function portfolio(rows) {
-  const live = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days != null && r.days >= 0);
-  return { total: rows.length, d30: live.filter(r => r.days <= 30).length, d90: live.filter(r => r.days <= 90).length, d365: live.filter(r => r.days <= 365).length, passed: rows.filter(r => r.missed || (r.days != null && r.days < 0 && r.section !== 'lapsed')).length, review: rows.filter(r => r.needsReview).length, expired: rows.filter(r => r.section === 'lapsed').length };
+// One bucket per contract, so the strip adds up to the total and matches each row's label.
+export const BUCKETS = [['passed', 'Passed'], ['d30', 'Due in 30 days'], ['d90', 'Due in 31 to 90 days'], ['d365', 'Due in 91 to 365 days'], ['later', 'Later'], ['review', 'Needs review'], ['cant', 'Can’t tell'], ['expired', 'Expired']];
+export function bucket(r) {
+  if (r.section === 'lapsed') return 'expired';
+  if (!r.actBy) return 'cant';
+  if (r.missed || (r.days != null && r.days < 0)) return 'passed';
+  if (r.needsReview) return 'review';
+  return r.days <= 30 ? 'd30' : r.days <= 90 ? 'd90' : r.days <= 365 ? 'd365' : 'later';
 }
+export const bucketLabel = k => BUCKETS.find(b => b[0] === k)[1];
+export function portfolio(rows) {
+  const o = Object.fromEntries(BUCKETS.map(([k]) => [k, 0])); for (const r of rows) o[bucket(r)]++; o.total = rows.length; return o;
+}
+// Strip HTML; Expired only when there is one. Zero counts are never drawn in the highlight colour.
+export const stripHtml = pf => BUCKETS.filter(([k]) => k !== 'expired' || pf.expired).map(([k, l], i) => `<div class="pf ${k}${pf[k] ? '' : ' zero'}" style="--i:${i}"><span class="lab">${l}</span><span class="sv">${pf[k]}</span></div>`).join('');
 
 // ---------- F5: audit CSV, one row per contract ----------
 const cell = v => { const s = String(v ?? ''); return /[",\r\n]/.test(s) || /^[=+\-@\t\r]/.test(s) ? '"' + (/^[=+\-@\t\r]/.test(s) ? "'" : '') + s.replace(/"/g, '""') + '"' : s; };

@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
 import { extract, toICS, buildQueue } from '../public/extract.js';
-import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, portfolio, auditCSV, statusOf, parseSaved, FILL } from '../public/features.js';
+import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, portfolio, BUCKETS, bucket, stripHtml, exitNote, cleanQuote, auditCSV, statusOf, parseSaved, FILL } from '../public/features.js';
 const load = f => JSON.parse(fs.readFileSync(new URL('../public/data/' + f + '.json', import.meta.url))).map(c => ({ ...c, x: extract(c.lines) }));
 const E = Object.fromEntries(load('edgar').map(c => [c.id, c])), H = Object.fromEntries(load('holdout').map(c => [c.id, c]));
 const AS = '2026-10-19';
@@ -98,15 +98,16 @@ test('F2: .docx is a valid zip that Word can open (unzip and XML check)', () => 
 });
 
 // F4
-test('F4: portfolio counts on the 10 SEC contracts', () => {
+test('F4: portfolio counts are exclusive and add up to the total', () => {
   const rows = buildQueue(Object.values(E), AS); const p = portfolio(rows);
-  const live = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days != null && r.days >= 0);
-  assert.equal(p.total, 10);
-  assert.equal(p.d30, live.filter(r => r.days <= 30).length); assert.ok(p.d30 <= p.d90 && p.d90 <= p.d365);
-  assert.equal(p.review, rows.filter(r => r.needsReview).length);
+  assert.deepEqual(p, { passed: 1, d30: 0, d90: 1, d365: 2, later: 2, review: 1, cant: 2, expired: 1, total: 10 });
+  assert.equal(BUCKETS.reduce((a, [k]) => a + p[k], 0), 10);
+  for (const r of rows) assert.ok(BUCKETS.some(([k]) => k === bucket(r)));
   const demo = portfolio(buildQueue([E.c5, E.c2, E.c3], AS));
-  assert.deepEqual([demo.d30, demo.d90, demo.d365, demo.passed], [0, 1, 1, 1]); // Star Brands in 58 days; Dragonfly passed; StableX 2030
-  assert.deepEqual(portfolio([]), { total: 0, d30: 0, d90: 0, d365: 0, passed: 0, review: 0, expired: 0 });
+  assert.deepEqual([demo.d30, demo.d90, demo.d365, demo.passed], [0, 1, 0, 1]); // Star Brands in 58 days; Dragonfly passed; StableX 2030
+  assert.equal(demo.later, 1);
+  assert.equal(portfolio([]).total, 0);
+  const h = stripHtml(portfolio([])); assert.equal((h.match(/ zero"/g) || []).length, 7); assert.ok(!/Expired/.test(h));
 });
 
 // F5
@@ -128,4 +129,28 @@ test('F6: saved data is parsed safely', () => {
   const ok = { name: 'A', lines: ['x', { text: 'y' }] };
   assert.deepEqual(parseSaved(JSON.stringify([ok, null, { name: 2 }, { name: 'B', lines: [5] }])), { docs: [ok], error: 'partial' });
   assert.deepEqual(parseSaved(JSON.stringify([ok])), { docs: [ok], error: '' });
+});
+
+// Review fixes
+test('early exit (TfC) after the initial term: Star Brands, in headline text, letter, calendar link and .ics', () => {
+  const ex = exitNote(E.c5);
+  assert.equal(ex.text, "After the first twenty four (24) consecutive months, either party can also end it on 30 days' notice for any reason (lines 100–101).");
+  assert.ok(!/\sb\.$/.test(ex.quote)); assert.equal(cleanQuote('notice to the other party. b.'), 'notice to the other party.');
+  assert.equal(exitNote(E.c2), null);
+  const r = buildQueue([E.c5], AS)[0];
+  assert.ok(letter(E.c5, r, AS).includes(ex.text));
+  assert.ok(decodeURIComponent(gcalLink({ name: 'x', actBy: r.actBy, asOf: AS, note: ex.text })).includes('either party can also end it'));
+  const ics = withAlarms(toICS([E.c5], AS, '20261019T000000Z'), { [E.c5.id]: ex.text });
+  const un = ics.replace(/\r\n[ \t]/g, ''); assert.match(un, /either party can also end it on 30 days' notice/);
+});
+test('.ics from withAlarms: every line at most 75 octets, alarms included, no zero-width characters', () => {
+  const c = { ...E.c5, name: 'Star\u200b Brands ' + 'é'.repeat(80) };
+  const ics = withAlarms(toICS([c], AS, '20261019T000000Z'));
+  for (const l of ics.split('\r\n')) assert.ok(new TextEncoder().encode(l).length <= 75, l);
+  assert.ok(!/[\u200b\u2060\ufeff]/.test(ics)); assert.equal((ics.match(/BEGIN:VALARM/g) || []).length, 3);
+  const un = ics.replace(/\r\n[ \t]/g, ''); assert.match(un, /DESCRIPTION:30 days to the send-notice deadline: Star Brands é+/);
+});
+test('letter: date line says it is the send date and gives today; docx timestamps are valid', () => {
+  const r = buildQueue([E.c5], AS)[0]; assert.match(letter(E.c5, r, AS), /^Date: \[NOT FOUND, FILL IN\] \(the day you send it; today is 19 October 2026\)$/m);
+  const z = docx('a\nb'); const v = new DataView(z.buffer); assert.equal(v.getUint16(12, true), 0x21);
 });
