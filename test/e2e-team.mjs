@@ -55,6 +55,28 @@ for (const w of [1440, 375]) {
     await p.evaluate(() => { document.querySelector('#teamBox').open = true; document.querySelector('#tSave').click(); });
     ok(await p.evaluate(() => localStorage.getItem('cc-team') === null && localStorage.getItem('cc-team-ok') === null), `${w}: unticking Save deletes the setup`);
     await p.ctx.close(); }
+  // 2. per-contract context: owner, plan and note; the plan changes the action; exports carry it
+  { const p = await fresh('/?asof=2026-10-19', w); await add3(p);
+    const acts = () => p.evaluate(() => [...document.querySelectorAll('#answer .acts > *')].map(e => e.id + ':' + e.className.split(' ')[0]));
+    ok((await acts())[0] === 'answerMore:btn-secondary' && (await acts()).includes('answerLetter:btn-secondary'), `${w}: no plan: the usual actions`);
+    await p.evaluate(() => { document.querySelector('#ctxBox').open = true; });
+    await type(p, '#cOwner', 'Ana Ruiz'); await p.evaluate(() => document.querySelector('#cOwner').dispatchEvent(new Event('change')));
+    await type(p, '#cNote', '=HYPERLINK("http://x")'); await p.evaluate(() => document.querySelector('#cNote').dispatchEvent(new Event('change')));
+    await type(p, '#cPlan', 'cancel');
+    ok((await acts())[0] === 'answerLetter:btn-primary', `${w}: plan cancel puts Draft notice first`);
+    await type(p, '#cPlan', 'renegotiate'); ok((await acts())[0] === 'answerLetter:btn-primary', `${w}: plan renegotiate puts Draft notice first`);
+    await shot(p, 'plan', w);
+    await type(p, '#cPlan', 'renew');
+    ok(!(await acts()).some(a => a.startsWith('answerLetter')) && /Plan: renew\. No notice to send/.test(await p.$eval('#planLine', e => e.textContent)), `${w}: plan renew shows a plain reminder and no letter button`);
+    ok(await p.evaluate(() => document.querySelector('#cOwner').value === 'Ana Ruiz' && document.querySelector('#cPlan').value === 'renew'), `${w}: context stays on the card after the re-render`);
+    await p.evaluate(() => document.querySelector('#exCsv').click()); const csv = (await dl(p)).split('\r\n');
+    ok(/,owner,plan,note$/.test(csv[0]) && csv.some(l => /,Ana Ruiz,renew,"'=HYPERLINK\(""http:\/\/x""\)"$/.test(l)), `${w}: CSV has owner, plan and note, with the formula guard on the note`);
+    await p.evaluate(() => document.querySelector('#exAudit').click()); const au = await dl(p);
+    ok(/Ana Ruiz,renew,"'=HYPERLINK/.test(au), `${w}: audit CSV carries the context`);
+    await p.evaluate(() => document.querySelector('#exPack').click()); ok(/Owner: Ana Ruiz · Plan: renew · Note: =HYPERLINK/.test(await dl(p)), `${w}: audit pack carries the context`);
+    await p.evaluate(() => document.querySelector('#exIcs').click()); ok(/Owner: Ana Ruiz\. Plan: renew\. Note: =HYPERLINK/.test((await dl(p)).replace(/\r\n /g, '')), `${w}: .ics description carries the context`);
+    ok(await p.evaluate(() => localStorage.getItem('cc-team') === null), `${w}: context is not stored without consent`);
+    await p.ctx.close(); }
 }
 ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
 console.log(`\n${pass} passed, ${fail} failed`); await browser.close(); process.exit(fail ? 1 : 0);

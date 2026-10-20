@@ -36,3 +36,32 @@ test('team: .ics uses warning days, calendar name and timezone', () => {
   assert.match(ics, /X-WR-CALNAME:GI renewals\r\nX-WR-TIMEZONE:America\/Chicago\r\n/);
   assert.deepEqual([...withAlarms(toICS([E.c5], AS), {}, { days: alarmDays(30) }).matchAll(/TRIGGER:(\S+)/g)].map(m => m[1]), [...withAlarms(toICS([E.c5], AS)).matchAll(/TRIGGER:(\S+)/g)].map(m => m[1])); // default setup = old reminders
 });
+import { ctxOf, setCtx, ctxLine, planAction } from '../public/team.js';
+import { toCSV, toPacket } from '../public/extract.js';
+import { auditCSV } from '../public/features.js';
+import { weekHtml, rowsFor } from '../public/portfolio.js';
+test('context: owner, plan and note are kept per contract and cleaned', () => {
+  const t = normTeam({}); setCtx(t, E.c5, { owner: 'Ana', plan: 'cancel', note: 'Switching vendor' });
+  assert.deepEqual(ctxOf(t, E.c5), { note: 'Switching vendor', owner: 'Ana', plan: 'cancel' }); assert.equal(ctxLine(ctxOf(t, E.c5)), 'Owner: Ana. Plan: cancel. Note: Switching vendor');
+  setCtx(t, E.c5, { owner: '', plan: '', note: '' }); assert.deepEqual(t.ctx, {});
+  assert.equal(setCtx(t, E.c5, { plan: 'sell' }), null);
+});
+test('context: the plan changes the action', () => {
+  assert.deepEqual([planAction('cancel').letterFirst, planAction('renegotiate').letterFirst, planAction('renew').letter, planAction('').letter, planAction('').letterFirst], [true, true, false, true, false]);
+  assert.match(planAction('renew').text, /No notice to send/);
+  const t = normTeam({}); const A2 = '2026-12-12'; const rows = rowsFor([E.c5], A2);
+  const plan = p => r => (setCtx(t, r.c, { plan: p }), ctxOf(t, r.c).plan);
+  const first = h => (h.match(/<span class="wk-b">(<[ab][^>]*>[^<]*)/) || [])[1] || '';
+  assert.match(first(weekHtml(rows, A2, () => 'https://calendar.google.com/x', plan('cancel'))), /btn-primary[^>]*data-letter[^>]*>Draft notice/);
+  const rn = weekHtml(rows, A2, () => 'https://calendar.google.com/x', plan('renew')); assert.ok(!/data-letter/.test(rn) && /Add reminder/.test(rn) && /Plan: renew/.test(rn));
+  assert.match(first(weekHtml(rows, A2, () => 'https://calendar.google.com/x', () => '')), /Add to calendar/);
+});
+test('context: CSV, audit pack and .ics carry owner, plan and note; notes keep the formula guard', () => {
+  const cx = () => ({ owner: 'Ana', plan: 'renegotiate', note: '=HYPERLINK("http://x")' });
+  const a = toCSV([E.c5], AS, cx).split('\r\n'); assert.match(a[0], /,owner,plan,note$/); assert.match(a[1], /,Ana,renegotiate,"'=HYPERLINK\(""http:\/\/x""\)"$/);
+  const b = auditCSV([E.c5], AS, cx).split('\r\n'); assert.match(b[0], /,owner,plan,note$/); assert.match(b[1], /,Ana,renegotiate,"'=HYPERLINK/);
+  assert.match(toPacket([E.c5], AS, cx), /<p class="ctx">Owner: Ana · Plan: renegotiate · Note: =HYPERLINK\(&quot;http:\/\/x&quot;\)<\/p>/);
+  assert.match(toCSV([E.c5], AS).split('\r\n')[1], /,,,$/);
+  const ics = withAlarms(toICS([E.c5], AS), { [E.c5.id]: ctxLine({ owner: 'Ana', plan: 'cancel', note: 'Switch' }) }).replace(/\r\n /g, '');
+  assert.match(ics, /DESCRIPTION:[^\r\n]*Owner: Ana\. Plan: cancel\. Note: Switch/);
+});

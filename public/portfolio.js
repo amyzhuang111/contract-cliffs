@@ -1,3 +1,4 @@
+import { planAction } from './team.js';
 // Portfolio view (button on every URL): 25 real public contracts from test/fixtures, bundled in /data/portfolio.json.
 // Every row's date is the tool's own output; the bundle only holds fixtures whose hand-checked answer matches it.
 import { extract, buildQueue, daysBetween, dayWord, ymd, addDays } from './extract.js';
@@ -83,10 +84,10 @@ export function actionOf(r) {
   const verb = w ? `${w.label} ${fmtW(w.day)}` : `Send non-renewal notice by ${fmtW(day)}`;
   return { day, text: (r.missed ? `Missed ${fmt(r.missed.actBy)}. ` : '') + verb, left: r.days === 0 ? 'today' : `${dayWord(daysBetween(r.asOf, day))} left`, review: !!r.needsReview };
 }
-export function weekHtml(rows, asOf, linkFor = () => '') {
+export function weekHtml(rows, asOf, linkFor = () => '', planOf = () => '') {
   const t = thisWeek(rows, asOf); const span = `${+asOf.slice(8)} ${MON[+asOf.slice(5, 7) - 1]} to ${fmt(t.end)}`;
-  const item = r => { const a = actionOf(r); const g = linkFor(r);
-    return `<li class="wk-i" data-id="${esc(r.id)}"><span class="wk-n">${esc(r.c.name)}</span><span class="wk-a">${esc(a.text)} · ${esc(a.left)}${a.review ? ' · <span class="rvnote">Needs review</span>' : ''}</span><span class="wk-b">${g ? `<a class="btn-secondary sm" href="${esc(g)}" target="_blank" rel="noopener">Add to calendar</a>` : ''}<button class="btn-secondary sm" type="button" data-letter="${esc(r.id)}">Draft notice</button></span></li>`; };
+  const item = r => { const a = actionOf(r); const g = linkFor(r); const pa = planAction(planOf(r)); const lb = `<button class="${pa.letterFirst ? 'btn-primary' : 'btn-secondary'} sm" type="button" data-letter="${esc(r.id)}">Draft notice</button>`;
+    return `<li class="wk-i" data-id="${esc(r.id)}"><span class="wk-n">${esc(r.c.name)}</span><span class="wk-a">${esc(a.text)} · ${esc(a.left)}${a.review ? ' · <span class="rvnote">Needs review</span>' : ''}</span><span class="wk-b">${pa.letterFirst ? lb : ''}${g ? `<a class="btn-secondary sm" href="${esc(g)}" target="_blank" rel="noopener">${pa.letter ? 'Add to calendar' : 'Add reminder'}</a>` : ''}${pa.letter && !pa.letterFirst ? lb : ''}</span>${pa.text ? `<span class="wk-p">${esc(pa.text)}</span>` : ''}</li>`; };
   const also = `<p class="wk-also">${esc(alsoLine(rows, asOf))}</p>`;
   if (t.due.length) return `<p class="wk-h">This week (${esc(span)}): ${t.due.length === 1 ? '1 contract needs' : `${t.due.length} contracts need`} notice sent</p><ul class="wk-l">${t.due.map(item).join('')}</ul>${also}`;
   return `<p class="wk-h">Nothing is due this week (${esc(span)}).${t.next ? ' The next one:' : ''}</p>${t.next ? `<ul class="wk-l">${item(t.next)}</ul>` : ''}`;

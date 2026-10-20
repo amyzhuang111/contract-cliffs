@@ -775,3 +775,13 @@ body.has-any .weekstrip{display:none}
 .tpins input{width:18px;height:18px;margin:0}
 .rname .pin,.wk-n .pin{font:400 12px/16px var(--mono);text-transform:uppercase;color:var(--body);border:1px solid var(--rule);padding:0 6px;margin-right:6px}
 @media (max-width:480px){.tform,.tform .tset{grid-template-columns:1fr}}
+/* Per-contract context */
+.ctx{margin:16px 0 0}.ctx > summary{list-style:none;display:inline-flex;align-items:center;min-height:44px;cursor:pointer}.ctx > summary::-webkit-details-marker{display:none}
+.ctxf{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px;margin-top:8px}.ctxf .ctxn{grid-column:1/-1}
+.ctxf .tf{display:flex;flex-direction:column;gap:6px;font:400 13px/18px var(--mono);text-transform:uppercase;color:var(--body)}
+.ctxf input,.ctxf select,.ctxf textarea{min-height:44px;padding:8px 12px;background:transparent;color:#fff;border:1px solid var(--rule);border-radius:0;font:15px/22px var(--sans);text-transform:none}
+.ctxf select option{color:#000}
+.planline{margin:12px 0 0;color:var(--ink);font:15px/22px var(--sans)}
+.rctx{display:block;color:var(--mute);font:400 13px/18px var(--mono);text-transform:uppercase}
+.wk-p{display:block;color:var(--body);font:14px/20px var(--sans)}
+@media (max-width:480px){.ctxf{grid-template-columns:1fr}}

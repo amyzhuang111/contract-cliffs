@@ -112,7 +112,7 @@ test('F4: portfolio counts are exclusive and add up to the total', () => {
 // F5
 test('F5: audit CSV has one row per contract with deadline, quote, confidence and status', () => {
   const csv = auditCSV([E.c5, E.c3, E.c2], AS).trim().split('\r\n');
-  assert.equal(csv[0], 'contract,counterparty,deadline,send_by_business_day,days_from_as_of,as_of,status,needs_review,review_reason,confidence,evidence_location,evidence_quote,source');
+  assert.equal(csv[0], 'contract,counterparty,deadline,send_by_business_day,days_from_as_of,as_of,status,needs_review,review_reason,confidence,evidence_location,evidence_quote,source,owner,plan,note');
   assert.equal(csv.length, 4);
   const star = csv.find(l => l.startsWith('Star Brands')); assert.match(star, /,2026-12-16,2026-12-16,58,2026-10-19,Due within 90 days,no,,/); assert.match(star, /lines 24–29,"If not otherwise terminated/); assert.match(star, /sec\.gov/);
   assert.match(csv.find(l => l.startsWith('Dragonfly')), /,2026-09-19,.*Missed: send-notice deadline passed/);

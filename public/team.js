@@ -38,3 +38,9 @@ export function signerLines(team) {
   const who = [s.name || '[YOUR NAME, FILL IN]', s.title || '[YOUR TITLE, FILL IN]', co || '[YOUR COMPANY, FILL IN]'].join(', ');
   return { from: `${who}, [YOUR ADDRESS, FILL IN]${s.email ? ` (${s.email})` : ''}`, sign: who + (s.email ? `\n${s.email}` : ''), any: !!(s.name || s.title || co) };
 }
+// Per-contract context: owner, plan and a note.
+export const ctxOf = (team, c) => team?.ctx?.[ckey(c)] || { note: '', owner: '', plan: '' };
+export function setCtx(team, c, patch) { const k = ckey(c); const v = normTeam({ ctx: { [k]: { ...ctxOf(team, c), ...patch } } }).ctx[k]; if (v) team.ctx[k] = v; else delete team.ctx[k]; return v || null; }
+export const ctxLine = x => [x?.owner && `Owner: ${x.owner}.`, x?.plan && `Plan: ${x.plan}.`, x?.note && `Note: ${x.note}`].filter(Boolean).join(' ');
+// The plan changes the action: cancel or renegotiate puts the notice letter first; renew is a plain reminder.
+export const planAction = plan => plan === 'renew' ? { letter: false, letterFirst: false, text: 'Plan: renew. No notice to send; this is a reminder of the date.' } : plan === 'cancel' || plan === 'renegotiate' ? { letter: true, letterFirst: true, text: `Plan: ${plan}. Draft the notice first.` } : { letter: true, letterFirst: false, text: '' };

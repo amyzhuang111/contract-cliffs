@@ -242,12 +242,12 @@ export function stripHtml(pf) {
 // Same guard as the main export: formulas (=, +, -, @, tab, CR) get a leading ' ; plain numbers such as -2 stay numbers.
 const cell = csvCell;
 export function statusOf(r) { return r.missed ? 'Missed: send-notice deadline passed, not yet renewed' : r.section === 'lapsed' ? 'Expired' : r.days != null && r.days < 0 ? 'Passed' : !r.actBy ? 'Needs review: no date found' : r.days <= 30 ? 'Due within 30 days' : r.days <= 90 ? 'Due within 90 days' : r.days <= 365 ? 'Due within 365 days' : 'Later than 365 days'; }
-export function auditCSV(contracts, asOf) {
+export function auditCSV(contracts, asOf, ctxOf = () => null) {
   const rows = buildQueue(contracts, asOf); const byId = new Map(contracts.map(c => [c.id, c]));
-  const head = ['contract', 'counterparty', 'deadline', 'send_by_business_day', 'days_from_as_of', 'as_of', 'status', 'needs_review', 'review_reason', 'confidence', 'evidence_location', 'evidence_quote', 'source'];
+  const head = ['contract', 'counterparty', 'deadline', 'send_by_business_day', 'days_from_as_of', 'as_of', 'status', 'needs_review', 'review_reason', 'confidence', 'evidence_location', 'evidence_quote', 'source', 'owner', 'plan', 'note'];
   const out = [head.join(',')];
   for (const r of rows) { const c = byId.get(r.id); const d = r.missed ? r.missed.actBy : r.actBy;
-    out.push([c.name, c.counterparty || '', d || '', d ? sendDay(d, asOf) : '', d ? daysBetween(asOf, d) : '', asOf, statusOf(r), r.needsReview ? 'yes' : 'no', r.needsReview ? r.tag || '' : '', sure(r.confidence), r.item?.source?.location || '', norm(r.item?.source?.quote || ''), c.url || c.fileName || ''].map(cell).join(',')); }
+    out.push([c.name, c.counterparty || '', d || '', d ? sendDay(d, asOf) : '', d ? daysBetween(asOf, d) : '', asOf, statusOf(r), r.needsReview ? 'yes' : 'no', r.needsReview ? r.tag || '' : '', sure(r.confidence), r.item?.source?.location || '', norm(r.item?.source?.quote || ''), c.url || c.fileName || '', ...(x => [x?.owner || '', x?.plan || '', x?.note || ''])(ctxOf(c))].map(cell).join(',')); }
   return out.join('\r\n') + '\r\n';
 }
 

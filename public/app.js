@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays } from '/team.js';
+import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, ctxOf, setCtx, ctxLine, planAction } from '/team.js';
 import { windowOf, windowNote, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -19,6 +19,8 @@ const teamSaved = () => { try { return localStorage.getItem(TEAM_OK) === '1'; } 
 const saveTeam = () => { if (teamSaved()) try { localStorage.setItem(TEAM_KEY, JSON.stringify(team)); } catch {} };
 try { if (teamSaved()) { const { team: t } = parseTeam(localStorage.getItem(TEAM_KEY)); if (t) team = t; else { localStorage.removeItem(TEAM_KEY); localStorage.removeItem(TEAM_OK); } } else localStorage.removeItem(TEAM_KEY); } catch {}
 const icsOpts = () => ({ days: alarmDays(team.warnDays), calName: team.calName, tz: team.tz });
+const cxOf = c => { const x = ctxOf(team, c); return x.owner || x.plan || x.note ? x : null; };
+const icsNotes = cs => Object.fromEntries(cs.map(c => [c.id, [exitNote(c)?.text, ctxLine(cxOf(c))].filter(Boolean).join(' ')]).filter(e => e[1]));
 const rowKey = r => ckey(r.c || current().find(c => c.id === r.id) || r);
 document.getElementById('rule').textContent = PRIORITY_RULE;
 // How it works: open on desktop, collapsed on phones so the list comes first
@@ -128,11 +130,11 @@ $('#setHoldout').onclick = async () => { if (!holdout.length) { $('#status').tex
 function download(name, text, type) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
 const tag = () => (set === 'edgar' ? 'sec-edgar' : 'my-docs') + '-asof-' + asOf;
 const guard = f => () => { if (!current().length) { $('#status').textContent = 'Nothing to export yet: add a contract first.'; return; } f(); };
-$('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf), 'text/csv'));
-$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), Object.fromEntries(current().map(c => [c.id, exitNote(c)?.text]).filter(e => e[1])), icsOpts()), 'text/calendar'));
+$('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf, cxOf), 'text/csv'));
+$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(current()), icsOpts()), 'text/calendar'));
 $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
-$('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
-$('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf), 'text/html'));
+$('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf, cxOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
+$('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf, cxOf), 'text/html'));
 
 let n = 0;
 const MAX_CHARS = 1500000;
@@ -187,7 +189,10 @@ const sendBy = r => { const d = r.safe?.date || r.actBy; return `${weekday(d).sl
 const days = (n, u) => `${n} ${u}${+n === 1 ? '' : 's'}`;
 const renewsFor = c => { const p = c.x.renewal?.period; return p ? `${p.n} more ${p.unit}${p.n > 1 ? 's' : ''}` : ''; };
 const gcal = (c, r) => { if (!r.actBy || r.section === 'lapsed' || (r.days != null && r.days < 0) || !/send-notice/i.test(r.label || '')) return ''; const u = gcalLink({ name: c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: c.url, note: exitNote(c)?.text, within: windowOf(r), windowNote: windowNote(r) }); return u ? `<a class="gcal" href="${esc(u)}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ''; };
+const PLAN_OPTS = [['', 'Not decided'], ['renew', 'Renew'], ['cancel', 'Cancel'], ['renegotiate', 'Renegotiate']];
+const ctxHtml = c => { const x = ctxOf(team, c); return `<details class="ctx" id="ctxBox"${x.owner || x.plan || x.note ? ' open' : ''}><summary class="tl">Owner, plan and note</summary><div class="ctxf"><label class="tf">Owner<input id="cOwner" maxlength="120" value="${esc(x.owner)}"></label><label class="tf">Plan<select id="cPlan">${PLAN_OPTS.map(([v, l]) => `<option value="${v}"${x.plan === v ? ' selected' : ''}>${l}</option>`).join('')}</select></label><label class="tf ctxn">Note<textarea id="cNote" maxlength="2000" rows="2">${esc(x.note)}</textarea></label></div></details>`; };
 function card(c, r) {
+  const pa = planAction(ctxOf(team, c).plan);
   const more = renewsFor(c); const ex = exitNote(c); const cons = (more ? `or it renews for ${more}.` : 'or it renews automatically.') + (ex ? ' ' + ex.text : '');
   const src = r.item?.source; const [cw, seg] = confWord(r.confidence);
   let kicker, hero, sub = '', cls = '';
@@ -224,7 +229,8 @@ function card(c, r) {
       <p class="conf"><span class="lab">How sure:</span> ${confTag(r)[1] === 'rvtag' ? `<span class="cw">${esc(cw)}</span>` : `<span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span>`} <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
       ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
-      <div class="acts"><button id="answerMore" class="btn-secondary sm">See every date and clause</button><button id="answerLetter" class="btn-secondary sm">Draft notice letter</button>${gcal(c, r)}<button id="answerPin" class="tl" type="button" aria-pressed="${isPinned(team, c)}">${isPinned(team, c) ? 'Pinned' : 'Pin this contract'}</button></div>
+      ${ctxHtml(c)}${pa.text ? `<p class="planline" id="planLine">${esc(pa.text)}</p>` : ''}
+      <div class="acts">${pa.letterFirst ? '<button id="answerLetter" class="btn-primary sm">Draft notice letter</button>' : ''}<button id="answerMore" class="btn-secondary sm">See every date and clause</button>${pa.letter && !pa.letterFirst ? '<button id="answerLetter" class="btn-secondary sm">Draft notice letter</button>' : ''}${gcal(c, r)}<button id="answerPin" class="tl" type="button" aria-pressed="${isPinned(team, c)}">${isPinned(team, c) ? 'Pinned' : 'Pin this contract'}</button></div>
     </div></div></article>`;
 }
 function row(c, r) {
@@ -234,7 +240,7 @@ function row(c, r) {
   return `<li class="lrow${newIds.has(c.id) ? ' new' : ''}" data-id="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(c.name)}: show the answer">
     <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? (windowOf(r) ? windowOf(r).label : 'Send notice by') : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${windowNote(r) && !passed ? `<span class="rsafe">${esc(windowNote(r))}</span>` : r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
-    <div class="ln"><span class="rname">${isPinned(team, c) ? '<span class="pin">Pinned</span> ' : ''}${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span></div>
+    <div class="ln"><span class="rname">${isPinned(team, c) ? '<span class="pin">Pinned</span> ' : ''}${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span>${(x => x ? `<span class="rctx">${esc([x.owner && 'Owner: ' + x.owner, x.plan && 'Plan: ' + x.plan].filter(Boolean).join(' · '))}</span>` : '')(cxOf(c))}</div>
     <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">Filing ↗</a>` : ''}</span>${gcal(c, r)}</div>
   </li>`;
 }
@@ -245,7 +251,10 @@ function live(cs) {
   const top = rows.find(r => r.id === expanded) || rows.find(r => r.id === cs[0].id) || rows[0];
   $('#answer').innerHTML = card(byId.get(top.id), top);
   $('#answerPin').onclick = () => { togglePin(team, byId.get(top.id)); teamChanged(); };
-  $('#answerMore').onclick = () => openDrawer(top.id); $('#answerLetter').onclick = () => openLetter(top.id);
+  $('#answerMore').onclick = () => openDrawer(top.id); if ($('#answerLetter')) $('#answerLetter').onclick = () => openLetter(top.id);
+  { const tc = byId.get(top.id); const put = () => setCtx(team, tc, { owner: $('#cOwner').value, note: $('#cNote').value, plan: $('#cPlan').value });
+    $('#cOwner').oninput = $('#cNote').oninput = () => { put(); saveTeam(); }; $('#cOwner').onchange = $('#cNote').onchange = () => { put(); saveTeam(); render(); };
+    $('#cPlan').onchange = () => { put(); saveTeam(); render(); $('#cPlan')?.focus(); }; }
   $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(showQuote(top.item.source.quote)).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
   const rest = rows.filter(r => r !== top); const exp = rest.filter(r => r.section === 'lapsed'), act = rest.filter(r => r.section !== 'lapsed');
   $('#lqh').textContent = (matchMedia('(max-width:480px)').matches ? `Queue · ${cs.length} contracts · 1 open above` : `Queue · ${cs.length} contracts · by send-notice date · 1 open above`);
@@ -362,7 +371,7 @@ let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
   $('#pfCount').textContent = pfRows.length; const wkIds = P.thisWeek(pfRows, asOf).due.map(r => r.id); $('#pfFirst').textContent = P.firstSentence(pfRows, wkIds); $('#pfTop3').innerHTML = P.top3Html(pfRows, wkIds);
-  $('#pfWeek').innerHTML = P.weekHtml(pinFirst(pfRows, team, rowKey), asOf, r => gcalLink({ name: r.c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: r.c.url, note: exitNote(r.c)?.text, within: windowOf(r), windowNote: windowNote(r) }));
+  $('#pfWeek').innerHTML = P.weekHtml(pinFirst(pfRows, team, rowKey), asOf, r => gcalLink({ name: r.c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: r.c.url, note: exitNote(r.c)?.text, within: windowOf(r), windowNote: windowNote(r) }), r => ctxOf(team, r.c).plan);
   document.querySelectorAll('#pfWeek [data-letter]').forEach(b => { b.onclick = () => { const r = pfRows.find(x => x.id === b.dataset.letter); if (r) openLetter(r.id, r.c); }; });
   $('#pfSub').textContent = `Sample data: ${pfRows.length} public SEC contracts standing in for GI's. Supply, manufacturing, licence, services, colocation and network deals make up most of them, with a few executive and consulting agreements; every row opens the SEC filing it came from. Dates are this tool's reading as of ${fmt(asOf)}.`;
   $('#pfStrip').innerHTML = stripHtml(portfolio(pfRows));
@@ -372,8 +381,8 @@ function renderPf() {
 }
 { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
   try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf);
-    $('#pfIcs').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.ics`, withAlarms(toICS(cs, asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), Object.fromEntries(cs.map(c => [c.id, exitNote(c)?.text]).filter(e => e[1])), icsOpts()), 'text/calendar');
-    $('#pfCsv').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.csv`, auditCSV(cs, asOf), 'text/csv'); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+    $('#pfIcs').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.ics`, withAlarms(toICS(cs, asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(cs), icsOpts()), 'text/calendar');
+    $('#pfCsv').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.csv`, auditCSV(cs, asOf, cxOf), 'text/csv'); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
   catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
 // ---------- Set up for your team ----------
 const tf = { company: $('#tCompany'), name: $('#tName'), title: $('#tTitle'), email: $('#tEmail'), warn: $('#tWarn'), cal: $('#tCal'), tz: $('#tTz') };
