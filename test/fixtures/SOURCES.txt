@@ -154,3 +154,13 @@ civeo-gerry-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1590584/000
 caliber-james-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1627282/000162728225000087/a7152025_cwdx8-kxexx101.htm
 thejoint-bowman-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1612630/000162828025030452/employmentagreement-bowm.htm
 trees-hershey-ex10-8.edgar.htm https://www.sec.gov/Archives/edgar/data/1477009/000121390025079941/ea025404501ex10-8_treescorp.htm
+taoweave-manako-license-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/746210/000143774926019366/ex_971834.htm
+stoneridge-mexico-mfg-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1043337/000104333726000002/sri-202622xxexx101mexicoma.htm
+fusemachines-qintess-mlsa-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/2033383/000149315226037251/ex10-2.htm
+cuentas-powerupp-colo-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1424657/000121390026102445/ea030636601ex10-1.htm
+mallinckrodt-par-supply-ex10-4.edgar.htm https://www.sec.gov/Archives/edgar/data/1567892/000110465925109241/tm2530694d1_ex10-4.htm
+usantimony-supply-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/101538/000110465925109570/tm2530543d2_ex10-1.htm
+hallmark-msa-ex10-4.edgar.htm https://www.sec.gov/Archives/edgar/data/1331421/000149315226028933/ex10-4.htm
+arlp-saminco-supply-ex10-5.edgar.htm https://www.sec.gov/Archives/edgar/data/1086600/000110465926092001/arlp-20260630xex10d5.htm
+aspen-clearpoint-supply-ex10-42.edgar.htm https://www.sec.gov/Archives/edgar/data/2124080/000119312526419104/na-ex10_42.htm
+perceptive-neb-supply-ex10-25.edgar.htm https://www.sec.gov/Archives/edgar/data/2017526/000114036126017428/ny20061080x8_ex10-25.htm

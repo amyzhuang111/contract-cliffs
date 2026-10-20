@@ -694,6 +694,22 @@ const EXPECT_SWEEP_AB9 = {
 for (const [f, [act, safe]] of Object.entries(EXPECT_SWEEP_AB9)) test(`sweep ab9a38e ${f} → ${act || 'flagged, no date'}`, () => {
   const { r } = fx(f + '.edgar.htm'); assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); if (!act) assert.equal(r.needsReview, true);
 });
+// Vendor, licence, supply, services and colocation contracts from EDGAR (hand-checked against each filing, as of 19 Oct 2026).
+const EXPECT_VENDOR = {
+  'taoweave-manako-license-ex10-1': ['2027-03-28', '2027-03-26'],   // licence/distribution, Effective Date 28 May 2026, one year → 27 May 2027; ≥60 days (Sun).
+  'stoneridge-mexico-mfg-ex10-1': ['2028-01-29', '2028-01-28'],     // manufacturing, 30 Jan 2026, three years → 29 Jan 2029; ≥12 months (Sat).
+  'fusemachines-qintess-mlsa-ex10-2': ['2029-05-11'],               // licence and services, 10 Aug 2026, three years → 9 Aug 2029; ≥90 days.
+  'cuentas-powerupp-colo-ex10-1': ['2029-05-21'],                   // power and colocation, 20 Aug 2026, 36 months → 19 Aug 2029; ≥90 days.
+  'mallinckrodt-par-supply-ex10-4': ['2029-11-10', '2029-11-09'],   // manufacturing and supply, 10 Nov 2025, "until the date that is five (5) years" → 10 Nov 2030; ≥12 months (Sat).
+  'usantimony-supply-ex10-1': ['2030-10-01'],                       // purchasing and supply, 1 Nov 2025 "through November 30, 2030"; notice "within 60 days prior".
+  'hallmark-msa-ex10-4': ['2030-12-10'],                            // master services, 9 Jun 2026, five years → 8 Jun 2031; ≥180 days.
+  'arlp-saminco-supply-ex10-5': ['2031-05-31', '2031-05-30'],       // supply, distribution and services, 1 Jul 2026, five years → 30 Jun 2031; ≥30 days (Sat).
+  'aspen-clearpoint-supply-ex10-42': ['2027-07-28'],                // master supply, 25 Jan 2022, five years → 24 Jan 2027; ≥180 days: 28 Jul 2026 passed → renews to 24 Jan 2028.
+  'perceptive-neb-supply-ex10-25': ['2028-08-15'],                  // supply, 16 Feb 2022, five years → 15 Feb 2027; ≥6 months: 15 Aug 2026 passed → renews two years to 15 Feb 2029.
+};
+for (const [f, [act, safe]] of Object.entries(EXPECT_VENDOR)) test(`vendor ${f} → ${act}`, () => {
+  const { r } = fx(f + '.edgar.htm'); assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); assert.equal(r.needsReview, false);
+});
 test('sweep ab9a38e missed windows: Strattec and Z Squared', () => {
   assert.deepEqual(fx('strattec-becker-ex10-7.edgar.htm').r.missed, { actBy: '2026-09-11', renews: '2026-11-11' });
   assert.deepEqual(fx('zsquared-mzhci-ex10-4.edgar.htm').r.missed, { actBy: '2026-10-08', renews: '2026-12-08' });

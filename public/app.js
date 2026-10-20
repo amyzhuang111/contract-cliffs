@@ -351,7 +351,7 @@ let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
   $('#pfCount').textContent = pfRows.length; $('#pfFirst').textContent = P.firstSentence(pfRows); $('#pfTop3').innerHTML = P.top3Html(pfRows);
-  $('#pfSub').textContent = `Stand-ins for a company's own agreements: ${pfRows.length} public contracts filed with the SEC (licence, supply, services and network deals, plus some executive and consulting agreements), each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
+  $('#pfSub').textContent = `Stand-ins for a company's own agreements: ${pfRows.length} public contracts filed with the SEC (supply, manufacturing, licence, services, colocation and network deals, plus a few executive and consulting agreements), each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
   $('#pfStrip').innerHTML = stripHtml(portfolio(pfRows));
   $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);
   $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf);

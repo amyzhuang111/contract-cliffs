@@ -34,7 +34,7 @@ export function timelineHtml(rows, asOf, nLabels = 4) {
   const on = dated.filter(r => r.actBy <= end), after = dated.length - on.length, none = rows.filter(r => !r.actBy).length;
   const now = r => ['passed', 'd30'].includes(r.st.bucket);
   const marks = on.map((r, k) => `<a class="mk ${now(r) ? 'now' : 'grey'}${r.st.flags.includes('review') ? ' review' : ''}" href="#pf-${esc(r.id)}" style="left:${P(r.actBy)}%;--i:${k}" title="${esc(r.c.name)}: send notice by ${esc(fmt(r.actBy))}" aria-label="${esc(r.c.name)}: send notice by ${esc(fmt(r.actBy))}, ${esc(r.st.label)}"></a>`).join('');
-  const labels = on.slice(0, nLabels).map((r, k) => { const x = +P(r.actBy); return `<span class="tlab${now(r) ? ' now' : ''}" style="left:${x}%;top:${k * 24}px;--t:${k * 24}px"><span class="tlt"${x > 55 ? ' data-right=""' : ''}>${esc(fmt(r.actBy))} · ${esc(r.c.name)}</span></span>`; }).join('');
+  const labels = on.slice(0, nLabels).map((r, k) => { const x = +P(r.actBy); return `<span class="tlab${now(r) ? ' now' : ''}" style="left:${x}%;top:${k * 24}px;--t:${k * 24}px;--x:${x}"><span class="tlt"${x > 55 ? ' data-right=""' : ''}>${esc(fmt(r.actBy))} · ${esc(r.c.name)}</span></span>`; }).join('');
   return `<div class="tl-track" role="group" aria-label="Send-notice dates in the next 12 months">${labels}<span class="tk today" style="left:0"><span class="lab">Today</span></span>${ticks.join('')}${marks}</div>
   <p class="tl-foot"><span><i class="dot now"></i>Act this month</span><span><i class="dot grey"></i>Later</span><span><i class="dot ring"></i>Needs review</span>${after ? `<span>${after} more after ${esc(fmt(end))}</span>` : ''}${none ? `<span class="cantnote">${none} with no date found</span>` : ''}</p>`;
 }

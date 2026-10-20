@@ -723,3 +723,6 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 /* Labels in the key views at 13px or more (timeline axis, section label, confidence badges) */
 .pfv > .lab,.tl-track .tk .lab,.tl-track .tk.today .lab,.pflist .tag,#answer .tag,#answer .chip,#liveQ .tag,#liveQ .chip,.eyebrow,#answer .lab,#liveQ .lab{font-size:13px;line-height:18px}
 @media (max-width:480px){.tl-track .tk .lab{font-size:13px;left:-18px}}
+
+/* Phone: each timeline label fits the room on its side of the marker */
+@media (max-width:480px){.tl-track .tlt{max-width:min(230px,calc((100vw - 64px) * (100 - var(--x,0)) / 100))}.tl-track .tlt[data-right]{max-width:min(230px,calc((100vw - 64px) * var(--x,0) / 100))}}

@@ -8,7 +8,7 @@ import { portfolio, BUCKETS, FLAGS, stripHtml, summaryOf } from '../public/featu
 const AS = '2026-10-19';
 const P = JSON.parse(fs.readFileSync(new URL('../public/data/portfolio.json', import.meta.url)));
 const ut = fs.readFileSync(new URL('./unit.test.mjs', import.meta.url), 'utf8');
-const EXP = {}; for (const n of ['EXPECT', 'EXPECT2', 'EXPECT3', 'EXPECT_SWEEP_AB9']) { const m = ut.match(new RegExp(`const ${n} = (\\{[\\s\\S]*?\\n\\});`)); Object.assign(EXP, Function('return ' + m[1].replace(/\/\/[^\n]*/g, ''))()); }
+const EXP = {}; for (const n of ['EXPECT', 'EXPECT2', 'EXPECT3', 'EXPECT_SWEEP_AB9', 'EXPECT_VENDOR']) { const m = ut.match(new RegExp(`const ${n} = (\\{[\\s\\S]*?\\n\\});`)); Object.assign(EXP, Function('return ' + m[1].replace(/\/\/[^\n]*/g, ''))()); }
 const SRC = Object.fromEntries(fs.readFileSync(new URL('./fixtures/SOURCES.txt', import.meta.url), 'utf8').split('\n').map(l => l.trim().split(/\s+/)).filter(p => p.length >= 2).map(p => [p[0], p[1]]));
 const cs = P.map(c => ({ ...c, x: extract(c.lines) }));
 
@@ -26,7 +26,7 @@ for (const c of cs) test(`portfolio ${c.file}: output equals expected ${c.expect
 test('portfolio: the mix, one bucket per contract, buckets add up to 25', () => {
   const rows = rowsFor(cs, AS); const n = k => rows.filter(r => r.st.bucket === k).length;
   const pf = portfolio(buildQueue(cs, AS));
-  assert.deepEqual(pf, { passed: 0, d30: 2, d90: 1, d365: 8, later: 10, cant: 4, expired: 0, review: 3, missed: 4, total: 25 });
+  assert.deepEqual(pf, { passed: 0, d30: 2, d90: 0, d365: 5, later: 14, cant: 4, expired: 0, review: 3, missed: 4, total: 25 });
   assert.equal(BUCKETS.reduce((a, [k]) => a + pf[k], 0), pf.total);
   for (const [k] of BUCKETS) assert.equal(n(k), pf[k], k); // row labels match the strip
   assert.equal(rows.filter(r => r.needsReview).length, 7); // 7 of 25 need review
@@ -48,21 +48,21 @@ test('portfolio: status, sorting and timeline', () => {
   const names = sortRows(rows, 'name', -1).map(r => r.c.name.toLowerCase()); assert.deepEqual(names, names.slice().sort().reverse());
   assert.equal(pos(AS, AS), 0); assert.equal(pos(END, AS), 1); assert.equal(pos('2044-07-26', AS), 1);
   const t = timelineHtml(rows, AS); const marks = [...t.matchAll(/class="mk ([\w ]+)"/g)].map(m => m[1]);
-  assert.equal(marks.length, 11); assert.equal(marks.filter(m => /\bnow\b/.test(m)).length, 2); assert.equal(marks.filter(m => /\bgrey\b/.test(m)).length, 9); assert.equal(marks.filter(m => /\breview\b/.test(m)).length, 2); // Glacier and Purple; 12 months: act-now red, the rest grey
+  assert.equal(marks.length, 7); assert.equal(marks.filter(m => /\bnow\b/.test(m)).length, 2); assert.equal(marks.filter(m => /\bgrey\b/.test(m)).length, 5); assert.equal(marks.filter(m => /\breview\b/.test(m)).length, 2); // Glacier and Purple; 12 months: act-now red, the rest grey
   assert.deepEqual([...t.matchAll(/<span class="lab">([A-Z][a-z]{2} \d{4})<\/span>/g)].map(m => m[1]), ['Jan 2027', 'Apr 2027', 'Jul 2027', 'Oct 2027']); assert.match(t, /class="tk today"[^>]*><span class="lab">Today/);
-  assert.deepEqual([...t.matchAll(/<span class="tlt"[^>]*>([^<]+)/g)].map(m => m[1]), ['22 Oct 2026 · Glacier Bancorp / Glacier Bank', '17 Nov 2026 · urban-gro / Richard Akright', '1 Dec 2026 · F. Scott Anthony / Coca-Cola Consolidated', '6 Feb 2027 · Z Squared / Mzhci']);
-  assert.match(t, /10 more after 19 Oct 2027/); assert.match(t, /4 with no date found/);
+  assert.deepEqual([...t.matchAll(/<span class="tlt"[^>]*>([^<]+)/g)].map(m => m[1]), ['22 Oct 2026 · Glacier Bancorp / Glacier Bank', '17 Nov 2026 · urban-gro / Richard Akright', '1 Mar 2027 · Entravision / Univision Network', '28 Mar 2027 · Manako / TaoWeave']);
+  assert.match(t, /14 more after 19 Oct 2027/); assert.match(t, /4 with no date found/);
   const leg = [...t.matchAll(/<i class="dot (\w+)"><\/i>([^<]+)/g)].map(m => m[2]); assert.deepEqual(leg, ['Act this month', 'Later', 'Needs review']); // matches the summary's words
-  const pf = portfolio(buildQueue(cs, AS)); assert.deepEqual(summaryOf(pf), { act: 2, year: 9, human: 7 }); // Glacier and urban-gro count as act-now despite review / missed
-  const sh = stripHtml(pf); assert.deepEqual([...sh.matchAll(/<span class="sv">(\d+)<\/span><span class="bl">([^<]+)/g)].map(m => m[2] + ' ' + m[1]), ['Act this month 2', 'Next 12 months 9', 'Needs a human look 7']);
-  assert.match(sh, /All 25 by next deadline: 2 within 30 days, 1 in 31 to 90 days, 8 in 91 to 365 days, 10 later, 4 with no date found\. 4 contracts had an earlier send-notice date missed\./);
+  const pf = portfolio(buildQueue(cs, AS)); assert.deepEqual(summaryOf(pf), { act: 2, year: 5, human: 7 }); // Glacier and urban-gro count as act-now despite review / missed
+  const sh = stripHtml(pf); assert.deepEqual([...sh.matchAll(/<span class="sv">(\d+)<\/span><span class="bl">([^<]+)/g)].map(m => m[2] + ' ' + m[1]), ['Act this month 2', 'Next 12 months 5', 'Needs a human look 7']);
+  assert.match(sh, /All 25 by next deadline: 2 within 30 days, 0 in 31 to 90 days, 5 in 91 to 365 days, 14 later, 4 with no date found\. 4 contracts had an earlier send-notice date missed\./);
   const l = listHtml(rows, AS); assert.equal((l.match(/<li /g) || []).length, 25); assert.equal((l.match(/href="https:\/\/www\.sec\.gov\//g) || []).length, 25);
   assert.ok(!/—/.test(t + l));
   assert.equal(confWord({ needsReview: false, confidence: 'high' }), 'Clear');
 });
 test('portfolio: default order is by urgency and the opening sentence count matches the data', () => {
   const rows = rowsFor(cs, AS); const u = byUrgency(rows);
-  assert.deepEqual(u.slice(0, 3).map(r => r.c.name), ['Glacier Bancorp / Glacier Bank', 'urban-gro / Richard Akright', 'F. Scott Anthony / Coca-Cola Consolidated']);
+  assert.deepEqual(u.slice(0, 3).map(r => r.c.name), ['Glacier Bancorp / Glacier Bank', 'urban-gro / Richard Akright', 'Entravision / Univision Network']);
   const n = rows.filter(r => ['passed', 'd30'].includes(r.st.bucket)).length; assert.equal(n, 2);
   assert.equal(firstSentence(rows), 'Act on these 2 this month. 1 more is next.');
   assert.ok(u.slice(0, n).every(r => ['passed', 'd30'].includes(r.st.bucket)) && u.slice(-4).every(r => !r.actBy));
