@@ -7,11 +7,15 @@ const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${MON[+m - 1]} ${y}`; };
 export const END = '2030-12-31';
 // status used for colour and sorting; needs review wins (it is the only state drawn in #EBFF0A)
-export function pfStatus(r) { const b = bucket(r), f = flagsOf(r); return { key: b, bucket: b, flags: f, label: rowLabel(r) }; }
+// Plain status words. A missed row reads as one phrase: "Missed 18 Oct, next deadline 17 Nov".
+const short = (d, asOf) => { const [y, m, dd] = d.split('-'); return `${+dd} ${MON[+m - 1]}${asOf && y !== asOf.slice(0, 4) ? ' ' + y : ''}`; };
+export function pfStatus(r, asOf = r.asOf) { const b = bucket(r), f = flagsOf(r);
+  const label = r.missed && r.actBy ? `Missed ${short(r.missed.actBy, asOf)}, next deadline ${short(r.actBy, asOf)}${f.includes('review') ? ' · needs review' : ''}` : rowLabel(r);
+  return { key: b, bucket: b, flags: f, label }; }
 const mkClass = r => ['mk', r.st.bucket, ...r.st.flags].join(' ');
 export const confWord = r => r.needsReview && !r.actBy ? 'Can’t tell' : r.needsReview || r.confidence !== 'high' ? 'Check' : 'Clear';
 export const pos = (d, asOf, end = END) => Math.max(0, Math.min(1, daysBetween(asOf, d) / daysBetween(asOf, end)));
-export function rowsFor(cs, asOf) { const byId = new Map(cs.map(c => [c.id, c])); return buildQueue(cs, asOf).map(r => ({ ...r, c: byId.get(r.id), st: pfStatus(r), conf: confWord(r) })); }
+export function rowsFor(cs, asOf) { const byId = new Map(cs.map(c => [c.id, c])); return buildQueue(cs, asOf).map(r => ({ ...r, c: byId.get(r.id), st: pfStatus(r, asOf), conf: confWord(r) })); }
 const RANK = Object.fromEntries(BUCKETS.map(([k], i) => [k, i]));
 export function sortRows(rows, by, dir = 1) {
   const k = { date: r => r.actBy || '9999', name: r => r.c.name.toLowerCase(), days: r => r.days ?? 1e9, conf: r => ['Clear', 'Check', 'Can’t tell'].indexOf(r.conf), status: r => RANK[r.st.bucket] }[by] || (r => r.actBy || '9999');
@@ -38,10 +42,10 @@ export function listHtml(rows, asOf) {
   return rows.map((r, k) => `<li id="pf-${esc(r.id)}" class="pr ${r.st.bucket} ${r.st.flags.join(' ')}" style="--i:${k}">
     <span class="pn">${esc(r.c.name)}</span>
     <span class="pd">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
-    <span class="pl">${r.days == null ? '' : r.days < 0 ? `${dayWord(-r.days)} ago` : r.days === 0 ? 'today' : `${dayWord(r.days)} left`}${r.missed ? ` <span class="pm">earlier date passed ${esc(fmt(r.missed.actBy))}</span>` : ''}</span>
+    <span class="pl">${r.days == null ? '' : r.days < 0 ? `${dayWord(-r.days)} ago` : r.days === 0 ? 'today' : `${dayWord(r.days)} left`}</span>
     <span class="pc"><span class="tag ${r.conf === 'Clear' ? 'clear' : r.conf === 'Check' ? 'check' : 'cttag'}">${esc(r.conf)}</span></span>
-    <span class="ps lab">${esc(r.st.label)}</span>
-    <a class="pe lab" href="${esc(r.c.url)}" target="_blank" rel="noopener">EDGAR ↗</a></li>`).join('');
+    <span class="ps">${esc(r.st.label)}</span>
+    <a class="pe lab" href="${esc(r.c.url)}" target="_blank" rel="noopener">Filing ↗</a></li>`).join('');
 }
 let cache = null;
 export async function loadPortfolio() { if (!cache) { const d = await (await fetch('/data/portfolio.json')).json(); cache = d.map(c => ({ ...c, x: extract(c.lines) })); } return cache; }

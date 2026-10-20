@@ -681,3 +681,6 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 .tl-foot{margin:40px 0 0;font:400 14px/20px var(--font-sans);text-transform:none}
 @media (max-width:480px){.tl-track .tlt{font-size:13px}.tl-track .tk .lab{font-size:12px;left:-16px}}
 @media (max-width:480px){.tl-track .tlt{max-width:230px;overflow:hidden;text-overflow:ellipsis}}
+
+/* Plain words, no all-caps in the portfolio table and controls */
+.pfv .pfhead,.pfv .pfsort button,.pfv .pfsort .lab,.pflist .tag,.pflist .pe,.pflist .ps{text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
