@@ -194,6 +194,9 @@ const CARDS = [
   ['altech-ex10-6.edgar.htm', /^Send notice by \| 18 Dec 2026 \| Friday \| or it renews for 1 more year\. \| 60 days left$/, 'ALTECH / ALLIANCE'],
   ['industrious-ex10-1.edgar.htm', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. \| 42 days left$/, 'Industrious Nyc 776 6th Avenue / Gelteq'],
   ['industrious-ex10-1.pdftotext.txt', /^Send notice by \(best reading\) \| 30 Nov 2026 \| Monday \| or it renews for 6 more months\. \| 42 days left$/, 'Industrious / Member'],
+  ['newgenivf-agency-ex10-2.generated.docx', /^Send notice by \| No date found \| The start date is set by an event and is not in the document\.$/, 'PredicXion Group / NewGenIVF Group'],
+  ['naturesmiracle-du-ex10-1.pdftotext.txt', /^Send notice by \| 1 Jan 2029 \| Monday \| or it renews for 1 more year\. \| 805 days left$/, 'Nature’s Miracle Holding Incorporated / Jinlong Frank Du'],
+  ['driven-omelia-amend3-ex10-2.edgar.htm', /^Send notice by \| 4 Apr 2027 \| Sunday \| or it renews for 12 more months\. \| 167 days left$/, 'Driven Brands Shared Services / Scott O’Melia'],
   ['natvision-ex10-1.edgar.htm', /^Send notice by \| 1 May 2028 \| Monday \| or it renews for 1 more month\. \| 560 days left \| One-sided extension right: Customer can extend the agreement an additional calendar quarter on its own\./, 'Essilor / National Vision'],
 ];
 for (const [f, re, name] of CARDS) { const p = await fresh('/?asof=2026-10-19'); await (await p.$('#file')).uploadFile(fx(f)); await waitStatus(p, /^Read /);

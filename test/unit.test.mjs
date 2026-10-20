@@ -503,7 +503,7 @@ test('B3 Ethena: date kept; Effective Date now found in the body, so no review n
 test('B3 early-exit tag when a reviewed date coexists with a convenience exit; date never dropped', () => {
   const t = ['This Services Agreement is dated April 14, 2026, by and between Alpha Corp and Beta LLC.', 'The initial term of this Agreement shall be one (1) year commencing on the Effective Date.', 'Upon expiration of the Initial Term, this Agreement shall automatically renew for successive one (1) year periods unless either Party provides written notice of non-renewal at least sixty (60) days prior to the expiration of the then-current Term.', 'Either Party may terminate this Agreement at any time, for any reason or no reason, by providing at least thirty (30) days\u2019 prior written notice to the other Party.'];
   const x = extract(t); const r = buildQueue([{ id: 's', name: 's', lines: t, x }], '2026-10-19')[0];
-  assert.equal(r.actBy, '2027-02-12'); assert.equal(r.needsReview, true); assert.equal(r.tag, 'a separate 30-day early-exit clause exists; confirm which applies');
+  assert.equal(r.actBy, '2027-02-12'); assert.equal(r.needsReview, true); assert.equal(r.tag, 'start date 14 Apr 2026 is taken from the "dated / as of" line, not a defined Effective Date; confirm it'); // 6ca64e8 #5: the check names the assumption the date rests on
 });
 test('B3 no fixture tag says "end of the term minus"', () => {
   for (const f of fs.readdirSync(new URL('./fixtures/', import.meta.url)).filter(f => f.endsWith('.edgar.htm'))) assert.doesNotMatch(fx(f).r.tag || '', /end of the term minus/i, f);
@@ -702,3 +702,39 @@ test('sweep ab9a38e party names', () => {
   assert.equal(partiesFromPreamble(fx('xti-schneiderman-ex10-2.edgar.htm').L), 'Drone Nerds / Jeremy Schneiderman');
   assert.equal(partiesFromPreamble(fx('heartsciences-simpson-ex10-1.edgar.htm').L), 'Heartsciences / Andrew Simpson');
 });
+// ---- reviewer 6ca64e8 items 1–8 (real sec.gov fixtures; hand-worked as of 2026-10-19) ----
+import { definedRoles } from '../public/extract.js';
+test('6ca64e8 #1 NewGenIvf: Effective Date set by SPA closing → no date, never the 28 May 2026 header date', () => {
+  for (const L of [fx('newgenivf-agency-ex10-2.edgar.htm').L, docxLines(new URL('./fixtures/newgenivf-agency-ex10-2.generated.docx', import.meta.url).pathname)]) {
+    const x = extract(L); const r = buildQueue([{ id: 'f', name: 'f', lines: L, x }], AS)[0];
+    assert.equal(x.effective, null); assert.match(x.effectiveEvent.event, /completion of Closing under the SPA/);
+    assert.equal(r.actBy || '', ''); assert.equal(r.needsReview, true); assert.match(r.tag, /start date is set by an event and is not in the document/);
+  }
+  const t = ['This Supply Agreement is dated March 1, 2026.', 'This Agreement becomes effective upon the closing of the Merger (the “Effective Date”).', 'The initial term is two (2) years from the Effective Date and shall automatically renew for successive one (1) year terms unless either party gives notice at least 60 days prior to the end of the then-current term.'];
+  const x = extract(t); assert.equal(buildQueue([{ id: 's', name: 's', lines: t, x }], AS)[0].actBy || '', '');
+});
+test('6ca64e8 #2 Driven/O\'Melia amendment: "is hereby extended until May 4, 2027" → Sun 4 Apr 2027, send by Fri 2 Apr, Clear', () => {
+  for (const g of [fx('driven-omelia-amend3-ex10-2.edgar.htm'), fxt('driven-omelia-amend3-ex10-2.pdftotext.txt')]) { assert.equal(g.r.actBy, '2027-04-04'); assert.equal(g.r.safe.date, '2027-04-02'); assert.equal(g.r.confidence, 'high'); assert.equal(g.r.needsReview, false); }
+});
+test('6ca64e8 #3 FirstEnergy: "commence as of the date first indicated above" = 1 Jan 2024 → 1 Jan 2028, send by Thu 30 Dec 2027, Check naming the start', () => {
+  const { r } = fx('firstenergy-service-ex10-6.edgar.htm'); assert.equal(r.actBy, '2028-01-01'); assert.equal(r.safe.date, '2027-12-30'); assert.equal(r.needsReview, true); assert.match(r.tag, /start date assumed to be the agreement date \(1 Jan 2024\)/);
+});
+test('6ca64e8 #4 Nature\'s Miracle: "the term of the Employment shall … end on January 31, 2029" → 1 Jan 2029, send by Fri 29 Dec 2028, Clear', () => {
+  for (const g of [fx('naturesmiracle-du-ex10-1.edgar.htm'), fxt('naturesmiracle-du-ex10-1.pdftotext.txt')]) { assert.equal(g.r.actBy, '2029-01-01'); assert.equal(g.r.safe.date, '2028-12-29'); assert.equal(g.r.confidence, 'high'); }
+});
+test('6ca64e8 #5 the check names the start-date assumption', () => {
+  assert.match(fx('gamg-taylor-ex10-2.edgar.htm').r.tag, /^start date 3 Mar 2026 is taken from the "dated \/ as of" line/);
+});
+test('6ca64e8 #6 party names', () => {
+  assert.equal(partiesFromPreamble(fx('driven-omelia-amend3-ex10-2.edgar.htm').L), 'Driven Brands Shared Services / Scott O’Melia');
+  assert.equal(partiesFromPreamble(fx('newgenivf-agency-ex10-2.edgar.htm').L), 'PredicXion Group / NewGenIVF Group');
+  assert.doesNotMatch(partiesFromPreamble(fx('firstenergy-service-ex10-6.edgar.htm').L), /each of|listed/);
+  assert.equal(definedRoles(['This Agreement is made by Foo (the “Company”) and Bar (the “Executive”).']), 'Company / Executive');
+});
+test('6ca64e8 #7 numeric dates only when unambiguous; "each December 31 thereafter" rolling renewals', () => {
+  assert.equal(ymd(parseDate('as of 3-3-2026').date), '2026-03-03'); assert.equal(ymd(parseDate('03/15/2026').date), '2026-03-15'); assert.equal(parseDate('04/05/2026'), null);
+  assert.equal(fx('gamg-taylor-ex10-2.edgar.htm').r.actBy, '2030-12-02');
+  const f = fx('fmbank-campbell-ex10-3.edgar.htm'); assert.equal(f.r.actBy, '2027-10-02'); assert.equal(f.r.confidence, 'medium');
+  assert.equal(fx('cineverse-mccabe-ex10-1.edgar.htm').x.effective.date, '2026-04-20');
+});
+test('6ca64e8 a renewal of another named agreement is not this document\'s (XPEL)', () => { assert.equal(fx('xpel-psa-ex10-5.edgar.htm').x.renewal, null); });

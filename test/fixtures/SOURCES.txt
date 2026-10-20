@@ -90,3 +90,10 @@ strattec-becker-ex10-7.edgar.htm https://www.sec.gov/Archives/edgar/data/933034/
 bluejay-lovell-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1704287/000121390026098071/ea030486401ex10-1.htm
 bitdigital-galaxy-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1710350/000121390026061574/ea029203101ex10-1.htm
 xpel-psa-ex10-5.edgar.htm https://www.sec.gov/Archives/edgar/data/1767258/000176725826000043/exhibit105.htm
+# 6ca64e8: reviewer blind batch g1/g4/g6/g7 + builder held-out h0/h8 (sec.gov, fetched Oct 19, 2026)
+driven-omelia-amend3-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1804745/000180474526000059/driven-thirdamendmenttoo.htm
+firstenergy-service-ex10-6.edgar.htm https://www.sec.gov/Archives/edgar/data/2152026/000119312526378599/d80949dex106.htm
+newgenivf-agency-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1981662/000121390026061805/ea029230001ex10-2.htm
+naturesmiracle-du-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1947861/000121390026013365/ea027603101ex10-2_natures.htm
+fmbank-campbell-ex10-3.edgar.htm https://www.sec.gov/Archives/edgar/data/740806/000165495425014119/fmbm_ex103.htm
+gamg-taylor-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/55234/000147793226001244/kens_ex102.htm

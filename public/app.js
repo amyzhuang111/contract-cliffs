@@ -1,4 +1,4 @@
-import { checkLine, htmlToLines, partiesFromPreamble, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
+import { checkLine, htmlToLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -120,7 +120,7 @@ async function addDoc(name, lines, meta = {}) {
   await stage(3, name);
   const id = 'u' + (++n); const base = name.replace(/\.[a-z0-9]+$/i, '');
   const parties = meta.name ? '' : partiesFromPreamble(lines);
-  mine.push({ id, name: (meta.name || parties || `Unnamed contract (${name})`).slice(0, 60), fileName: name, counterparty: meta.counterparty || (parties ? parties.split(' / ')[1] || '' : ''), filer: meta.filer || '', kind: meta.kind || 'Your contract', url: meta.url || '', title: meta.title || '', exhibit: meta.exhibit || '', filed: meta.filed || '', secId: meta.secId || '', lines, x });
+  mine.push({ id, name: (meta.name || parties || (definedRoles(lines) ? `${definedRoles(lines)} (${name})` : `Unnamed contract (${name})`)).slice(0, 60), fileName: name, counterparty: meta.counterparty || (parties ? parties.split(' / ')[1] || '' : ''), filer: meta.filer || '', kind: meta.kind || 'Your contract', url: meta.url || '', title: meta.title || '', exhibit: meta.exhibit || '', filed: meta.filed || '', secId: meta.secId || '', lines, x });
   newIds.add(id); setTimeout(() => { newIds.delete(id); document.querySelector(`#lq li[data-id="${id}"]`)?.classList.remove('new'); }, 4000);
   set = 'mine'; busyDone(); render();
   if (mine.length === 1) requestAnimationFrame(() => { const h = document.querySelector('#answer .hero-date'); if (h && h.getBoundingClientRect().bottom > innerHeight - 8) $('#answer').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
