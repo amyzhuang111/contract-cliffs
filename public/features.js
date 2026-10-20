@@ -269,7 +269,7 @@ export function auditCSV(contracts, asOf, ctxOf = () => null) {
   const head = ['contract', 'counterparty', 'deadline', 'send_by_business_day', 'days_from_as_of', 'as_of', 'status', 'needs_review', 'review_reason', 'confidence', 'evidence_location', 'evidence_quote', 'source', 'owner', 'plan', 'note'];
   const out = [head.join(',')];
   for (const r of rows) { const c = byId.get(r.id); const d = r.missed ? r.missed.actBy : r.actBy;
-    out.push([c.name, c.counterparty || '', d || '', d ? sendDay(d, asOf) : '', d ? daysBetween(asOf, d) : '', asOf, statusOf(r), r.needsReview ? 'yes' : 'no', r.needsReview ? r.tag || '' : '', sure(r.confidence), r.item?.source?.location || '', norm(r.item?.source?.quote || ''), c.url || c.fileName || '', ...(x => [x?.owner || '', x?.plan || '', x?.note || ''])(ctxOf(c))].map(cell).join(',')); }
+    out.push([c.name, c.counterparty || '', d || '', d ? (!r.missed && windowOf(r) ? windowOf(r).day : sendDay(d, asOf)) : '', d ? daysBetween(asOf, d) : '', asOf, statusOf(r), r.needsReview ? 'yes' : 'no', r.needsReview ? r.tag || '' : '', sure(r.confidence), r.item?.source?.location || '', norm(r.item?.source?.quote || ''), c.url || c.fileName || '', ...(x => [x?.owner || '', x?.plan || '', x?.note || ''])(ctxOf(c))].map(cell).join(',')); }
   return out.join('\r\n') + '\r\n';
 }
 

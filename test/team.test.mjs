@@ -104,3 +104,9 @@ test('renew plan: the .ics event is a renewal-date reminder with no send-notice 
   assert.ok(!/send notice|send-notice|window opens/i.test(ev), 'no send-notice wording');
   const plain = withAlarms(toICS([ARM], AS)); assert.match(plain, /Window opens: send notice on/); // no plan: unchanged
 });
+test("'within' send-by date in every export equals the Send notice on date (Armlogi 2027-06-20, not 06-17)", () => {
+  const a = toCSV([ARM], AS).split('\r\n').find(l => /Send-notice deadline/.test(l)); assert.match(a, /,2027-06-20,\d+,2026-10-19,2027-06-20,/); assert.ok(!/2027-06-17/.test(toCSV([ARM], AS)));
+  const b = auditCSV([ARM], AS).split('\r\n')[1]; assert.match(b, /^Armlogi \/ Goldensee,,2027-06-20,2027-06-20,/);
+  assert.ok(!/2027-06-17/.test(toPacket([ARM], AS)) && /2027-06-20/.test(toPacket([ARM], AS)));
+  const csv3 = toCSV([E.c5], AS); assert.match(csv3, /2026-12-16/); // other clause types unchanged
+});

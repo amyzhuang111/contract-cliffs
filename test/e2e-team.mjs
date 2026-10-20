@@ -124,6 +124,12 @@ for (const w of [1440, 375]) {
     await waitStatus(p, /^Read 2 contracts/, 30000);
     await p.evaluate(() => { const li = [...document.querySelectorAll('#lq .lrow')].find(l => /goldensee/i.test(l.textContent)); if (li) li.click(); });
     await p.waitForFunction(() => /goldensee/i.test(document.querySelector("#answer .iname")?.textContent || ""));
+    await p.evaluate(() => document.querySelector('#exSheets').click()); await waitStatus(p, /Copied/);
+    ok(/\tSend notice on 20 Jun 2027\t2027-06-20\t/.test((await p.evaluate(() => window.__lastTsv)).split('\n').find(l => /Goldensee/.test(l)) || ''), `${w}: Sheets send date for a 'within' clause is the Send notice on date`);
+    await p.evaluate(() => { document.addEventListener('click', e => { if (e.target.closest('a[href^="mailto:"]')) e.preventDefault(); }); document.querySelector('#exMail').click(); });
+    ok(/2027-06-20: Goldensee/.test(decodeURIComponent(await p.$eval('#exMail', a => a.href))), `${w}: email list uses the same date`);
+    await p.evaluate(() => document.querySelector('#exCsv').click()); { const csv = await dl(p); ok(/Goldensee[^\n]*,2027-06-20,\d+,2026-10-20,2027-06-20,/.test(csv) && !/2027-06-17/.test(csv), `${w}: CSV send-by for 'within' is 2027-06-20`); }
+    await p.evaluate(() => document.querySelector('#exAudit').click()); ok(!/2027-06-17/.test(await dl(p)), `${w}: audit CSV has no 2027-06-17`);
     await p.evaluate(() => { document.querySelector('#ctxBox').open = true; }); await type(p, '#cPlan', 'renew');
     await p.evaluate(() => document.querySelector('#exIcs').click()); const ics = (await dl(p)).replace(/\r\n /g, '');
     const ev = ics.split("BEGIN:VEVENT").find(e => /goldensee/i.test(e)) || '';
