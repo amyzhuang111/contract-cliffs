@@ -534,3 +534,7 @@ test('B5 quotes stop at a numbered sub-clause; "by and among"', async () => {
   assert.equal(trimQuote('This Agreement shall commence on the Transition Date and last for three months (the Term). 2In the event of a termination, fees are due.'), 'This Agreement shall commence on the Transition Date and last for three months (the Term).');
   assert.equal(partiesFromPreamble(fx('urbangro-akright-ex10-1.edgar.htm').L), 'urban-gro / Richard Akright');
 });
+test('party names: amendment title skipped, letters, "(i) … ; (ii)" lists', () => {
+  const N = { 'purple-ex10-8': 'Purple / Mattress Firm', 'entravision-ex10-1': 'Entravision / Univision Network', 'belfuse-ex10-3': 'Bel Fuse / Daniel Bernstein', 'grainger-ex10-4': 'W.W. Grainger / Susan Slavik Williams', 'spar-ex10-6': 'SPAR Group / Ron Lutz', 'natvision-ex10-1': 'Essilor / National Vision', 'nfg-ex10-1': 'National Fuel Gas / Donna L. DeCarolis' };
+  for (const [f, n] of Object.entries(N)) assert.equal(partiesFromPreamble(fx(f + '.edgar.htm').L), n, f);
+});

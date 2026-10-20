@@ -442,3 +442,4 @@ footer .foot{margin-top:0}
 .about .samples{display:block}
 @media (max-width:480px){.about .samples .chips{display:flex;gap:8px;margin-top:8px}.about .samples button[data-sample]{min-height:44px}}
 .about:not([open]) ~ footer{margin-top:24px}
+@media (min-width:481px){.samples{display:flex;gap:8px;flex-wrap:nowrap;align-items:center}}

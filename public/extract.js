@@ -12,11 +12,22 @@ const REDACT_RE = '\\[\\s*(?:\\*+|\\.{3}|redacted)\\s*\\]';
 // "by and between X ... and Y" in the preamble -> "X / Y" (short names), or '' if not found.
 const SUFFIX = /,?\s+(?:Inc|Corp|Corporation|LLC|L\.L\.C|Ltd|Limited|Co|Company|plc|N\.A|L\.P|LP|S\.A|GmbH|B\.V)\.?$/i;
 const shortParty = t => { let x = t.replace(/^\s*(?:the\s+)?/i, '').replace(/\s+/g, ' ').trim(); for (let i = 0; i < 2; i++) x = x.replace(SUFFIX, '').trim(); return x.replace(/[,.;:]+$/, '').slice(0, 40); };
+// Letter agreements have no "between": the addressee is named before the salutation, the company in the body.
+function letterParties(text) {
+  if (!/\bDear\s/.test(text)) return '';
+  const to = text.match(/(?:Exhibit\s+[\d.]+|\b(?:19|20)\d\d)\s+((?:Mr\.|Ms\.|Mrs\.|Dr\.)\s+)?([A-Z][a-z]+(?:\s+[A-Z]\.)?(?:\s+(?!Chief|Executive|Senior)[A-Z][a-z]+){1,2})\s+(?=\d|[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*\s+(?:Officer|Director|President)|Chief)/);
+  const co = text.match(/\b(?:On\s+behalf\s+of|of)\s+((?:[A-Z][\w.&-]*\s+){0,3}?[A-Z][\w.&-]*,?\s+(?:Inc|Corp|Corporation|LLC|Ltd|plc|Company)\.?)(?=[\s,(])/);
+  if (!to || !co) return '';
+  return `${co[1].replace(/,?\s+(?:Inc|Corp|Corporation|LLC|Ltd|plc|Company)\.?$/i, '').trim()} / ${to[2]}`;
+}
 export function partiesFromPreamble(lines) {
   const text = lines.slice(0, 80).map(l => typeof l === 'string' ? l : l.text).join(' ').replace(/\s+/g, ' ').slice(0, 6000);
-  const m = /\b(?:by\s+and\s+(?:between|among)|(?:made|entered\s+into|dated)[^.]{0,160}?\b(?:between|among)|\bis\s+between):?\s+(.{4,700})/i.exec(text); if (!m) return '';
-  const seg = m[1]; let a = '', b = '';
-  for (const re of [/[)”"]\s*[;,]?\s+and\s+/i, /;\s*and\s+/i, /,\s+and\s+/i, /\s+and\s+/i]) { const k = seg.search(re); if (k > 1 && k < 400) { const bb = seg.slice(k).replace(re, ''); if (/^(?:together|each|any|its|whereas|collectively|individually|shall|will|is|are)\b/i.test(bb)) continue; a = seg.slice(0, k + 1); b = bb; break; } }
+  const m = [...text.matchAll(/\b(?:by\s+and\s+(?:between|among)|(?:made|entered\s+into|dated)[^.]{0,160}?\b(?:between|among)|\bis\s+between):?\s+(?=(.{4,700}))/gi)].find(x => !/^(?:the\s+)?(?:company|parties|undersigned)\b/i.test(x[1]));
+  if (!m) return letterParties(text);
+  const seg = m[1].replace(/^\(i\)\s*/i, '').replace(/;\s*(?:and\s+)?\(ii\)\s*/i, '; and '); let a = '', b = '';
+  { const ok = mm => { const k = mm.index; return k > 1 && k < 400 && !/^(?:together|each|any|its|whereas|collectively|individually|shall|will|is|are|that|such)\b/i.test(seg.slice(k + mm[0].length)); };
+    const best = [/[)”"]\s*[;,]?\s+and\s+/gi, /;\s*and\s+/gi, /,\s+and\s+/gi].map(re => [...seg.matchAll(re)].find(ok)).filter(Boolean).sort((x, y) => x.index - y.index)[0] || [...seg.matchAll(/\s+and\s+/gi)].find(ok);
+    if (best) { a = seg.slice(0, best.index + 1); b = seg.slice(best.index + best[0].length); } }
   if (!a) return '';
   const KEEP = /^(?:USA|US|UK|EU|NA|II|III|IV)$/;
   const tc = x => /[a-z]/.test(x) ? x : x.replace(/\b([A-Z])([A-Z]+)\b/g, (w, f, r) => w.length <= 2 || KEEP.test(w) ? w : f + r.toLowerCase());
