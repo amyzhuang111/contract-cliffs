@@ -570,7 +570,7 @@ pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--f
 }
 @keyframes pf-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes pf-pop{from{opacity:0;transform:scale(.4)}to{opacity:1;transform:none}}
-@media (max-width:480px){.pfv .portfolio .pf:last-child:nth-child(odd){grid-column:span 2}}
+@media (max-width:480px){.portfolio .pf:nth-last-child(2):nth-child(odd){grid-column:span 2}}
 
 /* ---- R1–R5 (6577573 re-score) ---- */
 /* R1 slide plays after its strip has appeared; label upright */
@@ -648,3 +648,4 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 
 .pfflags{grid-column:1/-1;margin:0;padding:8px 12px;background:var(--bg,#000)}.pfflags .review .sv{color:#EBFF0A}.pfflags .missed .sv{color:var(--danger)}.pfflags .zero .sv{color:var(--mute)}
 .portfolio .review .sv,.portfolio .cant .sv{color:inherit}
+.pfflags .sv{font-size:inherit}
