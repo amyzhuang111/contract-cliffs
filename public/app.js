@@ -1,4 +1,5 @@
 import { checkLine, htmlToLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
+import { withAlarms, gcalLink } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -104,7 +105,8 @@ function download(name, text, type) { const a = document.createElement('a'); a.h
 const tag = () => (set === 'edgar' ? 'sec-edgar' : 'my-docs') + '-asof-' + asOf;
 const guard = f => () => { if (!current().length) { $('#status').textContent = 'Nothing to export yet: add a contract first.'; return; } f(); };
 $('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf), 'text/csv'));
-$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), 'text/calendar'));
+$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z')), 'text/calendar'));
+$('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
 $('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf), 'text/html'));
 
 let n = 0;
@@ -158,6 +160,7 @@ function oneThing(r) {
 const sendBy = r => { const d = r.safe?.date || r.actBy; return `${weekday(d).slice(0, 3)} ${fmt(d)}`; };
 const days = (n, u) => `${n} ${u}${+n === 1 ? '' : 's'}`;
 const renewsFor = c => { const p = c.x.renewal?.period; return p ? `${p.n} more ${p.unit}${p.n > 1 ? 's' : ''}` : ''; };
+const gcal = (c, r) => { if (!r.actBy || r.section === 'lapsed' || (r.days != null && r.days < 0) || !/send-notice/i.test(r.label || '')) return ''; const u = gcalLink({ name: c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: c.url }); return u ? `<a class="gcal" href="${esc(u)}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ''; };
 function card(c, r) {
   const more = renewsFor(c); const cons = more ? `or it renews for ${more}.` : 'or it renews automatically.';
   const src = r.item?.source; const [cw, seg] = confWord(r.confidence);
@@ -194,7 +197,7 @@ function card(c, r) {
       <p class="conf"><span class="lab">Confidence:</span> ${confTag(r)[1] === 'rvtag' ? `<span class="cw">${esc(cw)}</span>` : `<span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span>`} <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
       ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
-      <button id="answerMore" class="btn-secondary sm">See every date and clause</button>
+      <div class="acts"><button id="answerMore" class="btn-secondary sm">See every date and clause</button>${gcal(c, r)}</div>
     </div></div></article>`;
 }
 function row(c, r) {
@@ -205,7 +208,7 @@ function row(c, r) {
     <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? 'Send notice by' : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
     <div class="ln"><span class="rname">${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span></div>
-    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR ↗</a>` : ''}</span></div>
+    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR ↗</a>` : ''}</span>${gcal(c, r)}</div>
   </li>`;
 }
 function live(cs) {
