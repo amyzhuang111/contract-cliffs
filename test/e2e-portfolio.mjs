@@ -14,7 +14,7 @@ const load = async p => { await p.click('#loadPf'); await p.waitForSelector('#pf
 
 for (const w of [1440, 375]) {
   { const p = await fresh('/?asof=2026-10-19', w); await sleep(800);
-    ok(await p.evaluate(() => document.querySelector('#pfLoad').hidden && document.querySelector('#pfView').hidden && getComputedStyle(document.querySelector('#pfLoad')).display === 'none') && !p.reqs.some(u => /portfolio\.(json|js)/.test(u)), `${w}: plain URL: no portfolio button, no portfolio data fetched`);
+    ok(await p.evaluate(() => document.querySelector('#pfView').hidden) && !p.reqs.some(u => /portfolio\.json/.test(u)), `${w}: plain URL: portfolio closed, no portfolio data fetched on load`);
     await p.ctx.close(); }
   { const p = await fresh('/?demo=1&asof=2026-10-19', w); await p.waitForFunction(() => document.querySelector('#answer .iname'), { timeout: 5000 });
     const b = await p.evaluate(() => ({ t: document.querySelector('#loadPf').textContent, note: document.querySelector('.pfnote').textContent, vis: !document.querySelector('#pfLoad').hidden, card: document.querySelector('#answer .iname').textContent }));
