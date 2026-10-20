@@ -647,5 +647,8 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 .copyq,#letterDocx,#letterCopy,button.lnk{min-height:24px;min-width:24px;display:inline-flex;align-items:center}
 
 .pfflags{grid-column:1/-1;margin:0;padding:8px 12px;background:var(--bg,#000)}.pfflags .review .sv{color:#EBFF0A}.pfflags .missed .sv{color:var(--danger)}.pfflags .zero .sv{color:var(--mute)}
-.portfolio .review .sv,.portfolio .cant .sv{color:inherit}
+.portfolio .review .sv{color:inherit}
 .pfflags,.pfflags .sv{font-size:12px}
+
+/* Can't tell is neutral grey; #EBFF0A is for Needs review only */
+.portfolio .cant .sv,.pflist .cant .ps,.tl-foot .cantnote{color:#888}.tag.cttag{background:transparent;border:1px solid #888;color:#888}

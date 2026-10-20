@@ -25,14 +25,14 @@ export function timelineHtml(rows, asOf) {
   const later = dated.filter(r => r.actBy > END).length, none = rows.filter(r => !r.actBy).length;
   const marks = dated.filter(r => r.actBy <= END).map((r, k) => `<a class="${mkClass(r)}" href="#pf-${esc(r.id)}" style="left:${(pos(r.actBy, asOf) * 100).toFixed(2)}%;--i:${k}" title="${esc(r.c.name)}: send by ${esc(fmt(r.actBy))} (${esc(r.st.label)})" aria-label="${esc(r.c.name)}: send by ${esc(fmt(r.actBy))}, ${esc(r.st.label)}"></a>`).join('');
   return `<div class="tl-track" role="group" aria-label="Send-by dates from today to the end of 2030"><span class="tk today" style="left:0"><span class="lab">Today</span></span>${ticks.join('')}${marks}</div>
-  <p class="lab tl-foot">${BUCKETS.filter(([k]) => !['cant', 'expired'].includes(k) && (k !== 'passed' || dated.some(r => r.st.bucket === 'passed'))).map(([k, l]) => `<span><i class="dot ${k}"></i>${l}</span>`).join('')}<span><i class="dot ring"></i>Needs review</span>${later ? `<span>${later} after 2030, not on the line</span>` : ''}${none ? `<span>Can’t tell: ${none}, no date, not on the line</span>` : ''}</p>`;
+  <p class="lab tl-foot">${BUCKETS.filter(([k]) => !['cant', 'expired'].includes(k) && (k !== 'passed' || dated.some(r => r.st.bucket === 'passed'))).map(([k, l]) => `<span><i class="dot ${k}"></i>${l}</span>`).join('')}<span><i class="dot ring"></i>Needs review</span>${later ? `<span>${later} after 2030, not on the line</span>` : ''}${none ? `<span class="cantnote">Can’t tell: ${none}, no date, not on the line</span>` : ''}</p>`;
 }
 export function listHtml(rows, asOf) {
   return rows.map((r, k) => `<li id="pf-${esc(r.id)}" class="pr ${r.st.bucket} ${r.st.flags.join(' ')}" style="--i:${k}">
     <span class="pn">${esc(r.c.name)}</span>
     <span class="pd">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
     <span class="pl">${r.days == null ? '' : r.days < 0 ? `${dayWord(-r.days)} ago` : r.days === 0 ? 'today' : `${dayWord(r.days)} left`}${r.missed ? ` <span class="pm">earlier date passed ${esc(fmt(r.missed.actBy))}</span>` : ''}</span>
-    <span class="pc"><span class="tag ${r.conf === 'Clear' ? 'clear' : r.conf === 'Check' ? 'check' : 'rvtag'}">${esc(r.conf)}</span></span>
+    <span class="pc"><span class="tag ${r.conf === 'Clear' ? 'clear' : r.conf === 'Check' ? 'check' : 'cttag'}">${esc(r.conf)}</span></span>
     <span class="ps lab">${esc(r.st.label)}</span>
     <a class="pe lab" href="${esc(r.c.url)}" target="_blank" rel="noopener">EDGAR ↗</a></li>`).join('');
 }
