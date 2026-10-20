@@ -71,6 +71,16 @@ for (const w of [1440, 375]) {
     const back = await p.evaluate(async b64 => { const s = atob(b64); const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return (await window.mammoth.extractRawText({ arrayBuffer: u.buffer })).value; }, d.buf.toString('base64'));
     ok(/This notice is given on or before 16 December 2026/.test(back), `${w}: mammoth opens the generated .docx`);
     await shot(p, 'f2-letter', w); await p.ctx.close(); }
+  // F3 obligations (Cerus / Purolite in the SEC set)
+  { const p = await fresh('/?set=sec&asof=2026-10-19', w); await p.waitForSelector('#queue li[data-id="c1"]'); await p.click('#queue li[data-id="c1"]'); await sleep(400);
+    const o = await p.$eval('.obl', e => [...e.querySelectorAll('.it')].map(i => i.innerText.replace(/\s+/g, ' ')));
+    ok(o.length === 4 && /NOTICE METHOD AND ADDRESS/i.test(o[0]) && /2550 Stanwell Drive/.test(o[0]) && /lines 67–72/.test(o[0]) && /line 66/.test(o[0]), `${w}: Cerus notice method and both addresses quoted with lines`);
+    ok(/Not found in this document/.test(o[1]) && /Not found in this document/.test(o[2]) && /Not found in this document/.test(o[3]), `${w}: Cerus has no TfC, escalator or payment clause: left blank`);
+    await p.evaluate(() => document.querySelector('.obl').scrollIntoView()); await shot(p, 'f3-obligations', w);
+    await p.click('#close'); await p.click('#queue li[data-id="c6"]'); await sleep(400);
+    const v = await p.$eval('.obl .ob-esc', e => e.innerText.replace(/\s+/g, ' '));
+    ok(/shall not exceed 8%/.test(v) && /lines 193–194/.test(v), `${w}: Vivos price escalator quoted (lines 193–194)`);
+    await p.ctx.close(); }
 
 }
 ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));

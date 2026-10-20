@@ -523,5 +523,7 @@ body.has-any .cliff-strip,body.has-any .proof,body.has-any .dz-sub{display:none}
 a.gcal{font:400 var(--t-label) var(--font-mono);text-transform:uppercase;color:var(--accent);text-decoration:underline;text-underline-offset:3px;display:inline-flex;align-items:center;min-height:var(--tap)}
 .lrow .lt a.gcal{margin-top:4px}
 .lettr{margin:16px 0 0}
+.obl{margin-top:28px;border-top:1px solid var(--rule);padding-top:16px}.obl h4{margin:0}
+.obl .nd{color:var(--mute)}
 pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--font-mono);color:var(--fg);background:var(--card);padding:16px;margin:16px 0 0;border:1px solid var(--rule)}
 .lbtns{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}

@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
 import { extract, toICS, buildQueue } from '../public/extract.js';
-import { withAlarms, gcalLink, sendDay, noticeClause, letter, docx, crc32, FILL } from '../public/features.js';
+import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, FILL } from '../public/features.js';
 const load = f => JSON.parse(fs.readFileSync(new URL('../public/data/' + f + '.json', import.meta.url))).map(c => ({ ...c, x: extract(c.lines) }));
 const E = Object.fromEntries(load('edgar').map(c => [c.id, c])), H = Object.fromEntries(load('holdout').map(c => [c.id, c]));
 const AS = '2026-10-19';
@@ -41,6 +41,36 @@ test('F1: Google Calendar link is a correctly encoded all-day event on the safe 
   // safe day already passed: today
   assert.equal(sendDay('2027-09-19', '2027-09-18'), '2027-09-18');
   assert.equal(gcalLink({ name: 'x', actBy: 'bad', asOf: AS }), '');
+});
+
+// F3
+test('F3: notices clause, method and addresses from Cerus / Purolite (EDGAR c1)', () => {
+  const n = noticeClause(E.c1.lines);
+  assert.equal(n.location, 'line 66'); assert.match(n.quote, /^9\.2 Notices\. All notices and demands/);
+  assert.deepEqual(n.methods, ['personal delivery', 'mail (certified, registered or first class)', 'courier or overnight delivery']);
+  assert.deepEqual(n.addresses.map(a => [a.to, a.location]), [['Cerus', 'lines 67–72'], ['Purolite', 'lines 73–78']]);
+  assert.match(n.addresses[0].text, /2550 Stanwell Drive · Concord, CA 94520/);
+  for (const a of n.addresses) for (const part of a.lines) assert.ok(E.c1.lines.slice(66, 78).some(l => (l.text || l).includes(part)), 'address text is verbatim');
+});
+test('F3: a blank notice address in the filing stays blank (Dragonfly buyer); an address by reference is not invented (StableX)', () => {
+  const d = noticeClause(E.c3.lines); assert.deepEqual(d.addresses.map(a => a.to), ['Seller']); assert.equal(lineText(E.c3, 610).trim(), 'Attention:');
+  const s = noticeClause(E.c2.lines); assert.equal(s.addresses.length, 0); assert.match(s.ref, /^addresses first set forth above/);
+  assert.equal(noticeClause(E.c5.lines), null);
+  const ob = obligations(E.c5); assert.equal(ob.find(o => o.key === 'notice').found, false); assert.equal(ob.find(o => o.key === 'esc').found, false);
+});
+test('F3: price escalators quoted with lines (Vivos 8% cap, Power Upp CPI, Tradeweb CPI)', () => {
+  const v = escalators(E.c6.lines); assert.equal(v.length, 1); assert.equal(v[0].location, 'lines 193–194'); assert.match(v[0].quote, /adjust the Retainer once per calendar year.*shall not exceed 8%/);
+  const p = escalators(H.b1.lines); assert.equal(p[0].location, 'lines 137–141'); assert.match(p[0].quote, /Consumer Price Index/);
+  assert.match(escalators(E.c4.lines)[0].quote, /cumulative percentage increase in US CPI/);
+  for (const id of ['c1', 'c2', 'c3', 'c5', 'c12']) assert.equal(escalators(E[id].lines).length, 0, id + ' has no escalator');
+});
+test('F3: four obligations, each with a quote and line or left blank', () => {
+  const ob = obligations(E.c6);
+  assert.deepEqual(ob.map(o => o.key), ['notice', 'tfc', 'esc', 'pay']);
+  assert.equal(ob[0].found, true); assert.match(ob[0].summary, /courier or overnight delivery, email/); assert.equal(ob[0].extra.length, 2);
+  assert.equal(ob[1].found, false);
+  const pay = ob[3]; assert.ok(pay.found && pay.items.every(i => i.quote && /^lines? \d/.test(i.location)));
+  const tf = obligations(E.c5)[1]; assert.equal(tf.items[0].location, 'lines 100–101'); assert.match(tf.items[0].quote, /thirty \(30\) days advance written notice/);
 });
 
 // F2

@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { withAlarms, gcalLink, letter, docx } from '/features.js';
+import { withAlarms, gcalLink, letter, docx, obligations } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -89,9 +89,14 @@ function openDrawer(id) {
    ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(reason(i.why))}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? dayWord(-d) + ' ago' : 'in ' + dayWord(d))(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
      <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} ${esc(sure(i.confidence))}.</p>
-     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}<div class="lettr"><button class="btn-secondary sm" id="drawerLetter">Draft notice letter</button></div>`;
+     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}<div class="lettr"><button class="btn-secondary sm" id="drawerLetter">Draft notice letter</button></div>${obligationsHtml(c)}`;
   $('#drawerLetter').onclick = () => openLetter(id);
   $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on'); $('#drawer').scrollTop = 0; $('#close').focus({ preventScroll: true });
+}
+function obligationsHtml(c) {
+  const ob = obligations(c);
+  const q = i => i.quote ? `<blockquote class="clause">${esc(showQuote(i.quote))}</blockquote><div class="loc"><span>${esc(i.location)}</span>${c.url ? `<a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR filing ↗</a>${i.lineStart ? `<a href="/source/?id=${esc(c.id)}&from=${i.lineStart}&to=${i.lineEnd || i.lineStart}#L${i.lineStart}" target="_blank" rel="noopener">Saved text, ${esc(i.location)}</a>` : ''}` : ''}</div>` : '';
+  return `<section class="obl" aria-label="More obligations"><h4 class="lab">More obligations</h4>${ob.map(o => `<div class="it ob-${o.key}"><div class="top"><span class="lab">${esc(o.label)}</span></div>${!o.found ? '<p class="why nd">Not found in this document.</p>' : o.items ? o.items.map(i => `${i.summary ? `<p class="why">${esc(i.summary)}</p>` : ''}${q(i)}`).join('') : `<p class="why">${esc(o.summary)}</p>${q(o)}${o.extra.map(a => `<p class="why">${esc(a.label)}:</p>${q(a)}`).join('')}`}</div>`).join('')}</section>`;
 }
 // F2: draft non-renewal letter, shown in the drawer with .docx download and Copy
 function openLetter(id) {

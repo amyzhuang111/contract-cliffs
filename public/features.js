@@ -79,6 +79,34 @@ function noticeAddresses(T, from, to) {
   }
   return out;
 }
+const ESC = /\b(?:increase|escalat\w*|adjust\w*)\b[^.]{0,160}?(?:\d+(?:\.\d+)?\s*%|\bpercent\b|Consumer\s+Price\s+Index|\bCPI\b)|(?:\d+(?:\.\d+)?\s*%|Consumer\s+Price\s+Index|\bCPI\b)[^.]{0,120}?\b(?:increase|escalat\w*|adjust\w*)\b/i;
+const PRICEWORD = /\b(?:price|prices|pricing|fees?|rates?|rent|retainer|charges?|compensation)\b/i;
+const LATE = /\binterest\b|late\s+(?:fee|charge|payment)|past\s+due|overdue/i;
+export function escalators(lines) {
+  const S = toSentences(lines); const out = [];
+  for (let k = 0; k < S.length && out.length < 3; k++) {
+    const s = S[k]; if (s.text.length > 1200 || !ESC.test(s.text) || LATE.test(s.text)) continue;
+    // a short follow-on sentence ("Adjustments shall not exceed 8%") takes its price word from the sentence before
+    const p = S[k - 1]; const joint = !PRICEWORD.test(s.text) && p && s.text.length < 200 && PRICEWORD.test(p.text) && /\b(?:increase|adjust\w*|escalat\w*)\b/i.test(p.text);
+    if (!PRICEWORD.test(s.text) && !joint) continue;
+    const a = joint ? p : s; if (out.some(o => o.lineStart === a.lineStart)) continue;
+    out.push({ quote: trimQuote(joint ? p.text + ' ' + s.text : s.text), location: locLabel({ ...a, lineEnd: s.lineEnd, pageEnd: s.pageEnd, plEnd: s.plEnd }), lineStart: a.lineStart, lineEnd: s.lineEnd });
+  }
+  return out;
+}
+// Four obligations for the detail panel. Each is { found, summary, quote, location } or found:false (left blank).
+export function obligations(c) {
+  const nc = noticeClause(c.lines);
+  const tfc = c.x.other || [], pay = c.x.payments || [], esc = escalators(c.lines);
+  const uniq = arr => arr.filter((p, k) => arr.findIndex(q => q.source?.location === p.source?.location) === k);
+  return [
+    { key: 'notice', label: 'Notice method and address', found: !!nc, summary: nc ? `${nc.methods.length ? 'How: ' + nc.methods.join(', ') + '.' : 'How: not stated in the clause.'} ${nc.addresses.length ? 'Addresses found: ' + nc.addresses.length + '.' : 'Address: not found in the notices clause' + (nc.ref ? ` (it points to the "${nc.ref}")` : '') + '.'}` : '', quote: nc?.quote || '', location: nc?.location || '', lineStart: nc?.lineStart, lineEnd: nc?.lineEnd, extra: (nc?.addresses || []).map(a => ({ label: 'To ' + a.to, quote: a.text, location: a.location, lineStart: a.lineStart, lineEnd: a.lineEnd })) },
+    { key: 'tfc', label: 'Termination for convenience', found: tfc.length > 0, items: tfc.map(p => ({ summary: `${p.rule}${p.who && !/^party$/i.test(p.who) ? ' · held by ' + p.who : ''}`, quote: p.source?.quote || '', location: p.source?.location || '', lineStart: p.source?.lineStart, lineEnd: p.source?.lineEnd })) },
+    { key: 'esc', label: 'Price escalator', found: esc.length > 0, items: esc.map(e => ({ summary: '', quote: e.quote, location: e.location, lineStart: e.lineStart, lineEnd: e.lineEnd })) },
+    { key: 'pay', label: 'Payment terms', found: pay.length > 0, items: uniq(pay).slice(0, 3).map(p => ({ summary: p.rule, quote: p.source?.quote || '', location: p.source?.location || '', lineStart: p.source?.lineStart, lineEnd: p.source?.lineEnd })) },
+  ];
+}
+
 // ---------- F2: draft non-renewal letter ----------
 export const FILL = '[NOT FOUND, FILL IN]';
 const fmtLong = d => { if (!d) return FILL; const [y, m, dd] = d.split('-'); return `${+dd} ${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][+m - 1]} ${y}`; };
