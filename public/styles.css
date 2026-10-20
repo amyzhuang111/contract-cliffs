@@ -726,3 +726,5 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 
 /* Phone: each timeline label fits the room on its side of the marker */
 @media (max-width:480px){.tl-track .tlt{max-width:min(230px,calc((100vw - 64px) * (100 - var(--x,0)) / 100))}.tl-track .tlt[data-right]{max-width:min(230px,calc((100vw - 64px) * var(--x,0) / 100))}}
+/* Desktop keeps the 14/20 labels; 13px is the floor below 1200 */
+@media (min-width:1200px){#answer .lab,#liveQ .lab,.pfv > .lab,.pflist .tag,#answer .tag,#liveQ .tag{font-size:14px;line-height:20px}}

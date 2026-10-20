@@ -162,7 +162,7 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
   await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden); await sleep(300);
   const h = await p.$eval('#answer .hero-date', e => ({ h: e.getBoundingClientRect().height, fs: parseFloat(getComputedStyle(e).fontSize), lab: getComputedStyle(document.querySelector('#answer .lab')).fontSize }));
   ok(h.h <= h.fs * 1.3, `${w}: hero date on one line (${Math.round(h.h)}px tall at ${h.fs}px)`);
-  ok(w === 375 ? h.lab === '12px' : h.lab === '14px', `${w}: labels ${h.lab} (14/20 at >=1200, 12/16 below)`);
+  ok(w === 375 ? h.lab === '13px' : h.lab === '14px', `${w}: labels ${h.lab} (14/20 at >=1200, 13/18 below)`);
   ok(await p.$eval('#addBar', e => e.offsetParent && e.textContent === 'Add a contract' && e.getBoundingClientRect().height >= 44), `${w}: the 56px bar has an "Add a contract" button`);
   await p.click('#trySecond'); await waitStatus(p, /2 contracts/); await p.click('#trySecond'); await waitStatus(p, /3 contracts/); await sleep(600);
   const df = await p.$$eval('#lq li', ls => ls.map(l => l.querySelector('.rcons').textContent).find(t => /Renews 19 Nov/.test(t)));
