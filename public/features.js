@@ -1,3 +1,4 @@
+import { signerLines } from './team.js';
 // Product features layered on the extractor: calendar links and alarms, notice letter (.docx), more obligations,
 // portfolio summary, per-contract audit CSV and safe local storage. Pure functions; no network, no invented data.
 import { twoReadings, fold, csvCell, usHoliday, usHolidays, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
@@ -34,7 +35,9 @@ const icsText = t => String(t).replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').
 const ALARM = (n, name) => ['BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:-P${n}D`, `DESCRIPTION:${n} days to the send-notice deadline: ${name}`, 'END:VALARM'];
 // Unfold, give every send-notice event alarms at 30, 14 and 7 days (replacing any others), add the early-exit note
 // to its description (notes: contract id -> text), then fold again by octets.
-export function withAlarms(ics, notes = {}) {
+// opts (team setup): days = reminder days before each deadline, calName, tz.
+export function withAlarms(ics, notes = {}, opts = {}) {
+  const days = opts.days?.length ? opts.days : ALARM_DAYS;
   const L = ics.replace(/\r\n[ \t]/g, '').split('\r\n'); const out = []; let inEv = false, inAl = false, name = '', id = '';
   for (let l of L) {
     if (l === 'BEGIN:VEVENT') { inEv = true; name = ''; id = ''; }
@@ -45,8 +48,10 @@ export function withAlarms(ics, notes = {}) {
     if (l === 'BEGIN:VALARM') { inAl = true; if (!keep) continue; }
     if (inAl && !keep) { if (l === 'END:VALARM') inAl = false; continue; }
     if (inAl && l === 'END:VALARM') inAl = false;
-    if (l === 'END:VEVENT' && inEv) { inEv = false; if (/^Send-notice deadline/.test(name)) for (const n of ALARM_DAYS) out.push(...ALARM(n, name.replace(/^Send-notice deadline: /, ''))); }
+    if (l === 'END:VEVENT' && inEv) { inEv = false; if (/^Send-notice deadline/.test(name)) for (const n of days) out.push(...ALARM(n, name.replace(/^Send-notice deadline: /, ''))); }
+    if (opts.calName && l.startsWith('X-WR-CALNAME:')) l = 'X-WR-CALNAME:' + icsText(opts.calName);
     out.push(l);
+    if (opts.tz && l.startsWith('X-WR-CALNAME:')) out.push('X-WR-TIMEZONE:' + opts.tz);
   }
   return out.map(l => fold(l.replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, ''))).join('\r\n');
 }
@@ -140,7 +145,8 @@ export const FILL = '[FILL IN]';
 // Every placeholder names what to fill in, the same way as the date line.
 export const fill = what => `[${what.toUpperCase()}, FILL IN]`;
 const fmtLong = d => { if (!d) return fill('date'); const [y, m, dd] = d.split('-'); return `${+dd} ${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][+m - 1]} ${y}`; };
-export function letter(c, r, asOf) {
+export function letter(c, r, asOf, team) {
+  const sl = team ? signerLines(team) : null; const useT = sl?.any;
   const parties = String(c.name || '').includes(' / ') ? c.name.split(' / ').map(s => s.trim()) : [];
   const nc = noticeClause(c.lines); const q = r?.item?.source;
   const addr = nc?.addresses?.length ? nc.addresses.map(a => `${a.to}: ${a.text} (notices clause, ${a.location})`) : [`${fill('notice address')} (no notice address found in the notices clause${nc?.ref ? `; it points to the "${nc.ref}"` : ''})`];
@@ -150,7 +156,7 @@ export function letter(c, r, asOf) {
     '',
     `Date: [YOUR SEND DATE, FILL IN] (the day you send it; today is ${fmtLong(asOf)})`,
     `Parties to the agreement: ${parties.length ? parties.join(' and ') : fill('parties')}`,
-    `From: ${fill('your company, name, title and address')}`,
+    useT ? `From: ${sl.from}` : `From: ${fill('your company, name, title and address')}`,
     `To: ${fill('other party')}${parties.length ? ` (${parties.join(' or ')})` : ''}`,
     'Notice address from the contract (pick the other party\'s):',
     ...addr.map(a => '  ' + a),
@@ -171,7 +177,7 @@ export function letter(c, r, asOf) {
     '',
     'Sincerely,',
     '',
-    fill('your name, title and company'),
+    useT ? sl.sign : fill('your name, title and company'),
   ];
   return L.join('\n');
 }

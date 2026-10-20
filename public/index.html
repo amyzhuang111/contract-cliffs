@@ -108,6 +108,20 @@
   </div>
   <ol class="q" id="queue"></ol>
 </section>
+<section class="team" id="teamSec" aria-labelledby="teamh">
+<details id="teamBox"><summary><span class="lab" id="teamh">Set up for your team</span><span class="gn">One minute. It fills in the letters and sets the reminders.</span></summary>
+<form id="teamForm" class="tform" autocomplete="off" onsubmit="return false">
+  <label class="tf">Company name<input id="tCompany" maxlength="200"></label>
+  <fieldset class="tset"><legend class="lab">Who signs notices</legend>
+    <label class="tf">Name<input id="tName" maxlength="200"></label><label class="tf">Title<input id="tTitle" maxlength="200"></label><label class="tf">Email<input id="tEmail" type="email" maxlength="200"></label></fieldset>
+  <label class="tf">Days of warning before each deadline<input id="tWarn" type="number" min="1" max="365" value="30"></label>
+  <label class="tf">Reminder calendar name<input id="tCal" maxlength="80"></label>
+  <label class="tf">Timezone<select id="tTz"></select></label>
+  <fieldset class="tset"><legend class="lab">Contracts you care about most</legend><ul class="tpins" id="tPins"></ul></fieldset>
+  <label class="remember"><input type="checkbox" id="tSave"> Save this setup on this device (this browser only; untick to delete)</label>
+  <p class="status" id="tStatus" role="status" aria-live="polite"></p>
+</form></details>
+</section>
 <details class="about" id="about"><summary class="tl mute">How it works and how to trust it</summary>
 <section class="controls" id="add" aria-labelledby="addh">
   <div class="sechead"><h2 id="addh">How it works and how to trust it</h2><p class="status" id="testset">Latest blind test, 17 SEC contracts it had never seen: 5 dates right, 4 correctly left blank, 7 missed and 1 wrong. None of the wrong dates was marked Sure. When it can’t tell, it says so and flags the row for a person to check.</p></div>

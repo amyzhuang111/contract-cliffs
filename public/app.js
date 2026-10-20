@@ -1,4 +1,5 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
+import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays } from '/team.js';
 import { windowOf, windowNote, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -12,6 +13,13 @@ $('#asof').value = asOf;
 let edgar = [], mine = [], set = params.get('set') === 'sec' ? 'edgar' : params.get('set') === 'test' ? 'holdout' : 'mine', groupBy = ['counterparty', 'filer'].includes(params.get('group')) ? params.get('group') : 'none';
 let holdout = [];
 const current = () => set === 'edgar' ? edgar : set === 'holdout' ? holdout : mine;
+// Team setup: applied at once; written to this browser only after the user ticks "Save this setup".
+let team = normTeam(null);
+const teamSaved = () => { try { return localStorage.getItem(TEAM_OK) === '1'; } catch { return false; } };
+const saveTeam = () => { if (teamSaved()) try { localStorage.setItem(TEAM_KEY, JSON.stringify(team)); } catch {} };
+try { if (teamSaved()) { const { team: t } = parseTeam(localStorage.getItem(TEAM_KEY)); if (t) team = t; else { localStorage.removeItem(TEAM_KEY); localStorage.removeItem(TEAM_OK); } } else localStorage.removeItem(TEAM_KEY); } catch {}
+const icsOpts = () => ({ days: alarmDays(team.warnDays), calName: team.calName, tz: team.tz });
+const rowKey = r => ckey(r.c || current().find(c => c.id === r.id) || r);
 document.getElementById('rule').textContent = PRIORITY_RULE;
 // How it works: open on desktop, collapsed on phones so the list comes first
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1]} ${y}`; };
@@ -101,7 +109,7 @@ function obligationsHtml(c) {
 // F2: draft non-renewal letter, shown in the drawer with .docx download and Copy
 function openLetter(id, given) {
   const c = given || current().find(x => x.id === id); if (!c) return;
-  const r = buildQueue([c], asOf)[0]; const t = letter(c, r, asOf);
+  const r = buildQueue([c], asOf)[0]; const t = letter(c, r, asOf, team);
   if (!$('#drawer').classList.contains('on')) lastFocus = document.activeElement;
   $('#dbody').innerHTML = `<div class="lab">Draft letter · ${esc(c.name)}</div><h3>Non-renewal notice (draft)</h3><p class="note">DRAFT. Check every line against the contract before sending. Anything in [CAPITALS, FILL IN] is for you to fill in; the note after it says what the contract did or did not give.</p><div class="row lbtns"><button class="btn-primary sm" id="letterDocx">Download .docx</button><button class="btn-secondary sm" id="letterCopy">Copy</button></div><pre class="letter" id="letterText">${esc(t)}</pre>`;
   $('#letterDocx').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([docx(t)], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })); a.download = `DRAFT-non-renewal-${c.name.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '')}.docx`; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); };
@@ -121,7 +129,7 @@ function download(name, text, type) { const a = document.createElement('a'); a.h
 const tag = () => (set === 'edgar' ? 'sec-edgar' : 'my-docs') + '-asof-' + asOf;
 const guard = f => () => { if (!current().length) { $('#status').textContent = 'Nothing to export yet: add a contract first.'; return; } f(); };
 $('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf), 'text/csv'));
-$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), Object.fromEntries(current().map(c => [c.id, exitNote(c)?.text]).filter(e => e[1]))), 'text/calendar'));
+$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), Object.fromEntries(current().map(c => [c.id, exitNote(c)?.text]).filter(e => e[1])), icsOpts()), 'text/calendar'));
 $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
 $('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
 $('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf), 'text/html'));
@@ -154,9 +162,9 @@ const weekday = d => WDAY[new Date(d + 'T00:00:00Z').getUTCDay()];
 // Display-only clean-up of a quoted clause. The stored quote (used for copy and the audit pack) is untouched.
 export const showQuote = q => String(q || '').replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\s+/g, ' ').replace(/“\s+/g, '“').replace(/\s+”/g, '”').replace(/\b([A-Z]) (?=[A-Z]{2,}\b)/g, '$1').trim();
 const mark = (html, phrases) => phrases.filter(Boolean).reduce((h, p) => { const e = esc(showQuote(p)); return e && h.includes(e) ? h.replace(e, `<mark>${e}</mark>`) : h; }, html);
-const order = rows => { // 1 passed but renewing, 2 dated soonest first, 3 no date, 4 expired; ties by name
+const order = rows => { // pinned first; then 1 passed but renewing, 2 dated soonest first, 3 no date, 4 expired; ties by name
   const rank = r => r.missed ? 0 : r.section === 'lapsed' ? 3 : r.actBy ? 1 : 2;
-  return rows.slice().sort((a, b) => rank(a) - rank(b) || (a.actBy && b.actBy && rank(a) === 1 ? a.actBy.localeCompare(b.actBy) : 0) || a.name.localeCompare(b.name));
+  return pinFirst(rows.slice().sort((a, b) => rank(a) - rank(b) || (a.actBy && b.actBy && rank(a) === 1 ? a.actBy.localeCompare(b.actBy) : 0) || a.name.localeCompare(b.name)), team, rowKey);
 };
 function chip(r) {
   if (r.missed) { const ago = daysBetween(r.missed.actBy, asOf); return `<span class="chip passed">Passed ${dayWord(ago)} ago</span>`; }
@@ -216,7 +224,7 @@ function card(c, r) {
       <p class="conf"><span class="lab">How sure:</span> ${confTag(r)[1] === 'rvtag' ? `<span class="cw">${esc(cw)}</span>` : `<span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span>`} <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
       ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
-      <div class="acts"><button id="answerMore" class="btn-secondary sm">See every date and clause</button><button id="answerLetter" class="btn-secondary sm">Draft notice letter</button>${gcal(c, r)}</div>
+      <div class="acts"><button id="answerMore" class="btn-secondary sm">See every date and clause</button><button id="answerLetter" class="btn-secondary sm">Draft notice letter</button>${gcal(c, r)}<button id="answerPin" class="tl" type="button" aria-pressed="${isPinned(team, c)}">${isPinned(team, c) ? 'Pinned' : 'Pin this contract'}</button></div>
     </div></div></article>`;
 }
 function row(c, r) {
@@ -226,7 +234,7 @@ function row(c, r) {
   return `<li class="lrow${newIds.has(c.id) ? ' new' : ''}" data-id="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(c.name)}: show the answer">
     <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? (windowOf(r) ? windowOf(r).label : 'Send notice by') : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${windowNote(r) && !passed ? `<span class="rsafe">${esc(windowNote(r))}</span>` : r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
-    <div class="ln"><span class="rname">${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span></div>
+    <div class="ln"><span class="rname">${isPinned(team, c) ? '<span class="pin">Pinned</span> ' : ''}${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span></div>
     <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">Filing ↗</a>` : ''}</span>${gcal(c, r)}</div>
   </li>`;
 }
@@ -236,6 +244,7 @@ function live(cs) {
   if (!rows.length) { $('#answer').innerHTML = ''; $('#lq').innerHTML = ''; return; }
   const top = rows.find(r => r.id === expanded) || rows.find(r => r.id === cs[0].id) || rows[0];
   $('#answer').innerHTML = card(byId.get(top.id), top);
+  $('#answerPin').onclick = () => { togglePin(team, byId.get(top.id)); teamChanged(); };
   $('#answerMore').onclick = () => openDrawer(top.id); $('#answerLetter').onclick = () => openLetter(top.id);
   $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(showQuote(top.item.source.quote)).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
   const rest = rows.filter(r => r !== top); const exp = rest.filter(r => r.section === 'lapsed'), act = rest.filter(r => r.section !== 'lapsed');
@@ -344,7 +353,7 @@ try { const raw = localStorage.getItem(STORE_KEY); if (raw != null) { const { do
   else { const failed = loadDocs(docs), dropped = (bad || 0) + failed, kept = docs.length - failed;
     if (!kept) { localStorage.removeItem(STORE_KEY); storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; }
     else if (dropped) { save(); storeNote = `${dropped} saved ${dropped === 1 ? 'entry' : 'entries'} could not be read and ${dropped === 1 ? 'was' : 'were'} removed. ${kept} saved ${kept === 1 ? 'contract' : 'contracts'} kept.`; } } } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
-$('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} pendingSaved = null; $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
+$('#resetStore').onclick = () => { try { localStorage.removeItem(TEAM_OK); localStorage.removeItem(TEAM_KEY); team = normTeam(null); fillTeam(); localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} pendingSaved = null; $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
 // The ask has its own buttons. Load saved turns Remember on (your choice, never automatic); Delete removes it all.
 $('#loadSaved').onclick = () => { $('#savedAsk').hidden = true; $('#remember').checked = true; $('#remember').onchange({ target: $('#remember') }); $('#status').textContent = 'Loaded your saved contracts. Remember is on; untick it to delete them from this device.'; setTimeout(() => { const h = $('#liveQ').hidden ? $('#answer') : $('#lqh'); h.tabIndex = -1; h.focus(); }, 60); };
 $('#delSaved').onclick = () => { $('#savedAsk').hidden = true; $('#resetStore').onclick(); $('#drop').focus(); };
@@ -353,19 +362,37 @@ let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
   $('#pfCount').textContent = pfRows.length; const wkIds = P.thisWeek(pfRows, asOf).due.map(r => r.id); $('#pfFirst').textContent = P.firstSentence(pfRows, wkIds); $('#pfTop3').innerHTML = P.top3Html(pfRows, wkIds);
-  $('#pfWeek').innerHTML = P.weekHtml(pfRows, asOf, r => gcalLink({ name: r.c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: r.c.url, note: exitNote(r.c)?.text, within: windowOf(r), windowNote: windowNote(r) }));
+  $('#pfWeek').innerHTML = P.weekHtml(pinFirst(pfRows, team, rowKey), asOf, r => gcalLink({ name: r.c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: r.c.url, note: exitNote(r.c)?.text, within: windowOf(r), windowNote: windowNote(r) }));
   document.querySelectorAll('#pfWeek [data-letter]').forEach(b => { b.onclick = () => { const r = pfRows.find(x => x.id === b.dataset.letter); if (r) openLetter(r.id, r.c); }; });
   $('#pfSub').textContent = `Sample data: ${pfRows.length} public SEC contracts standing in for GI's. Supply, manufacturing, licence, services, colocation and network deals make up most of them, with a few executive and consulting agreements; every row opens the SEC filing it came from. Dates are this tool's reading as of ${fmt(asOf)}.`;
   $('#pfStrip').innerHTML = stripHtml(portfolio(pfRows));
   $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);
-  $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf);
-  document.querySelectorAll('.pfsort [data-sort]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.sort === pfSort)); b.onclick = () => { pfDir = pfSort === b.dataset.sort ? -pfDir : 1; pfSort = b.dataset.sort; $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf); document.querySelectorAll('.pfsort [data-sort]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.sort === pfSort))); }; });
+  $('#pfList').innerHTML = P.listHtml(pinFirst(P.sortRows(pfRows, pfSort, pfDir), team, rowKey), asOf);
+  document.querySelectorAll('.pfsort [data-sort]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.sort === pfSort)); b.onclick = () => { pfDir = pfSort === b.dataset.sort ? -pfDir : 1; pfSort = b.dataset.sort; $('#pfList').innerHTML = P.listHtml(pinFirst(P.sortRows(pfRows, pfSort, pfDir), team, rowKey), asOf); document.querySelectorAll('.pfsort [data-sort]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.sort === pfSort))); }; });
 }
 { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
   try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf);
-    $('#pfIcs').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.ics`, withAlarms(toICS(cs, asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), Object.fromEntries(cs.map(c => [c.id, exitNote(c)?.text]).filter(e => e[1]))), 'text/calendar');
+    $('#pfIcs').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.ics`, withAlarms(toICS(cs, asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), Object.fromEntries(cs.map(c => [c.id, exitNote(c)?.text]).filter(e => e[1])), icsOpts()), 'text/calendar');
     $('#pfCsv').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.csv`, auditCSV(cs, asOf), 'text/csv'); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
   catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
+// ---------- Set up for your team ----------
+const tf = { company: $('#tCompany'), name: $('#tName'), title: $('#tTitle'), email: $('#tEmail'), warn: $('#tWarn'), cal: $('#tCal'), tz: $('#tTz') };
+const localTz = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone; } catch { return ''; } })();
+tf.tz.innerHTML = [...new Set([team.tz, ...TZS, localTz].filter(Boolean))].map(z => `<option>${esc(z)}</option>`).join('');
+const fillTeam = () => { tf.company.value = team.company; tf.name.value = team.signer.name; tf.title.value = team.signer.title; tf.email.value = team.signer.email; tf.warn.value = team.warnDays; tf.cal.value = team.calName; tf.tz.value = team.tz; $('#tSave').checked = teamSaved(); };
+function teamStatus() {
+  const s = team.signer; const who = s.name ? `Letters are signed by ${s.name}${s.title ? ', ' + s.title : ''}${team.company ? ', ' + team.company : ''}.` : team.company ? `Letters come from ${team.company}.` : 'Add a name to sign the letters.';
+  const d = alarmDays(team.warnDays); $('#tStatus').textContent = `${who} Reminders go off ${d.join(', ').replace(/, (\d+)$/, ' and $1')} days before each deadline, in ${team.tz}. ${team.pins.length ? team.pins.length + ' pinned.' : ''} ${teamSaved() ? 'Saved on this device.' : 'Not saved: tick the box to keep it.'}`.replace(/\s+/g, ' ').trim();
+  const all = [...current().map(c => ({ c })), ...(pfRows || []).map(r => ({ c: r.c }))];
+  $('#tPins').innerHTML = all.length ? all.map(({ c }) => `<li><label><input type="checkbox" data-pin="${esc(ckey(c))}"${isPinned(team, c) ? ' checked' : ''}> ${esc(c.name)}</label></li>`).join('') : '<li class="status">Add contracts first, then pin the ones that matter most.</li>';
+  document.querySelectorAll('#tPins [data-pin]').forEach(b => b.onchange = () => { const k = b.dataset.pin; team.pins = b.checked ? [...new Set([...team.pins, k])] : team.pins.filter(p => p !== k); teamChanged(); });
+}
+function teamChanged() { saveTeam(); render(); renderPf(); teamStatus(); }
+const readTeam = () => { team = normTeam({ ...team, company: tf.company.value, signer: { name: tf.name.value, title: tf.title.value, email: tf.email.value }, warnDays: tf.warn.value, calName: tf.cal.value, tz: tf.tz.value }); saveTeam(); render(); renderPf(); teamStatus(); };
+Object.values(tf).forEach(i => i.addEventListener(i.tagName === 'SELECT' ? 'change' : 'input', readTeam));
+$('#tSave').onchange = e => { try { if (e.target.checked) { localStorage.setItem(TEAM_OK, '1'); saveTeam(); } else { localStorage.removeItem(TEAM_OK); localStorage.removeItem(TEAM_KEY); } } catch {} teamStatus(); };
+$('#teamBox').addEventListener('toggle', teamStatus);
+fillTeam(); teamStatus();
 if (params.get('demo') === '1') { document.body.classList.add('guided'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
 new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 if (set === 'edgar') loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
