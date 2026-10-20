@@ -685,3 +685,13 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 /* Plain words, no all-caps in the portfolio table and controls */
 .pfv .pfhead,.pfv .pfsort button,.pfv .pfsort .lab,.pflist .tag,.pflist .pe,.pflist .ps{text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
 .pffirst{font:500 20px/28px var(--font-sans);color:var(--fg);margin:0 0 16px}
+/* Bigger parties and dates; one column on phones */
+.pflist .pn{font-size:18px;line-height:24px}.pflist .pd{font-size:18px;line-height:24px}
+@media (max-width:720px){
+  .pflist .pr{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+  .pflist .pn{flex-basis:100%;font-size:18px}
+  .pflist .pd::before{content:'Send notice by ';color:var(--mute);font-size:14px}
+  .pflist .pl{font-size:14px}
+  .pflist .ps{flex-basis:100%}
+  .pflist .pe{margin-left:auto}
+}
