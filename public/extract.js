@@ -685,7 +685,9 @@ export function schedule(x, asOf) {
   let kc = 0; if (x.renewal && rp) while (kc < k && endOf(kc) < as) kc++;
   // Missed window: the running term's notice date passed, it has not renewed yet, and no later send-notice deadline falls before that renewal.
   const renewOn = x.renewal && rp ? addDays(endOf(kc), 1) : null;
-  const missedWindow = kc < k && renewOn && actBy && actBy >= renewOn ? { actBy: ymd(actByOf(endOf(kc))), renews: ymd(renewOn) } : null;
+  // Also when the running term's deadline passed in the last 90 days, even if the next send-notice date comes before that renewal (short renewal periods, e.g. monthly).
+  const recentMiss = kc < k && renewOn && (as - actByOf(endOf(kc))) <= 90 * 864e5 && actByOf(endOf(kc)) >= addDuration(endOf(kc), rp, -1);
+  const missedWindow = kc < k && renewOn && actBy && (actBy >= renewOn || recentMiss) ? { actBy: ymd(actByOf(endOf(kc))), renews: ymd(renewOn) } : null;
   const skipped = []; for (let j = kc + 1; j < k; j++) skipped.push(ymd(endOf(j)));
   if (missedWindow) items.push({ type: 'MISSED send-notice deadline', date: missedWindow.actBy, missed: true, status: 'missed', confidence: termConf === 'high' ? 'medium' : termConf, needsReview: true, why: `MISSED: the send-notice deadline for the term ending ${ymd(endOf(kc))} passed on ${missedWindow.actBy}, so the contract renews automatically on ${missedWindow.renews} unless the other side agrees to end it. The next send-notice deadline is ${ymd(actBy)}.`, source: x.notice?.source || x.term.source });
   if (kc < k) items.push({ missedWindow, type: kc > 0 ? 'Current term ends (projected)' : 'Initial term ends', date: ymd(endOf(kc)), confidence: kc > 0 && termConf === 'high' ? 'medium' : termConf, needsReview: termRev || x.renewal.needsReview, why: `The term running on the as-of date. Its non-renewal deadline (${ymd(actByOf(endOf(kc)))}) has already passed, so it renews; the next decision below applies to the following term.`, source: x.term.source });
@@ -814,7 +816,9 @@ export function buildQueue(contracts, asOf) {
 }
 
 // ---------- exports ----------
-const csvCell = v => { const s = String(v ?? ''); return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+export const ZW = /[\u200b\u200c\u200d\u2060\ufeff]/g;
+// Quote when needed; a cell starting with = + - @ tab or CR gets a ' prefix so spreadsheets never run it as a formula.
+export const csvCell = v => { const s = String(v ?? '').replace(ZW, ''); const f = /^[=+\-@\t\r]/.test(s) && !/^-?\d+(\.\d+)?$/.test(s); return f || /[",\r\n]/.test(s) ? '"' + (f ? "'" : '') + s.replace(/"/g, '""') + '"' : s; };
 export function toCSV(contracts, asOf) {
   const head = ['contract', 'filer', 'counterparty', 'item', 'who_acts', 'date', 'days_from_as_of', 'as_of', 'send_by_business_day', 'confidence', 'needs_review', 'reasoning', 'source_location', 'source_clause', 'source_url'];
   const out = [head.join(',')];
@@ -825,8 +829,11 @@ export function toCSV(contracts, asOf) {
   }
   return out.join('\r\n') + '\r\n';
 }
-const icsEsc = s => String(s).replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
-const fold = l => { const o = []; while (l.length > 74) { o.push(l.slice(0, 74)); l = ' ' + l.slice(74); } o.push(l); return o.join('\r\n'); };
+const icsEsc = s => String(s).replace(ZW, '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+// RFC 5545 3.1: lines of at most 75 octets, folded with CRLF + space, never splitting a UTF-8 character.
+export const fold = l => { const enc = new TextEncoder(); const o = []; let cur = '', n = 0, lim = 75;
+  for (const ch of l) { const b = enc.encode(ch).length; if (n + b > lim) { o.push(cur); cur = ' '; n = 1; } cur += ch; n += b; }
+  o.push(cur); return o.join('\r\n'); };
 export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
   const L = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Contract Cliffs//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Contract Cliffs send-notice deadlines'];
   for (const c of contracts) for (const i of schedule(c.x, asOf)) {
