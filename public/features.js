@@ -155,7 +155,7 @@ export function letter(c, r, asOf) {
     '',
     `Re: Notice of non-renewal of the ${c.title || 'agreement'} between ${parties.length ? parties.join(' and ') : fill('parties')}`,
     '',
-    'To whom it may concern,',
+    `Dear ${fill('other party')},`,
     '',
     `Under the renewal clause of the agreement, quoted below, we give notice that we do not wish to renew the agreement and that it will end at the close of its current term${r?.item?.termEnd ? `, ${fmtLong(r.item.termEnd)}` : ''}.`,
     '',
