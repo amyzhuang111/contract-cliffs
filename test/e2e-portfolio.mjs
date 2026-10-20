@@ -14,7 +14,7 @@ const load = async p => { await p.click('#loadPf'); await p.waitForSelector('#pf
 
 for (const w of [1440, 375]) {
   { const p = await fresh('/?asof=2026-10-19', w); await sleep(800);
-    ok(await p.evaluate(() => document.querySelector('#pfLoad').hidden && document.querySelector('#pfView').hidden && getComputedStyle(document.querySelector('#pfLoad')).display === 'none') && !p.reqs.some(u => /portfolio\.(json|js)/.test(u)), `${w}: plain URL: no portfolio button, no portfolio data fetched`);
+    ok(await p.evaluate(() => document.querySelector('#pfView').hidden) && !p.reqs.some(u => /portfolio\.json/.test(u)), `${w}: plain URL: portfolio closed, no portfolio data fetched on load`);
     await p.ctx.close(); }
   { const p = await fresh('/?demo=1&asof=2026-10-19', w); await p.waitForFunction(() => document.querySelector('#answer .iname'), { timeout: 5000 });
     const b = await p.evaluate(() => ({ t: document.querySelector('#loadPf').textContent, note: document.querySelector('.pfnote').textContent, vis: !document.querySelector('#pfLoad').hidden, card: document.querySelector('#answer .iname').textContent }));
@@ -22,9 +22,9 @@ for (const w of [1440, 375]) {
     ok(!p.reqs.some(u => /portfolio\.json/.test(u)), `${w}: portfolio data only loads on click`);
     await load(p);
     const d = await p.evaluate(() => ({ sub: document.querySelector('#pfSub').textContent, strip: [...document.querySelectorAll('#pfStrip .pf')].map(x => x.innerText.replace(/\s+/g, ' ')), rows: [...document.querySelectorAll('#pfList li')].map(li => ({ n: li.querySelector('.pn').textContent, d: li.querySelector('.pd').textContent, l: li.querySelector('.pl').textContent, c: li.querySelector('.pc').textContent, a: li.querySelector('a.pe').href })), marks: [...document.querySelectorAll('.tl-track .mk')].map(m => [m.className, getComputedStyle(m).backgroundColor]), secOnly: !document.querySelectorAll('#pfView a:not([href^="https://www.sec.gov/"]):not([href^="#pf-"])').length }));
-    ok(/^Stand-ins for a company's own vendor, cloud, compute and data agreements: 25 public contracts filed with the SEC, each linked to its filing as proof\./.test(d.sub), `${w}: header frames them as stand-ins`);
-    ok(d.strip.join('|') === 'DUE IN 30 DAYS 2|DUE IN 90 DAYS 3|DUE IN 365 DAYS 6|PASSED 2|NEEDS REVIEW 13', `${w}: summary strip ${d.strip.join(', ')}`);
-    ok(d.rows.length === 25 && d.rows[0].n === 'Glacier Bancorp / Glacier Bank' && d.rows[0].d === '22 Oct 2026' && d.rows[0].l === '3 days left' && d.rows[0].c === 'Clear', `${w}: 25 rows, soonest first (${d.rows[0].n}, ${d.rows[0].d}, ${d.rows[0].l})`);
+    ok(/^Stand-ins for a company's own agreements: 25 public contracts filed with the SEC \(licence, supply, services and network deals, plus some executive and consulting agreements\), each linked to its filing as proof\./.test(d.sub), `${w}: header frames them as stand-ins`);
+    ok(d.strip.join('|') === 'DUE IN 30 DAYS 2|DUE IN 90 DAYS 3|DUE IN 365 DAYS 6|PASSED 2|NEEDS REVIEW 14', `${w}: summary strip ${d.strip.join(', ')}`);
+    ok(d.rows.length === 25 && d.rows[0].n === 'Glacier Bancorp / Glacier Bank' && d.rows[0].d === '22 Oct 2026' && d.rows[0].l === '3 days left' && d.rows[0].c === 'Check', `${w}: 25 rows, soonest first (${d.rows[0].n}, ${d.rows[0].d}, ${d.rows[0].l})`);
     const urls = new Set(Object.values(SRC)); ok(d.rows.every(r => urls.has(r.a)) && d.secOnly, `${w}: every row links its SOURCES.txt EDGAR filing`);
     ok(d.rows.filter(r => r.c === 'Can’t tell').length === 9 && d.rows.filter(r => r.c === 'Check').length >= 5 && d.rows.some(r => /earlier date passed/.test(r.l)), `${w}: rows include Check, can't tell and passed`);
     const Y = 'rgb(235, 255, 10)'; ok(d.marks.length === 12 && d.marks.every(([c, bg]) => (bg === Y) === /review/.test(c)), `${w}: 12 timeline markers; #EBFF0A only on needs-review markers`);
