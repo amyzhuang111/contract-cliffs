@@ -411,3 +411,5 @@ body.demo #about{display:none}
 #asof{min-height:44px;box-sizing:border-box;padding:0 12px}
 #how > summary{min-height:44px;display:flex;align-items:center}
 .conf .cw{font:400 var(--t-label) var(--font-mono);text-transform:uppercase;color:#fff}
+body.has-any:not(.legacy) .dz-add{align-items:center;justify-content:center}
+.about #add{padding-top:0;margin-top:0}.about .sechead{margin-top:0}.about .sechead h2{margin-top:0}
