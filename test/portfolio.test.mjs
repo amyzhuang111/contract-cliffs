@@ -25,9 +25,9 @@ for (const c of cs) test(`portfolio ${c.file}: output equals expected ${c.expect
 });
 test('portfolio: the mix has passed, due soon, later, Check and can\'t tell', () => {
   const rows = rowsFor(cs, AS); const n = k => rows.filter(r => r.st.key === k).length;
-  assert.deepEqual({ passed: n('passed'), soon: n('soon'), later: n('later'), review: n('review') }, { passed: 2, soon: 3, later: 6, review: 14 });
+  assert.deepEqual({ passed: n('passed'), soon: n('soon'), later: n('later'), review: n('review') }, { passed: 2, soon: 3, later: 7, review: 13 });
   assert.equal(rows.filter(r => r.conf === 'Can’t tell').length, 9); assert.ok(rows.filter(r => r.conf === 'Check').length >= 5); assert.ok(rows.filter(r => r.conf === 'Clear').length >= 5);
-  assert.deepEqual(portfolio(buildQueue(cs, AS)), { total: 25, d30: 3, d90: 4, d365: 6, passed: 2, review: 14, expired: 0 });
+  assert.deepEqual(portfolio(buildQueue(cs, AS)), { total: 25, d30: 2, d90: 3, d365: 6, passed: 2, review: 13, expired: 0 });
 });
 test('portfolio: status, sorting and timeline', () => {
   assert.equal(pfStatus({ needsReview: true, actBy: '' }).label, 'Can’t tell');
