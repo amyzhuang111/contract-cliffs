@@ -718,3 +718,4 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 #liveQ .lab,#liveQ .chip,#liveQ .pchip,#liveQ .tag,#liveQ button,#liveQ a,#liveQ h2,
 #drawer .lab,#drawer .tag,#drawer button,#drawer a,.prompt button,.pfload button,.pfexport button{text-transform:none;letter-spacing:0}
 #answer *,#liveQ *{text-transform:none !important}
+.savedask{border:1px solid var(--rule);padding:12px 16px;margin:12px 0}.savedask p{margin:0 0 8px;color:var(--fg)}.savedask .row{display:flex;flex-wrap:wrap;gap:8px}

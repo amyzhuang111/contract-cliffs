@@ -338,11 +338,14 @@ let pendingSaved = null;
 const loadDocs = docs => { let failed = 0; for (const m of docs) { try { mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch { failed++; } } return failed; };
 try { const raw = localStorage.getItem(STORE_KEY); if (raw != null) { const { docs, error, bad } = parseSaved(raw);
   if (error === 'corrupt' || !docs.length) { localStorage.removeItem(STORE_KEY); localStorage.removeItem('cc-remember'); $('#remember').checked = false; storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; }
-  else if (!remember()) { pendingSaved = docs; storeNote = `${docs.length} saved ${docs.length === 1 ? 'contract is' : 'contracts are'} on this device from an earlier visit, not loaded. Keep saving? Tick Remember to load ${docs.length === 1 ? 'it' : 'them'}, or use Delete saved data.`; }
+  else if (!remember()) { pendingSaved = docs; $('#savedAskText').textContent = `${docs.length} saved ${docs.length === 1 ? 'contract is' : 'contracts are'} on this device from an earlier visit, not loaded. Keep saving?`; $('#savedAsk').hidden = false; }
   else { const failed = loadDocs(docs), dropped = (bad || 0) + failed, kept = docs.length - failed;
     if (!kept) { localStorage.removeItem(STORE_KEY); storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; }
     else if (dropped) { save(); storeNote = `${dropped} saved ${dropped === 1 ? 'entry' : 'entries'} could not be read and ${dropped === 1 ? 'was' : 'were'} removed. ${kept} saved ${kept === 1 ? 'contract' : 'contracts'} kept.`; } } } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
 $('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} pendingSaved = null; $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
+// The ask has its own buttons. Load saved turns Remember on (your choice, never automatic); Delete removes it all.
+$('#loadSaved').onclick = () => { $('#savedAsk').hidden = true; $('#remember').checked = true; $('#remember').onchange({ target: $('#remember') }); $('#status').textContent = 'Loaded your saved contracts. Remember is on; untick it to delete them from this device.'; };
+$('#delSaved').onclick = () => { $('#savedAsk').hidden = true; $('#resetStore').onclick(); };
 // Portfolio view: behind a button on every URL. Nothing loads until it is clicked.
 let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {
