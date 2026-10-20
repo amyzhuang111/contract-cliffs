@@ -1,4 +1,4 @@
-import { checkLine, htmlToLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
+import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -261,8 +261,8 @@ async function readFile(f) {
   if (ext === 'txt') return (await f.text()).split(/\r?\n/);
   if (ext === 'htm' || ext === 'html') return htmLines(await f.text());
   if (ext === 'docx') {
-    const { value } = await window.mammoth.extractRawText({ arrayBuffer: await f.arrayBuffer() });
-    return value.split(/\n+/).map(t => t.trim()).filter(Boolean).map(text => ({ para: true, text }));
+    const { value } = await window.mammoth.convertToHtml({ arrayBuffer: await f.arrayBuffer() });
+    return docxLines(value);
   }
   if (ext === 'pdf') {
     const lib = window.pdfjsLib; lib.GlobalWorkerOptions.workerSrc = '/vendor/pdf.worker.min.js';

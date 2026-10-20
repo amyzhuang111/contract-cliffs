@@ -124,3 +124,17 @@ dlh-parker-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/785557/00007
 fmbank-michael-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/740806/000165495425014119/fmbm_ex101.htm
 solarwind-pickett-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/95572/000121390025116815/ea026673301ex10-1_kinrg.htm
 timken-boldea-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/98362/000009836225000142/tkr93025exhibit104.htm
+dte-cic-template-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/936340/000093634025000203/exhibit102.htm
+carriage-franch-ex.edgar.htm https://www.sec.gov/Archives/edgar/data/1016281/000101628125000077/robfranchagreement040120.htm
+permapipe-sagr-ex.edgar.htm https://www.sec.gov/Archives/edgar/data/914122/000143774925011051/ex_797452.htm
+lazarus-revolver-ex.edgar.htm https://www.sec.gov/Archives/edgar/data/793306/000143774925025635/ex_849661.htm
+quaker-carvalho-cic-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/81362/000008136225000059/ex102changeincontrol-renat.htm
+firstcommonwealth-coc-ex10-3.edgar.htm https://www.sec.gov/Archives/edgar/data/712537/000071253725000088/fcf-ex103_20250331xchangeo.htm
+dominari-ledwick-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/12239/000121390025089817/ea025818901ex10-1_dominari.htm
+firstsource-murphy-ex10-a1.edgar.htm https://www.sec.gov/Archives/edgar/data/34782/000003478225000103/exhibit10a1murphyiiiemploy.htm
+puget-severance-plan-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1085392/000108539225000018/exhibit101executiveseveran.htm
+trex-severance-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1069878/000095017025102135/trex-ex10_2.htm
+woodmark-mason-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/794619/000079461925000107/ex10220250731.htm
+photronics-rivera-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/810136/000114036125017153/ef20048414_10-1.htm
+vail-katz-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/812011/000081201125000105/exhibit1012025-q4.htm
+*.generated.docx: LibreOffice conversion of the EDGAR HTML; *.html-in-word.generated.docx keeps the raw HTML source as text (a page pasted into Word).

@@ -12,3 +12,12 @@ export function docxLines(file) {
   const dec = s => s.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&');
   return [...xml.matchAll(/<w:p[ >][\s\S]*?<\/w:p>/g)].map(m => ({ para: true, text: dec([...m[0].matchAll(/<w:t(?: [^>]*)?>([^<]*)<\/w:t>/g)].map(x => x[1]).join('')) }));
 }
+// The browser's own Word path: the vendored mammoth bundle to HTML, then extract.js docxLines (same splitter as HTML).
+import fs from 'node:fs';
+import { docxLines as splitDocx } from '../public/extract.js';
+let mm = null;
+export async function docxBrowserLines(file) {
+  if (!mm) { const w = globalThis.window; globalThis.window = globalThis; (0, eval)(fs.readFileSync(new URL('../public/vendor/mammoth.browser.min.js', import.meta.url), 'utf8')); mm = globalThis.mammoth; if (w === undefined) delete globalThis.window; }
+  const b = fs.readFileSync(file); const { value } = await mm.convertToHtml({ arrayBuffer: b.buffer.slice(b.byteOffset, b.byteOffset + b.length) });
+  return splitDocx(value);
+}
