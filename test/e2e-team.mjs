@@ -35,7 +35,7 @@ for (const w of [1440, 375]) {
     ok(await p.evaluate(() => !!document.querySelector('#teamBox summary') && /Set up for your team/.test(document.querySelector('#teamBox summary').textContent) && document.querySelector('#tWarn').value === '30'), `${w}: setup panel is there, warning days default to 30`);
     await add3(p); await setup(p);
     ok(await p.evaluate(() => localStorage.getItem('cc-team') === null && localStorage.getItem('cc-team-ok') === null), `${w}: setup is not stored without consent`);
-    ok(/Stan Yushenko, VP Ops, General Intuition/.test(await p.$eval('#tStatus', e => e.textContent)) && /45, 14 and 7 days/.test(await p.$eval('#tStatus', e => e.textContent)), `${w}: status says what was applied`);
+    ok(/Stan Yushenko, VP Ops, General Intuition/.test(await p.$eval('#tStatus', e => e.textContent)) && /45, 14 and 7 days/.test(await p.$eval('#tStatus', e => e.textContent)) && /The calendar timezone, America\/Chicago, is passed to your calendar app; the reminders are all-day, so they fire in your device's time\./.test(await p.$eval('#tStatus', e => e.textContent)) && !/Reminders go off[^.]* in America/.test(await p.$eval('#tStatus', e => e.textContent)), `${w}: status says what was applied`);
     await shot(p, 'setup', w);
     await p.evaluate(() => document.querySelector('#answerLetter').click()); await p.waitForSelector('#letterText');
     const t = await p.$eval('#letterText', e => e.textContent);
