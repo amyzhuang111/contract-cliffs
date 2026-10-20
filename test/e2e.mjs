@@ -117,10 +117,10 @@ await page.$eval('#asof', e => { e.value = '2026-10-19'; e.dispatchEvent(new Eve
 await page.click('#pasteBtn'); await page.type('#paste', 'This Agreement is entered into as of January 5, 2026 (the "Effective Date"). The Initial Term shall commence on the Effective Date and continue for one (1) year. This Agreement shall automatically renew for successive one (1) year terms unless either party provides written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
 await page.click('#addPaste'); await openLatest(/^(Read|Added) Pasted text/);
 ok((await page.$eval('#drawer', e => e.textContent)).includes('5 Dec 2026'), 'pasted contract: act-by 5 Dec 2026 (term ends 4 Jan 2027 minus 30 days)');
-await page.click('#close'); await new Promise(r => setTimeout(r, 350)); await page.click('#setEdgar');
+await page.click('#close'); await new Promise(r => setTimeout(r, 350)); await page.$eval('#setEdgar', b => b.click());
 const TOK = await page.evaluate(() => { const p = document.createElement('div'); document.body.append(p); const g = v => { p.style.color = `var(${v})`; return getComputedStyle(p).color; }; const o = { ink: g('--ink'), mute: g('--mute') }; p.remove(); return o; }); // brand tokens, so a palette swap doesn't break the checks
 // Taste+Design checks: quotes normalised, review labels, lapsed rows, clause serif
-await page.click('#setEdgar'); await page.waitForSelector('#queue li');
+await page.$eval('#setEdgar', b => b.click()); await page.waitForSelector('#queue li');
 const quotes = [];
 for (const c of edgar) { await page.click(`#cards .card[data-id="${c.id}"]`); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 350)); quotes.push(...await page.$$eval('#drawer blockquote.clause', qs => qs.map(q => q.textContent))); await page.click('#close'); await new Promise(r => setTimeout(r, 350)); }
 ok(quotes.length > 30 && !quotes.some(q => /“\s|\s”/.test(q)), `no whitespace inside curly quotes across ${quotes.length} quoted clauses`);

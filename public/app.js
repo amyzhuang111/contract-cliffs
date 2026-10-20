@@ -1,4 +1,4 @@
-import { htmlToLines, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
+import { htmlToLines, partiesFromPreamble, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -36,7 +36,7 @@ function render() {
   const own = set === 'mine';
   document.body.classList.toggle('legacy', !own); document.body.classList.toggle('has-many', cs.length >= 2); document.body.classList.toggle('has-one', cs.length === 1); document.body.classList.toggle('has-any', cs.length > 0);
   $('#queueSec').hidden = own || cs.length < 2; $('#ch').closest('section').hidden = own || cs.length < 2;
-  $('#answer').hidden = !own || !cs.length; $('#prompt').hidden = !own || !cs.length || cs.length > 2; $('#liveQ').hidden = !own || cs.length < 2;
+  $('#answer').hidden = !own || !cs.length; $('#prompt').hidden = !own || !cs.length || cs.length > 2; if (own) promptLabel(cs.length); if (!own) $('#about').open = true; $('#liveQ').hidden = !own || cs.length < 2;
   if (own) live(cs); else $('#answer').innerHTML = '';
   if (remember()) save();
   $('#setEdgar').setAttribute('aria-pressed', set === 'edgar'); $('#setMine').setAttribute('aria-pressed', set === 'mine'); $('#setHoldout').setAttribute('aria-pressed', set === 'holdout');
@@ -119,9 +119,11 @@ async function addDoc(name, lines, meta = {}) {
   if (!looksLikeContract(x, text)) { const m = `Could not find a contract in ${name}: no term, renewal, notice or effective-date language. Nothing was added.`; dzError('This doesn’t look like a contract: no term, renewal or notice language found.'); $('#status').textContent = m; return null; }
   await stage(3, name);
   const id = 'u' + (++n); const base = name.replace(/\.[a-z0-9]+$/i, '');
-  mine.push({ id, name: (meta.name || base).slice(0, 60), fileName: name, counterparty: meta.counterparty || base, filer: meta.filer || '', kind: meta.kind || 'Your contract', url: meta.url || '', title: meta.title || '', exhibit: meta.exhibit || '', filed: meta.filed || '', secId: meta.secId || '', lines, x });
+  const parties = meta.name ? '' : partiesFromPreamble(lines);
+  mine.push({ id, name: (meta.name || parties || base).slice(0, 60), fileName: name, counterparty: meta.counterparty || base, filer: meta.filer || '', kind: meta.kind || 'Your contract', url: meta.url || '', title: meta.title || '', exhibit: meta.exhibit || '', filed: meta.filed || '', secId: meta.secId || '', lines, x });
   newIds.add(id); setTimeout(() => { newIds.delete(id); document.querySelector(`#lq li[data-id="${id}"]`)?.classList.remove('new'); }, 4000);
-  set = 'mine'; expanded = null; busyDone(); render();
+  set = 'mine'; busyDone(); render();
+  if (mine.length === 1) requestAnimationFrame(() => { const h = document.querySelector('#answer .hero-date'); if (h && h.getBoundingClientRect().bottom > innerHeight - 8) $('#answer').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); });
   const c = mine.length; $('#status').textContent = (c === 1 ? `Read ${name}.` : `Added ${name}: ${c} contracts, most urgent first.`) + note;
   return id;
 }
@@ -145,6 +147,15 @@ function chip(r) {
   return `<span class="chip ${cls}">${r.days === 0 ? 'Due today' : dayWord(r.days) + ' left'}</span>`;
 }
 const confWord = c => c === 'high' ? ['Clear', 3] : c === 'medium' ? ['Check one thing', 2] : c === 'low' ? ['Can’t tell', 1] : ['Can’t tell', 0];
+// One tag, used on both the card and the row: never Clear for medium.
+const confTag = r => r.needsReview || !['high', 'medium'].includes(r.confidence) ? ['Needs review', 'rvtag'] : r.confidence === 'medium' ? ['Check one thing', 'check'] : ['Clear', 'clear'];
+// The one thing to check, in one line, from the parser's own reason.
+function oneThing(r) {
+  const it = r.item || {};
+  if (it.renewed > 0 && it.initialEnd && !r.needsReview) return `Check: has either side sent notice since ${fmt(ymd(addDays(new Date(it.initialEnd + 'T00:00:00Z'), 1)))}? If not, the term rolled over ${it.renewed === 1 ? 'once' : it.renewed + ' times'}.`;
+  return r.tag ? `Check: ${r.tag}.` : 'Check the quoted clause before relying on this date.';
+}
+const days = (n, u) => `${n} ${u}${+n === 1 ? '' : 's'}`;
 const renewsFor = c => { const p = c.x.renewal?.period; return p ? `${p.n} more ${p.unit}${p.n > 1 ? 's' : ''}` : ''; };
 function card(c, r) {
   const more = renewsFor(c); const cons = more ? `or it renews for ${more}.` : 'or it renews automatically.';
@@ -158,8 +169,8 @@ function card(c, r) {
   else if (r.actBy && /Send-notice/.test(r.label)) { kicker = r.needsReview ? 'Send notice by (best reading)' : 'Send notice by'; hero = esc(fmt(r.actBy)); sub = esc(cons); }
   else if (r.actBy) { kicker = 'Ends on'; hero = esc(fmt(r.actBy)); sub = 'No automatic renewal. Plan the replacement before then.'; }
   else { kicker = 'Send notice by'; cls = 'nodate'; hero = 'No date found'; sub = esc(r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No renewal or term clause found. It may not auto-renew.'); }
-  const m = /\((\d{4}-\d{2}-\d{2}) − (\d+) (day|month|year|business day)/.exec(r.item?.why || ''); const cyc = /Projected forward (\d+) renewal/.exec(r.item?.why || '');
-  const math = m && r.actBy ? `Term ends ${fmt(m[1])}${cyc ? ` (renewed ${cyc[1] === '1' ? 'once' : cyc[1] + ' times'}, assuming no termination or amendment)` : ''}. Minus ${m[2]} ${m[3]}${m[2] === '1' ? '' : 's'} = ${fmt(r.actBy)}.` : '';
+  const it = r.item || {};
+  const math = it.termEnd && it.notice && r.actBy ? `Term ends ${fmt(it.termEnd)}${it.renewed ? ` (assumes it renewed ${it.renewed === 1 ? 'once' : it.renewed + ' times'} and was never amended)` : ''}. Minus ${days(it.notice.n, it.notice.unit)} = ${fmt(r.actBy)}.` : '';
   const quoteHtml = src?.quote ? mark(esc(showQuote(src.quote)), [c.x.notice?.period?.text, c.x.renewal?.period?.text, (showQuote(src.quote).match(/automatically renew\w*/i) || [])[0]]) : '';
   const meta = [c.kind && c.kind !== 'Your contract' ? c.title || c.kind : c.fileName ? 'Uploaded · ' + c.fileName : 'Your contract', c.exhibit || '', c.filed ? 'Filed ' + fmt(c.filed) : ''].filter(Boolean).join(' · ');
   return `<article class="acard ${cls}" data-id="${esc(c.id)}">
@@ -177,9 +188,9 @@ function card(c, r) {
       <p class="lab">From the contract</p>
       ${quoteHtml ? `<blockquote class="aq">“${quoteHtml}”</blockquote>` : '<p class="cons">No clause with a date was found.</p>'}
       <p class="prov lab">${src?.location ? `<span>${esc(src.location)}</span> · ` : ''}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">Open on SEC EDGAR ↗</a> · ` : ''}${src?.quote ? `<button class="tl copyq" type="button">Copy clause</button>` : ''}</p>
-      <p class="conf"><span class="lab">Confidence:</span> <b>${esc(cw)}</b> <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
+      <p class="conf"><span class="lab">Confidence:</span> <span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span> <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
+      ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
-      ${r.item?.why ? `<p class="whyp">${esc(r.item.why.replace(/\s*\(\d{4}-\d{2}-\d{2} − [^)]*\)\.?/, '.').replace(/\.\./g, '.'))}</p>` : ''}
       <button id="answerMore" class="btn-secondary sm">See every date and clause</button>
     </div></div></article>`;
 }
@@ -188,22 +199,27 @@ function row(c, r) {
   const d = r.missed ? r.missed.actBy : r.actBy;
   const cons = r.missed ? `Renews ${fmt(r.missed.renews)}. Next send-notice date ${fmt(r.actBy)}.` : r.section === 'lapsed' ? 'Expired. No action needed.' : !r.actBy ? (r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No date found.') : /Send-notice/.test(r.label) ? (renewsFor(c) ? `or it renews for ${renewsFor(c)}.` : 'or it renews automatically.') : 'No automatic renewal.';
   return `<li class="lrow${newIds.has(c.id) ? ' new' : ''}" data-id="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(c.name)}: show the answer">
-    <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? 'Send notice by' : 'Needs a person'}</span></div>
+    <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? 'Send notice by' : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
     <div class="ln"><span class="rname">${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span></div>
-    <div class="lt">${r.needsReview ? `<span class="tag rvtag">Needs review</span>` : `<span class="tag clear">Clear</span>`}<span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR ↗</a>` : ''}</span></div>
+    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR ↗</a>` : ''}</span></div>
   </li>`;
 }
 function live(cs) {
   const before = new Map([...document.querySelectorAll('#lq li[data-id]')].map(li => [li.dataset.id, li.getBoundingClientRect().top]));
   const rows = order(buildQueue(cs, asOf)); const byId = new Map(cs.map(c => [c.id, c]));
   if (!rows.length) { $('#answer').innerHTML = ''; $('#lq').innerHTML = ''; return; }
-  const top = rows.find(r => r.id === expanded) || rows[0];
+  const top = rows.find(r => r.id === expanded) || rows.find(r => r.id === cs[0].id) || rows[0];
   $('#answer').innerHTML = card(byId.get(top.id), top);
   $('#answerMore').onclick = () => openDrawer(top.id);
   $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(top.item.source.quote).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
   const rest = rows.filter(r => r !== top); const exp = rest.filter(r => r.section === 'lapsed'), act = rest.filter(r => r.section !== 'lapsed');
   $('#lqh').textContent = `Queue · ${cs.length} contracts · sorted by send-notice date`;
+  const sum = []; const pas = rows.filter(r => r.missed || (r.days != null && r.days < 0 && r.section !== 'lapsed')).length; if (pas) sum.push(`<span class="p">${pas} passed</span>`);
+  rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days != null && r.days >= 0 && r.days <= 90).sort((a, b) => a.days - b.days).forEach(r => sum.push(`1 due ${r.days === 0 ? 'today' : 'in ' + dayWord(r.days)}`));
+  const later = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days > 90).length; if (later) sum.push(`${later} later`);
+  const nod = rows.filter(r => !r.actBy).length; if (nod) sum.push(`${nod} no date`); const ex = rows.filter(r => r.section === 'lapsed').length; if (ex) sum.push(`${ex} expired`);
+  $('#lqSum').innerHTML = sum.join(' · ');
   $('#lq').innerHTML = act.map(r => row(byId.get(r.id), r)).join('');
   $('#lqExpired').innerHTML = exp.length ? `<button class="tl" id="showExp">${exp.length} expired · ${shownExpired ? 'Hide' : 'Show'}</button>${shownExpired ? `<ol class="lq">${exp.map(r => row(byId.get(r.id), r)).join('')}</ol>` : ''}` : '';
   $('#showExp')?.addEventListener('click', () => { shownExpired = !shownExpired; render(); });
@@ -229,8 +245,10 @@ $('#pasteCancel').onclick = e => { e.stopPropagation(); show(null); };
 $('#drop').addEventListener('click', e => { if (e.target === $('#drop') || e.target.closest('.dz-idle') && !e.target.closest('button')) $('#file').click(); });
 $('#drop').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === $('#drop')) { e.preventDefault(); $('#file').click(); } });
 $('#howBtn').onclick = () => { const h = $('#howPop'); h.hidden = !h.hidden; $('#howBtn').setAttribute('aria-expanded', String(!h.hidden)); };
-$('#clearAll').onclick = () => { mine = []; expanded = null; if (remember()) save(); render(); $('#status').textContent = 'Cleared.'; };
+$('#clearAll').onclick = () => { mine = []; expanded = null; newIds.clear(); if (remember()) save(); render(); $('#status').textContent = 'Cleared.'; };
 const DEMO = ['c2', 'c3', 'c1', 'c6', 'c12', 'c8', 'c13', 'c4', 'c7'];
+const DEMO_NAMES = { c2: 'StableX / Kopin', c3: 'Dragonfly / Keystone RV', c1: 'Cerus / Purolite', c6: 'CFO Portal / Vivos', c12: 'Reborn / Mighty Oak', c8: 'Patheon / Vaxcyte', c13: 'ARK / Eightco', c4: 'Tradeweb Data Schedule', c7: 'Synacor / Qwest' };
+function promptLabel(n) { const next = DEMO.find(id => !mine.some(m => m.secId === id)); $('#promptText').textContent = n >= 2 ? 'Add one more to see sorting' : 'Add another contract to build a priority queue'; $('#trySecond').textContent = next ? 'Add ' + DEMO_NAMES[next] : 'Add a real SEC contract'; $('#trySecond').hidden = !next; }
 async function addSec(id) { const c = (await edgarData()).find(c => c.id === id); if (mine.some(m => m.secId === id)) return; await stage(1, c.name); await addDoc(c.name, c.lines, { name: c.name, counterparty: c.counterparty, filer: c.filer, kind: c.kind, url: c.url, title: c.title, exhibit: c.exhibit, filed: c.filed, secId: id }); }
 $('#trySecond').onclick = async () => { const next = DEMO.find(id => !mine.some(m => m.secId === id)); if (next) await addSec(next); };
 const htmLines = t => htmlToLines(t);
@@ -255,26 +273,26 @@ async function readFile(f) {
   }
   throw new Error('unsupported file type (use PDF, .docx, .txt or .htm)');
 }
-async function addFiles(files) { for (const f of files) { try { $('#status').textContent = 'Reading ' + f.name + '…'; await stage(1, f.name); await addDoc(f.name, await readFile(f)); } catch (err) { dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + f.name + ': ' + err.message; } } }
+async function addFiles(files) { for (const f of files) { try { $('#status').textContent = 'Reading ' + f.name + '…'; await stage(1, f.name); await addDoc(f.name, await readFile(f)); } catch (err) { dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + f.name + ': ' + plainErr(err.message || ''); } } }
 $('#file').onchange = async e => { await addFiles([...e.target.files]); e.target.value = ''; };
 // The whole page is a drop target.
 ['dragenter', 'dragover'].forEach(ev => window.addEventListener(ev, e => { e.preventDefault(); document.body.classList.add('dragging'); }));
 ['dragleave', 'drop'].forEach(ev => window.addEventListener(ev, e => { e.preventDefault(); if (ev === 'drop' || !e.relatedTarget) document.body.classList.remove('dragging'); }));
 window.addEventListener('drop', e => { if (e.dataTransfer?.files?.length) addFiles([...e.dataTransfer.files]); });
-document.querySelectorAll('[data-sample]').forEach(b => b.onclick = async () => { const name = b.dataset.sample.split('/').pop(); try { $('#status').textContent = 'Reading ' + name + '…'; await stage(1, name); const blob = await (await fetch(b.dataset.sample)).blob(); await addDoc(name, await readFile(new File([blob], name))); } catch (err) { dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + name + ': ' + err.message; } });
+document.querySelectorAll('[data-sample]').forEach(b => b.onclick = async () => { const name = b.dataset.sample.split('/').pop(); try { $('#status').textContent = 'Reading ' + name + '…'; await stage(1, name); const blob = await (await fetch(b.dataset.sample)).blob(); await addDoc(name, await readFile(new File([blob], name))); } catch (err) { dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + name + ': ' + plainErr(err.message || ''); } });
 $('#addPaste').onclick = async e => { e?.stopPropagation?.(); const t = $('#paste').value.trim(); if (!t) { $('#status').textContent = 'Paste some contract text first.'; return; } const name = 'Pasted text ' + (n + 1); await stage(1, name); if (await addDoc(name, t.split(/\r?\n/))) $('#paste').value = ''; };
 // One click: a single real SEC contract (Star Brands / Schwazze licence), read the same way as your files.
 $('#tryOne').onclick = async () => {
   try { if (mine.some(m => m.secId === 'c5')) { set = 'mine'; render(); return; } await addSec('c5'); }
-  catch (err) { busyDone(); $('#status').textContent = 'Could not load the example: ' + err.message; }
+  catch (err) { busyDone(); $('#status').textContent = 'Could not load the example. Reload the page and try again.'; }
 };
 $('#fetchUrl').onclick = async () => {
   const u = $('#url').value.trim(); if (!/^https:\/\/(www\.)?sec\.gov\//i.test(u)) { $('#status').textContent = 'Could not fetch: only https://www.sec.gov links are accepted.'; return; }
   $('#status').textContent = 'Fetching from sec.gov…'; const name = decodeURIComponent(u.split('/').pop() || 'SEC document');
-  try { await stage(1, name); const r = await fetch('/api/edgar?url=' + encodeURIComponent(u)); const t = await r.text(); if (!r.ok) throw new Error(t || r.status);
+  try { await stage(1, name); const r = await fetch('/api/edgar?url=' + encodeURIComponent(u)); const t = await r.text(); if (!r.ok) throw Object.assign(new Error(String(t || 'sec.gov answered ' + r.status).replace(/<[^>]*>/g, '').slice(0, 160)), { fromServer: true });
     const lines = /<html|<body|<p[\s>]|<div[\s>]/i.test(t) ? htmLines(t) : t.split(/\r?\n/);
     await addDoc(name, lines, { url: u, kind: 'SEC filing' });
-  } catch (err) { busyDone(); $('#status').textContent = 'Could not fetch that link: ' + err.message; }
+  } catch (err) { busyDone(); $('#status').textContent = 'Could not fetch that link: ' + (err.fromServer ? err.message : 'no connection to sec.gov right now. Try again, or download the file and drop it here.'); }
 };
 // Opt-in local memory (localStorage). Off by default; unticking deletes what was saved.
 const remember = () => localStorage.getItem('cc-remember') === '1';

@@ -75,7 +75,7 @@ test('c4 Tradeweb: explicit 1 Nov 2025 – 31 Oct 2028, 180 days, up to two 2-yr
 test('c5 Schwazze licence: 24 months from 15 Jun 2023, 180 days, projected to next cycle', () => {
   assert.equal(C.c5.x.effective.date, '2023-06-15'); assert.equal(C.c5.x.term.end, '2025-06-14');
   assert.equal(C.c5.x.renewal.period.n, 24); assert.equal(C.c5.x.notice.period.n, 180);
-  const a = get('c5', 'Send-notice'); assert.equal(a.date, '2026-12-16'); assert.match(a.why, /Projected forward 1 renewal/);
+  const a = get('c5', 'Send-notice'); assert.equal(a.date, '2026-12-16'); assert.match(a.why, /Assumes it renewed once/); assert.equal(a.renewed, 1); assert.equal(a.termEnd, '2027-06-14');
 });
 test('c6 Vivos MSA: 31 Jul 2026, 12 months, 60 days', () => {
   assert.equal(C.c6.x.term.end, '2027-07-30'); const a = get('c6', 'Send-notice'); assert.equal(a.date, '2027-05-31'); assert.equal(a.needsReview, false);
@@ -423,4 +423,38 @@ test('Juneteenth only from 2021', () => { assert.equal([..._uh(2020).values()].i
 test('malformed dates do not crash safeSendBy', () => { for (const d of ['2026-02-30', 'junk', '', null, undefined, 42, '2026-13-01', '26-1-1', {}]) assert.deepEqual(_ssb(d), { date: '', changed: false, reason: '' }); });
 test('htmlToLines matches the totext.py method', () => {
   assert.deepEqual(htmlToLines('<html><style>p{}</style><script>x</script><p>A&nbsp; <b>b</b></p><div>C&amp;D</div><br><table><tr><td>e</td><td>f&#8217;s</td></tr></table>'), ['A b', 'C&D', 'e', 'f’s']);
+});
+
+test('day counts are exact calendar days to the printed date', async () => {
+  const { daysBetween } = await import('../public/extract.js');
+  for (const [a, b, n] of [['2026-10-20', '2030-01-26', 1194], ['2026-10-19', '2030-01-26', 1195], ['2026-10-20', '2030-01-25', 1193], ['2026-10-20', '2026-12-16', 57], ['2026-10-19', '2026-12-16', 58], ['2026-10-20', '2027-09-19', 334], ['2026-10-20', '2027-09-17', 332], ['2026-09-19', '2026-10-20', 31], ['2026-10-20', '2026-10-20', 0], ['2027-02-28', '2028-02-29', 366], ['2026-03-07', '2026-03-09', 2], ['2026-10-31', '2026-11-02', 2]]) assert.equal(daysBetween(a, b), n, `${a} -> ${b}`);
+  const r = buildQueue([C.c2], '2026-10-20')[0]; assert.equal(r.actBy, '2030-01-26'); assert.equal(r.days, 1194); assert.equal(r.safe.date, '2030-01-25');
+});
+
+// ---- independent review of 7593ee9: real unseen EDGAR exhibits ----
+test('ReposiTrak: "initial term of employment shall be three (3) years commencing on the Effective Date" -> 2029-08-17', async () => {
+  const { htmlToLines, partiesFromPreamble } = await import('../public/extract.js');
+  const L = htmlToLines(fs.readFileSync(new URL('./fixtures/repositrak-cfo-ex10-1.edgar.htm', import.meta.url), 'utf8')); const x = extract(L);
+  assert.equal(x.effective.date, '2026-08-18'); assert.equal(x.term.end, '2029-08-17'); assert.equal(x.renewal.period.n, 1);
+  assert.equal(buildQueue([{ id: 'r', name: 'r', lines: L, x }], '2026-10-19')[0].actBy, '2029-06-18');
+  assert.equal(partiesFromPreamble(L), 'ReposiTrak / John R. Merrill');
+});
+test('Alphega: "one (1)-year" renewals parsed; explicit "through December 31, 2028" is high confidence', async () => {
+  const { htmlToLines, partiesFromPreamble } = await import('../public/extract.js');
+  const L = htmlToLines(fs.readFileSync(new URL('./fixtures/alphega-ceo-ex10-1.edgar.htm', import.meta.url), 'utf8')); const x = extract(L);
+  assert.equal(x.term.end, '2028-12-31'); assert.equal(x.term.confidence, 'high'); assert.deepEqual([x.renewal.period.n, x.renewal.period.unit], [1, 'year']);
+  const r = buildQueue([{ id: 'a', name: 'a', lines: L, x }], '2026-10-19')[0]; assert.equal(r.actBy, '2028-10-02'); assert.equal(r.confidence, 'high');
+  assert.equal(partiesFromPreamble(L), 'Alphega Innovations / Luis Carlos Ung');
+});
+test('duration with a hyphen after the bracket: "one (1)-year", "twelve (12)-month"', () => {
+  assert.deepEqual([parseDuration('one (1)-year').n, parseDuration('one (1)-year').unit], [1, 'year']);
+  assert.deepEqual([parseDuration('twelve (12)-month periods').n, parseDuration('twelve (12)-month periods').unit], [12, 'month']);
+});
+test('no stray ")." and no "(s)" or "Projected forward" in send-notice explanations', () => {
+  for (const c of Object.values(C)) for (const r of buildQueue([c], '2026-10-19')) { const w = r.item?.why || ''; assert.doesNotMatch(w, /\)\.\)|\.\)\.|day\(s\)|month\(s\)|Projected forward/, c.id + ': ' + w); }
+});
+test('party names from the preamble, falling back to nothing', async () => {
+  const { partiesFromPreamble } = await import('../public/extract.js');
+  assert.equal(partiesFromPreamble(['This Agreement is made by and between ACME CORP., a Delaware corporation ("Acme"), and Beta LLC ("Beta").']), 'Acme / Beta');
+  assert.equal(partiesFromPreamble(['Shopping list: eggs and milk.']), '');
 });

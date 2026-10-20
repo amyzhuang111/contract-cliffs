@@ -346,3 +346,35 @@ body:not(.has-any):not(.legacy) .wrap > .hero{min-height:calc(100vh - 64px);box-
   body.legacy .drop,body.legacy .btnrow{display:none}body.legacy .hero{padding:12px 0 0}body.legacy .hero .status{margin-top:4px}
 }
 [hidden]{display:none!important}
+/* ===== re-review 7593ee9 ===== */
+.lab,.eyebrow,.caption,.dz-hint,.tl,.tag,.prov,.lqsum{font-size:12px;line-height:16px}
+.tag.check{border:1px solid var(--accent);color:var(--accent)}
+.conf .tag{vertical-align:middle;margin-left:4px}
+.one{font:400 15px/24px var(--font-sans);color:#fff;margin:var(--s-1) 0}
+.math{color:var(--body)}
+.chip{font:500 14px/20px var(--font-mono);padding:6px 12px;min-height:32px;box-sizing:border-box}
+.rsafe{font:var(--t-label) var(--font-mono);color:var(--body)}
+.lqsum{margin:0 0 var(--s-1);color:var(--muted);text-transform:uppercase}.lqsum .p{color:var(--danger)}
+.prompt{min-height:72px;padding:var(--s-1) var(--s-3)}.pr-r{display:flex;flex-direction:column;align-items:flex-end}.pr-cap{margin:4px 0 0}
+.dz-more{display:none}
+/* once a contract is loaded: one 56px dashed bar */
+body.has-any:not(.legacy) .hero{padding:var(--s-2) 0 var(--s-2)}
+body.has-any:not(.legacy) .hero .lede,body.has-any:not(.legacy) .edgar-url,body.has-any:not(.legacy) .btnrow,body.has-any:not(.legacy) .dz-hint,body.has-any:not(.legacy) .dz-pastelink,body.has-any:not(.legacy) .dz-desk,body.has-any:not(.legacy) .dz-phone{display:none}
+body.has-any:not(.legacy) .dz-more{display:inline}
+body.has-any:not(.legacy) .drop{min-height:56px;padding:0 var(--s-3);justify-content:flex-start}
+body.has-any:not(.legacy) .drop .dz-big{font:500 16px/24px var(--font-sans);margin:0}
+body.has-any:not(.legacy) .drop .dz-busy,body.has-any:not(.legacy) .drop .dz-err,body.has-any:not(.legacy) .drop .dz-paste{padding:var(--s-1) 0}
+body.has-any:not(.legacy) .hero .status{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;min-height:0}
+/* about behind one link */
+.about{margin:var(--s-4) 0}.about > summary{list-style:none;display:inline-flex;align-items:center;min-height:var(--tap);cursor:pointer}.about > summary::-webkit-details-marker{display:none}
+.about[open] > summary{margin-bottom:var(--s-2)}
+footer details.method > summary{min-height:var(--tap);display:flex;align-items:center;flex-wrap:wrap}
+#add .tl{margin-right:var(--s-3)}
+@media (max-width:767px){
+  .hero-date{font-size:clamp(40px,13vw,56px);line-height:1.05}
+  .pchip{display:table;margin:0 0 8px}
+  .dz-pastelink{display:none}
+  .prompt{flex-direction:column;align-items:stretch}.pr-r{align-items:stretch}
+  .tag{position:relative}.tag::after{content:"";position:absolute;inset:-8px 0}
+  .lt a,.prov a,.prov .tl,.lq-tools .tl,#showExp{display:inline-flex;align-items:center;min-height:var(--tap)}
+}

@@ -16,3 +16,12 @@ Own-contract e2e fixtures (Dragonfly Energy / THOR Industries supply agreement, 
 | c3-dragonfly.generated.pdf | **generated**: `google-chrome --headless --print-to-pdf edgar/raw/c3.htm` |
 
 Expected (edgar/VERIFICATION.md): send-notice deadline 19 Sep 2026 missed; renews 19 Nov 2026; next deadline 19 Sep 2027 (a Sunday, so send by Fri 17 Sep 2027).
+
+Reviewer's unseen EDGAR exhibits (verbatim HTML as served by sec.gov, fetched Oct 19, 2026 with a declared User-Agent; not generated):
+
+| file | source |
+|---|---|
+| repositrak-cfo-ex10-1.edgar.htm | ReposiTrak, Inc. 8-K (0001437749-26-028419), Executive Employment Agreement: https://www.sec.gov/Archives/edgar/data/50471/000143774926028419/ex_1006529.htm |
+| alphega-ceo-ex10-1.edgar.htm | Alphega Innovations Corp. 8-K (0002038564-26-000012), EX-10.1 Executive Employment Agreement: https://www.sec.gov/Archives/edgar/data/2038564/000203856426000012/alpga_ex10-1.htm |
+
+Expected (reviewer's hand calculation, checked against the clauses): ReposiTrak term "three (3) years commencing on the Effective Date" (18 Aug 2026) ends 2029-08-17; 60 days' notice gives 2029-06-18. Alphega "continue through December 31, 2028" (explicit, high confidence), "one (1)-year" renewals, ≥90 days' notice gives 2028-10-02.
