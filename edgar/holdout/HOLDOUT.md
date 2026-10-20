@@ -117,3 +117,24 @@ Answers were worked out by hand from each filing before running the tool. Source
 | Carriage Services / Franch | DOCX | 31 Jan 2027 | 31 Jan 2027, Check | right |
 | Trex severance template | HTML | no date (blank date) | no date | right |
 | Puget Sound Energy plan | PDF | 1 Nov 2027 | 1 Nov 2027 | right |
+
+## Blind test 5, October 2026 (16 unseen agreements through the browser; answers worked out by hand first; no code changes after)
+
+| Filing | Input | Hand answer (as of 19 Oct 2026) | Card | Result |
+|---|---|---|---|---|
+| Zimmer / Noor CIC | text | 2 Dec 2026 (renews each Jan 1; 30 days) | ends 31 Dec 2026, no further renewal, Check (renewal-wording note) | **wrong** at Check |
+| Stride CIC template | HTML | no date (blank Effective Date) | no date | right |
+| Cineverse / Opeka | PDF | 30 Jan 2027 | 30 Jan 2027, Sure | right (name keeps "having an address at") |
+| Crown / Rost | DOCX | 1 Jun 2027 (30 days before the Jul 1 anniversary) | 31 May 2027, Check | **wrong** by one day, early, at Check |
+| Enovis / McDonald offer | HTML | about 12–13 Mar 2028 (start date only "anticipated") | 13 Mar 2028, Sure | right date, should have been Check; unnamed |
+| Grand Canyon / Claypatch | PDF | 1 Apr 2028 | no date ("no notice period") | missed, flagged |
+| B. Riley / Yessner | HTML | about 4–5 Mar 2027 (term runs from the Jun 3 2025 Commencement Date) | 17 Feb 2027, Check | **wrong** at Check (counted from the May 19 Effective Date) |
+| TREES / Hershey consulting | DOCX | 20 Apr 2027 | no date ("no term found") | missed, flagged |
+| Civeo / Gerry | HTML | no deadline (extends one day every day) | no date | right |
+| West / scPharma amendment | HTML | ends 31 Dec 2027, no automatic renewal | no date ("no notice period") | missed: "does not automatically extend or renew" not read as a no |
+| Procore / Gopal | PDF | 24 Jul 2028 (first renewal on the third anniversary) | 24 Jul 2027, Sure | **wrong, marked Sure** |
+| The Joint / Bowman | DOCX | 11 Mar 2027 | 11 Mar 2027 | right |
+| CaliberCos / James | text | about 6 Jun 2027, Check | no date ("no term found") | missed, flagged |
+| ETHZilla / Rudisill | HTML | about 30–31 Dec 2028, Check (end before Dec 31 2028; no notice length) | no date | missed, flagged |
+| Shell / IRRX offtake | HTML | no date (Commencement Date is an event) | no date | right |
+| Aebi Schmidt loan | PDF | missed 2 Oct 2026; next 2 Oct 2027 | no date ("no notice period") | missed, flagged |

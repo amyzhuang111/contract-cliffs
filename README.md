@@ -11,6 +11,7 @@ Dev: `npm run serve` (static site + /api/edgar on :4173), `npm test`, `npm run e
 - Real set: 10 Exhibit 10 agreements from SEC EDGAR (edgar/SOURCES.md; hand checks in edgar/VERIFICATION.md).
 - Held-out test: 14 more Exhibit 10 agreements never used for tuning. First pass 2/14 send-notice deadline dates right, 5 flagged correctly, 6 missed, 1 wrong; after fixes 8 dated, 6 flagged, 0 wrong (edgar/holdout/HOLDOUT.md; those 14 are now tuning data).
 - Blind holdout 2: 10 new agreements, run once before any change: 3 right, 6 flagged, 1 missed, 0 wrong send-notice deadline dates (1 wrong secondary 'current term' date, fixed).
+- Blind test 5 (Oct 2026, 16 more unseen agreements through the browser: PDF, DOCX, text, HTML): 3 right, 3 correctly blank, 6 missed (flagged), 4 wrong (one marked Sure, three at Check).
 - Blind test 4 (Oct 2026, 13 more unseen agreements through the browser: PDF, DOCX, text, HTML): 4 right, 2 correctly blank, 5 missed (flagged), 2 wrong (one at Check).
 - Blind test 3 (Oct 2026, 13 more unseen agreements, real PDF and DOCX through the browser): 3 right, 3 correctly blank, 3 right next date without the passed-deadline warning, 3 missed (flagged), 1 wrong (shown as expired).
 - Blind test 2 (Oct 2026, 13 unseen SEC agreements, answers worked out by hand first, no code changes after): 3 dates right, 5 correctly left blank, 3 missed (flagged), 1 debatable (at Check), 1 wrong at Clear (it read an older agreement's term from the recitals). It is not error-free: when it can't tell it says so and flags the row for a person.
