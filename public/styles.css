@@ -684,3 +684,4 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 
 /* Plain words, no all-caps in the portfolio table and controls */
 .pfv .pfhead,.pfv .pfsort button,.pfv .pfsort .lab,.pflist .tag,.pflist .pe,.pflist .ps{text-transform:none;letter-spacing:0;font-family:var(--font-sans);font-size:14px}
+.pffirst{font:500 20px/28px var(--font-sans);color:var(--fg);margin:0 0 16px}

@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { htmlToLines, extract, buildQueue } from '../public/extract.js';
-import { rowsFor, pfStatus, sortRows, timelineHtml, listHtml, pos, confWord, END } from '../public/portfolio.js';
+import { rowsFor, pfStatus, sortRows, byUrgency, firstSentence, timelineHtml, listHtml, pos, confWord, END } from '../public/portfolio.js';
 import { portfolio, BUCKETS, FLAGS, stripHtml, summaryOf } from '../public/features.js';
 const AS = '2026-10-19';
 const P = JSON.parse(fs.readFileSync(new URL('../public/data/portfolio.json', import.meta.url)));
@@ -59,4 +59,12 @@ test('portfolio: status, sorting and timeline', () => {
   const l = listHtml(rows, AS); assert.equal((l.match(/<li /g) || []).length, 25); assert.equal((l.match(/href="https:\/\/www\.sec\.gov\//g) || []).length, 25);
   assert.ok(!/—/.test(t + l));
   assert.equal(confWord({ needsReview: false, confidence: 'high' }), 'Clear');
+});
+test('portfolio: default order is by urgency and the opening sentence count matches the data', () => {
+  const rows = rowsFor(cs, AS); const u = byUrgency(rows);
+  assert.deepEqual(u.slice(0, 3).map(r => r.c.name), ['Glacier Bancorp / Glacier Bank', 'urban-gro / Richard Akright', 'F. Scott Anthony / Coca-Cola Consolidated']);
+  const n = rows.filter(r => ['passed', 'd30'].includes(r.st.bucket)).length; assert.equal(n, 2);
+  assert.equal(firstSentence(rows), 'The 2 contracts you need to act on first are listed first.');
+  assert.ok(u.slice(0, n).every(r => ['passed', 'd30'].includes(r.st.bucket)) && u.slice(-4).every(r => !r.actBy));
+  assert.equal(firstSentence(rows.filter(r => r.st.bucket !== 'd30')), 'Nothing is due in the next 30 days. The next deadlines are listed first.');
 });

@@ -342,10 +342,10 @@ try { const raw = localStorage.getItem(STORE_KEY); if (raw != null) { const { do
     if (dropped) { save(); storeNote = `${dropped} saved ${dropped === 1 ? 'entry' : 'entries'} could not be read and ${dropped === 1 ? 'was' : 'were'} removed. ${kept} saved ${kept === 1 ? 'contract' : 'contracts'} kept.`; } } } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
 $('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
 // Portfolio view: behind a button on every URL. Nothing loads until it is clicked.
-let pfSort = 'date', pfDir = 1, pfRows = null;
+let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
-  $('#pfCount').textContent = pfRows.length;
+  $('#pfCount').textContent = pfRows.length; $('#pfFirst').textContent = P.firstSentence(pfRows);
   $('#pfSub').textContent = `Stand-ins for a company's own agreements: ${pfRows.length} public contracts filed with the SEC (licence, supply, services and network deals, plus some executive and consulting agreements), each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
   $('#pfStrip').innerHTML = stripHtml(portfolio(pfRows));
   $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);
