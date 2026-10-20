@@ -709,4 +709,5 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
   .pfv #pfh{font-size:20px;line-height:26px;margin:4px 0 8px}
   .portfolio .big{padding:8px 12px;gap:0 10px}.portfolio .big .sv{font-size:28px;line-height:32px}.portfolio .big .bl{font-size:16px}.portfolio .big .bc{font-size:14px;line-height:18px}
   .pfexport .btn-secondary{flex:1 1 100%}}
-@media (max-width:480px){.portfolio .big.act .bc,.portfolio .big.year .bc{display:none}.top3 .t3 a{padding:8px 12px}.pfv .portfolio .pfflags{font-size:14px;line-height:18px;padding:6px 12px}.pfv .lab:first-child{margin:0}}
+@media (max-width:480px){.top3 .t3 a{padding:8px 12px}.pfv .portfolio .pfflags{font-size:14px;line-height:18px;padding:6px 12px}.pfv .lab:first-child{margin:0}}
+@media (max-width:480px){.top3 .t3 a{padding:6px 12px}.portfolio .big{padding:6px 12px}}
