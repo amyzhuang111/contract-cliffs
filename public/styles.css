@@ -476,7 +476,7 @@ footer .foot{margin-top:0}
 .hero .lede .ld{color:#86A1B6}
 .hero .subline{margin:0}
 /* E2 calendar strip */
-.cliff-strip{position:relative;display:grid;grid-template-columns:repeat(12,1fr);border-top:1px solid rgba(134,161,182,.3);font:11px/1 'Geist Mono',ui-monospace,monospace;letter-spacing:.08em;color:rgba(255,255,255,.45);padding-top:10px;margin:40px 0 48px}
+.cliff-strip{position:relative;display:grid;grid-template-columns:repeat(12,1fr);border-top:1px solid rgba(134,161,182,.3);font:11px/1 'Geist Mono',ui-monospace,monospace;letter-spacing:0;color:rgba(255,255,255,.45);padding-top:10px;margin:40px 0 48px}
 .cliff-strip span{position:relative}
 .cliff-strip span::before{content:"";position:absolute;left:0;top:-10px;width:1px;height:6px;background:rgba(134,161,182,.5)}
 .cliff-mark{position:absolute;top:-18px;left:72%;border-left:1px dashed #86A1B6;height:36px}
@@ -489,7 +489,7 @@ footer .foot{margin-top:0}
 .drop .tk{position:absolute;width:12px;height:12px;border:0 solid #86A1B6;pointer-events:none}
 .drop .tk1{top:-1px;left:-1px;border-top-width:1px;border-left-width:1px}.drop .tk2{top:-1px;right:-1px;border-top-width:1px;border-right-width:1px}
 .drop .tk3{bottom:-1px;left:-1px;border-bottom-width:1px;border-left-width:1px}.drop .tk4{bottom:-1px;right:-1px;border-bottom-width:1px;border-right-width:1px}
-.hero .dz-big .dz-desk{font:400 13px/20px var(--font-mono);text-transform:uppercase;letter-spacing:.08em}
+.hero .dz-big .dz-desk{font:400 13px/20px var(--font-mono);text-transform:uppercase;letter-spacing:0}
 .dz-sub{font:400 15px/22px var(--font-sans);color:rgba(255,255,255,.6);margin:0 0 var(--s-1)}
 /* E4 proof line */
 .proof{font:400 12px/18px var(--font-mono);color:rgba(255,255,255,.5);margin:var(--s-2) 0 0}
@@ -516,6 +516,42 @@ body.has-any .cliff-strip,body.has-any .proof,body.has-any .dz-sub{display:none}
 @media (min-width:1200px){.hero .subline{max-width:none;font-size:19px}}
 @media (max-width:480px){.hero .lede{max-width:none;font-size:44px}.cliff-strip{display:none}.dz-sub{display:none}.proof{font-size:11px;line-height:16px;margin-top:8px}}
 @media (max-width:480px){body:not(.has-any):not(.legacy) .hero{padding-top:32px}.hero .lede{font-size:36px}.hero .subline{font-size:16px;line-height:24px}}
-@media (min-width:1200px){body.has-one .agrid{grid-template-columns:7fr 3fr}.hero-date{letter-spacing:-0.03em;white-space:nowrap}}
+@media (min-width:1200px){body.has-one .agrid{grid-template-columns:minmax(0,1fr) 340px;column-gap:40px}.hero-date{white-space:nowrap}}
 @media (min-width:821px) and (max-height:960px){.proof{margin-top:6px}body:not(.has-any) .btnrow{margin-top:8px}.caption{margin-top:4px}}
 .cliff.near .cl-d{transform:translateX(8px)}
+
+/* ---- R1–R5 (6577573 re-score) ---- */
+/* R1 slide plays after its strip has appeared; label upright */
+@media (prefers-reduced-motion:no-preference){.cliff-mark{animation:cc-slide 1.2s var(--ease) 420ms both}}
+.cliff-mark b{font-style:normal}
+/* R2 strip becomes the hero instrument: taller months, a shaded 'auto-renews' zone after the marker, a ghost countdown (no data) */
+@media (min-width:821px){
+  .cliff-strip{letter-spacing:0;font-size:12px;color:rgba(255,255,255,.6);border-top:1px solid rgba(134,161,182,.6);padding-top:0;margin:36px 0 28px}
+  .cliff-strip span{height:56px;padding:36px 0 0 8px;border-left:1px solid rgba(134,161,182,.22)}
+  .cliff-strip span::before{display:none}
+  .cliff-strip::after{content:"AUTO-RENEWS";position:absolute;left:72%;right:0;top:0;height:56px;background:var(--accent-tint);color:var(--accent);font:400 12px/16px var(--font-mono);padding:8px 0 0 12px;box-sizing:border-box;pointer-events:none}
+  .cliff-mark{top:-28px;height:84px;border-left:2px solid #fff;z-index:1}
+  .cliff-mark b{color:#fff;top:-4px}
+  .cliff-mark::after{content:"-- DAYS LEFT";position:absolute;left:12px;top:30px;font:500 24px/28px var(--font-mono);color:var(--accent);white-space:nowrap}
+}
+/* R3 shrink the empty instrument so the strip is the focal object */
+@media (min-width:821px){body:not(.has-any):not(.legacy) .drop{min-height:150px}}
+.hero .dz-big .dz-desk{letter-spacing:0}
+/* R4 375: gap above the drop zone, compact strip back on phones */
+@media (max-width:480px){
+  .hero .subline{margin-bottom:24px}
+  body:not(.has-any) .cliff-strip{display:grid;margin:16px 0 28px;font-size:10px}
+  .cliff-strip span:nth-of-type(even){color:transparent}
+  .proof{display:none}
+}
+/* R5 demo: balance columns, no orphan, a readable cliff line, brand-true tracking */
+@media (min-width:1200px){
+  body.has-one .aq{font-size:15px;line-height:24px}
+  body.has-one .prov{flex-wrap:wrap;white-space:nowrap}body.has-one .prov > span:first-child{flex-basis:100%}body.has-one .prov > span:first-child + .dot{display:none}
+  .hero-date{letter-spacing:0;font-size:120px;line-height:112px}
+}
+.cliff{max-width:none}
+.cliff::before{background:rgba(255,255,255,.35)}
+.cliff::after{height:2px;top:-.5px}
+/* R2 follow-up: the AUTO-RENEWS caption sits above the shaded zone, right-aligned, so it never collides with the ghost countdown */
+@media (min-width:821px){.cliff-strip::after{top:-20px;height:76px;padding:2px 0 0;text-align:right;background:linear-gradient(transparent 20px,var(--accent-tint) 20px)}}
