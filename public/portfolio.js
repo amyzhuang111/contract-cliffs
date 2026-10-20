@@ -10,7 +10,7 @@ export const END = '2030-12-31';
 // Plain status words. A missed row reads as one phrase: "Missed 18 Oct, next deadline 17 Nov".
 const short = (d, asOf) => { const [y, m, dd] = d.split('-'); return `${+dd} ${MON[+m - 1]}${asOf && y !== asOf.slice(0, 4) ? ' ' + y : ''}`; };
 export function pfStatus(r, asOf = r.asOf) { const b = bucket(r), f = flagsOf(r);
-  const label = r.missed && r.actBy ? `Missed ${short(r.missed.actBy, asOf)}, next deadline ${short(r.actBy, asOf)}${f.includes('review') ? ' · needs review' : ''}` : rowLabel(r);
+  const label = r.missed && r.actBy ? `Missed ${short(r.missed.actBy, asOf)}, next deadline ${short(r.actBy, asOf)}${f.includes('review') ? ' · needs review' : ''}` : b === 'cant' ? 'No date found' : rowLabel(r); // Can't tell is shown once, in the Confidence column
   return { key: b, bucket: b, flags: f, label }; }
 const mkClass = r => ['mk', r.st.bucket, ...r.st.flags].join(' ');
 export const confWord = r => r.needsReview && !r.actBy ? 'Can’t tell' : r.needsReview || r.confidence !== 'high' ? 'Check' : 'Clear';

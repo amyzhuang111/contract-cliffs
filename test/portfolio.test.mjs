@@ -36,7 +36,7 @@ test('portfolio: the mix, one bucket per contract, buckets add up to 25', () => 
   for (const [f] of FLAGS) assert.equal(rows.filter(r => r.st.flags.includes(f)).length, pf[f], f);
 });
 test('portfolio: status, sorting and timeline', () => {
-  assert.equal(pfStatus({ needsReview: true, actBy: '' }).label, 'Can’t tell');
+  assert.equal(pfStatus({ needsReview: true, actBy: '' }).label, 'No date found');
   assert.equal(pfStatus({ actBy: '2026-10-21', days: 2, needsReview: true }).bucket, 'd30');
   assert.equal(pfStatus({ missed: { actBy: '2026-10-01' }, actBy: '2027-01-15', days: 88, needsReview: true }, AS).label, 'Missed 1 Oct, next deadline 15 Jan 2027 · needs review');
   assert.equal(pfStatus({ actBy: '2026-11-01', days: 13, needsReview: true }).label, 'Due in 30 days · needs review');
