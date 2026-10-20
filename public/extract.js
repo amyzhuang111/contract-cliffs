@@ -796,14 +796,14 @@ export function buildQueue(contracts, asOf) {
     let why; const ion = items.find(i => i.initialOnlyPassed);
     if (ion) why = ion.why;
     else if (mw) { const ago = daysBetween(mw.actBy, asOf), inn = daysBetween(asOf, mw.renews); why = `MISSED: send-notice deadline passed ${ago} day${ago === 1 ? '' : 's'} ago · renews ${fmtD(mw.renews)} (in ${inn} day${inn === 1 ? '' : 's'}) for ${lockText(rp)} unless the other side agrees to end it · next send-notice deadline ${fmtD(key)}`; }
-    else if (section === 'lapsed') why = isExp ? `Expired ${-d} days ago · all renewals used; confirm a replacement is in place` : act ? `Notice date passed ${-d} days ago · it has renewed or lapsed; check which` : `Expired ${-d} days ago · no auto-renewal`;
+    else if (section === 'lapsed') why = isExp ? `Expired ${-d} day${d === -1 ? '' : 's'} ago · all renewals used; confirm a replacement is in place` : act ? `Notice date passed ${-d} day${d === -1 ? '' : 's'} ago · it has renewed or lapsed; check which` : `Expired ${-d} day${d === -1 ? '' : 's'} ago · no auto-renewal`;
     else if (section === 'resolve' && c.x.notice?.evergreen) { const cur = items.find(i => /term ends/i.test(i.type) && i.date); why = `No send-notice deadline: renews every ${c.x.renewal.period.unit} until terminated, and the contract has no notice clause${cur ? ` · current term ends ${fmtD(cur.date)}` : ''}`; }
     else if (section === 'resolve') why = `No date found · resolve first: ${shortReason(/No end date could be worked out/.test(item?.why || '') && exp ? exp.why : item?.why)}`;
     else if (section === 'due' && item?.within) { const o = safeSendBy(key, true).date; const od = daysBetween(asOf, o); why = `Send notice on ${fmtW(key)}, ${d === 0 ? 'today' : `in ${d} day${d === 1 ? '' : 's'}`}; the clause can be read two ways (see the note), and if nothing is sent it renews for ${lockText(rp) || 'another term'}`; void o; void od; }
     else if (section === 'due') why = `Due ${d === 0 ? 'today' : `in ${d} day${d === 1 ? '' : 's'}`} · send notice now or it renews for ${lockText(rp) || 'another term'}`;
     else if (act) why = `Deadline in ${d} day${d === 1 ? '' : 's'} · miss it and it renews for ${lockText(rp) || 'another term'}${noticeLong ? ' · notice is longer than the renewal, so this decides two cycles out' : ''}`;
     else if (exp?.finalTerm) why = `Send-notice date passed (${fmtD2(exp.prevActBy || key)}) · extended to ${fmtD2(key)}, then it expires; no further renewal`;
-    else why = `Expires in ${d} days · no auto-renewal, so plan the replacement`;
+    else why = `Expires in ${d} day${d === 1 ? '' : 's'} · no auto-renewal, so plan the replacement`;
     const tfc = (c.x.other || []).find(o => /convenience/.test(o.kind) && o.notice?.n);
     // The check line names the assumption the date rests on (the start date) before anything else.
     const st0 = c.x.term?.start; const assume = !act || !key || !st0 || c.x.term.rule === 'explicit' ? '' : /read as the date of the agreement/.test(c.x.term.why || '') ? `start date assumed to be the agreement date (${fmtD(st0)}); confirm the term runs from it` : c.x.effective?.needsReview && st0 === c.x.effective.date && !c.x.term.table ? `start date ${fmtD(st0)} is taken from the "dated / as of" line, not a defined Effective Date; confirm it` : '';

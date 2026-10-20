@@ -32,7 +32,7 @@ export function sendByNote(actBy, asOf, forward = false) {
 }
 export const ALARM_DAYS = [30, 14, 7];
 const icsText = t => String(t).replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
-const ALARM = (n, name) => ['BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:-P${n}D`, `DESCRIPTION:${n} days to the send-notice deadline: ${name}`, 'END:VALARM'];
+const ALARM = (n, name) => ['BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:-P${n}D`, `DESCRIPTION:${n} day${n === 1 ? '' : 's'} to the send-notice deadline: ${name}`, 'END:VALARM'];
 // Unfold, give every send-notice event alarms at 30, 14 and 7 days (replacing any others), add the early-exit note
 // to its description (notes: contract id -> text), then fold again by octets.
 // opts (team setup): days = reminder days before each deadline, calName, tz.
@@ -72,7 +72,7 @@ function renewPlan(L, renew, notes, days) {
       `SUMMARY:${icsText(`Renews ${fmtLong(on)} (plan: renew): ${p.name}`)}`,
       `DESCRIPTION:${icsText(`Plan: renew. Nothing to send; this is a reminder of the renewal date. The current term ends ${fmtLong(p.termEnd)} and the contract renews on ${fmtLong(on)}.${extra}`)}`,
       ...ev.filter(x => x.startsWith('URL:')));
-    for (const n of days) out.push('BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:-P${n}D`, `DESCRIPTION:${icsText(`${n} days to the renewal date (plan: renew): ${p.name}`)}`, 'END:VALARM');
+    for (const n of days) out.push('BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:-P${n}D`, `DESCRIPTION:${icsText(`${n} day${n === 1 ? '' : 's'} to the renewal date (plan: renew): ${p.name}`)}`, 'END:VALARM');
     out.push('END:VEVENT'); ev = null;
   }
   return out;

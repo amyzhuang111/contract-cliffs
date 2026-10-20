@@ -119,3 +119,9 @@ test('email: the plan is named once', () => {
   const u = decodeURIComponent(mailtoList([{ ...IT(1)[0], plan: 'renew', action: 'Renews 21 Jul 2027; reminder only, nothing to send (plan: renew)' }, { ...IT(1)[0], plan: 'cancel' }], { asOf: AS }).url);
   assert.equal((u.match(/\(plan: renew\)/g) || []).length, 1); assert.equal((u.match(/\(plan: cancel\)/g) || []).length, 1);
 });
+test('one day is singular everywhere', () => {
+  const ics = withAlarms(toICS([E.c5], AS), {}, { days: alarmDays(1) }); assert.match(ics, /DESCRIPTION:1 day to the send-notice deadline/); assert.ok(!/\b1 days\b/.test(ics));
+  const r = withAlarms(toICS([ARM], AS), {}, { days: alarmDays(1), renew: { arm: { name: 'A', termEnd: '2027-07-20' } } }); assert.match(r, /1 day to the renewal date/);
+  const src = ['app.js', 'features.js', 'extract.js', 'team.js'].map(f => fs.readFileSync(new URL('../public/' + f, import.meta.url), 'utf8')).join('\n');
+  assert.ok(!/\$\{-?d\} days/.test(src), 'no bare ${d} days');
+});

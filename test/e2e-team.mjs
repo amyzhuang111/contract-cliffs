@@ -66,6 +66,7 @@ for (const w of [1440, 375]) {
       const st = await p.evaluate(() => ({ f: document.querySelector('#tWarn').value, m: document.querySelector('#tWarnMsg').hidden ? '' : document.querySelector('#tWarnMsg').textContent, s: document.querySelector('#tStatus').textContent }));
       await p.evaluate(() => document.querySelector('#exIcs').click()); const ics = await dl(p);
       ok(st.f === String(v) && st.m === `Days of warning must be 1 to 365, so it is set to ${v}.` && new RegExp(`go off ${v}[ ,]`).test(st.s) && ics.includes(`TRIGGER:-P${v}D`), `${w}: warning days ${raw} is clamped to ${v} in the field, the message, the status and the .ics`); }
+    ok(/Reminders go off 1 day before each deadline\./.test(await p.$eval('#tStatus', e => e.textContent)), `${w}: 1 day is singular in the status`);
     await type(p, '#tWarn', '20'); ok(await p.evaluate(() => document.querySelector('#tWarnMsg').hidden), `${w}: the message goes away for a valid number`);
     await p.ctx.close(); }
   // corrupt saved setup: cleared with a plain message
