@@ -1,6 +1,6 @@
 // Product features layered on the extractor: calendar links and alarms, notice letter (.docx), more obligations,
 // portfolio summary, per-contract audit CSV and safe local storage. Pure functions; no network, no invented data.
-import { toSentences, locLabel, trimQuote, safeSendBy, ymd, addDays } from './extract.js';
+import { toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
 
 const txt = l => typeof l === 'string' ? l : (l?.text ?? '');
 const norm = s => String(s ?? '').replace(/[\u200b\u200c\u200d\ufeff]/g, '').replace(/\s+/g, ' ').trim();
@@ -173,5 +173,17 @@ export function docx(text) {
 export function portfolio(rows) {
   const live = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days != null && r.days >= 0);
   return { total: rows.length, d30: live.filter(r => r.days <= 30).length, d90: live.filter(r => r.days <= 90).length, d365: live.filter(r => r.days <= 365).length, passed: rows.filter(r => r.missed || (r.days != null && r.days < 0 && r.section !== 'lapsed')).length, review: rows.filter(r => r.needsReview).length, expired: rows.filter(r => r.section === 'lapsed').length };
+}
+
+// ---------- F5: audit CSV, one row per contract ----------
+const cell = v => { const s = String(v ?? ''); return /[",\r\n]/.test(s) || /^[=+\-@\t\r]/.test(s) ? '"' + (/^[=+\-@\t\r]/.test(s) ? "'" : '') + s.replace(/"/g, '""') + '"' : s; };
+export function statusOf(r) { return r.missed ? 'Missed: send-notice deadline passed, not yet renewed' : r.section === 'lapsed' ? 'Expired' : r.days != null && r.days < 0 ? 'Passed' : !r.actBy ? 'Needs review: no date found' : r.days <= 30 ? 'Due within 30 days' : r.days <= 90 ? 'Due within 90 days' : r.days <= 365 ? 'Due within 365 days' : 'Later than 365 days'; }
+export function auditCSV(contracts, asOf) {
+  const rows = buildQueue(contracts, asOf); const byId = new Map(contracts.map(c => [c.id, c]));
+  const head = ['contract', 'counterparty', 'deadline', 'send_by_business_day', 'days_from_as_of', 'as_of', 'status', 'needs_review', 'review_reason', 'confidence', 'evidence_location', 'evidence_quote', 'source'];
+  const out = [head.join(',')];
+  for (const r of rows) { const c = byId.get(r.id); const d = r.missed ? r.missed.actBy : r.actBy;
+    out.push([c.name, c.counterparty || '', d || '', d ? sendDay(d, asOf) : '', d ? daysBetween(asOf, d) : '', asOf, statusOf(r), r.needsReview ? 'yes' : 'no', r.needsReview ? r.tag || '' : '', sure(r.confidence), r.item?.source?.location || '', norm(r.item?.source?.quote || ''), c.url || c.fileName || ''].map(cell).join(',')); }
+  return out.join('\r\n') + '\r\n';
 }
 

@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
 import { extract, toICS, buildQueue } from '../public/extract.js';
-import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, portfolio, FILL } from '../public/features.js';
+import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, portfolio, auditCSV, statusOf, FILL } from '../public/features.js';
 const load = f => JSON.parse(fs.readFileSync(new URL('../public/data/' + f + '.json', import.meta.url))).map(c => ({ ...c, x: extract(c.lines) }));
 const E = Object.fromEntries(load('edgar').map(c => [c.id, c])), H = Object.fromEntries(load('holdout').map(c => [c.id, c]));
 const AS = '2026-10-19';
@@ -107,4 +107,15 @@ test('F4: portfolio counts on the 10 SEC contracts', () => {
   const demo = portfolio(buildQueue([E.c5, E.c2, E.c3], AS));
   assert.deepEqual([demo.d30, demo.d90, demo.d365, demo.passed], [0, 1, 1, 1]); // Star Brands in 58 days; Dragonfly passed; StableX 2030
   assert.deepEqual(portfolio([]), { total: 0, d30: 0, d90: 0, d365: 0, passed: 0, review: 0, expired: 0 });
+});
+
+// F5
+test('F5: audit CSV has one row per contract with deadline, quote, confidence and status', () => {
+  const csv = auditCSV([E.c5, E.c3, E.c2], AS).trim().split('\r\n');
+  assert.equal(csv[0], 'contract,counterparty,deadline,send_by_business_day,days_from_as_of,as_of,status,needs_review,review_reason,confidence,evidence_location,evidence_quote,source');
+  assert.equal(csv.length, 4);
+  const star = csv.find(l => l.startsWith('Star Brands')); assert.match(star, /,2026-12-16,2026-12-16,58,2026-10-19,Due within 90 days,no,,/); assert.match(star, /lines 24–29,"If not otherwise terminated/); assert.match(star, /sec\.gov/);
+  assert.match(csv.find(l => l.startsWith('Dragonfly')), /,2026-09-19,.*Missed: send-notice deadline passed/);
+  const evil = auditCSV([{ ...E.c5, id: 'z', name: '=HYPERLINK("x")' }], AS); assert.match(evil, /^contract[^\n]*\r\n"'=HYPERLINK\(""x""\)"/);
+  assert.equal(statusOf({ actBy: '', days: null }), 'Needs review: no date found');
 });

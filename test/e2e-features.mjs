@@ -92,6 +92,10 @@ for (const w of [1440, 375]) {
     const pf = await p.$$eval('#portfolio .pf', ds => ds.map(d => d.innerText.replace(/\s+/g, ' ').trim()));
     ok(pf.join('|') === 'DUE IN 30 DAYS 0|DUE IN 90 DAYS 0|DUE IN 365 DAYS 1|PASSED 1|NEEDS REVIEW 1', `${w}: portfolio summary ${pf.join(', ')}`);
     await p.evaluate(() => document.querySelector('#portfolio').scrollIntoView({ block: 'start' })); await sleep(300); await shot(p, 'f4-portfolio', w);
+    // F5 audit CSV from the same queue
+    await p.click('#lqAudit'); const csv = (await lastDl(p)).buf.toString().trim().split('\r\n');
+    ok(csv.length === 4 && /^contract,counterparty,deadline,send_by_business_day,days_from_as_of,as_of,status,needs_review,review_reason,confidence,evidence_location,evidence_quote,source$/.test(csv[0]) && csv.some(l => /Missed: send-notice deadline passed/.test(l)) && csv.slice(1).every(l => /,2026-10-19,/.test(l)), `${w}: audit CSV: header + one row per contract with status and evidence`);
+    await p.evaluate(() => document.querySelector('#lqAudit').scrollIntoView({ block: 'center' })); await shot(p, 'f5-audit', w);
     await p.ctx.close(); }
 
 }

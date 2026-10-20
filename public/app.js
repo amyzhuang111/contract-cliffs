@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { withAlarms, gcalLink, letter, docx, obligations, portfolio } from '/features.js';
+import { withAlarms, gcalLink, letter, docx, obligations, portfolio, auditCSV } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -123,6 +123,7 @@ const guard = f => () => { if (!current().length) { $('#status').textContent = '
 $('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf), 'text/csv'));
 $('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z')), 'text/calendar'));
 $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
+$('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
 $('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf), 'text/html'));
 
 let n = 0;
