@@ -50,7 +50,8 @@ test('portfolio: status, sorting and timeline', () => {
   const t = timelineHtml(rows, AS); const marks = [...t.matchAll(/class="mk ([\w ]+)"/g)].map(m => m[1]);
   assert.equal(marks.length, rows.filter(r => r.actBy && r.actBy <= END && r.days >= 0).length); assert.equal(marks.length, 18); assert.equal(marks.filter(m => /\breview\b/.test(m)).length, rows.filter(r => r.needsReview && r.actBy && r.actBy <= END).length);
   for (let y = 2027; y <= 2030; y++) assert.match(t, new RegExp(`<span class="lab">${y}</span>`));
-  assert.match(t, /3 after 2030, not on the line/); assert.match(t, /4 with no date/);
+  assert.match(t, /3 after 2030, not on the line/); assert.match(t, /Can’t tell: 4, no date/);
+  const leg = [...t.matchAll(/<i class="dot (\w+)"><\/i>([^<]+)/g)].map(m => m[2]); assert.deepEqual(leg, ['Due in 30 days', 'Due in 31 to 90 days', 'Due in 91 to 365 days', 'Later', 'Needs review']); // same names as the strip
   const sh = stripHtml(portfolio(buildQueue(cs, AS))); assert.match(sh, /class="pf d30"[^>]*><span class="lab">Due in 30 days<\/span><span class="sv">2</); assert.ok(!/pf passed|pf expired/.test(sh)); assert.match(sh, /needs review <span class="sv">3<\/span>/);
   const l = listHtml(rows, AS); assert.equal((l.match(/<li /g) || []).length, 25); assert.equal((l.match(/href="https:\/\/www\.sec\.gov\//g) || []).length, 25);
   assert.ok(!/—/.test(t + l));

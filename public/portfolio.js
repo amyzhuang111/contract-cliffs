@@ -25,7 +25,7 @@ export function timelineHtml(rows, asOf) {
   const later = dated.filter(r => r.actBy > END).length, none = rows.filter(r => !r.actBy).length;
   const marks = dated.filter(r => r.actBy <= END).map((r, k) => `<a class="${mkClass(r)}" href="#pf-${esc(r.id)}" style="left:${(pos(r.actBy, asOf) * 100).toFixed(2)}%;--i:${k}" title="${esc(r.c.name)}: send by ${esc(fmt(r.actBy))} (${esc(r.st.label)})" aria-label="${esc(r.c.name)}: send by ${esc(fmt(r.actBy))}, ${esc(r.st.label)}"></a>`).join('');
   return `<div class="tl-track" role="group" aria-label="Send-by dates from today to the end of 2030"><span class="tk today" style="left:0"><span class="lab">Today</span></span>${ticks.join('')}${marks}</div>
-  <p class="lab tl-foot"><span><i class="dot d30"></i>Due in 30 days</span><span><i class="dot d90"></i>Due in 90 days</span><span><i class="dot d365"></i>Due after 90 days</span><span><i class="dot ring"></i>Needs review</span>${later ? `<span>${later} after 2030, not on the line</span>` : ''}${none ? `<span>${none} with no date (can’t tell)</span>` : ''}</p>`;
+  <p class="lab tl-foot">${BUCKETS.filter(([k]) => !['cant', 'expired'].includes(k) && (k !== 'passed' || dated.some(r => r.st.bucket === 'passed'))).map(([k, l]) => `<span><i class="dot ${k}"></i>${l}</span>`).join('')}<span><i class="dot ring"></i>Needs review</span>${later ? `<span>${later} after 2030, not on the line</span>` : ''}${none ? `<span>Can’t tell: ${none}, no date, not on the line</span>` : ''}</p>`;
 }
 export function listHtml(rows, asOf) {
   return rows.map((r, k) => `<li id="pf-${esc(r.id)}" class="pr ${r.st.bucket} ${r.st.flags.join(' ')}" style="--i:${k}">
