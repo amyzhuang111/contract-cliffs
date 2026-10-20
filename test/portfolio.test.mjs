@@ -77,7 +77,8 @@ test('This week: from the data, with the next one when nothing is due', async ()
   const { thisWeek, weekHtml } = await import('../public/portfolio.js');
   const txt = h => h.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
   const a = thisWeek(rowsFor(cs, '2026-10-19'), '2026-10-19'); assert.deepEqual(a.due.map(r => [r.c.name, r.actBy]), [['Glacier Bancorp / Glacier Bank', '2026-10-22']]); assert.equal(a.next, null);
-  assert.equal(txt(weekHtml(rowsFor(cs, '2026-10-19'), '2026-10-19')), 'This week (19 Oct to 25 Oct 2026): 1 contract needs notice sent Glacier Bancorp / Glacier Bank Send non-renewal notice by Thu 22 Oct 2026 · 3 days left · Needs review Draft notice');
+  assert.equal(txt(weekHtml(rowsFor(cs, '2026-10-19'), '2026-10-19')), 'This week (19 Oct to 25 Oct 2026): 1 contract needs notice sent Glacier Bancorp / Glacier Bank Send non-renewal notice by Thu 22 Oct 2026 · 3 days left · Needs review Draft notice Also this month: urban-gro (missed 18 Oct, next 17 Nov)');
+  const { alsoLine } = await import('../public/portfolio.js'); assert.equal(alsoLine(rowsFor(cs, '2026-10-19'), '2026-10-19'), 'Also this month: urban-gro (missed 18 Oct, next 17 Nov)'); assert.equal(alsoLine([], '2026-10-19'), 'Nothing else is due this month.');
   const b = thisWeek(rowsFor(cs, '2026-10-23'), '2026-10-23'); assert.equal(b.due.length, 0); assert.equal(b.next.c.name, 'urban-gro / Richard Akright');
   assert.equal(txt(weekHtml(rowsFor(cs, '2026-10-23'), '2026-10-23')), 'Nothing is due this week (23 Oct to 29 Oct 2026). The next one: urban-gro / Richard Akright Missed 18 Oct 2026. Send non-renewal notice by Tue 17 Nov 2026 · 25 days left Draft notice');
 });

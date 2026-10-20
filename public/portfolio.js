@@ -87,6 +87,15 @@ export function weekHtml(rows, asOf, linkFor = () => '') {
   const t = thisWeek(rows, asOf); const span = `${+asOf.slice(8)} ${MON[+asOf.slice(5, 7) - 1]} to ${fmt(t.end)}`;
   const item = r => { const a = actionOf(r); const g = linkFor(r);
     return `<li class="wk-i" data-id="${esc(r.id)}"><span class="wk-n">${esc(r.c.name)}</span><span class="wk-a">${esc(a.text)} · ${esc(a.left)}${a.review ? ' · <span class="rvnote">Needs review</span>' : ''}</span><span class="wk-b">${g ? `<a class="btn-secondary sm" href="${esc(g)}" target="_blank" rel="noopener">Add to calendar</a>` : ''}<button class="btn-secondary sm" type="button" data-letter="${esc(r.id)}">Draft notice</button></span></li>`; };
-  if (t.due.length) return `<p class="wk-h">This week (${esc(span)}): ${t.due.length === 1 ? '1 contract needs' : `${t.due.length} contracts need`} notice sent</p><ul class="wk-l">${t.due.map(item).join('')}</ul>`;
+  const also = `<p class="wk-also">${esc(alsoLine(rows, asOf))}</p>`;
+  if (t.due.length) return `<p class="wk-h">This week (${esc(span)}): ${t.due.length === 1 ? '1 contract needs' : `${t.due.length} contracts need`} notice sent</p><ul class="wk-l">${t.due.map(item).join('')}</ul>${also}`;
   return `<p class="wk-h">Nothing is due this week (${esc(span)}).${t.next ? ' The next one:' : ''}</p>${t.next ? `<ul class="wk-l">${item(t.next)}</ul>` : ''}`;
+}
+// One line for phones, where the top-3 is hidden: the rest of this month after This week.
+export function alsoLine(rows, asOf) {
+  const wk = thisWeek(rows, asOf).due.map(r => r.id);
+  const rest = byUrgency(rows).filter(r => ['passed', 'd30'].includes(r.st.bucket) && !wk.includes(r.id));
+  const sh = d => `${+d.slice(8)} ${MON[+d.slice(5, 7) - 1]}`;
+  if (!rest.length) return 'Nothing else is due this month.';
+  return 'Also this month: ' + rest.map(r => `${r.c.name.split(' / ')[0]} (${r.missed ? `missed ${sh(r.missed.actBy)}, next ${sh(r.actBy)}` : `send by ${sh(r.actBy)}`})`).join('; ');
 }

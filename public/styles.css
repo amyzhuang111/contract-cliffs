@@ -752,3 +752,5 @@ body.has-any .weekstrip{display:none}
 .pfweek .wk-b{grid-column:2;grid-row:1 / span 2;display:flex;gap:8px}
 @media (max-width:480px){.pfweek{padding:8px 12px}.pfweek .wk-h{font-size:16px;line-height:22px}.pfweek .wk-i{grid-template-columns:1fr}.pfweek .wk-b{grid-column:1;grid-row:auto}}
 @media (max-width:480px){#pfTop3{display:none}} /* on phones the This week box is the act-now answer */
+.pfweek .wk-also{display:none;font:400 14px/20px var(--font-sans);color:var(--body);margin:8px 0 0}
+@media (max-width:480px){.pfweek .wk-also{display:block}}
