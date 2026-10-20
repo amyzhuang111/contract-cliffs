@@ -852,3 +852,20 @@ test('540ec12 batch: the rest of blind test 4 still reads as hand-worked', () =>
   assert.equal(fx('carriage-franch-ex.edgar.htm').r.actBy, '2027-01-31'); assert.equal(fx('puget-severance-plan-ex10-1.edgar.htm').r.actBy, '2027-11-01');
   for (const f of ['dte-cic-template-ex10-2', 'trex-severance-ex10-2']) assert.equal(fx(f + '.edgar.htm').r.actBy, '', f);
 });
+// ---- round 8: calibration (Sure only when the date rests on explicit text and a second count agrees); hand-worked as of 2026-10-19 ----
+import { execFileSync as _exf } from 'node:child_process';
+test('calibration: no Sure card is wrong across every fixture with a hand answer', () => {
+  const out = _exf('node', [new URL('./calibration/run.mjs', import.meta.url).pathname], { encoding: 'utf8' }); const s = JSON.parse(out.split('\n')[0]);
+  assert.equal(s.sureWrong, 0, out); assert.equal(s.sureUnverified, 0, out); assert.ok(s.sure >= 30);
+});
+test('round 8 #2 Procore "upon such third anniversary" → 24 Jul 2028, Check', () => { const r = fx('procore-gopal-ex10-2.edgar.htm').r; assert.equal(r.actBy, '2028-07-24'); assert.notEqual(r.confidence, 'high'); });
+test('round 8 #2 Zimmer "each subsequent January 1", 30 days before the extension → 2 Dec 2026', () => { const r = fx('zimmer-noor-cic-ex10-2.edgar.htm').r; assert.equal(r.actBy, '2026-12-02'); assert.notEqual(r.confidence, 'high'); });
+test('round 8 #2 B. Riley: term from the Commencement Date (3 Jun 2025) → 4 Mar 2027, Check naming it', () => { const r = fx('briley-yessner-ex10-1.edgar.htm').r; assert.equal(r.actBy, '2027-03-04'); assert.notEqual(r.confidence, 'high'); assert.match(r.tag, /Commencement Date/); });
+test('round 8 #2 Crown: 30 days before any anniversary → 1 Jun 2027', () => { assert.equal(fx('crown-rost-ex10-2.edgar.htm').r.actBy, '2027-06-01'); });
+test('round 8 #2 West: "does not automatically extend or automatically renew" → expires 31 Dec 2027', () => { const r = fx('west-scpharma-amend-ex10-1.edgar.htm').r; assert.equal(r.actBy, '2027-12-31'); assert.match(r.label, /^Expires/); });
+test('round 8 #2 Aebi: "no later than 90 days before the end of the then-current term" → missed 2 Oct 2026, next 2 Oct 2027', () => { const r = fx('aebi-loan-ex10-6.edgar.htm').r; assert.equal(r.missed?.actBy, '2026-10-02'); assert.equal(r.actBy, '2027-10-02'); });
+test('round 8 #2 Enovis: an "anticipated" start date is Check', () => { const r = fx('enovis-mcdonald-offer-ex10-2.edgar.htm').r; assert.equal(r.actBy, '2028-03-13'); assert.notEqual(r.confidence, 'high'); assert.match(r.tag, /anticipated/); });
+test('round 8 batch: the rest still reads as hand-worked', () => {
+  assert.equal(fx('cineverse-opeka-ex10-2.edgar.htm').r.actBy, '2027-01-30'); assert.equal(fx('thejoint-bowman-ex10-1.edgar.htm').r.actBy, '2027-03-11');
+  for (const f of ['stride-cic-template-ex10-2', 'civeo-gerry-ex10-2', 'shell-irrx-offtake-ex10-1']) assert.equal(fx(f + '.edgar.htm').r.actBy, '', f);
+});
