@@ -7,10 +7,9 @@ const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${MON[+m - 1]} ${y}`; };
 export const END = '2030-12-31';
 // status used for colour and sorting; needs review wins (it is the only state drawn in #EBFF0A)
-// Plain status words. A missed row reads as one phrase: "Missed 18 Oct, next deadline 17 Nov".
-const short = (d, asOf) => { const [y, m, dd] = d.split('-'); return `${+dd} ${MON[+m - 1]}${asOf && y !== asOf.slice(0, 4) ? ' ' + y : ''}`; };
+// Plain status words. A missed row reads as one phrase, with years: "Missed 18 Oct 2026, next deadline 17 Nov 2026".
 export function pfStatus(r, asOf = r.asOf) { const b = bucket(r), f = flagsOf(r);
-  const label = r.missed && r.actBy ? `Missed ${short(r.missed.actBy, asOf)}, next deadline ${short(r.actBy, asOf)}${f.includes('review') ? ' · needs review' : ''}` : b === 'cant' ? 'No date found' : rowLabel(r); // Can't tell is shown once, in the Confidence column
+  const label = r.missed && r.actBy ? `Missed ${fmt(r.missed.actBy)}, next deadline ${fmt(r.actBy)}${f.includes('review') ? ' · needs review' : ''}` : b === 'cant' ? 'No date found' : rowLabel(r); // Can't tell is shown once, in the Confidence column
   return { key: b, bucket: b, flags: f, label }; }
 const mkClass = r => ['mk', r.st.bucket, ...r.st.flags].join(' ');
 export const confWord = r => r.needsReview && !r.actBy ? 'Can’t tell' : r.needsReview || r.confidence !== 'high' ? 'Check' : 'Clear';

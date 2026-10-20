@@ -31,14 +31,14 @@ test('portfolio: the mix, one bucket per contract, buckets add up to 25', () => 
   for (const [k] of BUCKETS) assert.equal(n(k), pf[k], k); // row labels match the strip
   assert.equal(rows.filter(r => r.needsReview).length, 8); // 8 of 25 need review
   assert.equal(rows.filter(r => r.conf === 'Can’t tell').length, 4); assert.ok(rows.filter(r => r.conf === 'Check').length >= 5); assert.ok(rows.filter(r => r.conf === 'Clear').length >= 5);
-  assert.equal(rows.find(r => /urban-gro/.test(r.c.name)).st.label, 'Missed 18 Oct, next deadline 17 Nov'); // next date in 29 days
+  assert.equal(rows.find(r => /urban-gro/.test(r.c.name)).st.label, 'Missed 18 Oct 2026, next deadline 17 Nov 2026'); // next date in 29 days
   assert.equal(rows.find(r => /Glacier/.test(r.c.name)).st.label, 'Due in 30 days · needs review'); // 3 days left, still counted as urgent
   for (const [f] of FLAGS) assert.equal(rows.filter(r => r.st.flags.includes(f)).length, pf[f], f);
 });
 test('portfolio: status, sorting and timeline', () => {
   assert.equal(pfStatus({ needsReview: true, actBy: '' }).label, 'No date found');
   assert.equal(pfStatus({ actBy: '2026-10-21', days: 2, needsReview: true }).bucket, 'd30');
-  assert.equal(pfStatus({ missed: { actBy: '2026-10-01' }, actBy: '2027-01-15', days: 88, needsReview: true }, AS).label, 'Missed 1 Oct, next deadline 15 Jan 2027 · needs review');
+  assert.equal(pfStatus({ missed: { actBy: '2026-10-01' }, actBy: '2027-01-15', days: 88, needsReview: true }, AS).label, 'Missed 1 Oct 2026, next deadline 15 Jan 2027 · needs review');
   assert.equal(pfStatus({ actBy: '2026-11-01', days: 13, needsReview: true }).label, 'Due in 30 days · needs review');
   assert.equal(pfStatus({ actBy: '2026-11-01', days: 13 }).label, 'Due in 30 days');
   const rows = rowsFor(cs, AS);
