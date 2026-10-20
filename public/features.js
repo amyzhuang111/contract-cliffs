@@ -13,20 +13,21 @@ const DAY = d => d.replace(/-/g, '');
 
 // ---------- F1: calendar ----------
 // The day the reminder goes on: the last business day on or before the send-by date; today if that day has passed.
-export function sendDay(actBy, asOf) {
-  const sb = safeSendBy(actBy); if (!sb.date) return '';
+export function sendDay(actBy, asOf, forward = false) {
+  const sb = safeSendBy(actBy, forward); if (!sb.date) return '';
+  if (forward) return sb.date;
   return sb.changed && sb.date < asOf && actBy >= asOf ? asOf : sb.date;
 }
 // Plain note when a send-notice date is not a business day, e.g. "Falls on Thanksgiving. Send by Wed 25 Nov".
 // Weekends and US federal holidays (computed by rule for any year, observed dates included).
 const SHORTH = { 'Thanksgiving Day': 'Thanksgiving', 'Christmas Day': 'Christmas Day' };
 const WD3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-export function sendByNote(actBy, asOf) {
-  const sb = safeSendBy(actBy); if (!sb.changed) return '';
+export function sendByNote(actBy, asOf, forward = false) {
+  const sb = safeSendBy(actBy, forward); if (!sb.changed) return '';
   const wd = new Date(actBy + 'T00:00:00Z').getUTCDay(), h = usHoliday(actBy);
   const why = wd === 0 || wd === 6 ? `Falls on a ${['Sunday', '', '', '', '', '', 'Saturday'][wd]}` : `Falls on ${SHORTH[h] || h}`;
-  const d = sendDay(actBy, asOf || sb.date), dt = new Date(d + 'T00:00:00Z');
-  return `${why}. Send by ${WD3[dt.getUTCDay()]} ${dt.getUTCDate()} ${MON3[dt.getUTCMonth()]}${d.slice(0, 4) !== (asOf || d).slice(0, 4) ? ' ' + d.slice(0, 4) : ''}`;
+  const d = sendDay(actBy, asOf || sb.date, forward), dt = new Date(d + 'T00:00:00Z');
+  return `${why}. ${forward ? 'Send notice on or after' : 'Send by'} ${WD3[dt.getUTCDay()]} ${dt.getUTCDate()} ${MON3[dt.getUTCMonth()]}${d.slice(0, 4) !== (asOf || d).slice(0, 4) ? ' ' + d.slice(0, 4) : ''}`;
 }
 export const ALARM_DAYS = [30, 14, 7];
 const icsText = t => String(t).replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
@@ -253,5 +254,11 @@ export function parseSaved(raw) {
   return { docs, error: docs.length < v.length ? 'partial' : '', bad: v.length - docs.length };
 }
 
-// "Within N days prior" clauses: the send-notice date opens the window, so it is the earliest safe day, not the latest.
-export const windowNote = r => r?.item?.within && r.actBy ? `"Within ${r.item.notice?.n} ${r.item.notice?.unit}s prior": ${fmtLong(r.actBy).replace(/(\w{3})\w* /, "$1 ")} is the earliest safe date` : '';
+// "Within N days prior" clauses: the window opens on the send-notice date (moved forward to a business day) and closes when the term ends.
+const dShort = (d, y) => { const [yy, m, dd] = d.split('-'); return `${+dd} ${MON3[+m - 1]}${y ? ' ' + yy : ''}`; };
+export function windowOf(r) {
+  const i = r?.item || r; const at = r?.actBy || i?.date; if (!i?.within || !at || !i.termEnd) return null;
+  const from = safeSendBy(at, true).date || at, to = i.termEnd, dt = new Date(from + 'T00:00:00Z');
+  return { from, to, label: 'Send notice on or after', fromW: `${WD3[dt.getUTCDay()]} ${dShort(from, true)}`, range: `send between ${dShort(from, from.slice(0, 4) !== to.slice(0, 4))} and ${dShort(to, true)}`, n: i.notice?.n, unit: i.notice?.unit };
+}
+export const windowNote = r => { const w = windowOf(r); return w ? `"Within ${w.n} ${w.unit}${w.n === 1 ? '' : 's'} prior": ${w.range}. ${dShort(w.from, true)} is the earliest safe date` : ''; };

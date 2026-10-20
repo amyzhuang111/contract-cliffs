@@ -600,12 +600,13 @@ export const usHoliday = day => { const y = +day.slice(0, 4); return usHolidays(
 const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 // Last safe business day on or before a contract deadline: steps back over Saturdays, Sundays and US federal holidays.
 // Returns { date, changed, reason } where reason names why the contract date is not a business day.
-export function safeSendBy(day) {
+// forward: for "within N days prior" windows the day opens the window, so a weekend or holiday moves to the NEXT business day.
+export function safeSendBy(day, forward = false) {
   if (typeof day !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(day) || isNaN(new Date(day + 'T00:00:00Z')) || ymd(new Date(day + 'T00:00:00Z')) !== day) return { date: '', changed: false, reason: '' };
   const wd = new Date(day + 'T00:00:00Z').getUTCDay();
   const reason = wd === 0 || wd === 6 ? `Falls on a ${WD[wd]}` : usHoliday(day) ? `Falls on ${usHoliday(day)} (US federal holiday)` : '';
   let d = new Date(day + 'T00:00:00Z');
-  while ([0, 6].includes(d.getUTCDay()) || usHoliday(ymd(d))) d = addDays(d, -1);
+  while ([0, 6].includes(d.getUTCDay()) || usHoliday(ymd(d))) d = addDays(d, forward ? 1 : -1);
   return { date: ymd(d), changed: ymd(d) !== day, reason };
 }
 export const dayWord = n => `${n} day${Math.abs(n) === 1 ? '' : 's'}`;
@@ -799,8 +800,8 @@ export function buildQueue(contracts, asOf) {
     const generic = /^(?:confirm against the clause|effective date not defined)$/.test(shortReason(item?.why));
     const termNote = act && key && generic && /amendment restates|the date given where that term is defined/.test(c.x.term?.why || '') ? shortReason(c.x.term.why) : '';
     const tag = termNote || (assume && (generic || tfc) ? assume : item?.needsReview && act && key && tfc ? `a separate ${tfc.notice.n}-${tfc.notice.unit} early-exit clause exists; confirm which applies` : shortReason(!key && /No end date could be worked out/.test(item?.why || '') && exp ? exp.why : item?.why));
-    const sb = act && key && d != null && d >= 0 ? safeSendBy(key) : null;
-    const safe = sb?.changed ? (sb.date < asOf ? { date: sb.date, reason: sb.reason, passed: true, note: `${sb.reason}. The last business day before it (${fmtW(sb.date)}) has passed. Send today and confirm delivery.` } : { date: sb.date, reason: sb.reason, note: `${sb.reason} · send by ${fmtW(sb.date)} to be safe` }) : null;
+    const sb = act && key && d != null && d >= 0 ? safeSendBy(key, !!item?.within) : null;
+    const safe = sb?.changed && item?.within ? { date: sb.date, reason: sb.reason, within: true, note: `${sb.reason} · send notice on or after ${fmtW(sb.date)}` } : sb?.changed ? (sb.date < asOf ? { date: sb.date, reason: sb.reason, passed: true, note: `${sb.reason}. The last business day before it (${fmtW(sb.date)}) has passed. Send today and confirm delivery.` } : { date: sb.date, reason: sb.reason, note: `${sb.reason} · send by ${fmtW(sb.date)} to be safe` }) : null;
     const hint = !c.x.renewal && c.x.renewHint && !act;
     const noRenGuard = !hint && !act && (!isExp || !!exp?.finalTerm) && c.x.renewWords && !!key; // renewal wording present, yet the card says it just ends
     rows.push({ renewHint: hint ? c.x.renewHint.text : '', safe, tag: noRenGuard ? 'the document has renewal or extension wording, but this date assumes no further automatic renewal; check it' : hint ? (c.x.renewHint.other ? 'the only renewal wording found is for a letter of credit, deposit or policy; confirm the agreement itself does not renew' : 'the document mentions renewal or extension, but no automatic renewal was read; check it') : (exp?.finalTerm && !act) || ion ? '' : tag, id: c.id, name: c.name, actBy: key, days: d, missed: mw || null, item, section, window: win, lockMonths: lockM, noticeLong, why, label: ion ? 'Send-notice date passed' : mw ? 'Next send-notice deadline' : act ? 'Send-notice deadline' : exp?.finalTerm ? 'Expires (no further renewal)' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || !!item?.needsReview || hint || noRenGuard, confidence: key ? (item?.confidence === 'none' ? 'low' : (hint || noRenGuard) && item?.confidence === 'high' ? 'medium' : item?.confidence || 'low') : 'none' });

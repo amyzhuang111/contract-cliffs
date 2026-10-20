@@ -710,11 +710,26 @@ const EXPECT_VENDOR = {
 for (const [f, [act, safe]] of Object.entries(EXPECT_VENDOR)) test(`vendor ${f} → ${act}`, () => {
   const { r } = fx(f + '.edgar.htm'); assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); assert.equal(r.needsReview, f === 'usantimony-supply-ex10-1');
 });
+test('within N days prior: weekend and holiday shift moves FORWARD and the window is stated', async () => {
+  const { windowNote, windowOf, sendByNote } = await import('../public/features.js');
+  assert.equal(safeSendBy('2026-11-01', true).date, '2026-11-02'); assert.equal(safeSendBy('2026-11-01').date, '2026-10-30');
+  assert.equal(safeSendBy('2026-11-26', true).date, '2026-11-27'); assert.equal(safeSendBy('2026-12-25', true).date, '2026-12-28');
+  const t = 'MASTER SUPPLY AGREEMENT\nThis Agreement is effective as of January 1, 2026 (the "Effective Date").\n2. Term. The initial term of this Agreement shall commence on the Effective Date and end on December 31, 2026. Thereafter this Agreement shall automatically renew for successive one (1) year terms unless either party gives written notice of non-renewal within sixty (60) days prior to the end of the then-current term.';
+  const L = t.split('\n'); const x = extract(L); const r = buildQueue([{ id: 'p', name: 'p', lines: L, x }], '2026-10-20')[0];
+  assert.equal(r.actBy, '2026-11-01'); assert.equal(r.safe.date, '2026-11-02'); assert.equal(r.safe.note, 'Falls on a Sunday · send notice on or after Mon 2 Nov 2026');
+  assert.equal(windowOf(r).label, 'Send notice on or after'); assert.equal(windowOf(r).fromW, 'Mon 2 Nov 2026');
+  assert.equal(windowNote(r), '"Within 60 days prior": send between 2 Nov and 31 Dec 2026. 2 Nov 2026 is the earliest safe date');
+  assert.equal(sendByNote('2026-11-01', '2026-10-20', true), 'Falls on a Sunday. Send notice on or after Mon 2 Nov');
+  const a = fx('armlogi-goldensee-ex10-11.edgar.htm').r; assert.equal(a.actBy, '2027-06-20'); assert.equal(a.safe.date, '2027-06-21');
+  assert.equal(windowNote(a), '"Within 1 month prior": send between 21 Jun and 20 Jul 2027. 21 Jun 2027 is the earliest safe date');
+  // other clause types still move back
+  assert.equal(fx('taoweave-manako-license-ex10-1.edgar.htm').r.safe.date, '2027-03-26');
+});
 test('within N days prior is Check, not Clear, with the earliest safe date', async () => {
   const { windowNote } = await import('../public/features.js');
   const { r } = fx('usantimony-supply-ex10-1.edgar.htm');
   assert.equal(r.confidence, 'medium'); assert.equal(r.needsReview, true); assert.equal(r.item.within, true);
-  assert.equal(windowNote(r), '"Within 60 days prior": 1 Oct 2030 is the earliest safe date');
+  assert.equal(windowNote(r), '"Within 60 days prior": send between 1 Oct and 30 Nov 2030. 1 Oct 2030 is the earliest safe date');
   assert.equal(fx('mallinckrodt-par-supply-ex10-4.edgar.htm').r.item.within, false);
 });
 test('sweep ab9a38e missed windows: Strattec and Z Squared', () => {
