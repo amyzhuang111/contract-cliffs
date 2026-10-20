@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { withAlarms, gcalLink } from '/features.js';
+import { withAlarms, gcalLink, letter, docx } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -89,7 +89,18 @@ function openDrawer(id) {
    ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(reason(i.why))}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? dayWord(-d) + ' ago' : 'in ' + dayWord(d))(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
      <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} ${esc(sure(i.confidence))}.</p>
-     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}`;
+     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}<div class="lettr"><button class="btn-secondary sm" id="drawerLetter">Draft notice letter</button></div>`;
+  $('#drawerLetter').onclick = () => openLetter(id);
+  $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on'); $('#drawer').scrollTop = 0; $('#close').focus({ preventScroll: true });
+}
+// F2: draft non-renewal letter, shown in the drawer with .docx download and Copy
+function openLetter(id) {
+  const c = current().find(x => x.id === id); if (!c) return;
+  const r = buildQueue([c], asOf)[0]; const t = letter(c, r, asOf);
+  if (!$('#drawer').classList.contains('on')) lastFocus = document.activeElement;
+  $('#dbody').innerHTML = `<div class="lab">Draft letter · ${esc(c.name)}</div><h3>Non-renewal notice (draft)</h3><p class="note">DRAFT. Check every line against the contract before sending. Anything marked [NOT FOUND, FILL IN] was not in the document.</p><div class="row lbtns"><button class="btn-primary sm" id="letterDocx">Download .docx</button><button class="btn-secondary sm" id="letterCopy">Copy</button></div><pre class="letter" id="letterText">${esc(t)}</pre>`;
+  $('#letterDocx').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([docx(t)], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })); a.download = `DRAFT-non-renewal-${c.name.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '')}.docx`; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); };
+  $('#letterCopy').onclick = e => { (navigator.clipboard?.writeText(t) || Promise.reject()).then(() => { e.target.textContent = 'Copied'; }, () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); e.target.textContent = 'Copied'; } catch { e.target.textContent = 'Copy failed: select the text'; } ta.remove(); }); };
   $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on'); $('#drawer').scrollTop = 0; $('#close').focus({ preventScroll: true });
 }
 const closeDrawer = () => { if (!$('#drawer').classList.contains('on')) return; $('#drawer').classList.remove('on'); $('#drawer').setAttribute('aria-hidden', 'true'); $('#scrim').classList.remove('on'); if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true }); };
@@ -197,7 +208,7 @@ function card(c, r) {
       <p class="conf"><span class="lab">Confidence:</span> ${confTag(r)[1] === 'rvtag' ? `<span class="cw">${esc(cw)}</span>` : `<span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span>`} <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
       ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
-      <div class="acts"><button id="answerMore" class="btn-secondary sm">See every date and clause</button>${gcal(c, r)}</div>
+      <div class="acts"><button id="answerMore" class="btn-secondary sm">See every date and clause</button><button id="answerLetter" class="btn-secondary sm">Draft notice letter</button>${gcal(c, r)}</div>
     </div></div></article>`;
 }
 function row(c, r) {
@@ -217,7 +228,7 @@ function live(cs) {
   if (!rows.length) { $('#answer').innerHTML = ''; $('#lq').innerHTML = ''; return; }
   const top = rows.find(r => r.id === expanded) || rows.find(r => r.id === cs[0].id) || rows[0];
   $('#answer').innerHTML = card(byId.get(top.id), top);
-  $('#answerMore').onclick = () => openDrawer(top.id);
+  $('#answerMore').onclick = () => openDrawer(top.id); $('#answerLetter').onclick = () => openLetter(top.id);
   $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(top.item.source.quote).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
   const rest = rows.filter(r => r !== top); const exp = rest.filter(r => r.section === 'lapsed'), act = rest.filter(r => r.section !== 'lapsed');
   $('#lqh').textContent = (matchMedia('(max-width:480px)').matches ? `Queue · ${cs.length} contracts · 1 open above` : `Queue · ${cs.length} contracts · by send-notice date · 1 open above`);

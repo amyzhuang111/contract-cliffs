@@ -1,6 +1,6 @@
 // Product features layered on the extractor: calendar links and alarms, notice letter (.docx), more obligations,
 // portfolio summary, per-contract audit CSV and safe local storage. Pure functions; no network, no invented data.
-import { locLabel, safeSendBy, ymd, addDays } from './extract.js';
+import { toSentences, locLabel, trimQuote, safeSendBy, ymd, addDays } from './extract.js';
 
 const txt = l => typeof l === 'string' ? l : (l?.text ?? '');
 const norm = s => String(s ?? '').replace(/[\u200b\u200c\u200d\ufeff]/g, '').replace(/\s+/g, ' ').trim();
@@ -39,5 +39,105 @@ export function gcalLink({ name, actBy, asOf, quote = '', location = '', url = '
   const end = ymd(addDays(new Date(d + 'T00:00:00Z'), 1));
   const q = norm(quote); const details = [`Last day to send non-renewal notice: ${actBy}.`, d !== actBy ? `Event is on ${d}, the last business day you can safely send it.` : '', location ? `Clause (${location}): "${q.length > 600 ? q.slice(0, 600) + '...' : q}"` : '', url ? `Source: ${url}` : '', 'Made with Contract Cliffs. Check the clause before relying on this date.'].filter(Boolean).join('\n');
   return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Send non-renewal notice: ' + name) + '&dates=' + DAY(d) + '/' + DAY(end) + '&details=' + encodeURIComponent(details);
+}
+
+// ---------- F3: more obligations ----------
+const HEAD = /^(?:(?:Section|Article)?\s*\d+(?:\.\d+)*\.?\s*[-–]?\s*)?(?:Notices?|NOTICES?)(?:\s+Addresses)?\s*[.:]?\s*/;
+const METHODS = [[/personal(?:ly)?\s+deliver|deliver\w*\s+(?:either\s+)?in\s+person|personally\s+given|\bin\s+person\b|by\s+hand/i, 'personal delivery'], [/certified|registered\s+mail|return\s+receipt|first\s+class\s+mail|United\s+States\s+mail|U\.S\.\s+mail|prepaid\s+(?:certified\s+)?mail/i, 'mail (certified, registered or first class)'], [/courier|overnight/i, 'courier or overnight delivery'], [/e-?mail/i, 'email'], [/facsimile|telecopy|\bfax\b/i, 'fax']];
+export function noticeClause(lines) {
+  const T = lines.map(txt);
+  for (let i = 0; i < T.length; i++) {
+    const t = T[i].trim(); if (!HEAD.test(t)) continue;
+    if (/^Notice\s+of\b/i.test(t) || /^Notices?\s+to\s+/i.test(t)) continue;
+    // body: the heading line plus following lines until ~900 chars
+    let j = i, body = '';
+    while (j < T.length && body.length < 900) { body += ' ' + T[j].trim(); j++; if (j > i && /^\s*(?:\d+(?:\.\d+)+\.?|Section\s+\d)/.test(T[j] || '') && body.length > 200) break; }
+    if (!/\b(writing|deliver|given|addressed|sent)\b/i.test(body.slice(0, 500))) continue; // table of contents, etc.
+    const addresses = noticeAddresses(T, i, Math.min(T.length, i + 60)).map(({ a, b, ...x }) => ({ ...x, start: a, lineStart: a + 1, lineEnd: b + 1, location: locOf(lines, a, b) }));
+    const firstA = addresses.length ? addresses[0].start : j;
+    const end = Math.max(i, Math.min(j - 1, i + 8, firstA - 1));
+    const methods = METHODS.filter(([re]) => re.test(T.slice(i, Math.max(end + 1, Math.min(j, firstA))).join(' '))).map(m => m[1]); let quote = trimQuote(norm(T.slice(i, end + 1).join(' '))); if (quote.length > 700) quote = quote.slice(0, 700).replace(/\s\S*$/, '') + '...';
+    const ref = body.match(/(?:address(?:es)?\s+(?:first\s+)?(?:set\s+forth|specified|listed|indicated|stated)\s+(?:in|on|below|above)\s*[^.;]{0,60}|address\s+listed\s+in\s+the\s+Account)/i)?.[0] || '';
+    return { methods, quote, location: locOf(lines, i, end), lineStart: i + 1, lineEnd: end + 1, addresses, ref: norm(ref) };
+  }
+  return null;
+}
+// "If to Cerus:" / "Notice to Seller:" / "If to PWRU:" blocks with a street address or Attention line.
+function noticeAddresses(T, from, to) {
+  const out = [];
+  for (let i = from; i < to; i++) {
+    const t = T[i].trim(); const nx = (T[i + 1] || '').trim();
+    let m = t.match(/^(?:if\s+to|notices?\s+to)\s*(?:the\s+)?([A-Z][\w .,&'’-]{0,60}?)\s*:\s*(.*)$/i), two = false;
+    if (!m && /^(?:Notice|If|To)$/i.test(t)) { m = nx.match(/^(?:to\s+)?(?:the\s+)?([A-Z][\w .,&'’-]{0,60}?)\s*:\s*(.*)$/); two = !!m; }
+    if (!m) continue;
+    const start = i; if (two) i++;
+    const block = m[2] ? [m[2]] : []; let k = i + 1;
+    for (; k < to && block.length < 8; k++) { const u = T[k].trim(); if (!u || /^(?:if\s+to|notices?\s+to|or\s+to\s+such|any\s+party|either\s+party|\d+(?:\.\d+)+)/i.test(u) || /^(?:Notice|If|To)$/i.test(u) || u.length > 240) break; block.push(u); }
+    const text = block.join(' · ');
+    if (/\d{3,}|P\.?O\.?\s+Box|@/i.test(text) || block.length >= 3) out.push({ to: m[1].trim(), text, lines: block, a: start, b: k - 1 });
+    i = k - 1;
+  }
+  return out;
+}
+// ---------- F2: draft non-renewal letter ----------
+export const FILL = '[NOT FOUND, FILL IN]';
+const fmtLong = d => { if (!d) return FILL; const [y, m, dd] = d.split('-'); return `${+dd} ${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][+m - 1]} ${y}`; };
+export function letter(c, r, asOf) {
+  const parties = String(c.name || '').includes(' / ') ? c.name.split(' / ').map(s => s.trim()) : [];
+  const nc = noticeClause(c.lines); const q = r?.item?.source;
+  const addr = nc?.addresses?.length ? nc.addresses.map(a => `${a.to}: ${a.text} (notices clause, ${a.location})`) : [`${FILL} (no notice address found in the notices clause${nc?.ref ? `; it points to the "${nc.ref}"` : ''})`];
+  const sendBy = r?.actBy ? fmtLong(r.actBy) : FILL;
+  const L = [
+    'DRAFT. NOT SENT. CHECK EVERY LINE AGAINST THE CONTRACT BEFORE USE. NOT LEGAL ADVICE.',
+    '',
+    `Date: ${FILL}`,
+    `Parties to the agreement: ${parties.length ? parties.join(' and ') : FILL}`,
+    `From: ${FILL} (your company, name, title and address)`,
+    `To: ${FILL} (the other party${parties.length ? ': ' + parties.join(' or ') : ''})`,
+    'Notice address from the contract (pick the other party\'s):',
+    ...addr.map(a => '  ' + a),
+    nc?.methods?.length ? `Send by: ${nc.methods.join(', ')} (as allowed by the notices clause, ${nc.location}).` : `Send by: ${FILL} (no delivery method found in a notices clause).`,
+    '',
+    `Re: Notice of non-renewal of the ${c.title || 'agreement'} between ${parties.length ? parties.join(' and ') : FILL}`,
+    '',
+    'To whom it may concern,',
+    '',
+    `Under the renewal clause of the agreement, quoted below, we give notice that we do not wish to renew the agreement and that it will end at the close of its current term${r?.item?.termEnd ? `, ${fmtLong(r.item.termEnd)}` : ''}.`,
+    '',
+    q?.quote ? `Renewal clause (${q.location}): "${norm(q.quote)}"` : `Renewal clause: ${FILL} (no renewal clause found)`,
+    '',
+    r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${FILL} (no date could be worked out from the contract).`,
+    '',
+    'Please confirm receipt of this notice in writing.',
+    '',
+    'Sincerely,',
+    '',
+    `${FILL}: name, title, company`,
+  ];
+  return L.join('\n');
+}
+// Minimal .docx (stored ZIP, no compression) holding one paragraph per line.
+const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+export const crc32 = b => { let c = 0xffffffff; for (const x of b) c = CRC[(c ^ x) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
+export function zip(files) {
+  const enc = new TextEncoder(); const parts = [], cen = []; let off = 0;
+  for (const [name, data] of files) {
+    const n = enc.encode(name), d = typeof data === 'string' ? enc.encode(data) : data, crc = crc32(d);
+    const h = new DataView(new ArrayBuffer(30)); h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true); h.setUint32(14, crc, true); h.setUint32(18, d.length, true); h.setUint32(22, d.length, true); h.setUint16(26, n.length, true);
+    parts.push(new Uint8Array(h.buffer), n, d);
+    const cd = new DataView(new ArrayBuffer(46)); cd.setUint32(0, 0x02014b50, true); cd.setUint16(4, 20, true); cd.setUint16(6, 20, true); cd.setUint16(8, 0x0800, true); cd.setUint32(16, crc, true); cd.setUint32(20, d.length, true); cd.setUint32(24, d.length, true); cd.setUint16(28, n.length, true); cd.setUint32(42, off, true);
+    cen.push(new Uint8Array(cd.buffer), n); off += 30 + n.length + d.length;
+  }
+  const size = cen.reduce((a, b) => a + b.length, 0); const e = new DataView(new ArrayBuffer(22)); e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, size, true); e.setUint32(16, off, true);
+  const all = [...parts, ...cen, new Uint8Array(e.buffer)]; const out = new Uint8Array(all.reduce((a, b) => a + b.length, 0)); let p = 0; for (const a of all) { out.set(a, p); p += a.length; } return out;
+}
+const xesc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])).replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, '');
+export function docx(text) {
+  const paras = text.split('\n').map((l, k) => `<w:p>${k === 0 ? '<w:pPr><w:jc w:val="center"/></w:pPr>' : ''}<w:r>${k === 0 ? '<w:rPr><w:b/><w:color w:val="C00000"/></w:rPr>' : ''}<w:t xml:space="preserve">${xesc(l)}</w:t></w:r></w:p>`).join('');
+  return zip([
+    ['[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'],
+    ['_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'],
+    ['word/document.xml', `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>${paras}<w:sectPr/></w:body></w:document>`],
+  ]);
 }
 

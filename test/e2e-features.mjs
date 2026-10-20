@@ -57,6 +57,20 @@ for (const w of [1440, 375]) {
     ok(ev.length === 3 && ev.every(e => /TRIGGER:-P30D[\s\S]*TRIGGER:-P14D[\s\S]*TRIGGER:-P7D/.test(e) && (e.match(/BEGIN:VALARM/g) || []).length === 3), `${w}: queue "Export .ics" downloads 3 send-notice events (Star Brands, StableX, Dragonfly next), each with 30/14/7-day alarms`);
     await p.evaluate(() => document.querySelector('a.gcal').scrollIntoView({ block: 'center' })); await shot(p, 'f1-calendar', w);
     await p.ctx.close(); }
+  // F2 letter
+  { const p = await fresh('/?demo=1&asof=2026-10-19', w); await p.ctx.overridePermissions(BASE, ['clipboard-read', 'clipboard-write']);
+    await auto(p); await p.click('#answerLetter'); await sleep(300);
+    const t = await p.$eval('#letterText', e => e.textContent);
+    ok(/^DRAFT\. NOT SENT\./.test(t) && /Star Brands and Schwazze/.test(t) && /Renewal clause \(lines 24–29\): "If not otherwise terminated/.test(t) && /16 December 2026/.test(t) && /\[NOT FOUND, FILL IN\] \(no notice address/.test(t), `${w}: letter has DRAFT, parties, quoted clause, send-by date, missing address marker`);
+    await p.click('#letterCopy'); await sleep(300); const clip = await p.evaluate(() => navigator.clipboard.readText().catch(() => ''));
+    ok(clip === t && await p.$eval('#letterCopy', e => e.textContent) === 'Copied', `${w}: Copy puts the exact letter on the clipboard`);
+    await p.click('#letterDocx'); const d = await lastDl(p); const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'ccl-')), 'l.docx'); fs.writeFileSync(f, d.buf);
+    const xml = execFileSync('unzip', ['-p', f, 'word/document.xml']).toString();
+    ok(/wordprocessingml/.test(d.type) && /No errors/.test(execFileSync('unzip', ['-t', f]).toString()) && /DRAFT\. NOT SENT/.test(xml) && /16 December 2026/.test(xml), `${w}: .docx downloads and unzips with the letter text`);
+    // round trip: the app's own DOCX reader (mammoth) reads the generated file
+    const back = await p.evaluate(async b64 => { const s = atob(b64); const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); return (await window.mammoth.extractRawText({ arrayBuffer: u.buffer })).value; }, d.buf.toString('base64'));
+    ok(/This notice is given on or before 16 December 2026/.test(back), `${w}: mammoth opens the generated .docx`);
+    await shot(p, 'f2-letter', w); await p.ctx.close(); }
 
 }
 ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
