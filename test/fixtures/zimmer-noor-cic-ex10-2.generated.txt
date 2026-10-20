@@ -1,0 +1,187 @@
+EX-10.2
+3
+zbh-ex10_2.htm
+EX-10.2
+EX-10.2
+Exhibit 10.2
+Change in Control Severance Agreement
+This Change in Control Severance Agreement ("Agreement") is made by and between Zimmer GmbH ("Employer" or "Company" as case may be) and Jehanzeb Noor ("Executive").
+Recitals
+(A)
+The Company considers it essential to the best interests of its ultimate shareholders to foster the continuous employment of key management personnel.
+(B)
+The Company and the Board recognize that, as is the case with many publicly held corporations, the possibility of a Change in Control in the Ultimate Parent Company exists and that such a possibility, and the uncertainty and questions that it may raise among management, may result in the departure or distraction of management personnel to the detriment of the Company and its shareholders.
+(C)
+The Board has determined that appropriate steps should be taken to reinforce and encourage the continued attention and dedication of members of the Company's management, including the Executive, to their assigned duties without distraction in the face of potentially disturbing circumstances arising from the possibility of a Change in Control.
+(D)
+The parties intend that no amount or benefit will be payable under this Agreement unless a termination of the Executive's employment with the Company occurs following a Change in Control, or is deemed to have occurred following a Change in Control, as provided in this Agreement.
+Defined terms as used herein and not defined elsewhere in this Agreement, shall have the meaning ascribed to them in Annex 1 to this Agreement.
+1.
+Term of Agreement
+This Agreement will commence on the date stated below and will continue in effect through December 31, 2025. Beginning on January 1, 2026, and each subsequent January 1, the term of this Agreement will automatically be extended for one additional year, unless either party gives the other party written notice not to extend this Agreement at least 30 days before the extension would otherwise become effective or unless a Change in Control occurs.  If a Change in Control occurs during
+2 / 12
+Change in Control Severance Agreement
+the term of this Agreement, this Agreement will continue in effect for a period of 24 months from the end of the month in which the Change in Control occurs. Notwithstanding the foregoing provisions of this Article, this Agreement will terminate on the Executive's retirement date, as defined under Swiss law.
+2.
+Compensation other than Severance Payments
+2.1
+Compensation Previously Earned
+If the Executive's employment is terminated for any reason following a Change in Control and during the term of this Agreement, the Company will pay the Executive's salary accrued through the Date of Termination, at the rate in effect at the time the Notice of Termination is given, together with all other compensation and benefits payable to the Executive through the Date of Termination under the terms of any compensation or benefit plan, program, or arrangement maintained by the Company during that period.
+2.2
+Normal Post-Termination Compensation and Benefits.
+Except as provided in Section 3.1, if the Executive's employment is terminated for any reason following a Change in Control and during the term of this Agreement, the Company will pay the Executive the normal compensation and benefits payable to the Executive under the terms of the Company's compensation or benefit plans, programs, and arrangements, as in effect immediately prior to the Change in Control, including but not limited to the Non-Competition Period Payments (if any), always provided that the Executive fully complies with the respective post-contractual obligations, including but not limited to the obligations arising out of or under the Confidentiality, Non-Competition and Non-Solicitation Agreement. This provision does not restrict the Company's right to amend, modify, or terminate any plan, program, or arrangement prior to a Change in Control.
+2.3
+No Duplication.
+Notwithstanding any other provision of this Agreement to the contrary, the Executive will not be entitled to duplicate benefits or compensation under this Agreement and the terms of any other plan, program, or arrangement maintained by the Company or any affiliate.
+3.
+Severance Payments
+3.1
+Payment Triggers
+(a)
+Severance Payment Triggers
+In addition to the payments as set out in Section 2 above, but in lieu of any other severance compensation or benefits to which the Executive may otherwise be entitled
+3 / 12
+Change in Control Severance Agreement
+under any plan, program, policy, or arrangement of the Company or by law in particular due to abusive termination under Art. 336a Swiss Code of Obligations (and which the Executive hereby expressly waives), the Company will pay the Executive the Severance Payments described in Section 3.2 upon termination of the Executive's employment following a Change in Control and during the term of this Agreement, unless the termination is (1) by the Company for Cause, (2) by reason of the Executive’s death, or (3) by the Executive without Good Reason.
+For purposes of this Section 3.1, the Executive’s employment will be deemed to have been terminated following a Change in Control by the Company without Cause or by the Executive with Good Reason if (1) the Executive’s employment is terminated without Cause prior to a Change in Control at the direction of a Person who has entered into an agreement with the Ultimate Parent Company, the consummation of which will constitute a Change in Control; or (2) the Executive terminates his employment with Good Reason prior to a Change in Control (determined by treating a Potential Change in Control as a Change in control in applying the definition of Good Reason), if the circumstance or event that constitutes Good Reason occurs at the direction of such a Person.
+The Severance Payments described in this Article 3 are subject to the conditions stated in Section 4 below.
+(b)
+Severance Payment Adjustments
+If and to the extent the Severance Payments were, at the time of their payment, to be deemed a golden parachute or similar arrangement that the Company is prohibited to pay under the laws where the Company is incorporated and has its registered office or the costs associated with the Severance Payments could no longer be booked as expenditures in the Company's profit and loss statement (a "Parachute Payment") then, depending on whichever alternative produces the better net after-tax result for the Executive, the value of the Severance Payments will either:
+i.
+Be reduced in part or in their totality to the extent necessary so that the Severance Payments are not, at the time of their payment, deemed to be Parachute Payments.  For this purpose, cash Severance Payments will be reduced first (if necessary, to zero), and all other, non-cash Severance Payments will be reduced next (if necessary, to zero).  For purposes of the limitation described in the preceding sentence, the following will not be taken into account:  (1) any portion of the Severance Payments the receipt or enjoyment of which the Executive effectively waived in writing prior to the Date of Termination, and (2) any portion of the Severance Payments that, in the opinion of the Company’s accounting firm, does not constitute a “parachute payment” within the meaning of Section 280G(b)(2) of the U.S. Internal Revenue Code of 1986, as amended, and its interpretive rules and regulations.
+4 / 12
+Change in Control Severance Agreement
+OR
+ii.
+Be paid in full.
+For the avoidance of doubt, this Section 3.1(b) shall reduce the Severance Payments otherwise payable to the Executive only if doing so would place the Executive in a better net after-tax economic position as compared with not doing so (taking into the account any excise taxes payable in respect of such Severance Payments).
+3.2
+Severance Payments.
+The following are the Severance Payments referenced in Section 3.1:
+(a)
+Lump Sum Severance Payment
+In lieu of any further salary payments to the Executive for periods after the Date of Termination, and in lieu of any severance benefits otherwise payable to the Executive, the Company will pay to the Executive, in accordance with Section 3.3, a lump sum severance payment, in cash, equal to (a) two times the sum of (1) the higher of the Executive's annual base salary in effect immediately prior to the event or circumstance upon which the Notice of Termination is based or in effect immediately prior to the Change in Control, plus (2) the amount of the Executive's target annual bonus entitlement under the Cash Incentive Plan (or any other bonus plan of the Company then in effect) as in effect immediately prior to the event or circumstance giving rise to the Notice of Termination, less (b) the amount of any statutory payment to which the Executive is entitled related to any statutory notice period. If the Board determines that it is not workable to determine the amount that the Executive's target bonus would have been for the year in which the Notice of Termination was given, then, for purposes of this paragraph (a), the Executive's target annual bonus entitlement will be the average of annual bonus paid to the Executive with respect to the three years immediately prior to the year in which the Notice of Termination was given.
+(b)
+Options and Restricted Shares
+All outstanding Options will become immediately vested and exercisable (to the extent not yet vested and exercisable as of the Date of Termination).  To the extent not otherwise provided under the written agreement evidencing the grant of any restricted Shares to the Executive, all outstanding Shares that have been granted to the Executive subject to restrictions that, as of the Date of Termination, have not yet lapsed will lapse automatically upon the Date of Termination, and the Executive will own those Shares free and clear of all such restrictions. Notwithstanding the foregoing, Options and restricted Shares remain subject to any forfeiture or clawback claims under the applicable option plan or award agreement.
+3.3
+Time of Payment
+Except as otherwise expressly provided in Section 3.2, payments provided for in that
+5 / 12
+Change in Control Severance Agreement
+Section will be made as follows:
+No later than the fifth business day following the Date of Termination, the Company will pay to the Executive an estimate, as determined by the Company in good faith, of 90% of the payments under Section 3.2 (a) to which the Executive is clearly entitled.
+The Company will pay to the Executive the remainder of the payments due to the Executive under Section 3.2 not later than 90 business days after the Date of Termination.
+At the time that payment is made under this Section 3.3, the Company will provide the Executive with a written statement setting forth the manner in which all of the payments to him under this Agreement were calculated and the basis for the calculations.
+3.4
+Outplacement Services
+For a period not to exceed six (6) months following the Date of Termination, the Company will provide the Executive with reasonable outplacement services consistent with past practices of the Company prior to the Change in Control or, if no past practice has been established prior to the Change in Control, consistent with the prevailing practice in the medical device manufacturing industry.
+4.
+The Executive's Covenants
+4.1
+Confidentiality, Non-Competition and Non-Solicitation Agreement
+The Executive herewith acknowledges and affirms his continuing obligations under the existing Confidentiality, Non-Competition and Non-Solicitation Agreement and re-affirms his agreement to honor the obligations as set forth therein and undertakes to restate effective as per termination date of his employment the Confidentiality, Non-Competition and Non-Solicitation Agreement in case - in the Company's sole discretion - the circumstances so warrant.
+4.2
+General Release
+The Executive agrees that, notwithstanding any other provision of this Agreement, the Executive will not be eligible for any Severance Payments under this Agreement unless the Executive timely signs a General Release in substantially the form attached to this Agreement as Annex 2. The Executive will be given 30 days to consider the terms of the General Release. If the Executive does not return the executed General Release to the Company by the end of the 30 day period that failure will be deemed a refusal to sign, and the Executive will not be entitled to receive any Severance Payments under this Agreement.
+6 / 12
+Change in Control Severance Agreement
+5.
+Notices
+For the purpose of this Agreement, notices and all other communications provided for in the Agreement will be in writing and will be deemed to have been duly given when delivered or mailed by Swiss registered mail, return receipt requested, addressed to the respective addresses set forth below, or to such other address as either party may furnish to the other in writing in accordance with this Article 5, except that notice of change of address will be effective only upon actual receipt:
+To the Company:
+Zimmer GmbH
+Attention: Vice President EMEA Associate General Counsel
+Zählerweg 4
+6300 Zug, Switzerland
+To the Executive:
+The Executive’s principal residence as reflected in the records of the Company.
+6.
+Miscellaneous
+This Agreement constitutes and expresses the entire agreement between the Parties pertaining to the subject matter contained herein and supersedes all prior and contemporaneous oral or written agreements, representations, understandings and the like between the Parties.
+This Agreement may not be modified, amended, altered or supplemented, in whole or in part, except by a written agreement signed by the Parties.
+If any provision of this Agreement is found by any competent authority to be void, invalid or unenforceable, such provision shall be deemed to be deleted from this Agreement and the remaining provisions of this Agreement shall continue in full force. In this event, the Agreement shall be construed, and, if necessary, amended in a way to give effect to, or to approximate, or to achieve a result which is as close as legally possible to the result intended by the provision hereof determined to be void, illegal or unenforceable.
+7.
+Governing Law and Jurisdiction
+This Agreement shall be governed by, interpreted and construed in accordance with the substantive laws of Switzerland.
+The ordinary courts and at the registered office of the Company shall have exclusive jurisdiction for all disputes arising out of or in connection with this Agreement.
+This Agreement enters into force effective as of February 13, 2025.
+7 / 12
+Change in Control Severance Agreement
+Zimmer GmbH
+/s/ Guillaume Génin
+Guillaume Génin
+VP EMEA Associate General Counsel
+/s/ Rachel Stauffer
+Rachel Stauffer
+Vice President HR EMEA
+Executive
+/s/ Jehanzeb Noor
+Jehanzeb Noor
+8 / 12
+Change in Control Severance Agreement
+Annex 1: Definitions
+"Beneficial Owner" has the meaning stated in Rule 13d‑3 under the Exchange Act.
+"Board" means the Board of Directors of the Ultimate Parent Company.
+"Cash Incentive Plan" means the Ultimate Parent Company’s Executive Performance Incentive Plan.
+"Cause" for termination by the Company of the Executive's employment, after any Change in Control, means (1) any reason being deemed good reason in the sense of Art. 340c para 2 Swiss Code of Obligations; (2) the willful and continued failure by the Executive to substantially perform the Executive's duties with the Company (other than any such failure resulting from the Executive's incapacity due to physical or mental illness or any such actual or anticipated failure after the issuance of a Notice of Termination for Good Reason by the Executive) for a period of at least 10 consecutive days after a written demand for substantial performance is delivered to the Executive by the Company, which demand specifically identifies the manner in which the Company believes that the Executive has not substantially performed the Executive's duties; or (3) the Executive willfully engages in a conduct that is demonstrably and materially injurious to the Company, the Ultimate Parent Company or its subsidiaries, monetarily or otherwise.
+A "Change in Control" will be deemed to have occurred if any of the following events occur:
+(a)
+any Person is or becomes the Beneficial Owner, directly or indirectly, of securities of the Ultimate Parent Company (not including in the securities beneficially owned by that Person any securities acquired directly from the Ultimate Parent Company or its affiliates) representing 20% or more of the combined voting power of the Ultimate Parent Company's then outstanding securities; or
+(b)
+during any period of two consecutive years (not including any period prior to the execution of this Agreement), individuals who at the beginning of the period constitute the Board and any new director (other than a director designated by a Person who has entered into an agreement with the Ultimate Parent Company to effect a transaction described in clause (a), (c) or (d) of this paragraph whose election by the Board or nomination for election by the Ultimate Parent Company's stockholders was approved by a vote of at least two-thirds (2/3) of the directors then still in office who either were directors at the beginning of the period or whose election or nomination for election was previously approved), cease for any reason to constitute a majority of the Board; or
+(c)
+the shareholders of the Ultimate Parent Company approve a merger or consolidation of the Ultimate Parent Company with any other corporation, other than (A) a merger or consolidation that would result in the voting securities of
+9 / 12
+Change in Control Severance Agreement
+the Ultimate Parent Company outstanding immediately prior to the merger or consolidation continuing to represent (either by remaining outstanding or by being converted into voting securities of the surviving entity), in combination with the ownership of any trustee or other fiduciary holding securities under an employee benefit plan of the Ultimate Parent Company, at least 75% of the combined voting power of the voting securities of the Ultimate Parent Company or the surviving entity outstanding immediately after the merger or consolidation; or (B) a merger or consolidation effected to implement a recapitalization of the Ultimate Parent Company (or similar transaction) in which no Person acquires more than 50% of the combined voting power of the Ultimate Parent Company's then outstanding securities; or
+(d)
+the shareholders of the Ultimate Parent Company approve a plan of complete liquidation of the Ultimate Parent Company or an agreement for the sale or disposition by the Ultimate Parent Company of all or substantially all the Ultimate Parent Company's assets.
+Notwithstanding the foregoing, a Change in Control will not include any event, circumstance, or transaction occurring during the six-month period following a Potential Change in Control that results from the action of any entity or group that includes, is affiliated with, or is wholly or partly controlled by the Executive; provided, further, that such an action will not be taken into account for this purpose if it occurs within a six-month period following a Potential Change in Control resulting from the action of any entity or group that does not include the Executive.
+"Date of Termination" means the date on which the Notice of Termination under the Employment Agreement has lapsed.
+"Employment Agreement" means the employment agreement between the Executive and the Company dated February 13, 2025 as further modified.
+"Exchange Act" means the U.S. Securities Exchange Act of 1934, as amended from time to time, and interpretive rules and regulations.
+"Good Reason" for termination by the Executive of the Executive's employment means the occurrence (without the Executive's express written consent) of any one of the following acts by the Company, or failures by the Company to act following a Change in Control:
+(e)
+the assignment to the Executive of any duties inconsistent with the Executive's status as an executive officer of the Company or a substantial adverse alteration in the nature or status of the Executive's responsibilities from those in effect immediately prior to a Change in Control;
+(f)
+the Company's failure, without the Executive's consent, to pay to the Executive any portion of the Executive's current compensation (which means, for purposes of this paragraph (b), the Executive's annual base salary as in effect on the date
+10 / 12
+Change in Control Severance Agreement
+of this Agreement, or as it may be increased from time to time, and the awards earned pursuant to the Cash Incentive Plan) or to pay to the Executive any portion of an installment of deferred compensation under any deferred compensation program of the Company, within 30 days of the date the compensation is due;
+(g)
+the Company's failure to continue in effect any compensation plan in which the Executive participates immediately prior to a Change in Control, which plan is material to the Executive's total compensation, including, but not limited to, the Cash Incentive Plan and the Ultimate Parent Company’s 2009 Stock Incentive Plan as amended from time to time or any substitute plans adopted prior to the Change in Control, unless an equitable arrangement (embodied in an ongoing substitute or alternative plan) has been made with respect to that plan, or the Company's failure to continue the Executive's participation in such a plan (or in a substitute or alternative plan) on a basis not materially less favorable, both in terms of the amount of benefits provided and the level of the Executive's participation relative to other participants, as existed at the time of the Change in Control.
+Notwithstanding the foregoing, the occurrence of an event that would otherwise constitute Good Reason will cease to be an event constituting Good Reason if the Executive does not timely provide a Notice of Termination to the Company within 120 days of the date on which the Executive first becomes aware (or reasonably should have become aware) of the occurrence of that event.
+"Non-Competition Period Payments" has the meaning as defined in the Confidentiality, Non-Competition and Non-Solicitation Agreement dated February 13, 2025 between the Company and the Executive.
+“Notice of Termination” has the meaning as defined in section 2.3 of the Employment Agreement (i.e., notice period of 3 months from the end of the month in which the notice is given).
+"Options" means options to purchase Shares awarded to the Executive during his employment with the Company.
+"Person" has the meaning stated in section 3(a)(9) of the Exchange Act, as modified and used in sections 13(d) and 14(d) of the Exchange Act; however, a Person will not include (1) the Ultimate Parent Company or any of its subsidiaries, (2) a trustee or other fiduciary holding securities under an employee benefit plan of the Ultimate Parent Company or any of its subsidiaries, (3) an underwriter temporarily holding securities pursuant to an offering of those securities, or (4) a corporation owned, directly or indirectly, by the stockholders of the Ultimate Parent Company in substantially the same proportions as their ownership of stock of the Ultimate Parent Company.
+11 / 12
+Change in Control Severance Agreement
+"Potential Change in Control" will be deemed to have occurred if any one of the following events occurs:
+(h)
+the Ultimate Parent Company enters into an agreement, the consummation of which would result in the occurrence of a Change in Control;
+(i)
+the Ultimate Parent Company or any Person publicly announces an intention to take or to consider taking actions that, if consummated, would constitute a Change in Control;
+(j)
+any Person who is or becomes the Beneficial Owner, directly or indirectly, of securities of the Ultimate Parent Company representing 10% or more of the combined voting power of the Ultimate Parent Company's then outstanding securities, increases that Person's beneficial ownership of those securities by 5% or more over the percentage so owned by that Person on the date of this Agreement; or
+(k)
+the Board adopts a resolution to the effect that, for purposes of this Agreement, a Potential Change in Control has occurred.
+"Shares" means shares of the common stock, $0.01 par value, of the Ultimate Parent Company.
+"Severance Payments" means the payments described in Section 3.2.
+"Ultimate Parent Company" means Zimmer Biomet Holdings, Inc., a Delaware corporation, and any successor to its business and/or assets.
+12 / 12
+Change in Control Severance Agreement
+Annex 2
+GENERAL RELEASE
+Name: Jehanzeb Noor	                                     Notification Date:  14-Feb-2025
+Zimmer GmbH. (the "Company") has offered me certain severance benefits (the "Severance Benefits") pursuant to a Change in Control Severance Agreement ("Agreement") between the Company and me.  I will only be able to receive the Severance Benefits in consideration for my signing this General Release.
+The Company has advised me of, and I acknowledge the following:
+I have 30 days from the date I receive this General Release to consider and sign it.  If I do not return this signed General Release in 30 days (INSERT DATE), the Company will consider this my refusal to sign, and I will not receive the Severance Benefits.  If I do sign this General Release, it will become immediately effective.
+By signing this General Release I am giving up my right to sue the Company, and any affiliates, parent companies and subsidiaries, and their past, present and future officers, directors, employees, and agents (collectively, the "Released Parties") based upon any act or event occurring prior to my signing this General Release, to the fullest extent permitted by law.  Without limitation, and again to the fullest extent permitted by law, I specifically release the Company from any and all claims arising out of my employment and termination, including claims based on the Swiss Code of Obligations, the Labor Act and all applicable federal, cantonal and local laws.
+For the sake of clarification, I acknowledge that this General Release shall not affect my legal obligation to protect the confidentiality of the Company's information or any of my existing obligations under the Confidentiality, Non-Competition and Non-Solicitation Agreement that I executed during my employment with the Company (the "Non-Competition Agreement"), and I hereby reaffirm my covenants and obligations under the Non-Competition Agreement.
+By signing this General Release, none of my benefits will be affected to which I am entitled under the Agreement or any claim arising out of the enforcement of the Agreement.
+My signature below acknowledges that I have read the above, understand what I am signing, and am acting of my own free will.  The Company has advised me to consult with an attorney and any other advisors of my choice prior to signing this General Release.
+SIGNATURE  /s/ Jehanzeb Noor		    DATE  14-Feb-2025
+PRINT NAME  Jehanzeb Noor

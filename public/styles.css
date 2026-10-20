@@ -597,7 +597,7 @@ pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--f
 /* R5 demo: balance columns, no orphan, a readable cliff line, brand-true tracking */
 @media (min-width:1200px){
   body.has-one .aq{font-size:15px;line-height:24px}
-  body.has-one .prov{flex-wrap:wrap;white-space:nowrap}body.has-one .prov > span:first-child{flex-basis:100%}body.has-one .prov > span:first-child + .dot{display:none}
+  body.has-one .prov{flex-wrap:nowrap;white-space:nowrap}
   .hero-date{letter-spacing:0;font-size:120px;line-height:112px}
 }
 .cliff{max-width:none}
@@ -605,3 +605,37 @@ pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--f
 .cliff::after{height:2px;top:-.5px}
 /* R2 follow-up: the AUTO-RENEWS caption sits above the shaded zone, right-aligned, so it never collides with the ghost countdown */
 @media (min-width:821px){.cliff-strip::after{top:-20px;height:76px;padding:2px 0 0;text-align:right;background:linear-gradient(transparent 20px,var(--accent-tint) 20px)}}
+
+/* ---- C1–C5 (c965f22 re-score) ---- */
+/* C1 timeline: date label above the tick, TODAY stays below at the left; no adjacency */
+.cliff{margin-top:44px}
+.cliff .cl-d,.cliff.near .cl-d{top:-30px;transform:translateX(-50%)}
+.cliff.near .cl-d{transform:translateX(-8px)}
+.cliff .cl-d::after{content:"";position:absolute;left:50%;top:18px;width:1px;height:6px;background:#fff}
+.cliff .cl-t{color:var(--muted)}
+/* C2 captions on one baseline above the strip, with room under the subline */
+@media (min-width:821px){
+  body:not(.has-any) .hero .subline{margin-bottom:44px}
+  .cliff-mark b{top:8px;line-height:16px}  /* mark top is -28px, so the caption lands at -20px, the same line as AUTO-RENEWS (.cliff-strip::after top:-20px, styles.css:557) */
+}
+/* C3 the drop zone yields to the instrument; drop the redundant empty-state status */
+@media (min-width:821px){body:not(.has-any):not(.legacy) .drop{min-height:96px}}
+body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
+/* C4 phone: the instrument comes back at full strength */
+@media (max-width:480px){
+  body:not(.has-any) .cliff-strip::after{content:"";position:absolute;left:72%;right:0;top:0;height:28px;background:var(--accent-tint)}
+  .cliff-mark{border-left:2px solid #fff;height:44px;top:-12px}
+  .cliff-mark::after{content:"-- DAYS LEFT";position:absolute;left:8px;top:32px;font:500 16px/20px var(--font-mono);color:var(--accent);white-space:nowrap}
+  body:not(.has-any):not(.legacy) .drop{min-height:132px}
+  .cliff-strip{margin-bottom:44px}
+}
+/* C5 demo right column: quote back to reading size, meta on one line */
+@media (min-width:1200px){
+  body.has-one .aq{font-size:15px;line-height:24px}
+  body.has-one .agrid{grid-template-columns:minmax(0,1fr) 380px}
+  body.has-one .prov{flex-wrap:nowrap;white-space:nowrap;font-size:12px}
+}
+/* C4 follow-up: on phones the ghost countdown sits left of the marker so it stays on screen */
+@media (max-width:480px){.cliff-mark::after{left:auto;right:8px;text-align:right}}
+/* C5 follow-up: with the 380px right column the 120px date needs 720px; below 1600px wide it sets at 112px so it clears the quote */
+@media (min-width:1200px) and (max-width:1599px){body.has-one .hero-date{font-size:112px;line-height:104px}}
