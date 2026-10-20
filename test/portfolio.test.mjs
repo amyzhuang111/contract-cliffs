@@ -64,7 +64,7 @@ test('portfolio: default order is by urgency and the opening sentence count matc
   const rows = rowsFor(cs, AS); const u = byUrgency(rows);
   assert.deepEqual(u.slice(0, 3).map(r => r.c.name), ['Glacier Bancorp / Glacier Bank', 'urban-gro / Richard Akright', 'F. Scott Anthony / Coca-Cola Consolidated']);
   const n = rows.filter(r => ['passed', 'd30'].includes(r.st.bucket)).length; assert.equal(n, 2);
-  assert.equal(firstSentence(rows), 'The 2 contracts you need to act on first are listed first.');
+  assert.equal(firstSentence(rows), 'Act on these 2 this month. 1 more is next.');
   assert.ok(u.slice(0, n).every(r => ['passed', 'd30'].includes(r.st.bucket)) && u.slice(-4).every(r => !r.actBy));
-  assert.equal(firstSentence(rows.filter(r => r.st.bucket !== 'd30')), 'Nothing is due in the next 30 days. The next deadlines are listed first.');
+  assert.equal(firstSentence(rows.filter(r => r.st.bucket !== 'd30')), 'Nothing is due this month. These 3 are next.');
 });

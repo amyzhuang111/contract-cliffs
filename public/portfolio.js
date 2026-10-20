@@ -53,8 +53,11 @@ export async function loadPortfolio() { if (!cache) { const d = await (await fet
 // Urgency order (past due, then due within 30 days, then the rest by date; no date last) and the sentence that goes with it.
 export const byUrgency = rows => sortRows(rows, 'status', 1);
 export function firstSentence(rows) {
-  const n = rows.filter(r => ['passed', 'd30'].includes(r.st.bucket)).length;
-  return n ? `The ${n === 1 ? 'contract' : n + ' contracts'} you need to act on first ${n === 1 ? 'is' : 'are'} listed first.` : 'Nothing is due in the next 30 days. The next deadlines are listed first.';
+  const a = rows.filter(r => ['passed', 'd30'].includes(r.st.bucket)).length, shown = Math.min(3, byUrgency(rows).filter(r => r.actBy).length), rest = shown - Math.min(a, shown);
+  if (!shown) return 'No send-notice dates found.';
+  if (!a) return `Nothing is due this month. ${shown === 1 ? 'This one is' : `These ${shown} are`} next.`;
+  if (a >= shown) return a === shown ? `Act on ${a === 1 ? 'this one' : `these ${a}`} this month.` : `Act on these ${shown} first. ${a} are due this month.`;
+  return `Act on ${a === 1 ? 'this one' : `these ${a}`} this month. ${rest} more ${rest === 1 ? 'is' : 'are'} next.`;
 }
 
 // Opening view: the 3 contracts to act on first, each with company, action and days left.
