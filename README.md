@@ -11,6 +11,8 @@ Dev: `npm run serve` (static site + /api/edgar on :4173), `npm test`, `npm run e
 - Real set: 10 Exhibit 10 agreements from SEC EDGAR (edgar/SOURCES.md; hand checks in edgar/VERIFICATION.md).
 - Held-out test: 14 more Exhibit 10 agreements never used for tuning. First pass 2/14 send-notice deadline dates right, 5 flagged correctly, 6 missed, 1 wrong; after fixes 8 dated, 6 flagged, 0 wrong (edgar/holdout/HOLDOUT.md; those 14 are now tuning data).
 - Blind holdout 2: 10 new agreements, run once before any change: 3 right, 6 flagged, 1 missed, 0 wrong send-notice deadline dates (1 wrong secondary 'current term' date, fixed).
+- Calibration (Oct 2026): a card says Sure only when the start date is explicit, there is one renewal rule, the notice period is parsed and a second count agrees. Across every fixture and past held-out folder (328 contracts), Sure cards that were wrong went from 3 of 78 to 0 of 58 (`node test/calibration/run.mjs`).
+- Blind test 6 (Oct 2026, 17 unseen agreements through the browser: PDF, DOCX, text, HTML): 5 right, 4 correctly blank, 7 missed (flagged), 1 wrong at Check, 0 wrong at Sure.
 - Blind test 5 (Oct 2026, 16 more unseen agreements through the browser: PDF, DOCX, text, HTML): 3 right, 3 correctly blank, 6 missed (flagged), 4 wrong (one marked Sure, three at Check).
 - Blind test 4 (Oct 2026, 13 more unseen agreements through the browser: PDF, DOCX, text, HTML): 4 right, 2 correctly blank, 5 missed (flagged), 2 wrong (one at Check).
 - Blind test 3 (Oct 2026, 13 more unseen agreements, real PDF and DOCX through the browser): 3 right, 3 correctly blank, 3 right next date without the passed-deadline warning, 3 missed (flagged), 1 wrong (shown as expired).

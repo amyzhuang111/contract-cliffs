@@ -138,3 +138,33 @@ Answers were worked out by hand from each filing before running the tool. Source
 | ETHZilla / Rudisill | HTML | about 30–31 Dec 2028, Check (end before Dec 31 2028; no notice length) | no date | missed, flagged |
 | Shell / IRRX offtake | HTML | no date (Commencement Date is an event) | no date | right |
 | Aebi Schmidt loan | PDF | missed 2 Oct 2026; next 2 Oct 2027 | no date ("no notice period") | missed, flagged |
+
+## Calibration, October 2026
+Rule: Sure only when (1) the start date is an explicit date in the term clause, or an expressly defined Effective Date with no separate or anticipated Commencement / Start Date; (2) one renewal rule, with no "such Nth anniversary" or "subsequent" qualifier left unread and no renewal cap; (3) the notice period is parsed directly; (4) a second count (term end rolled forward by the renewal period, minus the notice) gives the same date. Otherwise Check, with a note naming what to confirm.
+Sweep over every fixture plus /tmp/ho12–ho17, /tmp/blind–blind4 and /tmp/sw (328 distinct contracts; every Sure card checked against a hand answer):
+- before (7559d22): 78 Sure, 3 wrong (Procore 24 Jul 2027 vs 24 Jul 2028; Standard Premium 31 Dec 2026 vs 31 Dec 2029; Salvation Army lease 11 Oct 2029 vs 12 Oct 2039)
+- after: 58 Sure, 0 wrong
+
+## Blind test 6, October 2026 (17 unseen agreements through the browser; answers worked out by hand first; no code changes after)
+
+| Filing | Input | Hand answer (as of 19 Oct 2026) | Card | Result |
+|---|---|---|---|---|
+| Thermo Fisher / Arcturus MSA | HTML | no date (Effective Date = last signature) | no date, Can't tell | right |
+| Fusemachines / Qintess | PDF | 11 May 2029 | 11 May 2029, Sure | right |
+| Nuburu / Maddox JV | HTML | no date (Effective Date undated) | 22 Jul 2030, Check (best reading) | **wrong** at Check: start taken from a date in the recitals |
+| Wesbanco / Pattishall | DOCX | missed 21 Sep 2026, next 21 Sep 2027 | no date ("no term found") | missed, flagged |
+| State Street / VanEck admin | HTML | 24–25 Mar 2027 | no date ("no term found") | missed, flagged |
+| Reservoir / Khosrowshahi | PDF | 2 Oct 2028 | no date ("no term found") | missed, flagged |
+| Figure offer | HTML | no date (no notice period) | no date | right |
+| Origin / Crotwell CIC | DOCX | 25–26 Jun 2028 | no date ("no term found") | missed, flagged |
+| Apple iSports JV | HTML | no date (no notice period) | no date | right |
+| Director service agreement | text | 7–8 Jan 2027 | no date ("effective date not found") | missed, flagged |
+| Dime / exec | HTML | no date (renews daily) | no date | right |
+| CVR Energy / Neumann | DOCX | 18 Dec 2028 | 18 Dec 2028, Can't tell (best reading) | right date, low confidence |
+| Ethena / StablecoinX DVN | PDF | 12–13 Feb 2027 | 12 Feb 2027, Sure | right |
+| Progyny / Sturmer | text | 1 Nov 2026 (Sunday; send by Fri 30 Oct) | 1 Nov 2026, Can't tell (best reading) | right date, low confidence |
+| Murphy USA / West | DOCX | 2–3 Oct 2030 | 3 Oct 2030, Sure | right |
+| Greenlight L/C commitment | HTML | 24 Aug 2027 | no date | missed, flagged |
+| Revelation / Zygmont | PDF | 25 May 2029 | no date ("no term found") | missed, flagged |
+
+Correct 9 (5 dates, 4 blanks), missed 7, wrong 1, wrong at Sure 0.
