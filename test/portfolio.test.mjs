@@ -54,7 +54,7 @@ test('portfolio: status, sorting and timeline', () => {
   assert.match(t, /10 more after 19 Oct 2027/); assert.match(t, /4 with no date found/);
   const leg = [...t.matchAll(/<i class="dot (\w+)"><\/i>([^<]+)/g)].map(m => m[2]); assert.deepEqual(leg, ['Act this month', 'Later', 'Needs review']); // matches the summary's words
   const pf = portfolio(buildQueue(cs, AS)); assert.deepEqual(summaryOf(pf), { act: 2, year: 9, human: 7 }); // Glacier and urban-gro count as act-now despite review / missed
-  const sh = stripHtml(pf); assert.deepEqual([...sh.matchAll(/<span class="sv">(\d+)<\/span><span class="bl">([^<]+)/g)].map(m => m[2] + ' ' + m[1]), ['Act this month 2', 'Coming up this year 9', 'Needs a human look 7']);
+  const sh = stripHtml(pf); assert.deepEqual([...sh.matchAll(/<span class="sv">(\d+)<\/span><span class="bl">([^<]+)/g)].map(m => m[2] + ' ' + m[1]), ['Act this month 2', 'Next 12 months 9', 'Needs a human look 7']);
   assert.match(sh, /All 25 by next deadline: 2 within 30 days, 1 in 31 to 90 days, 8 in 91 to 365 days, 10 later, 4 with no date found\. 4 contracts had an earlier send-notice date missed\./);
   const l = listHtml(rows, AS); assert.equal((l.match(/<li /g) || []).length, 25); assert.equal((l.match(/href="https:\/\/www\.sec\.gov\//g) || []).length, 25);
   assert.ok(!/—/.test(t + l));

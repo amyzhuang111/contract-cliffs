@@ -211,7 +211,7 @@ export function stripHtml(pf) {
   const tile = (k, n, l, c) => `<div class="big ${k}${n ? '' : ' zero'}"><span class="sv">${n}</span><span class="bl">${l}</span><span class="bc">${c}</span></div>`;
   const parts = [pf.passed && `${pf.passed} past due`, `${pf.d30} within 30 days`, `${pf.d90} in 31 to 90 days`, `${pf.d365} in 91 to 365 days`, `${pf.later} later`, `${pf.cant} with no date found`, pf.expired && `${pf.expired} expired`].filter(Boolean);
   return tile('act', s.act, 'Act this month', 'Send-notice date within 30 days or already past')
-    + tile('year', s.year, 'Coming up this year', 'Send-notice date 31 to 365 days from today')
+    + tile('year', s.year, 'Next 12 months', 'Send-notice date 31 to 365 days from today')
     + tile('human', s.human, 'Needs a human look', `${pf.review} to review, ${pf.cant} with no date found`)
     + `<p class="pfflags">All ${pf.total} by next deadline: ${parts.join(', ')}.${pf.missed ? ` ${plural(pf.missed, 'contract', 'contracts')} had an earlier send-notice date missed.` : ''}</p>`;
 }
