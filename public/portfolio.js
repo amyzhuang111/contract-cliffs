@@ -65,7 +65,7 @@ export function firstSentence(rows, skip = []) {
 export function top3Html(rows, skip = []) {
   return byUrgency(rows).filter(r => !skip.includes(r.id)).slice(0, 3).map(r => { const now = ['passed', 'd30'].includes(r.st.bucket);
     const note = [r.actBy && (r.item?.within ? '' : sendByNote(r.actBy, r.asOf)) && esc((r.item?.within ? '' : sendByNote(r.actBy, r.asOf))), windowNote(r) && esc(windowNote(r)), r.missed && `Missed ${esc(fmt(r.missed.actBy))}`, r.st.flags.includes('review') && '<span class="rvnote">Needs review</span>'].filter(Boolean).join(' · ');
-    return `<li class="t3${now ? ' now' : ''}"><a href="#pf-${esc(r.id)}"><span class="t3n">${esc(r.c.name)}</span><span class="t3a">${r.item?.within ? 'Send notice on or after' : 'Send notice by'} ${esc(fmt(r.actBy))}</span><span class="t3d">${r.days === 0 ? 'Today' : `${dayWord(r.days)} left`}</span>${note ? `<span class="t3x">${note}</span>` : ''}</a></li>`; }).join('');
+    return `<li class="t3${now ? ' now' : ''}"><a href="#pf-${esc(r.id)}"><span class="t3n">${esc(r.c.name)}</span><span class="t3a">${r.item?.within ? 'Send notice on' : 'Send notice by'} ${esc(fmt(r.actBy))}</span><span class="t3d">${r.days === 0 ? 'Today' : `${dayWord(r.days)} left`}</span>${note ? `<span class="t3x">${note}</span>` : ''}</a></li>`; }).join('');
 }
 
 // "This week": every contract whose send-notice date falls in the 7 days from the as-of date, soonest first.

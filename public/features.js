@@ -66,7 +66,7 @@ export function gcalLink({ name, actBy, asOf, quote = '', location = '', url = '
   const d = within ? within.day : sendDay(actBy, asOf); if (!d) return '';
   const end = ymd(addDays(new Date(d + 'T00:00:00Z'), 1));
   const q = norm(quote); const details = [within ? `${within.label} ${within.dayW}. ${wn}.` : `Last day to send non-renewal notice: ${actBy}.`, within ? '' : d !== actBy ? `Event is on ${d}, the last business day you can safely send it.` : '', location ? `Clause (${location}): "${q.length > 600 ? q.slice(0, 600) + '...' : q}"` : '', note || '', url ? `Source: ${url}` : '', 'Made with Contract Cliffs. Check the clause before relying on this date.'].filter(Boolean).join('\n');
-  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent((within ? `Window opens: send notice from ${within.dayW.slice(4)}${within.shifted ? ' (two readings)' : ''}: ` : 'Send non-renewal notice: ') + name) + '&dates=' + DAY(d) + '/' + DAY(end) + '&details=' + encodeURIComponent(details);
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent((within ? `Window opens: send notice on ${within.dayW.slice(4)} (two readings): ` : 'Send non-renewal notice: ') + name) + '&dates=' + DAY(d) + '/' + DAY(end) + '&details=' + encodeURIComponent(details);
 }
 
 // ---------- F3: more obligations ----------
@@ -165,7 +165,7 @@ export function letter(c, r, asOf) {
     q?.quote ? `Renewal clause (${q.location}): "${norm(q.quote)}"` : `Renewal clause: ${fill('renewal clause')} (no renewal clause found)`,
     '',
     ...(ex ? [`Note: ${ex.text} If that option fits better, it may be quicker than waiting for the term to end. Termination clause (${ex.location}): "${ex.quote}"`, ''] : []),
-    windowOf(r) ? `This notice is given within the ${windowOf(r).n} ${windowOf(r).unit}${windowOf(r).n === 1 ? '' : 's'} before the end of the current term, ${windowOf(r).shifted ? 'on' : 'on or after'} ${fmtLong(windowOf(r).day)}, as the clause above requires.` : r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${fill('last day to give notice')} (no date could be worked out from the contract).`,
+    windowOf(r) ? `This notice is given within the ${windowOf(r).n} ${windowOf(r).unit}${windowOf(r).n === 1 ? '' : 's'} before the end of the current term, on ${fmtLong(windowOf(r).day)}, as the clause above requires.` : r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${fill('last day to give notice')} (no date could be worked out from the contract).`,
     '',
     'Please confirm receipt of this notice in writing.',
     '',
@@ -262,10 +262,9 @@ export function windowOf(r) {
   const i = r?.item || r; const at = typeof r?.actBy === 'string' && r.actBy ? r.actBy : i?.date; if (!i?.within || !at || !i.termEnd) return null;
   const from = safeSendBy(at, true).date || at, to = i.termEnd, W = d => { const t = new Date(d + 'T00:00:00Z'); return `${WD3[t.getUTCDay()]} ${dShort(d, true)}`; };
   // shifted: the opening day is not a business day. Moving forward suits the window reading only; "at least N before" would make it late. Both readings meet on the day itself.
-  const shifted = from !== at; const day = shifted ? at : from;
-  return { at, from, to, shifted, day, dayW: W(day), label: shifted ? 'Send notice on' : 'Send notice on or after', fromW: W(from), atW: W(at), range: `send between ${dShort(from, from.slice(0, 4) !== to.slice(0, 4))} and ${dShort(to, true)}`, n: i.notice?.n, unit: i.notice?.unit, quote: i.withinText || '' };
+  const shifted = from !== at; const day = at;
+  return { at, from, to, shifted, day, dayW: W(day), label: 'Send notice on', fromW: W(from), atW: W(at), range: `send between ${dShort(from, from.slice(0, 4) !== to.slice(0, 4))} and ${dShort(to, true)}`, n: i.notice?.n, unit: i.notice?.unit, quote: i.withinText || '' };
 }
 export const windowNote = r => { const w = windowOf(r); if (!w) return ''; const per = `${w.n} ${w.unit}${w.n === 1 ? '' : 's'}`;
   const said = w.quote ? `The clause says "${w.quote}"` : `Notice must fall within ${per} of the term end`;
-  return w.shifted ? twoReadings({ start: w.at, end: w.to, n: w.n, unit: w.unit, quote: w.quote })
-    : `${said}: ${w.range}. ${dShort(w.from, true)} is the earliest safe date`; };
+  return twoReadings({ start: w.at, end: w.to, n: w.n, unit: w.unit, quote: w.quote }); };

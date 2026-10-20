@@ -720,7 +720,7 @@ test('within N days prior: weekend and holiday shift moves FORWARD and the windo
   assert.equal(r.tag, 'two readings'); assert.equal(r.needsReview, true); assert.doesNotMatch(windowNote(r) + r.why + r.safe.note, /earliest safe/);
   const w = windowOf(r); assert.equal(w.shifted, true); assert.equal(w.label, 'Send notice on'); assert.equal(w.dayW, 'Sun 1 Nov 2026'); assert.equal(w.fromW, 'Mon 2 Nov 2026');
   assert.equal(windowNote(r), 'Needs review: two readings. The clause says "within sixty (60) days prior". If that opens a window, it runs from Sun 1 Nov to 31 Dec 2026, and the first business day is Mon 2 Nov. If it means at least 60 days before, the cutoff is Sun 1 Nov 2026. Notice delivered on Sun 1 Nov 2026 satisfies both, if the notices clause allows a delivery method that works that day; otherwise ask counsel which reading applies');
-  assert.match(r.why, /^Notice window opens in 12 days \(Sun 1 Nov 2026\) · two readings of the clause/);
+  assert.match(r.why, /^Send notice on Sun 1 Nov 2026, in 12 days; the clause can be read two ways/);
   const a = fx('armlogi-goldensee-ex10-11.edgar.htm').r; assert.equal(a.actBy, '2027-06-20'); assert.equal(a.safe.date, '2027-06-20'); assert.equal(a.tag, 'two readings');
   assert.equal(windowNote(a), 'Needs review: two readings. The clause says "within one month before". If that opens a window, it runs from Sun 20 Jun to 20 Jul 2027, and the first business day is Mon 21 Jun. If it means at least 1 month before, the cutoff is Sun 20 Jun 2027. Notice delivered on Sun 20 Jun 2027 satisfies both, if the notices clause allows a delivery method that works that day; otherwise ask counsel which reading applies');
   // unshifted window (US Antimony, Tue 1 Oct 2030) keeps the single earliest-safe-date note
@@ -728,11 +728,11 @@ test('within N days prior: weekend and holiday shift moves FORWARD and the windo
   // other clause types still move back
   assert.equal(fx('taoweave-manako-license-ex10-1.edgar.htm').r.safe.date, '2027-03-26');
 });
-test('within N days prior is Check, not Clear, with the earliest safe date', async () => {
+test('within N days prior is Check, not Clear, with two readings even on a weekday', async () => {
   const { windowNote } = await import('../public/features.js');
   const { r } = fx('usantimony-supply-ex10-1.edgar.htm');
   assert.equal(r.confidence, 'medium'); assert.equal(r.needsReview, true); assert.equal(r.item.within, true);
-  assert.equal(windowNote(r), 'The clause says "within 60 days prior": send between 1 Oct and 30 Nov 2030. 1 Oct 2030 is the earliest safe date');
+  assert.equal(windowNote(r), 'Needs review: two readings. The clause says "within 60 days prior". If that opens a window, it runs from Tue 1 Oct to 30 Nov 2030. If it means at least 60 days before, the cutoff is Tue 1 Oct 2030. Notice delivered on Tue 1 Oct 2030 satisfies both readings, so that is the day to send it');
   assert.equal(fx('mallinckrodt-par-supply-ex10-4.edgar.htm').r.item.within, false);
 });
 test('sweep ab9a38e missed windows: Strattec and Z Squared', () => {
@@ -917,14 +917,14 @@ test('ics: within-window events are titled Window opens and remind only on or af
   const L = t.split('\n'); const c = { id: 'p', name: 'Paste', lines: L, x: extract(L) };
   for (const ics of [toICS([c], '2026-10-20'), withAlarms(toICS([c], '2026-10-20'))]) {
     const u = ics.replace(/\r\n[ \t]/g, '');
-    assert.match(u, /SUMMARY:Window opens: send notice from 1 Nov 2026 \(two readings\): Paste/); assert.match(u, /DTSTART;VALUE=DATE:20261101/);
+    assert.match(u, /SUMMARY:Window opens: send notice on 1 Nov 2026 \(two readings\): Paste/); assert.match(u, /DTSTART;VALUE=DATE:20261101/);
     assert.match(u, /Needs review: two readings\./); assert.match(u, /it runs from Sun 1 Nov to 31 Dec 2026\\, and the first business day is Mon 2 Nov\./); assert.match(u, /Notice delivered on Sun 1 Nov 2026 satisfies both/); assert.doesNotMatch(u, /earliest safe/);
     const trig = [...u.matchAll(/TRIGGER:(\S+)/g)].map(m => m[1]); assert.deepEqual(trig, ['PT9H', 'P53D']); assert.ok(trig.every(x => !x.startsWith('-')));
     assert.ok(ics.split('\r\n').every(l => Buffer.byteLength(l) <= 75));
   }
   const fxc = f => { const L = htmlToLines(fs.readFileSync(new URL('./fixtures/' + f, import.meta.url), 'utf8')); return { id: 'x', name: 'X', lines: L, x: extract(L) }; };
   const ua = withAlarms(toICS([fxc('usantimony-supply-ex10-1.edgar.htm')], '2026-10-19')).replace(/\r\n[ \t]/g, '');
-  assert.match(ua, /SUMMARY:Window opens: send notice from 1 Oct 2030: X/); assert.doesNotMatch(ua, /TRIGGER:-/);
+  assert.match(ua, /SUMMARY:Window opens: send notice on 1 Oct 2030 \(two readings\): X/); assert.doesNotMatch(ua, /TRIGGER:-/);
   // other clause types keep the deadline title and 30/14/7-day reminders
   const tw = withAlarms(toICS([fxc('taoweave-manako-license-ex10-1.edgar.htm')], '2026-10-19')).replace(/\r\n[ \t]/g, '');
   assert.match(tw, /SUMMARY:Send-notice deadline: X/); assert.deepEqual([...tw.matchAll(/TRIGGER:(\S+)/g)].map(m => m[1]), ['-P30D', '-P14D', '-P7D']);
@@ -938,4 +938,12 @@ test('within note: anything in quotation marks is the clause\'s exact words, on 
     for (const t of texts) for (const [, w] of t.matchAll(/"([^"]*within[^"]*)"/gi)) assert.ok(q.toLowerCase().includes(w.toLowerCase()) && q.includes(w), `${f}: "${w}" is not in the clause`);
   }
   assert.match(windowNote(fx('armlogi-goldensee-ex10-11.edgar.htm').r), /^Needs review: two readings\. The clause says "within one month before"\. /);
+});
+
+test('every within clause uses two readings, even on a weekday; no earliest safe date anywhere', async () => {
+  const { windowOf, windowNote } = await import('../public/features.js');
+  const { r } = fx('usantimony-supply-ex10-1.edgar.htm');
+  assert.equal(r.tag, 'two readings'); assert.equal(r.needsReview, true); assert.equal(windowOf(r).label, 'Send notice on'); assert.equal(windowOf(r).dayW, 'Tue 1 Oct 2030');
+  assert.match(windowNote(r), /^Needs review: two readings\. /);
+  for (const f of fs.readdirSync(new URL('../public/', import.meta.url)).filter(f => f.endsWith('.js') || f.endsWith('.html'))) assert.doesNotMatch(fs.readFileSync(new URL('../public/' + f, import.meta.url), 'utf8'), /earliest safe/i, f);
 });
