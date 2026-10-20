@@ -1,5 +1,5 @@
 // Puppeteer e2e. Usage: BASE_URL=https://contract-cliffs.vercel.app node test/e2e.mjs
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer-core'; import ExcelJS from 'exceljs';
 import fs from 'node:fs'; import path from 'node:path'; import os from 'node:os';
 const BASE = (process.env.BASE_URL || 'http://localhost:4173').replace(/\/$/, '');
 const CHROME = process.env.CHROME || '/usr/bin/google-chrome';
@@ -97,6 +97,12 @@ for (const c of edgar) {
 const waitFile = async (re) => { for (let i = 0; i < 50; i++) { const f = fs.readdirSync(dl).find(n => re.test(n) && !n.endsWith('.crdownload')); if (f) return fs.readFileSync(path.join(dl, f), 'utf8'); await new Promise(r => setTimeout(r, 100)); } return null; };
 await page.click('#exCsv'); const csv = await waitFile(/\.csv$/);
 ok(csv && csv.startsWith('\ufeffContract,Counterparty,Send notice by,Days left,Status,Plan,Owner,What to do,Note,Why,Filing link') && csv.includes('16 Dec 2026') && csv.includes('https://www.sec.gov/Archives/edgar/'), 'CSV export downloaded with dates and EDGAR URLs');
+// the .xlsx: in every row the date in What to do matches Send notice by (missed rows use the moved-back date)
+{ await page.click('#exXlsx'); let f; for (let i = 0; i < 100 && !f; i++) { f = fs.readdirSync(dl).find(n => /\.xlsx$/.test(n)); if (!f) await new Promise(r => setTimeout(r, 100)); } await new Promise(r => setTimeout(r, 300));
+  const wb = new ExcelJS.Workbook(); await wb.xlsx.load(fs.readFileSync(path.join(dl, f))); const ws = wb.getWorksheet('Deadlines'); const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const d2s = d => `${d.getUTCDate()} ${M[d.getUTCMonth()]} ${d.getUTCFullYear()}`; const bad = []; let n = 0, dragon = '', aebi = '';
+  for (let r = 3; r <= ws.rowCount; r++) { const c = ws.getCell(r, 3).value, todo = String(ws.getCell(r, 8).value || ''), name = String(ws.getCell(r, 1).value || ''); const m = todo.match(/(?:notice by|notice on) (\d{1,2} \w{3} \d{4})/); if (!m) continue; n++; if (!(c instanceof Date) || d2s(c) !== m[1]) bad.push(`${name}: ${c instanceof Date ? d2s(c) : c} vs ${m[1]}`); if (/Dragonfly/.test(name)) dragon = todo; if (/Aebi/.test(name)) aebi = todo; }
+  ok(n >= 5 && !bad.length && dragon === 'Missed; next notice by 17 Sep 2027' && (!aebi || /1 Oct 2027/.test(aebi)), `xlsx: dates agree in all ${n} rows with a send date (Dragonfly "${dragon}", Aebi "${aebi}")${bad.length ? ' BAD ' + bad.join('; ') : ''}`); }
 await page.click('#exIcs'); const ics = await waitFile(/\.ics$/);
 ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []).length === 8 && ics.includes('DTSTART;VALUE=DATE:20261216') && !ics.includes('20240302'), 'ICS export: 7 upcoming send-notice deadlines + 1 MISSED renewal event (no expired Synacor event)');
 await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Audit pack') && (pk.match(/<section>/g) || []).length === 10, 'audit pack export');
