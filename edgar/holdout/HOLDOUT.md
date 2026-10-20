@@ -61,3 +61,23 @@ Fix (wrong dates only): the schedule now shows the term running on the as-of dat
 
 ### Holdout 2 after the test-lead re-run fixes (Oct 19, ~6:30 PM ET; not blind any more)
 The first-pass numbers above stay the published blind score. After the fixes (`edgar/holdout2/results-after-rerun-fixes.txt`): b5 is now dated (act by 2027-05-02, matching the independent recompute); b9's renewal ("consecutive two (2) year periods") is read, so its send-notice deadline is no longer shown with "none" confidence; b8's effective date ("made as of August 3, 2015") is picked up and its conditional renewal ("if there is a Product Agreement in effect") is flagged for review. No send-notice deadline date changed for b1–b4, b6–b8 or b10. The holdout set can now be viewed on the site ("Blind holdout (10)").
+
+## Blind test, October 2026 (13 unseen agreements, run once with no code changes after)
+
+Answers were worked out by hand from each filing before running the tool. Sources are in /tmp/ho14 at run time and are listed below.
+
+| Filing | Hand answer | Tool | Result |
+|---|---|---|---|
+| Union Bankshares / Weidley | 3 Feb 2029 | no date ("effective date not found"; it is defined in Exhibit A) | missed, flagged |
+| Birchtech / MacPherson | 1 Apr 2030 | 1 Apr 2027, Clear | **wrong**: read the prior agreement's term from the recitals |
+| Expeditors / Wall | no date (term ends at an annual board meeting) | no date | right |
+| Honeywell trademark licence | no date (Distribution Date) | no date | right |
+| UFP Technologies award | no renewal | no date | right |
+| Immunic / Tardio | missed 2 Oct 2026, next 2 Oct 2027 | no date | missed, flagged |
+| Kingfish / Matthews (pasted text) | 16 Apr 2027 | 16 Apr 2027, Clear | right |
+| Ocugen award amendment | no renewal | no date, renewal wording flagged | right |
+| Sera Prognostics consulting | no send-notice deadline (ends any time on 30 days) | no date | right |
+| National Healthcare Properties amendment (PDF text) | 29 Jun 2030 | no date ("no notice period found") | missed, flagged |
+| Polar Power consulting | no clear deadline (month-to-month, consultant may end on 30 days) | 20 Jun 2027, Check | debatable |
+| General Enterprise Ventures (PDF text) | 1 Mar 2027 | 1 Mar 2027, Check | right |
+| BTCS / Allen | 23 Dec 2027 | 23 Dec 2027, Clear | right |

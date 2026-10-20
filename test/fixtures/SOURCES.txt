@@ -97,3 +97,11 @@ newgenivf-agency-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/198166
 naturesmiracle-du-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1947861/000121390026013365/ea027603101ex10-2_natures.htm
 fmbank-campbell-ex10-3.edgar.htm https://www.sec.gov/Archives/edgar/data/740806/000165495425014119/fmbm_ex103.htm
 gamg-taylor-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/55234/000147793226001244/kens_ex102.htm
+# b1eb7bd held-out batch (k*), now tuning data after the run reported for b1eb7bd (sec.gov, fetched Oct 19, 2026)
+bayfirst-oliver-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1649739/000164973926000114/ex101employmentagreementro.htm
+thor-biren-ex10-20.edgar.htm https://www.sec.gov/Archives/edgar/data/730263/000073026326000027/tho7312026exhibit1020.htm
+mercury-ballhaus-amend2-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1049521/000104952126000073/ballhausamendmentno2toem.htm
+carvana-caret-amend2-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1788882/000178888226000068/a102secondamendmenttotheco.htm
+duos-polimeni-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1396536/000107997326001340/ex10x2.htm
+armlogi-goldensee-ex10-11.edgar.htm https://www.sec.gov/Archives/edgar/data/1972529/000121390026103636/ea030633901ex10-11.htm
+aibotics-gmoore-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1763329/000109690626001565/aibt_ex10z2.htm

@@ -16,7 +16,7 @@ const DF = /^Send-notice date passed \| Passed19 Sep 2026 \| It renews on 19 Nov
 for (const w of [1440, 375]) {
   const p = await fresh('/?asof=2026-10-19', w);
   const s = await p.evaluate(() => ({ lede: document.querySelector('#lede').textContent.trim(), dz: [...document.querySelectorAll('#dzTitle span')].find(x => x.offsetParent)?.textContent.trim(), sub: document.querySelector('.subline').textContent.trim(), eb: document.querySelector('.eyebrow').innerText.trim(), cap: document.querySelector('.caption').innerText.trim(), hint: document.querySelector('#dzHint').textContent.trim(), cta: document.querySelector('#tryOne').textContent.trim(), ans: document.querySelector('#answer').hidden, q: document.querySelector('#queueSec').hidden, cards: document.querySelector('#ch').closest('section').hidden, addTop: document.querySelector('#about').getBoundingClientRect().top, ctaBottom: document.querySelector('#tryOne').getBoundingClientRect().bottom, sw: document.documentElement.scrollWidth }));
-  ok(s.eb === 'CONTRACT RENEWAL DEADLINES' && s.lede === 'Find the date you must send notice, before it renews.' && s.sub === 'Drop in a contract. Get the deadline, the exact clause it comes from, and a link to the source.' && s.dz === (w === 375 ? 'Choose a contract' : 'Drop a contract or paste text') && s.hint === 'PDF, Word or plain text · stays in your browser' && s.cta === 'Try a real SEC contract →' && s.cap === 'STAR BRANDS / SCHWAZZE LICENSE · EX-10.21 · SEC EDGAR', `${w}: first screen copy exactly as specced: ` + JSON.stringify([s.eb, s.lede, s.dz, s.cta, s.cap]));
+  ok(s.eb === 'CONTRACT RENEWAL DEADLINES' && s.lede === 'Know the last day to stop a contract renewing.' && s.sub === 'Drop in a contract. Get the notice deadline and the sentence it comes from, then add it to Google Calendar or a Sheets file.' && s.dz === (w === 375 ? 'Choose a contract' : 'Drop a contract or paste text') && s.hint === 'PDF, Word or plain text · stays in your browser' && s.cta === 'Try a real SEC contract →' && s.cap === 'STAR BRANDS / SCHWAZZE LICENSE · EX-10.21 · SEC EDGAR', `${w}: first screen copy exactly as specced: ` + JSON.stringify([s.eb, s.lede, s.dz, s.cta, s.cap]));
   ok(s.ans && s.q && s.cards, `${w}: no answer, list or cards before input`);
   ok(s.addTop >= (w === 1440 ? 900 : 812) && s.ctaBottom <= (w === 1440 ? 900 : 812), `${w}: one-click button above the fold, examples/exports/method below it (more at ${Math.round(s.addTop)}px)`);
   ok(s.sw <= w, `${w}: no sideways scroll`);
@@ -86,7 +86,7 @@ for (const f of ['c3-dragonfly.edgar.txt', 'c3-dragonfly.generated.pdf']) {
   ok(await p.evaluate(() => { const t0 = performance.now(); return new Promise(r => requestAnimationFrame(() => r(performance.now() - t0 < 500))); }), 'page still responsive after the large file'); await p.close(); }
 // 9. privacy + opt-in memory
 { const p = await fresh('/?asof=2026-10-19');
-  ok(/read in this browser tab\. They are not uploaded and not stored/.test(await p.$eval('#privacy', e => e.textContent)), 'privacy stated plainly');
+  ok(/^Files are read in your browser\. Nothing is uploaded or stored\./.test(await p.$eval('#privacy', e => e.textContent)), 'privacy stated plainly');
   await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden);
   ok(await p.evaluate(() => localStorage.length === 0), 'nothing written to localStorage without opt-in');
   await p.$eval('#remember', e => e.click()); ok(await p.evaluate(() => JSON.parse(localStorage.getItem('cc-docs') || '[]').length === 1), 'opt-in saves to this device');
@@ -182,8 +182,8 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
   ok(t.oneRow && t.txt.join('|') === 'EXPORT .ICS|EXPORT CSV|CLEAR ALL', `${w}: queue tools on one row: ${t.txt.join(' | ')}`);
   ok(t.meta, `${w}: the filed date never splits`);
   const ab = await p.evaluate(() => { const a = document.querySelector('#about'); a.open = true; return { h: a.querySelector('h2').textContent, rem: !!document.querySelector('#remember').offsetParent, how: !!document.querySelector('#how').offsetParent, howLink: /\(\s*how\s*\)/i.test(a.innerText), ts: document.querySelector('#testset').textContent }; });
-  ok(ab.h === 'About this tool' && !ab.rem && !ab.how && !ab.howLink, `${w}: About panel: heading "About this tool", no Remember, no "( how )", no empty How it works block`);
-  ok(ab.ts === 'Test set: 10 unseen SEC contracts. First blind pass: 3 dates right, 6 correctly left blank for review, 1 missed, 0 wrong. Rules adjusted after.', `${w}: test-set line adds up to 10 (3 + 6 + 1 + 0)`);
+  ok(ab.h === 'How it works and how to trust it' && !ab.rem && !ab.how && !ab.howLink, `${w}: About panel: heading "How it works and how to trust it", no Remember, no "( how )", no empty How it works block`);
+  ok(ab.ts === 'Latest blind test, 13 SEC contracts it had never seen: 3 dates right, 5 correctly left blank, 3 missed, 1 debatable and 1 wrong. When it can’t tell, it says so and flags the row for a person to check.', `${w}: test-set line adds up to 10 (3 + 6 + 1 + 0)`);
   await p.close(); }
 // 17. reviewer ab9a38e: real VerifyMe, Simwon, Altech, Industrious, National Vision filings through the UI (card headline, as of 2026-10-19)
 const CARDS = [

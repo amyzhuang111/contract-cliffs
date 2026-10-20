@@ -25,8 +25,8 @@
 </div>
 <section class="hero" id="hero" aria-labelledby="lede">
   <p class="eyebrow">Contract renewal deadlines</p>
-  <h1 class="lede" id="lede">Find the date you must send notice, before it renews.</h1>
-  <p class="subline">Drop in a contract. Get the deadline, the exact clause it comes from, and a link to the source.</p>
+  <h1 class="lede" id="lede">Know the last day to stop a contract renewing.</h1>
+  <p class="subline">Drop in a contract. Get the notice deadline and the sentence it comes from, then add it to Google Calendar or a Sheets file.</p>
   <hr class="gridline">
   <div class="drop" id="drop" role="button" tabindex="0" aria-label="Drop a contract or paste text. Press Enter to choose a file.">
     <div class="dz-idle">
@@ -82,19 +82,19 @@
   </div>
   <ol class="q" id="queue"></ol>
 </section>
-<details class="about" id="about"><summary class="tl mute">About this tool</summary>
+<details class="about" id="about"><summary class="tl mute">How it works and how to trust it</summary>
 <section class="controls" id="add" aria-labelledby="addh">
-  <div class="sechead"><h2 id="addh">About this tool</h2><p class="status" id="testset">Test set: 10 unseen SEC contracts. First blind pass: 3 dates right, 6 correctly left blank for review, 1 missed, 0 wrong. Rules adjusted after.</p></div>
+  <div class="sechead"><h2 id="addh">How it works and how to trust it</h2><p class="status" id="testset">Latest blind test, 13 SEC contracts it had never seen: 3 dates right, 5 correctly left blank, 3 missed, 1 debatable and 1 wrong. When it can’t tell, it says so and flags the row for a person to check.</p></div>
   <div>
     <span class="lab">Sample files</span>
     <div class="row setbar" hidden>
       <button id="setMine" aria-pressed="true">Your contracts</button>
       <button id="setEdgar" aria-pressed="false">Try with 10 real SEC contracts</button>
-      <button id="setHoldout" aria-pressed="false">Test set (10 contracts; first blind pass 3 right, 6 left blank for review, 1 missed, 0 wrong; rules adjusted after)</button>
+      <button id="setHoldout" aria-pressed="false">Test set (10 SEC contracts kept out of tuning)</button>
     </div>
     <p class="status samples">Sample files, generated from real EDGAR filings:<span class="chips"> <button data-sample="/samples/c6-vivos-msa.generated.pdf">PDF</button> · <button data-sample="/samples/c12-reborn-supply.generated.docx">DOCX</button></span></p>
     <span class="lab" style="margin-top:18px">Privacy</span>
-    <p class="status" id="privacy">Files and pasted text are read in this browser tab. They are not uploaded and not stored. SEC links are fetched from sec.gov through a small proxy that keeps nothing.</p>
+    <p class="status" id="privacy">Files are read in your browser. Nothing is uploaded or stored. SEC links are fetched from sec.gov through a small proxy that keeps nothing.</p>
     <label class="remember"><input type="checkbox" id="remember"> Remember my contracts on this device (saved in this browser only; untick to delete)</label>
   </div>
   <div>
@@ -131,7 +131,7 @@
   <hr class="hair" style="margin-bottom:28px">
   <details class="method"><summary><span class="lab">Method and accuracy</span><span class="gn">How dates are worked out and how often they are right</span></summary>
   <p>Extraction is deterministic: regular expressions plus date and duration parsing (“sixty (60) days”, “one hundred and eighty (180) days”, “Eighty-Four (84) months”). No language model and no network call touches your documents; uploads stay in this browser tab. A term of N months “commencing on” a date ends the day before the anniversary; “until N years following” ends on the anniversary. When words and numerals disagree, or a value is redacted, the field is left blank and marked for review.</p>
-  <p>Accuracy, stated plainly: tuned on the 10 example SEC contracts (all hand-checked). On a test set of 10 more EDGAR agreements it had never seen, run once before any change: 3 send-notice deadline dates right, 6 correctly left blank for review, 1 missed, 0 wrong send-notice deadline dates, plus one wrong "current term" date that has since been fixed. An earlier set of 14 is now tuning data (first pass there: 2 right, 5 flagged, 6 missed, 1 wrong) (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
+  <p>Accuracy, stated plainly: it is tested on real SEC contracts it has not seen, and the answers are worked out by hand first. It is often right and it is sometimes wrong. Latest blind test, 13 SEC contracts it had never seen: 3 dates right, 5 correctly left blank, 3 missed, 1 debatable and 1 wrong. The wrong one read the term of an older agreement quoted in the background section. When it can’t tell, it leaves the date blank and says why, and anything resting on an assumption is marked Check. Read the quoted clause before you rely on a date (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
   <p>Real contracts are material agreements filed with the SEC, fetched from EDGAR with a declared User-Agent under SEC fair-access rules. Send-notice deadlines that land on a weekend or a US federal holiday get a “send by” business day: weekends and US federal holidays flagged; local holidays not modelled. The contract’s own date is always shown unchanged. Dates projected past the initial term assume the agreement was not terminated or amended. Not legal advice.</p>
   <p>Type: Geist and Geist Mono, both under the SIL Open Font License (<a href="/fonts/OFL-Geist.txt">Geist</a>, <a href="/fonts/OFL-GeistMono.txt">Geist Mono</a>), self-hosted. Colours follow General Intuition's public site. Geist stands in for Alpha Lyrae, GI's licensed display face, which is not used here; this is an independent demo, not a General Intuition product. PDF reading by pdf.js (<a href="/vendor/LICENSE-pdfjs.txt">Apache 2.0</a>), DOCX by mammoth (<a href="/vendor/LICENSE-mammoth.txt">BSD-2-Clause</a>). Built by Amy Zhuang · <a href="https://github.com/amyzhuang111/contract-cliffs">source</a>.</p>
   </details>

@@ -50,7 +50,7 @@ for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setV
   if (w === 375) ok(m.sw <= 375 && m.over === 0 && m.lede && m.steps === 3 && true, `375: nothing breaks (scrollWidth ${m.sw}, ${m.over} overflowing elements, hero + 3 steps shown)`);
   await pf.close(); }
 { const lede = await page.$eval('.lede', e => e.textContent.replace(/\s+/g, ' ').trim());
-  ok(lede === 'Find the date you must send notice, before it renews.', 'clarity: plain-words hero');
+  ok(lede === 'Know the last day to stop a contract renewing.', 'clarity: plain-words hero');
   const steps = await page.$$eval('.steps li .lab', l => l.map(x => x.textContent));
   ok(steps.join('|') === '1 · Add contracts|2 · Read the answer|3 · Check and export', 'clarity: 3-step how to use (in About)');
   const ex = await page.$eval('#example', e => e.textContent.replace(/\s+/g, ' '));
@@ -59,7 +59,7 @@ for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setV
   ok(!/EX-10/.test(await page.$eval('#cards', e => e.textContent)) && !/(high|medium|low|none) confidence/.test(await page.$eval('#queue', e => e.textContent)) && /Sure/.test(await page.$eval('#queue', e => e.textContent)) && /Check this/.test(await page.$eval('#queue', e => e.textContent)), 'N5: plain confidence words, no exhibit codes on cards');
   ok(await page.$eval('#qh abbr', e => /last day to send notice/.test(e.title)), 'clarity: "Send-notice deadlines" has a plain tooltip');
   ok(await page.$eval('details.method', e => !e.open) && await page.$eval('details.rule', e => !e.open), 'clarity: method and priority rule collapsed');
-  ok(/Test set \(10 contracts; first blind pass 3 right, 6 left blank for review, 1 missed, 0 wrong; rules adjusted after\)/.test(await page.$eval('#setHoldout', e => e.textContent)) && !/holdout|Lapsed/i.test(await page.$eval('body', e => e.innerText.replace(/Method and accuracy[\s\S]*/, ''))), 'clarity: no "holdout" or "Lapsed" jargon in visible labels');
+  ok(/^Test set \(10 SEC contracts kept out of tuning\)$/.test(await page.$eval('#setHoldout', e => e.textContent)) && !/holdout|Lapsed/i.test(await page.$eval('body', e => e.innerText.replace(/Method and accuracy[\s\S]*/, ''))), 'clarity: no "holdout" or "Lapsed" jargon in visible labels');
   const vis = await page.evaluate(() => { const q = document.querySelector('#queue').getBoundingClientRect().top, a = document.querySelector('#add').getBoundingClientRect().top; return q < a; });
   ok(vis, 'clarity: the list comes before the add/export controls');
   const d3 = await page.$eval('#queue li[data-id="c3"] .d', e => e.textContent.replace(/\s+/g, ' ').trim()), n3 = await page.$eval('#queue li[data-id="c3"] .n', e => e.textContent.trim());

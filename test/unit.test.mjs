@@ -738,3 +738,30 @@ test('6ca64e8 #7 numeric dates only when unambiguous; "each December 31 thereaft
   assert.equal(fx('cineverse-mccabe-ex10-1.edgar.htm').x.effective.date, '2026-04-20');
 });
 test('6ca64e8 a renewal of another named agreement is not this document\'s (XPEL)', () => { assert.equal(fx('xpel-psa-ex10-5.edgar.htm').x.renewal, null); });
+// ---- b1eb7bd follow-up: capped extensions, safety net, yearly roll-forward, amendments, evergreen wording, names (hand-worked as of 2026-10-19) ----
+test('b1eb7bd #1 Aibotics "automatically be extended for up to five additional terms" is a capped auto-renewal (Oct 12 2026 + 3y, 30 days)', () => {
+  const g = fx('aibotics-gmoore-ex10-2.edgar.htm'); assert.equal(g.x.renewal.auto, true); assert.equal(g.x.renewal.max, 5); assert.equal(g.r.actBy, '2029-09-11'); assert.equal(g.r.label, 'Send-notice deadline');
+});
+test('b1eb7bd #1 safety net: renewal or extension wording with no modelled renewal is never Clear', () => {
+  const L = ['This Services Agreement is dated as of January 5, 2026 (the “Effective Date”) by and between Alpha Corp. and Beta LLC.', 'The term of this Agreement shall be two (2) years from the Effective Date.', 'The parties may discuss a renewal of this Agreement in good faith before the term ends.'];
+  const x = extract(L), r = buildQueue([{ id: 'a', name: 'a', lines: L, x }], AS)[0];
+  assert.equal(x.renewal, null); assert.notEqual(r.confidence, 'high'); assert.equal(r.needsReview, true); assert.match(r.tag, /mentions renewal or extension/);
+  const lc = fx('douglas-lease-ex10-1.edgar.htm').r; assert.notEqual(lc.confidence, 'high'); assert.match(lc.tag, /letter of credit/);
+});
+test('b1eb7bd #2 yearly deadlines roll forward: BayFirst (renews each 1 Sep, 90 days) and Armlogi (ended 7/20/2024, renews yearly, one month)', () => {
+  assert.equal(fx('bayfirst-oliver-ex10-1.edgar.htm').r.actBy, '2029-06-03');
+  const a = fx('armlogi-goldensee-ex10-11.edgar.htm').r; assert.equal(a.actBy, '2027-06-20'); assert.equal(a.confidence, 'medium');
+});
+test('b1eb7bd #3 amendments at Check: term from the amendment date (Carvana) and a restated end date (Mercury)', () => {
+  const c = fx('carvana-caret-amend2-ex10-2.edgar.htm'); assert.equal(c.x.term.start, '2026-08-31'); assert.equal(c.r.actBy, '2028-03-03'); assert.equal(c.r.confidence, 'medium'); assert.match(c.r.tag, /Second Amendment Effective Date \(2026-08-31\)/);
+  const m = fx('mercury-ballhaus-amend2-ex10-1.edgar.htm'); assert.equal(m.r.actBy, '2030-07-16'); assert.equal(m.r.confidence, 'medium'); assert.match(m.r.tag, /amendment restates/);
+});
+test('b1eb7bd #4 evergreen wording names the real renewal period (Thor: yearly, not monthly)', () => {
+  const r = fx('thor-biren-ex10-20.edgar.htm').r; assert.equal(r.actBy || '', ''); assert.equal(r.tag, 'renews every year, no notice clause');
+  assert.equal(shortReason('Evergreen: renews every 3 month "unless and until terminated"'), 'renews every 3 months, no notice clause');
+});
+test('b1eb7bd #5 party names', () => {
+  assert.equal(partiesFromPreamble(fx('aibotics-gmoore-ex10-2.edgar.htm').L), 'Aibotics / Gregory Moore');
+  assert.equal(partiesFromPreamble(fx('armlogi-goldensee-ex10-11.edgar.htm').L), 'Goldensee / Armstrong Logistic');
+  assert.equal(partiesFromPreamble(fx('duos-polimeni-ex10-2.edgar.htm').L), 'Duos Technologies Group / Matthew Polimeni');
+});

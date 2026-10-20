@@ -11,6 +11,7 @@ Dev: `npm run serve` (static site + /api/edgar on :4173), `npm test`, `npm run e
 - Real set: 10 Exhibit 10 agreements from SEC EDGAR (edgar/SOURCES.md; hand checks in edgar/VERIFICATION.md).
 - Held-out test: 14 more Exhibit 10 agreements never used for tuning. First pass 2/14 send-notice deadline dates right, 5 flagged correctly, 6 missed, 1 wrong; after fixes 8 dated, 6 flagged, 0 wrong (edgar/holdout/HOLDOUT.md; those 14 are now tuning data).
 - Blind holdout 2: 10 new agreements, run once before any change: 3 right, 6 flagged, 1 missed, 0 wrong send-notice deadline dates (1 wrong secondary 'current term' date, fixed).
+- Latest blind test (Oct 2026, 13 unseen SEC agreements, answers worked out by hand first, no code changes after): 3 dates right, 5 correctly left blank, 3 missed (flagged), 1 debatable (at Check), 1 wrong at Clear (it read an older agreement's term from the recitals). It is not error-free: when it can't tell it says so and flags the row for a person.
 - Notice periods given by cross-reference ("pursuant to Section 7.4") are read from that section and flagged, with both clauses quoted. The queue can be grouped by counterparty or by party (filer).
 - Upload fixtures: a PDF and a DOCX generated from real EDGAR filings, labelled as generated (test/fixtures/README.md). PDF citations carry page and in-page line; DOCX cites paragraphs (¶).
 - Exports: obligations CSV, send-notice deadline .ics, audit pack (single HTML).
