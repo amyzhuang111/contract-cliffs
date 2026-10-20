@@ -31,7 +31,7 @@ const f64 = n => fs.readFileSync(fx(n)).toString('base64');
 
 // R. ?demo=1 regression: exact order Star Brands, then StableX, then Dragonfly
 { const p = await fresh('/?demo=1&asof=2026-10-19');
-  ok(await p.evaluate(() => document.body.classList.contains('demo')), 'demo: demo mode on');
+  ok(await p.evaluate(() => document.body.classList.contains('guided')), '?demo=1: guided mode on');
   await auto(p); await sleep(300);
   const s1 = await p.evaluate(() => ({ n: document.querySelector('#answer .iname').textContent, d: document.querySelector('#answerBig').textContent, next: document.querySelector('#trySecond').textContent }));
   ok(s1.n === 'Star Brands / Schwazze' && s1.d === '16 Dec 2026' && s1.next === 'Add StableX / Kopin', `demo step 1 (auto-run): Star Brands, 16 Dec 2026, next button "${s1.next}"`);

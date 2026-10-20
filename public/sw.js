@@ -1,4 +1,4 @@
-// Offline shell for live demos. Same-origin GETs only; /api is always network (never cached).
+// Offline shell so the page works without a network. Same-origin GETs only; /api is always network (never cached).
 const V = 'cc-v3';
 const SHELL = ['/', '/index.html', '/app.js', '/extract.js', '/features.js', '/portfolio.js', '/styles.css', '/data/edgar.json', '/vendor/pdf.min.js', '/vendor/pdf.worker.min.js', '/vendor/mammoth.browser.min.js', '/fonts/Geist-Variable.woff2', '/fonts/GeistMono-Variable.woff2', '/manifest.webmanifest'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });

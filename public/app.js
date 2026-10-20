@@ -272,11 +272,11 @@ $('#drop').addEventListener('click', e => { if (e.target === $('#drop') || e.tar
 $('#drop').addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target === $('#drop')) { e.preventDefault(); $('#file').click(); } });
 $('#howBtn').onclick = () => { const h = $('#howPop'); h.hidden = !h.hidden; $('#howBtn').setAttribute('aria-expanded', String(!h.hidden)); };
 $('#clearAll').onclick = () => { mine = []; expanded = null; newIds.clear(); if (remember()) save(); render(); $('#status').textContent = 'Cleared.'; };
-const DEMO = ['c2', 'c3', 'c1', 'c6', 'c12', 'c8', 'c13', 'c4', 'c7'];
-const DEMO_NAMES = { c2: 'StableX / Kopin', c3: 'Dragonfly / Keystone RV', c1: 'Cerus / Purolite', c6: 'CFO Portal / Vivos', c12: 'Reborn / Mighty Oak', c8: 'Patheon / Vaxcyte', c13: 'ARK / Eightco', c4: 'Tradeweb Data Schedule', c7: 'Synacor / Qwest' };
-function promptLabel(n) { const next = DEMO.find(id => !mine.some(m => m.secId === id)); $('#promptText').textContent = n >= 2 ? 'Add one more to see sorting' : 'Add another contract to build a priority queue'; $('#trySecond').textContent = next ? 'Add ' + DEMO_NAMES[next] : 'Add a real SEC contract'; $('#trySecond').hidden = !next; }
+const SAMPLES = ['c2', 'c3', 'c1', 'c6', 'c12', 'c8', 'c13', 'c4', 'c7'];
+const SAMPLE_NAMES = { c2: 'StableX / Kopin', c3: 'Dragonfly / Keystone RV', c1: 'Cerus / Purolite', c6: 'CFO Portal / Vivos', c12: 'Reborn / Mighty Oak', c8: 'Patheon / Vaxcyte', c13: 'ARK / Eightco', c4: 'Tradeweb Data Schedule', c7: 'Synacor / Qwest' };
+function promptLabel(n) { const next = SAMPLES.find(id => !mine.some(m => m.secId === id)); $('#promptText').textContent = n >= 2 ? 'Add one more to see sorting' : 'Add another contract to build a priority queue'; $('#trySecond').textContent = next ? 'Add ' + SAMPLE_NAMES[next] : 'Add a real SEC contract'; $('#trySecond').hidden = !next; }
 async function addSec(id) { const c = (await edgarData()).find(c => c.id === id); if (mine.some(m => m.secId === id)) return; await stage(1, c.name); await addDoc(c.name, c.lines, { name: c.name, counterparty: c.counterparty, filer: c.filer, kind: c.kind, url: c.url, title: c.title, exhibit: c.exhibit, filed: c.filed, secId: id }); }
-$('#trySecond').onclick = async () => { const next = DEMO.find(id => !mine.some(m => m.secId === id)); if (next) await addSec(next); };
+$('#trySecond').onclick = async () => { const next = SAMPLES.find(id => !mine.some(m => m.secId === id)); if (next) await addSec(next); };
 const htmLines = t => htmlToLines(t);
 async function readFile(f) {
   const ext = f.name.toLowerCase().split('.').pop();
@@ -349,7 +349,7 @@ function renderPf() {
 { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
   try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
   catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
-if (params.get('demo') === '1') { document.body.classList.add('demo'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
+if (params.get('demo') === '1') { document.body.classList.add('guided'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
 new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 if (set === 'edgar') loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
 else if (set === 'holdout') $('#setHoldout').onclick();

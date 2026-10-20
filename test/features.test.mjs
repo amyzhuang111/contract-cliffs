@@ -153,3 +153,10 @@ test('letter: date line says it is the send date and gives today; docx timestamp
   const r = buildQueue([E.c5], AS)[0]; assert.match(letter(E.c5, r, AS), /^Date: \[NOT FOUND, FILL IN\] \(the day you send it; today is 19 October 2026\)$/m);
   const z = docx('a\nb'); const v = new DataView(z.buffer); assert.equal(v.getUint16(12, true), 0x21);
 });
+test('shipped files carry no "demo" wording (only the ?demo=1 URL parameter); footer says independent, not a General Intuition product', () => {
+  for (const f of ['index.html', 'app.js', 'features.js', 'portfolio.js', 'extract.js', 'styles.css', 'sw.js']) {
+    const t = fs.readFileSync(new URL('../public/' + f, import.meta.url), 'utf8').replace(/params\.get\('demo'\)/g, '');
+    assert.ok(!/demo/i.test(t), f);
+  }
+  assert.match(fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8'), /independent project by Amy Zhuang, not a General Intuition product/);
+});

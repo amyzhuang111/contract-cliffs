@@ -282,7 +282,7 @@ body.has-any .hero .lede{font-size:24px;line-height:32px;max-width:none;margin-b
 body.has-any .drop{min-height:96px}body.has-any .dz-big{font-size:18px;line-height:24px}
 body.legacy .hero{padding:var(--s-2) 0 var(--s-1)}body.legacy .hero .eyebrow,body.legacy .subline,body.legacy .caption,body.legacy .gridline,body.legacy .edgar-url{display:none}
 body.legacy .hero .lede{font-size:22px;line-height:28px;max-width:none;margin:0 0 8px}body.legacy .drop{min-height:56px;padding:8px}body.legacy .dz-big{font-size:16px;line-height:22px;margin:0}body.legacy .dz-hint,body.legacy .dz-pastelink{display:none}body.legacy .btnrow{margin-top:8px}body.legacy .btnrow .btn-primary,body.legacy .btnrow .btn-secondary{min-height:var(--tap);padding:8px 14px;font-size:14px}body.legacy .btnrow .or{line-height:var(--tap)}
-body.demo #add,body.demo .edgar-url,body.demo footer details{display:none}
+body.guided #add,body.guided .edgar-url,body.guided footer details{display:none}
 /* answer card */
 .answer{margin:0 0 var(--s-3)}
 .acard{background:var(--card);border:var(--card-border-w) solid var(--card-border);border-radius:0}
@@ -407,7 +407,7 @@ body.has-any:not(.legacy) .drop:hover{border-style:solid;background:#111}
 body.has-any:not(.legacy) .dz-big,body.has-any:not(.legacy) .dz-add{white-space:nowrap}
 body.has-any:not(.legacy) .dz-add{min-height:44px;padding:0 12px;font-size:14px}
 @media (max-width:480px){body.has-any:not(.legacy) .drop{padding:0 6px 0 16px}body.has-any:not(.legacy) .drop .dz-big{font-size:15px}}
-body.demo #about{display:none}
+body.guided #about{display:none}
 #asof{min-height:44px;box-sizing:border-box;padding:0 12px}
 #how > summary{min-height:44px;display:flex;align-items:center}
 .conf .cw{font:400 var(--t-label) var(--font-mono);text-transform:uppercase;color:#fff}
@@ -534,7 +534,7 @@ pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--f
 .portfolio .sv{font:500 24px/28px var(--font-sans);font-variant-numeric:tabular-nums;color:var(--fg)}
 .portfolio .passed .sv{color:var(--danger)}.portfolio .review .sv,.portfolio .cant .sv{color:var(--highlight)}.portfolio .zero .sv{color:var(--mute)}
 @media (max-width:480px){.portfolio{grid-template-columns:repeat(2,minmax(0,1fr))}.portfolio .sv{font-size:20px}}
-/* ---------- portfolio view (?demo=1 only) ---------- */
+/* ---------- portfolio view ---------- */
 .pfload{margin:24px 0 0;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
 .pfnote{font:400 var(--t-label) var(--font-mono);color:var(--mute);margin:0}
 .pfv{margin:48px 0 0;border-top:1px solid var(--rule);padding-top:24px}
@@ -594,7 +594,7 @@ pre.letter{white-space:pre-wrap;word-break:break-word;font:400 14px/22px var(--f
   .cliff-strip span:nth-of-type(even){color:transparent}
   .proof{display:none}
 }
-/* R5 demo: balance columns, no orphan, a readable cliff line, brand-true tracking */
+/* R5: balance columns, no orphan, a readable cliff line, brand-true tracking */
 @media (min-width:1200px){
   body.has-one .aq{font-size:15px;line-height:24px}
   body.has-one .prov{flex-wrap:nowrap;white-space:nowrap}
@@ -629,7 +629,7 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
   body:not(.has-any):not(.legacy) .drop{min-height:132px}
   .cliff-strip{margin-bottom:44px}
 }
-/* C5 demo right column: quote back to reading size, meta on one line */
+/* C5 right column: quote back to reading size, meta on one line */
 @media (min-width:1200px){
   body.has-one .aq{font-size:15px;line-height:24px}
   body.has-one .agrid{grid-template-columns:minmax(0,1fr) 380px}
