@@ -859,8 +859,9 @@ export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
         fold(`SUMMARY:${icsEsc(`Window opens: send notice on ${fmtD(i.date)} (two readings): ${c.name}`)}`),
         fold(`DESCRIPTION:${icsEsc(`The clause says notice is given within ${i.notice?.n} ${i.notice?.unit}${i.notice?.n === 1 ? '' : 's'} before the term ends, so sending earlier may not count${i.withinText ? ` ("${i.withinText}")` : ''}. ${twoReadings({ start: i.date, end: i.termEnd, n: i.notice?.n, unit: i.notice?.unit, quote: i.withinText })}. ${i.why}${i.needsReview ? ' NEEDS REVIEW.' : ''} Confidence: ${sure(i.confidence)}. Source ${i.source?.location}: "${i.source?.quote}"`)}`),
         ...(c.url ? [fold(`URL:${c.url}`)] : []),
-        'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:PT9H', fold(`DESCRIPTION:${icsEsc('Notice window opens today: ' + c.name)}`), 'END:VALARM',
-        ...(left > 7 ? ['BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:P${left - 7}D`, fold(`DESCRIPTION:${icsEsc('7 days left in the notice window: ' + c.name)}`), 'END:VALARM'] : []), 'END:VEVENT');
+        // reminders 7 days before and on the one day that satisfies both readings; none after it
+        'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:-P7D', fold(`DESCRIPTION:${icsEsc('7 days to the day that satisfies both readings: ' + c.name)}`), 'END:VALARM',
+        'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:PT9H', fold(`DESCRIPTION:${icsEsc('Send notice today, the day that satisfies both readings: ' + c.name)}`), 'END:VALARM', 'END:VEVENT'); void left;
       continue;
     }
     const sb0 = safeSendBy(i.date); const late = sb0.changed && sb0.date < asOf; const sb = late ? { ...sb0, date: asOf } : sb0; const d = sb.date.replace(/-/g, ''); const n = ymd(addDays(new Date(sb.date + 'T00:00:00Z'), 1)).replace(/-/g, '');
