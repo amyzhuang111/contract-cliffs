@@ -1,7 +1,7 @@
 // Parse the generated .xlsx back and check it opens cleanly (exceljs, openpyxl, LibreOffice headless).
 import test from 'node:test'; import assert from 'node:assert/strict'; import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
 import ExcelJS from 'exceljs';
-import { buildXlsx, RED, YELLOW, fillOf } from '../public/xlsx.js';
+import { buildXlsx, linesFor, RV_COLS, RED, YELLOW, fillOf } from '../public/xlsx.js';
 import { SHEET_COLS, MAIN_COLS, sheetCSV, sheetsTSV } from '../public/team.js';
 export const ITEMS = [
   { name: 'Star Brands / Schwazze', counterparty: 'Schwazze', sendBy: '2026-11-10', days: 21, status: 'Due in 30 days', plan: 'cancel', owner: 'Ana Ruiz', todo: 'Send notice by 10 Nov 2026', note: '=HYPERLINK("http://x") switch vendor', why: '', link: 'https://www.sec.gov/Archives/edgar/data/1/x.htm', review: false, urgent: true },
@@ -34,19 +34,26 @@ test('xlsx: fills (red for due in 30 days or missed, yellow for review, red wins
   const px = k => ws.getColumn(k).width * 7 + 5; const main = [...Array(MAIN_COLS).keys()].reduce((a, k) => a + px(k + 1), 0);
   assert.ok(main + 60 <= 1440 && main + px(9) > 1440 - 200, `first 8 columns fit in 1440 (${main} px)`);
   assert.equal(ws.getCell('I3').alignment.wrapText, true); assert.equal(ws.getCell('H3').alignment.wrapText, true); assert.equal(ws.getColumn(8).width, 46);
-  for (let n = 3; n <= ws.rowCount; n++) assert.ok(ws.getRow(n).height <= 33, `row ${n} capped at 2 lines (${ws.getRow(n).height})`);
-  assert.ok(String(ws.getCell('J4').value).length > 200 && ws.getRow(4).height <= 33, 'full Why text kept in the cell');
+  for (const k of [1, 2, 5, 8]) assert.equal(ws.getCell(3, k).alignment.wrapText, true, `column ${k} wraps`);
+  // every row is at least lines x 15pt for its visible wrapped cells; clean rows 1 line, rows with a Note or Why 2
+  const fits = (sh, cols, extra) => { for (let n = 3; n <= sh.rowCount; n++) { const row = sh.getRow(n); let need = extra && (row.getCell(9).text || row.getCell(10).text) ? 2 : 1;
+    for (const k of cols) { const c = row.getCell(k); if (c.alignment?.wrapText) need = Math.max(need, linesFor(c.text, sh.getColumn(k).width)); }
+    assert.ok(row.height >= need * 15, `${sh.name} row ${n}: ${row.height}pt for ${need} lines`); if (extra) assert.ok(row.height <= need * 15 + 3, `${sh.name} row ${n} not taller than it needs`); } };
+  fits(ws, [1, 2, 3, 4, 5, 6, 7, 8], true); assert.equal(ws.getRow(6).height, 18, 'clean row is 1 line'); assert.ok(ws.getRow(4).height >= 33, 'row with a Why is 2 lines');
+  assert.ok(String(ws.getCell('J4').value).length > 200, 'full Why text kept in the cell');
+  const rv0 = wb.getWorksheet('Needs a human look'); fits(rv0, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], false);
+  for (let n = 3; n <= rv0.rowCount; n++) { const row = rv0.getRow(n); assert.ok(row.height >= linesFor(row.getCell(9).text, 60) * 15, 'Why fits in full, no cap'); }
 });
 test('xlsx: hyperlink, formula guard, renew row agrees with the card, Needs a human look and About', async () => {
   const l = ws.getCell('K3').value; assert.equal(l.hyperlink, 'https://www.sec.gov/Archives/edgar/data/1/x.htm');
   assert.equal(ws.getCell('I3').value, "'=HYPERLINK(\"http://x\") switch vendor"); assert.equal(ws.getCell('B5').value, "'+Keystone");
   ws.eachRow(r => r.eachCell(c => assert.ok(!c.formula, 'no formula cells')));
   assert.equal(ws.getCell('H4').value, 'Renews 21 Jul 2027 (in 274 days); nothing to send'); assert.match(ws.getCell('J4').value, /satisfies both readings of "within one month before"/);
-  const rv = wb.getWorksheet('Needs a human look'); assert.equal(rv.rowCount, 4); assert.match(rv.getCell('J3').value, /^Two readings\. /); assert.match(rv.getCell('J4').value, /^Check the clause\./);
+  const rv = wb.getWorksheet('Needs a human look'); assert.equal(rv.rowCount, 4); assert.deepEqual(rv.getRow(2).values.slice(1), RV_COLS); assert.equal(rv.getCell('F3').value, 'Two readings'); assert.equal(rv.getCell('F4').value, 'Check the clause'); assert.ok(!/Needs review/.test(rv.getCell('I4').text));
   const ab = wb.getWorksheet('About').getColumn(1).values.join('\n'); for (const re of [/business day/, /US federal holiday/, /satisfies both readings/, /standing in for your own/, /A row that is both is red/, /exception is a 'within' date: it stays where it is, even on a weekend, because that date satisfies both readings/]) assert.match(ab, re);
   { const one = { name: 'X', counterparty: '', sendBy: '2027-01-04', days: 76, status: 'Due this year · review', plan: '', owner: '', todo: 'Send notice by 4 Jan 2027', note: '', why: 'Needs review: renewal depends on a condition; confirm it holds.', link: '', review: true, reason: 'renewal depends on a condition; confirm it holds', urgent: false };
     const wb2 = new ExcelJS.Workbook(); await wb2.xlsx.load(await buildXlsx(ExcelJS, [one], { company: 'GI', asOf: '2026-10-20' }));
-    const j = String(wb2.getWorksheet('Needs a human look').getCell('J3').value); assert.equal(j.toLowerCase().split('renewal depends on a condition').length - 1, 1, 'reason said once: ' + j); }
+    const j = String(wb2.getWorksheet('Needs a human look').getRow(3).values.slice(1).map(v => typeof v === 'object' && v ? '' : v).join(' ')); assert.equal(j.toLowerCase().split('renewal depends on a condition').length - 1, 1, 'reason said once: ' + j); }
 });
 test('xlsx: openpyxl loads it with the same types; LibreOffice converts it without errors', () => {
   const py = execFileSync('python3', ['-c', `import openpyxl,sys,datetime;wb=openpyxl.load_workbook(sys.argv[1]);ws=wb['Deadlines'];print(wb.sheetnames, type(ws['C3'].value).__name__, type(ws['D3'].value).__name__, ws.freeze_panes, ws.auto_filter.ref, ws['K3'].hyperlink.target, ws['A3'].fill.fgColor.rgb)`, FILE], { encoding: 'utf8' });
