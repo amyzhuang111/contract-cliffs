@@ -134,10 +134,12 @@ const guard = f => () => { if (!current().length) { $('#status').textContent = '
 $('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, sheetCSV(listItems()), 'text/csv;charset=utf-8'));
 // Download as a spreadsheet: a formatted .xlsx built here with the vendored exceljs (loaded on first use only).
 let xlLib = null; const loadXl = () => xlLib || (xlLib = new Promise((res, rej) => { const s = document.createElement('script'); s.src = '/vendor/exceljs.min.js'; s.onload = () => res(window.ExcelJS); s.onerror = () => { xlLib = null; rej(new Error('load')); }; document.head.appendChild(s); }));
-$('#exXlsx').onclick = guard(async () => { $('#status').textContent = 'Building the spreadsheet…';
-  try { const [X, { buildXlsx, XLSX_TYPE }] = await Promise.all([loadXl(), import('/xlsx.js')]); const it = listItems(); const buf = await buildXlsx(X, it, { company: team.company, asOf });
-    download(`contract-cliffs-${tag()}.xlsx`, buf, XLSX_TYPE); $('#status').textContent = `Saved a spreadsheet with ${it.length} ${it.length === 1 ? 'contract' : 'contracts'}: Deadlines, Needs a human look and About.`; }
-  catch { $('#status').textContent = 'Could not build the spreadsheet. Use the CSV instead.'; } });
+// One builder for both places: the main list and the 25-contract portfolio, same file, same wording.
+const saveXlsx = async (cs, name, st) => { st.textContent = 'Building the spreadsheet…';
+  try { const [X, { buildXlsx, XLSX_TYPE }] = await Promise.all([loadXl(), import('/xlsx.js')]); const it = listItems(cs); const buf = await buildXlsx(X, it, { company: team.company, asOf });
+    download(name, buf, XLSX_TYPE); st.textContent = `Saved a spreadsheet with ${it.length} ${it.length === 1 ? 'contract' : 'contracts'}: Deadlines, Needs a human look and About.`; }
+  catch { st.textContent = 'Could not build the spreadsheet. Use the CSV instead.'; } };
+$('#exXlsx').onclick = guard(() => saveXlsx(current(), `contract-cliffs-${tag()}.xlsx`, $('#status')));
 $('#lqXlsx').onclick = () => $('#exXlsx').onclick();
 $('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(current()), icsOpts()), 'text/calendar'));
 $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
@@ -145,7 +147,7 @@ $('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV
 // One list for Sheets and email: every live row, soonest first, pinned first.
 // One list for the spreadsheet, CSV, Sheets and email: every live row, sorted as the app sorts (pinned first, then urgency).
 const STATUS_SHORT = r => r.missed ? 'Missed' : r.days != null && r.days < 0 ? 'Passed' : !r.actBy ? 'No date found' : r.days <= 30 ? 'Due in 30 days' : r.days <= 90 ? 'Due in 90 days' : r.days <= 365 ? 'Due this year' : 'Later';
-const listItems = () => { const cs = current(); const byId = new Map(cs.map(c => [c.id, c]));
+const listItems = (cs = current()) => { const byId = new Map(cs.map(c => [c.id, c]));
   return order(buildQueue(cs, asOf)).filter(r => r.section !== 'lapsed').map(r => { const c = byId.get(r.id); const x = ctxOf(team, c); const w = windowOf(r); const date0 = w?.day || r.actBy || ''; const rv = renewView(c, r);
     const renewOn = rv ? rv.on : '';
     const sendBy = !r.actBy ? '' : w ? w.day : r.safe && !r.safe.passed ? r.safe.date : r.actBy;
@@ -442,7 +444,8 @@ function renderPf() {
 { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
   try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf);
     $('#pfIcs').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.ics`, withAlarms(toICS(cs, asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(cs), icsOpts(cs)), 'text/calendar');
-    $('#pfCsv').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.csv`, auditCSV(cs, asOf, cxOf), 'text/csv'); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+    $('#pfXlsx').onclick = () => saveXlsx(cs, `contract-cliffs-portfolio-asof-${asOf}.xlsx`, $('#pfStatus'));
+    $('#pfCsv').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.csv`, sheetCSV(listItems(cs)), 'text/csv;charset=utf-8'); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
   catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
 // ---------- Set up for your team ----------
 const tf = { company: $('#tCompany'), name: $('#tName'), title: $('#tTitle'), email: $('#tEmail'), warn: $('#tWarn'), cal: $('#tCal'), tz: $('#tTz') };

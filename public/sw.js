@@ -1,5 +1,5 @@
 // Offline shell so the page works without a network. Same-origin GETs only; /api is always network (never cached).
-const V = 'cc-v22';
+const V = 'cc-v23';
 const SHELL = ['/', '/index.html', '/app.js', '/extract.js', '/features.js', '/portfolio.js', '/team.js', '/styles.css', '/data/edgar.json', '/vendor/pdf.min.js', '/vendor/pdf.worker.min.js', '/vendor/mammoth.browser.min.js', '/vendor/exceljs.min.js', '/xlsx.js', '/fonts/Geist-Variable.woff2', '/fonts/GeistMono-Variable.woff2', '/manifest.webmanifest'];
 self.addEventListener('install', e => { e.waitUntil(caches.open(V).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });

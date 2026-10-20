@@ -793,3 +793,4 @@ body.has-any .weekstrip{display:none}
 .dz-done{margin:8px 0 0;color:var(--ink);font:400 13px/18px var(--mono);text-transform:uppercase}
 .dz-done{display:block;width:100%;box-sizing:border-box;clear:both}
 #tWarnMsg{grid-column:1/-1;margin:-8px 0 0}
+.pfstatus{margin:-28px 0 40px}.pfstatus:empty{display:none}
