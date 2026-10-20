@@ -1,6 +1,6 @@
 // Product features layered on the extractor: calendar links and alarms, notice letter (.docx), more obligations,
 // portfolio summary, per-contract audit CSV and safe local storage. Pure functions; no network, no invented data.
-import { fold, csvCell, usHoliday, usHolidays, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
+import { twoReadings, fold, csvCell, usHoliday, usHolidays, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
 
 const txt = l => typeof l === 'string' ? l : (l?.text ?? '');
 const norm = s => String(s ?? '').replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\s+/g, ' ').trim();
@@ -267,5 +267,5 @@ export function windowOf(r) {
 }
 export const windowNote = r => { const w = windowOf(r); if (!w) return ''; const per = `${w.n} ${w.unit}${w.n === 1 ? '' : 's'}`;
   const said = w.quote ? `The clause says "${w.quote}"` : `Notice must fall within ${per} of the term end`;
-  return w.shifted ? `Needs review: two readings. ${said}. If that opens a window, send between ${w.fromW} and ${dShort(w.to, true)}. If it means at least ${per} before, the cutoff is ${w.atW}. Notice delivered on ${w.atW} satisfies both, if the notices clause allows a delivery method that works that day`
+  return w.shifted ? twoReadings({ start: w.at, end: w.to, n: w.n, unit: w.unit, quote: w.quote })
     : `${said}: ${w.range}. ${dShort(w.from, true)} is the earliest safe date`; };

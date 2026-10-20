@@ -719,10 +719,10 @@ test('within N days prior: weekend and holiday shift moves FORWARD and the windo
   assert.equal(r.actBy, '2026-11-01'); assert.equal(r.safe.date, '2026-11-01'); assert.equal(r.safe.note, 'Falls on a Sunday · needs review: two readings');
   assert.equal(r.tag, 'two readings'); assert.equal(r.needsReview, true); assert.doesNotMatch(windowNote(r) + r.why + r.safe.note, /earliest safe/);
   const w = windowOf(r); assert.equal(w.shifted, true); assert.equal(w.label, 'Send notice on'); assert.equal(w.dayW, 'Sun 1 Nov 2026'); assert.equal(w.fromW, 'Mon 2 Nov 2026');
-  assert.equal(windowNote(r), 'Needs review: two readings. The clause says "within sixty (60) days prior". If that opens a window, send between Mon 2 Nov 2026 and 31 Dec 2026. If it means at least 60 days before, the cutoff is Sun 1 Nov 2026. Notice delivered on Sun 1 Nov 2026 satisfies both, if the notices clause allows a delivery method that works that day');
+  assert.equal(windowNote(r), 'Needs review: two readings. The clause says "within sixty (60) days prior". If that opens a window, it runs from Sun 1 Nov to 31 Dec 2026, and the first business day is Mon 2 Nov. If it means at least 60 days before, the cutoff is Sun 1 Nov 2026. Notice delivered on Sun 1 Nov 2026 satisfies both, if the notices clause allows a delivery method that works that day; otherwise ask counsel which reading applies');
   assert.match(r.why, /^Notice window opens in 12 days \(Sun 1 Nov 2026\) · two readings of the clause/);
   const a = fx('armlogi-goldensee-ex10-11.edgar.htm').r; assert.equal(a.actBy, '2027-06-20'); assert.equal(a.safe.date, '2027-06-20'); assert.equal(a.tag, 'two readings');
-  assert.equal(windowNote(a), 'Needs review: two readings. The clause says "within one month before". If that opens a window, send between Mon 21 Jun 2027 and 20 Jul 2027. If it means at least 1 month before, the cutoff is Sun 20 Jun 2027. Notice delivered on Sun 20 Jun 2027 satisfies both, if the notices clause allows a delivery method that works that day');
+  assert.equal(windowNote(a), 'Needs review: two readings. The clause says "within one month before". If that opens a window, it runs from Sun 20 Jun to 20 Jul 2027, and the first business day is Mon 21 Jun. If it means at least 1 month before, the cutoff is Sun 20 Jun 2027. Notice delivered on Sun 20 Jun 2027 satisfies both, if the notices clause allows a delivery method that works that day; otherwise ask counsel which reading applies');
   // unshifted window (US Antimony, Tue 1 Oct 2030) keeps the single earliest-safe-date note
   assert.equal(windowOf(fx('usantimony-supply-ex10-1.edgar.htm').r).shifted, false);
   // other clause types still move back
@@ -918,7 +918,7 @@ test('ics: within-window events are titled Window opens and remind only on or af
   for (const ics of [toICS([c], '2026-10-20'), withAlarms(toICS([c], '2026-10-20'))]) {
     const u = ics.replace(/\r\n[ \t]/g, '');
     assert.match(u, /SUMMARY:Window opens: send notice from 1 Nov 2026 \(two readings\): Paste/); assert.match(u, /DTSTART;VALUE=DATE:20261101/);
-    assert.match(u, /Needs review: two readings\./); assert.match(u, /send between 2 Nov 2026 and 31 Dec 2026/); assert.match(u, /Notice delivered on 1 Nov 2026 satisfies both/);
+    assert.match(u, /Needs review: two readings\./); assert.match(u, /it runs from Sun 1 Nov to 31 Dec 2026\\, and the first business day is Mon 2 Nov\./); assert.match(u, /Notice delivered on Sun 1 Nov 2026 satisfies both/); assert.doesNotMatch(u, /earliest safe/);
     const trig = [...u.matchAll(/TRIGGER:(\S+)/g)].map(m => m[1]); assert.deepEqual(trig, ['PT9H', 'P53D']); assert.ok(trig.every(x => !x.startsWith('-')));
     assert.ok(ics.split('\r\n').every(l => Buffer.byteLength(l) <= 75));
   }

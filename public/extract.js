@@ -495,7 +495,7 @@ export function extract(lines) {
     if (res.notice.period && /prior\s+to\s+the\s+(?:end|expiration)\s+of\s+the\s+Initial\s+Term(?![^.]{0,40}(?:Renewal|then[- ]current|any\s+(?:extension|subsequent)))/i.test(nq)) res.notice.initialOnly = true;
     // "within 60 days prior to the end": can be read as a window that opens 60 days before the end, so sending earlier may not count. Never Clear.
     const wm = res.notice.period && nq.match(new RegExp(`\\bwithin\\s+(?:(?:${NUMWORD_RE})\\s*)?(?:\\(\\s*\\d+\\s*\\)|\\d+)?\\s*(?:calendar\\s+|business\\s+)?(?:days?|months?)\\s+(?:prior|before)`, 'i'));
-    if (wm) { res.notice.withinPrior = true; res.notice.withinText = norm(wm[0]); res.notice.confidence = 'medium'; res.notice.needsReview = true; res.notice.why += ` "${res.notice.withinText}" can mean notice only counts inside that window, so the send-notice date is the earliest safe day to send, not the latest.`; }
+    if (wm) { res.notice.withinPrior = true; res.notice.withinText = norm(wm[0]); res.notice.confidence = 'medium'; res.notice.needsReview = true; res.notice.why += ` "${res.notice.withinText}" can mean notice only counts inside a window that opens on the send-notice date.`; }
     res.notice.who = /either\s+party|each\s+party|either\s+of\s+the\s+parties/i.test(nq) ? 'Either party' : (nq.match(/\b([A-Z][A-Za-z&.]+(?:\s+[A-Z][A-Za-z&.]+)?)\s+(?:may|shall|must)\s+(?:give|provide|deliver|notify)/)?.[1] || 'Not stated');
     const days = p => !p ? 0 : p.unit === 'year' ? p.n * 12 * 30.44 : p.unit === 'month' ? p.n * 30.44 : p.n * ({ day: 1, week: 7 })[p.unit]; // months and years compared in months, so 24 months == 2 years
     if (res.notice.period && res.renewal.period && days(res.notice.period) > days(res.renewal.period)) {
@@ -609,6 +609,14 @@ export function safeSendBy(day, forward = false) {
   let d = new Date(day + 'T00:00:00Z');
   while ([0, 6].includes(d.getUTCDay()) || usHoliday(ymd(d))) d = addDays(d, forward ? 1 : -1);
   return { date: ymd(d), changed: ymd(d) !== day, reason };
+}
+// Two readings of "within N days prior" when the window start (term end minus N, unshifted) is not a business day.
+const WDN = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MN = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const dw = (d, y) => { const t = new Date(d + 'T00:00:00Z'); return `${WDN[t.getUTCDay()]} ${t.getUTCDate()} ${MN[t.getUTCMonth()]}${y ? ' ' + d.slice(0, 4) : ''}`; };
+export function twoReadings({ start, end, n, unit, quote }) {
+  const first = safeSendBy(start, true).date; const per = `${n} ${unit}${n === 1 ? '' : 's'}`; const sameY = start.slice(0, 4) === end.slice(0, 4);
+  const [ey, em, ed] = end.split('-');
+  return `Needs review: two readings. ${quote ? `The clause says "${quote}"` : `Notice must fall within ${per} of the term end`}. If that opens a window, it runs from ${dw(start, !sameY)} to ${+ed} ${MN[+em - 1]} ${ey}, and the first business day is ${dw(first, first.slice(0, 4) !== end.slice(0, 4))}. If it means at least ${per} before, the cutoff is ${dw(start, true)}. Notice delivered on ${dw(start, true)} satisfies both, if the notices clause allows a delivery method that works that day; otherwise ask counsel which reading applies`;
 }
 export const dayWord = n => `${n} day${Math.abs(n) === 1 ? '' : 's'}`;
 // HTML to lines, same method as edgar/holdout/totext.py: block tags become line breaks, script/style dropped, whitespace collapsed, empty lines removed.
@@ -849,7 +857,7 @@ export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
       const sw = safeSendBy(i.date, true); const day = sw.changed ? i.date : sw.date; const d = day.replace(/-/g, ''); const n = ymd(addDays(new Date(day + 'T00:00:00Z'), 1)).replace(/-/g, ''); const left = daysBetween(day, i.termEnd); const per = `${i.notice?.n} ${i.notice?.unit}${i.notice?.n === 1 ? '' : 's'}`;
       L.push('BEGIN:VEVENT', `UID:${c.id}-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`,
         fold(`SUMMARY:${icsEsc(`Window opens: send notice from ${fmtD(day)}${sw.changed ? ' (two readings)' : ''}: ${c.name}`)}`),
-        fold(`DESCRIPTION:${icsEsc(`The clause says notice is given within ${i.notice?.n} ${i.notice?.unit}${i.notice?.n === 1 ? '' : 's'} before the term ends, so sending earlier may not count${i.withinText ? ` ("${i.withinText}")` : ''}. ${sw.changed ? `Needs review: two readings. The opening day ${fmtD(i.date)} ${sw.reason.replace(/^Falls/, 'falls')}. If the clause opens a window, send between ${fmtD(sw.date)} and ${fmtD(i.termEnd)}. If it means at least ${per} before, the cutoff is ${fmtD(i.date)}. Notice delivered on ${fmtD(i.date)} satisfies both, if the notices clause allows a delivery method that works that day.` : `Send between ${fmtD(sw.date)} and ${fmtD(i.termEnd)}. Contract date: ${i.date}.`} ${i.why}${i.needsReview ? ' NEEDS REVIEW.' : ''} Confidence: ${sure(i.confidence)}. Source ${i.source?.location}: "${i.source?.quote}"`)}`),
+        fold(`DESCRIPTION:${icsEsc(`The clause says notice is given within ${i.notice?.n} ${i.notice?.unit}${i.notice?.n === 1 ? '' : 's'} before the term ends, so sending earlier may not count${i.withinText ? ` ("${i.withinText}")` : ''}. ${sw.changed ? `${twoReadings({ start: i.date, end: i.termEnd, n: i.notice?.n, unit: i.notice?.unit, quote: i.withinText })}.` : `Send between ${fmtD(sw.date)} and ${fmtD(i.termEnd)}. Contract date: ${i.date}.`} ${i.why}${i.needsReview ? ' NEEDS REVIEW.' : ''} Confidence: ${sure(i.confidence)}. Source ${i.source?.location}: "${i.source?.quote}"`)}`),
         ...(c.url ? [fold(`URL:${c.url}`)] : []),
         'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:PT9H', fold(`DESCRIPTION:${icsEsc('Notice window opens today: ' + c.name)}`), 'END:VALARM',
         ...(left > 7 ? ['BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:P${left - 7}D`, fold(`DESCRIPTION:${icsEsc('7 days left in the notice window: ' + c.name)}`), 'END:VALARM'] : []), 'END:VEVENT');
