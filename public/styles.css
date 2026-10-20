@@ -648,4 +648,4 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 
 .pfflags{grid-column:1/-1;margin:0;padding:8px 12px;background:var(--bg,#000)}.pfflags .review .sv{color:#EBFF0A}.pfflags .missed .sv{color:var(--danger)}.pfflags .zero .sv{color:var(--mute)}
 .portfolio .review .sv,.portfolio .cant .sv{color:inherit}
-.pfflags .sv{font-size:inherit}
+.pfflags,.pfflags .sv{font-size:12px}
