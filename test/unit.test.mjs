@@ -560,7 +560,7 @@ test('B4 letter-of-credit renewal is not the agreement\'s clause', () => {
 // ---- 20-exhibit "deemed extended" / anniversary batch (EDGAR full-text search, 2025–2026); hand-worked as of 2026-10-19 ----
 const EXPECT2 = {
   'angiodynamics-ex10-1': '2027-09-03', 'arrow-demarco-ex10-1': ['2027-01-02', '2026-12-31'], 'atlasclear-ex10-3': '2028-07-21', 'cffi-ex10-40': '2027-01-15',
-  'dnow-ex10-2': '2027-09-07', 'fibk-lee-ex10-1': '2027-06-16', 'firstfoundation-ex10-1': '2027-09-17', 'glacier-ex10-l': '2026-10-22', 'gormanrupp-ex10-1': '2027-10-01',
+  'dnow-ex10-2': '2027-09-07', 'fibk-lee-ex10-1': '2027-06-15', 'firstfoundation-ex10-1': '2027-09-17', 'glacier-ex10-l': '2026-10-22', 'gormanrupp-ex10-1': '2027-10-01',
   'hornbeck-ex10-1': '2031-10-02', 'photronics-ex10-1': ['2027-07-10', '2027-07-09'], 'rekor-ex10-1': ['2028-04-01', '2028-03-31'], 'renasant-ex10-1': ['2028-08-06', '2028-08-04'], // ab9a38e: term runs from the defined Start Date (5 Oct 2026; movable by agreement → Check), not the signing date
   'smenergy-ex10-1': ['2026-11-01', '2026-10-30'], 'xponential-ex10-1': ['2026-11-14', '2026-11-13'],
   // flagged, no date: letter of credit; "date hereof" undated; merger "Effective Time" not dated; Effective Date not dated in the filing
@@ -807,4 +807,48 @@ test('5a7dc15 #5 party names', () => {
   assert.equal(partiesFromPreamble(fx('lsb-bemis-cic-ex10-1.edgar.htm').L), 'LSB Industries / Scott D. Bemis');
   assert.equal(partiesFromPreamble(fx('medallion-haley-ex10-2.edgar.htm').L), 'David Justin Haley / Medallion');
   assert.equal(fx('baxter-hider-ex10-1.edgar.htm').r.actBy, '2027-08-19');
+});
+// ---- 540ec12 follow-up (hand-worked as of 2026-10-19) ----
+import { docxBrowserLines } from './doc-readers.mjs';
+const q1 = L => { const x = extract(L); const r = buildQueue([{ id: 'q', name: 'q', lines: L, x }], AS)[0] || {}; return { end: x.term?.end || '', actBy: r.actBy || '', conf: r.confidence, missed: r.missed?.actBy || '', name: partiesFromPreamble(L) }; };
+test('540ec12 #2 every DOCX fixture gives the same result through the browser Word path as its HTML (or the XML reader)', async () => {
+  const dir = new URL('./fixtures/', import.meta.url).pathname; const files = fs.readdirSync(dir).filter(f => f.endsWith('.docx'));
+  assert.ok(files.length >= 7);
+  for (const f of files) {
+    const base = f.replace(/(?:\.html-in-word)?\.generated\.docx$/, ''); const htm = dir + base + '.edgar.htm';
+    const ref = fs.existsSync(htm) ? q1(htmlToLines(fs.readFileSync(htm, 'utf8'))) : q1(docxLines(dir + f));
+    const got = q1(await docxBrowserLines(dir + f));
+    assert.deepEqual({ end: got.end, actBy: got.actBy, missed: got.missed, name: got.name }, { end: ref.end, actBy: ref.actBy, missed: ref.missed, name: ref.name }, f);
+  }
+});
+test('540ec12 #2 Dominari: Word file holding HTML source as text → 30 Jun 2027, real names', async () => {
+  const g = q1(await docxBrowserLines(new URL('./fixtures/dominari-ledwick-ex10-1.html-in-word.generated.docx', import.meta.url).pathname));
+  assert.equal(g.actBy, '2027-06-30'); assert.equal(g.name, 'Dominari Holdings / Tim S. Ledwick');
+});
+test('540ec12 #1 American Woodmark: "each January 1 … one additional calendar year" repeats → 1 Nov 2026, Check', () => {
+  const g = fx('woodmark-mason-ex10-2.edgar.htm'); assert.notEqual(g.x.renewal.max, 1); assert.equal(g.r.actBy, '2026-11-01'); assert.notEqual(g.r.confidence, 'high');
+  assert.equal(partiesFromPreamble(g.L), 'Jimmy Mason / American Woodmark');
+});
+test('540ec12 #1 guard: renewal wording plus a computed "no further renewal" is Check with a note', () => {
+  const L = ['This Agreement is dated as of January 1, 2026 (the “Effective Date”) between Alpha Corp. and Beta LLC.', 'The term of this Agreement shall commence on the Effective Date and end on December 31, 2026; provided that the term shall automatically be extended for one additional year unless either party gives notice at least 30 days before the end of the term.', 'Any renewal of this Agreement after the extended term requires a written amendment.'];
+  const x = extract(L), r = buildQueue([{ id: 'a', name: 'a', lines: L, x }], '2027-06-01')[0];
+  assert.equal(r.label, 'Expires (no further renewal)'); assert.equal(r.needsReview, true); assert.notEqual(r.confidence, 'high'); assert.match(r.tag, /assumes no further automatic renewal/);
+});
+test('540ec12 #3 the five misses: 1st Source, Quaker, First Commonwealth, Vail, Perma-Pipe', async () => {
+  let r = fx('firstsource-murphy-ex10-a1.edgar.htm').r; assert.equal(r.missed?.actBy, '2026-09-30'); assert.equal(r.actBy, '2027-09-30');
+  r = fx('quaker-carvalho-cic-ex10-2.edgar.htm').r; assert.equal(r.actBy, '2027-07-01'); assert.notEqual(r.confidence, 'high');
+  r = fx('firstcommonwealth-coc-ex10-3.edgar.htm').r; assert.equal(r.actBy, '2026-12-31');
+  assert.equal(q1(pdfLines(new URL('./fixtures/firstcommonwealth-coc-ex10-3.generated.pdf', import.meta.url).pathname)).actBy, '2026-12-31');
+  assert.equal(q1(await docxBrowserLines(new URL('./fixtures/vail-katz-ex10-1.generated.docx', import.meta.url).pathname)).actBy, '2028-07-27');
+  assert.equal(fx('permapipe-sagr-ex.edgar.htm').r.actBy, '2026-12-30');
+});
+test('540ec12 #4 party names: blanks rejected, bare roles fall back', () => {
+  assert.equal(partiesFromPreamble(fx('trex-severance-ex10-2.edgar.htm').L), 'Trex');
+  assert.equal(partiesFromPreamble(['THIS AGREEMENT, between ______________ (the “Employee”) and ______________ (the “Company”), is effective as of July 7, 2025.']), '');
+  assert.equal(partiesFromPreamble(['This Agreement is made by and between Mr. John Smith (the “Executive”) and Acme Widgets, Inc. (the “Company”).']), 'John Smith / Acme Widgets');
+});
+test('540ec12 batch: the rest of blind test 4 still reads as hand-worked', () => {
+  assert.equal(fx('lazarus-revolver-ex.edgar.htm').r.actBy, '2027-03-01'); assert.equal(fx('photronics-rivera-ex10-1.edgar.htm').r.actBy, '2027-11-02');
+  assert.equal(fx('carriage-franch-ex.edgar.htm').r.actBy, '2027-01-31'); assert.equal(fx('puget-severance-plan-ex10-1.edgar.htm').r.actBy, '2027-11-01');
+  for (const f of ['dte-cic-template-ex10-2', 'trex-severance-ex10-2']) assert.equal(fx(f + '.edgar.htm').r.actBy, '', f);
 });

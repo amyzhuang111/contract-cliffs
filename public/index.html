@@ -33,7 +33,7 @@
     <div class="dz-idle">
       <p class="dz-big" id="dzTitle"><span class="dz-desk">Drop a contract PDF</span><span class="dz-phone">Choose a contract</span><span class="dz-more">Drop another contract</span></p>
       <p class="dz-sub">We quote the clause and give you the date.</p>
-      <p class="dz-hint" id="dzHint">PDF, Word or plain text · stays in your browser</p>
+      <p class="dz-hint" id="dzHint">PDF, Word or plain text</p>
       <button class="tl dz-pastelink" id="pasteLink" type="button">Paste text</button>
       <button class="btn-secondary sm dz-add" id="addBar" type="button">Add a contract</button>
     </div>
@@ -99,7 +99,7 @@
 </section>
 <details class="about" id="about"><summary class="tl mute">How it works and how to trust it</summary>
 <section class="controls" id="add" aria-labelledby="addh">
-  <div class="sechead"><h2 id="addh">How it works and how to trust it</h2><p class="status" id="testset">Latest blind test, 13 SEC contracts it had never seen: 4 dates right, 2 correctly left blank, 5 missed and 2 wrong. When it can’t tell, it says so and flags the row for a person to check.</p></div>
+  <div class="sechead"><h2 id="addh">How it works and how to trust it</h2><p class="status" id="testset">Latest blind test, 16 SEC contracts it had never seen: 3 dates right, 3 correctly left blank, 6 missed and 4 wrong. When it can’t tell, it says so and flags the row for a person to check.</p></div>
   <div>
     <span class="lab">Sample files</span>
     <div class="row setbar" hidden>
@@ -148,7 +148,7 @@
   <hr class="hair" style="margin-bottom:28px">
   <details class="method"><summary><span class="lab">Method and accuracy</span><span class="gn">How dates are worked out and how often they are right</span></summary>
   <p>Extraction is deterministic: regular expressions plus date and duration parsing (“sixty (60) days”, “one hundred and eighty (180) days”, “Eighty-Four (84) months”). No language model and no network call touches your documents; uploads stay in this browser tab. A term of N months “commencing on” a date ends the day before the anniversary; “until N years following” ends on the anniversary. When words and numerals disagree, or a value is redacted, the field is left blank and marked for review.</p>
-  <p>Accuracy, stated plainly: it is tested on real SEC contracts it has not seen, and the answers are worked out by hand first. It is often right and it is sometimes wrong. Latest blind test, 13 SEC contracts it had never seen: 4 dates right, 2 correctly left blank, 5 missed and 2 wrong. One wrong card read “one additional calendar year … each January 1” as a single renewal and showed no deadline; the other, from a Word file, put the date 9 days early (marked Check). When it can’t tell, it leaves the date blank and says why, and anything resting on an assumption is marked Check. Read the quoted clause before you rely on a date (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
+  <p>Accuracy, stated plainly: it is tested on real SEC contracts it has not seen, and the answers are worked out by hand first. It is often right and it is sometimes wrong. Latest blind test, 16 SEC contracts it had never seen: 3 dates right, 3 correctly left blank, 6 missed and 4 wrong. One wrong card was marked Sure: it counted yearly renewals from the first anniversary when the first renewal comes on the third. The other three were marked Check. When it can’t tell, it leaves the date blank and says why, and anything resting on an assumption is marked Check. Read the quoted clause before you rely on a date (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
   <p>Real contracts are material agreements filed with the SEC, fetched from EDGAR with a declared User-Agent under SEC fair-access rules. Send-notice deadlines that land on a weekend or a US federal holiday get a “send by” business day: weekends and US federal holidays flagged; local holidays not modelled. The contract’s own date is always shown unchanged. Dates projected past the initial term assume the agreement was not terminated or amended. Not legal advice.</p>
   <p>Type: Geist and Geist Mono, both under the SIL Open Font License (<a href="/fonts/OFL-Geist.txt">Geist</a>, <a href="/fonts/OFL-GeistMono.txt">Geist Mono</a>), self-hosted. Colours follow General Intuition's public site. Geist stands in for Alpha Lyrae, GI's licensed display face, which is not used here; this is an independent demo, not a General Intuition product. PDF reading by pdf.js (<a href="/vendor/LICENSE-pdfjs.txt">Apache 2.0</a>), DOCX by mammoth (<a href="/vendor/LICENSE-mammoth.txt">BSD-2-Clause</a>). Built by Amy Zhuang · <a href="https://github.com/amyzhuang111/contract-cliffs">source</a>.</p>
   </details>
