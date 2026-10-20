@@ -53,7 +53,29 @@ export function withAlarms(ics, notes = {}, opts = {}) {
     out.push(l);
     if (opts.tz && l.startsWith('X-WR-CALNAME:')) out.push('X-WR-TIMEZONE:' + opts.tz);
   }
-  return out.map(l => fold(l.replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, ''))).join('\r\n');
+  return (opts.renew ? renewPlan(out, opts.renew, notes, days) : out).map(l => fold(l.replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, ''))).join('\r\n');
+}
+// Plan renew (opts.renew: contract id -> { name, termEnd }): the event becomes a reminder of the renewal date, with no
+// send-notice wording, on the day the contract renews, and the reminders count down to that day.
+const icsDay = d => d.replace(/-/g, '');
+function renewPlan(L, renew, notes, days) {
+  const out = []; let ev = null;
+  for (const l of L) {
+    if (l === 'BEGIN:VEVENT') { ev = [l]; continue; }
+    if (!ev) { out.push(l); continue; }
+    ev.push(l); if (l !== 'END:VEVENT') continue;
+    const uid = ev.find(x => x.startsWith('UID:')) || ''; const id = (uid.match(/^UID:(.+?)-\d{8}@contract-cliffs$/) || [])[1]; const p = id && renew[id];
+    if (!p || !p.termEnd) { out.push(...ev); ev = null; continue; }
+    const on = ymd(addDays(new Date(p.termEnd + 'T00:00:00Z'), 1)); const next = ymd(addDays(new Date(on + 'T00:00:00Z'), 1));
+    const extra = notes[id] ? ' ' + notes[id] : '';
+    out.push('BEGIN:VEVENT', uid, ev.find(x => x.startsWith('DTSTAMP:')), `DTSTART;VALUE=DATE:${icsDay(on)}`, `DTEND;VALUE=DATE:${icsDay(next)}`,
+      `SUMMARY:${icsText(`Renews ${fmtLong(on)} (plan: renew): ${p.name}`)}`,
+      `DESCRIPTION:${icsText(`Plan: renew. Nothing to send; this is a reminder of the renewal date. The current term ends ${fmtLong(p.termEnd)} and the contract renews on ${fmtLong(on)}.${extra}`)}`,
+      ...ev.filter(x => x.startsWith('URL:')));
+    for (const n of days) out.push('BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:-P${n}D`, `DESCRIPTION:${icsText(`${n} days to the renewal date (plan: renew): ${p.name}`)}`, 'END:VALARM');
+    out.push('END:VEVENT'); ev = null;
+  }
+  return out;
 }
 // Early exit: a termination-for-convenience right with a notice length, e.g. "after the first 24 months either party
 // may terminate on 30 days' notice". Returns { text, quote, location } or null. Never invents a period.

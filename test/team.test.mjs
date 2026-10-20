@@ -93,3 +93,14 @@ test('progress: reading files adds no fixed delay', () => {
   assert.ok(st.length > 50 && !/setTimeout\(r, [1-9]/.test(st), 'stage() must not wait a fixed time'); assert.match(src, /const GUIDED_PACE = params\.get\('demo'\) === '1' \? 250 : 0;/);
   assert.match(src, /Done\. Read \$\{word\(added\)\}/);
 });
+import { htmlToLines as h2l } from '../public/extract.js';
+const ARM = (() => { const c = { id: 'arm', name: 'Armlogi / Goldensee', lines: h2l(fs.readFileSync(new URL('./fixtures/armlogi-goldensee-ex10-11.edgar.htm', import.meta.url), 'utf8')) }; c.x = extract(c.lines); return c; })();
+test('renew plan: the .ics event is a renewal-date reminder with no send-notice wording (Armlogi)', () => {
+  const ics = withAlarms(toICS([ARM], AS), { arm: 'Plan: renew.' }, { days: alarmDays(30), renew: { arm: { name: ARM.name, termEnd: '2027-07-20' } } }).replace(/\r\n /g, '');
+  const ev = ics.slice(ics.indexOf('BEGIN:VEVENT'), ics.indexOf('END:VEVENT'));
+  assert.match(ev, /SUMMARY:Renews 21 July 2027 \(plan: renew\): Armlogi \/ Goldensee/); assert.match(ev, /DTSTART;VALUE=DATE:20270721\r\nDTEND;VALUE=DATE:20270722/);
+  assert.match(ev, /DESCRIPTION:Plan: renew\. Nothing to send\\; this is a reminder of the renewal date\. The current term ends 20 July 2027 and the contract renews on 21 July 2027\./);
+  assert.deepEqual([...ev.matchAll(/TRIGGER:(\S+)/g)].map(m => m[1]), ['-P30D', '-P14D', '-P7D']); assert.match(ev, /30 days to the renewal date \(plan: renew\)/);
+  assert.ok(!/send notice|send-notice|window opens/i.test(ev), 'no send-notice wording');
+  const plain = withAlarms(toICS([ARM], AS)); assert.match(plain, /Window opens: send notice on/); // no plan: unchanged
+});

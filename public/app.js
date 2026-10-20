@@ -18,7 +18,8 @@ let team = normTeam(null);
 const teamSaved = () => { try { return localStorage.getItem(TEAM_OK) === '1'; } catch { return false; } };
 const saveTeam = () => { if (teamSaved()) try { localStorage.setItem(TEAM_KEY, JSON.stringify(team)); } catch {} };
 try { if (teamSaved()) { const { team: t } = parseTeam(localStorage.getItem(TEAM_KEY)); if (t) team = t; else { localStorage.removeItem(TEAM_KEY); localStorage.removeItem(TEAM_OK); } } else localStorage.removeItem(TEAM_KEY); } catch {}
-const icsOpts = () => ({ days: alarmDays(team.warnDays), calName: team.calName, tz: team.tz });
+const renewOf = cs => Object.fromEntries(buildQueue(cs, asOf).map(r => [r, cs.find(c => c.id === r.id)]).filter(([r, c]) => c && ctxOf(team, c).plan === 'renew' && r.item?.termEnd && !r.missed).map(([r, c]) => [c.id, { name: c.name, termEnd: r.item.termEnd }]));
+const icsOpts = (cs = current()) => ({ days: alarmDays(team.warnDays), calName: team.calName, tz: team.tz, renew: renewOf(cs) });
 const cxOf = c => { const x = ctxOf(team, c); return x.owner || x.plan || x.note ? x : null; };
 const icsNotes = cs => Object.fromEntries(cs.map(c => [c.id, [exitNote(c)?.text, ctxLine(cxOf(c))].filter(Boolean).join(' ')]).filter(e => e[1]));
 const rowKey = r => ckey(r.c || current().find(c => c.id === r.id) || r);
@@ -136,9 +137,10 @@ $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $
 $('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf, cxOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
 // One list for Sheets and email: every live row, soonest first, pinned first.
 const listItems = () => { const cs = current(); const byId = new Map(cs.map(c => [c.id, c]));
-  return order(buildQueue(cs, asOf)).filter(r => r.section !== 'lapsed').map(r => { const c = byId.get(r.id); const x = ctxOf(team, c); const w = windowOf(r); const date = w?.day || r.actBy || '';
-    const action = !r.actBy ? 'No date found; a person needs to read the clause' : r.missed ? `Missed ${fmt(r.missed.actBy)}. Next: send notice by ${fmt(r.actBy)}` : w ? `Send notice on ${fmt(w.day)}` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(r.actBy)}` : `Ends ${fmt(r.actBy)}`;
-    return { name: c.name, action, date, days: date ? daysBetween(asOf, date) : '', review: !!r.needsReview, owner: x.owner, plan: x.plan, note: x.note, source: c.url || c.fileName || '' }; }); };
+  return order(buildQueue(cs, asOf)).filter(r => r.section !== 'lapsed').map(r => { const c = byId.get(r.id); const x = ctxOf(team, c); const w = windowOf(r); const date0 = w?.day || r.actBy || '';
+    const renewOn = x.plan === 'renew' && r.item?.termEnd && !r.missed ? ymd(addDays(new Date(r.item.termEnd + 'T00:00:00Z'), 1)) : '';
+    const action = renewOn ? `Renews ${fmt(renewOn)}; reminder only, nothing to send (plan: renew)` : !r.actBy ? 'No date found; a person needs to read the clause' : r.missed ? `Missed ${fmt(r.missed.actBy)}. Next: send notice by ${fmt(r.actBy)}` : w ? `Send notice on ${fmt(w.day)}` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(r.actBy)}` : `Ends ${fmt(r.actBy)}`;
+    const date = renewOn || date0; return { name: c.name, action, date, days: date ? daysBetween(asOf, date) : '', review: !!r.needsReview, owner: x.owner, plan: x.plan, note: x.note, source: c.url || c.fileName || '' }; }); };
 const copyText = (t, done) => (navigator.clipboard?.writeText(t) || Promise.reject()).then(done, () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch { $('#status').textContent = 'Could not copy. Use Export CSV instead.'; } ta.remove(); });
 $('#exSheets').onclick = guard(() => { const it = listItems(); const t = sheetsTSV(it); window.__lastTsv = t; copyText(t, () => { $('#status').textContent = `Copied ${it.length} ${it.length === 1 ? 'row' : 'rows'} for Google Sheets. Click cell A1 in a sheet and paste.`; }); });
 $('#lqSheets').onclick = () => $('#exSheets').onclick();
@@ -423,7 +425,7 @@ function renderPf() {
 }
 { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
   try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf);
-    $('#pfIcs').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.ics`, withAlarms(toICS(cs, asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(cs), icsOpts()), 'text/calendar');
+    $('#pfIcs').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.ics`, withAlarms(toICS(cs, asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(cs), icsOpts(cs)), 'text/calendar');
     $('#pfCsv').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.csv`, auditCSV(cs, asOf, cxOf), 'text/csv'); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
   catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
 // ---------- Set up for your team ----------

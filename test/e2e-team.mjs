@@ -118,6 +118,20 @@ for (const w of [1440, 375]) {
     ok(await status(p) === 'Drive blocks this from the browser; download the PDF and drop it here.' && await p.evaluate(() => document.querySelector('#answer').hidden && !document.querySelector('#lq .lrow')), `${w}: Drive link (${how}) says plainly that Drive blocks it and adds nothing`);
     if (how === 'abort') await shot(p, 'drive', w);
     await p.ctx.close(); }
+  // renew plan reaches the .ics, Sheets and email (Armlogi)
+  { const p = await fresh('/?asof=2026-10-20', w);
+    await drop(p, [['armlogi.htm', f64('armlogi-goldensee-ex10-11.edgar.htm'), 'text/html'], ['c3-dragonfly.edgar.txt', f64('c3-dragonfly.edgar.txt'), 'text/plain']]);
+    await waitStatus(p, /^Read 2 contracts/, 30000);
+    await p.evaluate(() => { const li = [...document.querySelectorAll('#lq .lrow')].find(l => /goldensee/i.test(l.textContent)); if (li) li.click(); });
+    await p.waitForFunction(() => /goldensee/i.test(document.querySelector("#answer .iname")?.textContent || ""));
+    await p.evaluate(() => { document.querySelector('#ctxBox').open = true; }); await type(p, '#cPlan', 'renew');
+    await p.evaluate(() => document.querySelector('#exIcs').click()); const ics = (await dl(p)).replace(/\r\n /g, '');
+    const ev = ics.split("BEGIN:VEVENT").find(e => /goldensee/i.test(e)) || '';
+    ok(/SUMMARY:Renews 21 July 2027 \(plan: renew\)/.test(ev) && /reminder of the renewal date/.test(ev) && /days to the renewal date/.test(ev) && !/send notice|send-notice|window opens/i.test(ev), `${w}: renew plan: Armlogi's .ics event is a renewal-date reminder with no send-notice wording`);
+    await p.evaluate(() => document.querySelector('#exSheets').click()); await waitStatus(p, /Copied/);
+    const row = (await p.evaluate(() => window.__lastTsv)).split('\n').find(l => /Goldensee/.test(l)) || '';
+    ok(/Renews 21 Jul 2027; reminder only, nothing to send \(plan: renew\)\t2027-07-21/.test(row) && !/Send notice/.test(row), `${w}: renew plan: Sheets row says renewal reminder`);
+    await p.ctx.close(); }
 }
 // the Drive test makes the browser log its own CORS refusal; that is the expected result, not a page error
 const real = errors.filter(e => !/drive\.google\.com|ERR_BLOCKED_BY_CLIENT|net::ERR_FAILED/.test(e));
