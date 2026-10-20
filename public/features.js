@@ -1,6 +1,6 @@
 // Product features layered on the extractor: calendar links and alarms, notice letter (.docx), more obligations,
 // portfolio summary, per-contract audit CSV and safe local storage. Pure functions; no network, no invented data.
-import { fold, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
+import { fold, csvCell, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
 
 const txt = l => typeof l === 'string' ? l : (l?.text ?? '');
 const norm = s => String(s ?? '').replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\s+/g, ' ').trim();
@@ -217,7 +217,8 @@ export function stripHtml(pf) {
 }
 
 // ---------- F5: audit CSV, one row per contract ----------
-const cell = v => { const s = String(v ?? ''); return /[",\r\n]/.test(s) || /^[=+\-@\t\r]/.test(s) ? '"' + (/^[=+\-@\t\r]/.test(s) ? "'" : '') + s.replace(/"/g, '""') + '"' : s; };
+// Same guard as the main export: formulas (=, +, -, @, tab, CR) get a leading ' ; plain numbers such as -2 stay numbers.
+const cell = csvCell;
 export function statusOf(r) { return r.missed ? 'Missed: send-notice deadline passed, not yet renewed' : r.section === 'lapsed' ? 'Expired' : r.days != null && r.days < 0 ? 'Passed' : !r.actBy ? 'Needs review: no date found' : r.days <= 30 ? 'Due within 30 days' : r.days <= 90 ? 'Due within 90 days' : r.days <= 365 ? 'Due within 365 days' : 'Later than 365 days'; }
 export function auditCSV(contracts, asOf) {
   const rows = buildQueue(contracts, asOf); const byId = new Map(contracts.map(c => [c.id, c]));

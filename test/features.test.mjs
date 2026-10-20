@@ -2,7 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
-import { extract, toICS, buildQueue } from '../public/extract.js';
+import { extract, toICS, toCSV, buildQueue } from '../public/extract.js';
 import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, portfolio, BUCKETS, bucket, stripHtml, exitNote, cleanQuote, auditCSV, statusOf, parseSaved, FILL } from '../public/features.js';
 const load = f => JSON.parse(fs.readFileSync(new URL('../public/data/' + f + '.json', import.meta.url))).map(c => ({ ...c, x: extract(c.lines) }));
 const E = Object.fromEntries(load('edgar').map(c => [c.id, c])), H = Object.fromEntries(load('holdout').map(c => [c.id, c]));
@@ -159,4 +159,15 @@ test('shipped files carry no "demo" wording (only the ?demo=1 URL parameter); fo
     assert.ok(!/demo/i.test(t), f);
   }
   assert.match(fs.readFileSync(new URL('../public/index.html', import.meta.url), 'utf8'), /independent project by Amy Zhuang, not a General Intuition product/);
+});
+test('CSV guard: numbers stay numbers in both exports; formulas and dash-text are guarded', async () => {
+  const { csvCell } = await import('../public/extract.js');
+  for (const n of ['-2', '-108', '-12', '0', '42', '-3.5']) assert.equal(csvCell(n), n);
+  assert.equal(csvCell(-108), '-108');
+  for (const [i, o] of [['=cmd|calc!A1', `"'=cmd|calc!A1"`], ['+1+1', `"'+1+1"`], ['@SUM(A1)', `"'@SUM(A1)"`], ['-x', `"'-x"`], ['-2+3', `"'-2+3"`], ['\tx', `"'\tx"`]]) assert.equal(csvCell(i), o, i);
+  // audit export: a missed row's negative days_from_as_of is a plain number
+  const missed = { ...E.c3 }; const csv = auditCSV([missed], '2027-10-01');
+  const neg = csv.split('\r\n')[1]?.split(',').find(v => /^"?'?-\d+"?$/.test(v)); assert.ok(neg && /^-\d+$/.test(neg), String(neg));
+  assert.ok(!/"'-\d+"/.test(csv));
+  const main = toCSV([missed], '2027-10-01'); assert.ok(!/"'-\d+"/.test(main));
 });
