@@ -842,6 +842,16 @@ export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
   for (const c of contracts) for (const i of schedule(c.x, asOf)) {
     if (i.missed) { const r = schedule(c.x, asOf).find(t => t.missedWindow)?.missedWindow; if (r) { const d = r.renews.replace(/-/g, ''); const n = ymd(addDays(new Date(r.renews + 'T00:00:00Z'), 1)).replace(/-/g, ''); L.push('BEGIN:VEVENT', `UID:${c.id}-renews-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`, fold(`SUMMARY:${icsEsc('MISSED: ' + c.name + ' renews today (send-notice deadline missed)')}`), fold(`DESCRIPTION:${icsEsc(i.why)}`), ...(c.url ? [fold(`URL:${c.url}`)] : []), 'END:VEVENT'); } continue; }
     if (!i.actBy || !i.date || i.status === 'past') continue;
+    if (i.within && i.termEnd) { // "within N days prior": the event is the day the window opens; reminders only on or after it
+      const sw = safeSendBy(i.date, true); const d = sw.date.replace(/-/g, ''); const n = ymd(addDays(new Date(sw.date + 'T00:00:00Z'), 1)).replace(/-/g, ''); const left = daysBetween(sw.date, i.termEnd);
+      L.push('BEGIN:VEVENT', `UID:${c.id}-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`,
+        fold(`SUMMARY:${icsEsc(`Window opens: send notice from ${fmtD(sw.date)}: ${c.name}`)}`),
+        fold(`DESCRIPTION:${icsEsc(`The clause says notice is given within ${i.notice?.n} ${i.notice?.unit}${i.notice?.n === 1 ? '' : 's'} before the term ends, so sending earlier may not count. Send between ${fmtD(sw.date)} and ${fmtD(i.termEnd)}. Contract date: ${i.date}${sw.changed ? `, which ${sw.reason.replace(/^Falls/, 'falls')}; this event is on the next business day (${sw.date})` : ''}. ${i.why}${i.needsReview ? ' NEEDS REVIEW.' : ''} Confidence: ${sure(i.confidence)}. Source ${i.source?.location}: "${i.source?.quote}"`)}`),
+        ...(c.url ? [fold(`URL:${c.url}`)] : []),
+        'BEGIN:VALARM', 'ACTION:DISPLAY', 'TRIGGER:PT9H', fold(`DESCRIPTION:${icsEsc('Notice window opens today: ' + c.name)}`), 'END:VALARM',
+        ...(left > 7 ? ['BEGIN:VALARM', 'ACTION:DISPLAY', `TRIGGER:P${left - 7}D`, fold(`DESCRIPTION:${icsEsc('7 days left in the notice window: ' + c.name)}`), 'END:VALARM'] : []), 'END:VEVENT');
+      continue;
+    }
     const sb0 = safeSendBy(i.date); const late = sb0.changed && sb0.date < asOf; const sb = late ? { ...sb0, date: asOf } : sb0; const d = sb.date.replace(/-/g, ''); const n = ymd(addDays(new Date(sb.date + 'T00:00:00Z'), 1)).replace(/-/g, '');
     const sbNote = late ? `Contract date: ${i.date}, which ${sb0.reason.replace(/^Falls/, 'falls')}. The last business day before it (${sb0.date}) has passed. Send today and confirm delivery. ` : sb.changed ? `Contract date: ${i.date}, which ${sb.reason.replace(/^Falls/, 'falls')}; this event is on the last business day before it (${sb.date}). ` : `Contract date: ${i.date}. `;
     L.push('BEGIN:VEVENT', `UID:${c.id}-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`,

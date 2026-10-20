@@ -907,3 +907,22 @@ test('round 8 batch: the rest still reads as hand-worked', () => {
   assert.equal(fx('cineverse-opeka-ex10-2.edgar.htm').r.actBy, '2027-01-30'); assert.equal(fx('thejoint-bowman-ex10-1.edgar.htm').r.actBy, '2027-03-11');
   for (const f of ['stride-cic-template-ex10-2', 'civeo-gerry-ex10-2', 'shell-irrx-offtake-ex10-1']) assert.equal(fx(f + '.edgar.htm').r.actBy, '', f);
 });
+
+test('ics: within-window events are titled Window opens and remind only on or after the opening day', async () => {
+  const { withAlarms } = await import('../public/features.js');
+  const t = 'MASTER SUPPLY AGREEMENT\nThis Agreement is effective as of January 1, 2026 (the "Effective Date").\n2. Term. The initial term of this Agreement shall commence on the Effective Date and end on December 31, 2026. Thereafter this Agreement shall automatically renew for successive one (1) year terms unless either party gives written notice of non-renewal within sixty (60) days prior to the end of the then-current term.';
+  const L = t.split('\n'); const c = { id: 'p', name: 'Paste', lines: L, x: extract(L) };
+  for (const ics of [toICS([c], '2026-10-20'), withAlarms(toICS([c], '2026-10-20'))]) {
+    const u = ics.replace(/\r\n[ \t]/g, '');
+    assert.match(u, /SUMMARY:Window opens: send notice from 2 Nov 2026: Paste/); assert.match(u, /DTSTART;VALUE=DATE:20261102/);
+    assert.match(u, /Send between 2 Nov 2026 and 31 Dec 2026/);
+    const trig = [...u.matchAll(/TRIGGER:(\S+)/g)].map(m => m[1]); assert.deepEqual(trig, ['PT9H', 'P52D']); assert.ok(trig.every(x => !x.startsWith('-')));
+    assert.ok(ics.split('\r\n').every(l => Buffer.byteLength(l) <= 75));
+  }
+  const fxc = f => { const L = htmlToLines(fs.readFileSync(new URL('./fixtures/' + f, import.meta.url), 'utf8')); return { id: 'x', name: 'X', lines: L, x: extract(L) }; };
+  const ua = withAlarms(toICS([fxc('usantimony-supply-ex10-1.edgar.htm')], '2026-10-19')).replace(/\r\n[ \t]/g, '');
+  assert.match(ua, /SUMMARY:Window opens: send notice from 1 Oct 2030: X/); assert.doesNotMatch(ua, /TRIGGER:-/);
+  // other clause types keep the deadline title and 30/14/7-day reminders
+  const tw = withAlarms(toICS([fxc('taoweave-manako-license-ex10-1.edgar.htm')], '2026-10-19')).replace(/\r\n[ \t]/g, '');
+  assert.match(tw, /SUMMARY:Send-notice deadline: X/); assert.deepEqual([...tw.matchAll(/TRIGGER:(\S+)/g)].map(m => m[1]), ['-P30D', '-P14D', '-P7D']);
+});

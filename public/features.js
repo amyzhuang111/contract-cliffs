@@ -41,8 +41,10 @@ export function withAlarms(ics, notes = {}) {
     if (inEv && l.startsWith('SUMMARY:')) name = l.slice(8);
     if (inEv && l.startsWith('UID:')) id = (l.match(/^UID:(.+?)-(?:renews-)?\d{8}@contract-cliffs$/) || [])[1] || '';
     if (inEv && l.startsWith('DESCRIPTION:') && !inAl && notes[id]) l += icsText(' ' + notes[id]);
-    if (l === 'BEGIN:VALARM') { inAl = true; continue; }
-    if (inAl) { if (l === 'END:VALARM') inAl = false; continue; }
+    const keep = /^Window opens/.test(name); // window events carry their own on-or-after reminders
+    if (l === 'BEGIN:VALARM') { inAl = true; if (!keep) continue; }
+    if (inAl && !keep) { if (l === 'END:VALARM') inAl = false; continue; }
+    if (inAl && l === 'END:VALARM') inAl = false;
     if (l === 'END:VEVENT' && inEv) { inEv = false; if (/^Send-notice deadline/.test(name)) for (const n of ALARM_DAYS) out.push(...ALARM(n, name.replace(/^Send-notice deadline: /, ''))); }
     out.push(l);
   }
