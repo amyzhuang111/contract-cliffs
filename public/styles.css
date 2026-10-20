@@ -720,3 +720,6 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 #answer *,#liveQ *{text-transform:none !important}
 .savedask{border:1px solid var(--rule);padding:12px 16px;margin:12px 0}.savedask p{margin:0 0 8px;color:var(--fg)}.savedask .row{display:flex;flex-wrap:wrap;gap:8px}
 .pflist .psafe{display:block;font:400 14px/20px var(--font-sans);color:var(--mute)}
+/* Labels in the key views at 13px or more (timeline axis, section label, confidence badges) */
+.pfv > .lab,.tl-track .tk .lab,.tl-track .tk.today .lab,.pflist .tag,#answer .tag,#answer .chip,#liveQ .tag,#liveQ .chip,.eyebrow,#answer .lab,#liveQ .lab{font-size:13px;line-height:18px}
+@media (max-width:480px){.tl-track .tk .lab{font-size:13px;left:-18px}}
