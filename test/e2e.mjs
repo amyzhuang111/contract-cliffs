@@ -191,7 +191,8 @@ await page.click('#cards .card'); await new Promise(r => setTimeout(r, 450)); co
 const all = [...new Set([...links, ...dl2, ...edgar.map(c => c.url)])];
 ok(!all.filter(h => !h.startsWith(BASE + '/')).some(h => /example\.(com|org)|placeholder|lorem|javascript:|localhost|127\.0\.0\.1/i.test(h)) && !all.some(h => /#$/.test(h)), `no placeholder links among ${all.length} (own-origin links allowed for any BASE_URL port)`);
 const html = await page.content(); ok(!/example\.com|lorem ipsum|TODO/i.test(html), 'no placeholder text in page');
-for (const h of all) { let s = 0; try { const r = await fetch(h, { headers: { 'User-Agent': UA }, redirect: 'follow' }); s = r.status; } catch (e) { s = String(e); } ok(s === 200, `200 ${h} (${s})`); await new Promise(r => setTimeout(r, 150)); }
+ok(all.filter(h => !/^https?:/.test(h)).every(h => h === 'mailto:'), 'only non-web links are the two Email me this list drafts (filled in on click)');
+for (const h of all.filter(h => /^https?:/.test(h))) { let s = 0; try { const r = await fetch(h, { headers: { 'User-Agent': UA }, redirect: 'follow' }); s = r.status; } catch (e) { s = String(e); } ok(s === 200, `200 ${h} (${s})`); await new Promise(r => setTimeout(r, 150)); }
 const src = await browser.newPage(); await src.goto(BASE + '/source/?id=c2&from=352&to=355#L352', { waitUntil: 'networkidle0' });
 ok((await src.$eval('#L353', e => e.className)) === 'hl', 'saved-text viewer highlights cited lines'); await src.close();
 if (SHOTS) { await page.reload({ waitUntil: 'networkidle0' }); await page.screenshot({ path: path.join(SHOTS, 'contract-cliffs-1440.png'), fullPage: true }); await page.click('#cards .card[data-id="c5"]'); await new Promise(r => setTimeout(r, 400)); await page.screenshot({ path: path.join(SHOTS, 'contract-cliffs-1440-drawer.png') }); await page.click('#close'); }

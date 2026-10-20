@@ -65,3 +65,26 @@ test('context: CSV, audit pack and .ics carry owner, plan and note; notes keep t
   const ics = withAlarms(toICS([E.c5], AS), { [E.c5.id]: ctxLine({ owner: 'Ana', plan: 'cancel', note: 'Switch' }) }).replace(/\r\n /g, '');
   assert.match(ics, /DESCRIPTION:[^\r\n]*Owner: Ana\. Plan: cancel\. Note: Switch/);
 });
+import { splitFiles, isDrive, driveId, driveDownload, DRIVE_BLOCKED, sheetsTSV, tsvCell, mailtoList, MAILTO_MAX } from '../public/team.js';
+test('plug in: folder files are filtered to what we can read', () => {
+  const { ok, skipped } = splitFiles(['a.pdf', 'b.DOCX', 'c.txt', 'd.htm', 'e.html', 'logo.png', '.DS_Store', 'x.xlsx'].map(name => ({ name })));
+  assert.deepEqual(ok.map(f => f.name), ['a.pdf', 'b.DOCX', 'c.txt', 'd.htm', 'e.html']); assert.equal(skipped.length, 3);
+});
+test('plug in: Drive links are spotted and the blocked message is plain', () => {
+  assert.ok(isDrive('https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing') && isDrive('https://docs.google.com/document/d/1AbCdEfGhIjKlMnOp/edit') && !isDrive('https://www.sec.gov/x'));
+  assert.equal(driveId('https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing'), '1AbCdEfGhIjKlMnOpQrStUv'); assert.equal(driveId('https://drive.google.com/open?id=1AbCdEfGhIjKlMnOp'), '1AbCdEfGhIjKlMnOp'); assert.equal(driveId('https://drive.google.com/drive/my-drive'), '');
+  assert.equal(driveDownload('abc_DEF-123'), 'https://drive.google.com/uc?export=download&id=abc_DEF-123');
+  assert.equal(DRIVE_BLOCKED, 'Drive blocks this from the browser; download the PDF and drop it here.');
+});
+const IT = n => Array.from({ length: n }, (_, i) => ({ name: `Vendor ${i + 1} / Acme Supply Company`, action: `Send notice by ${i + 1} Dec 2026`, date: '2026-12-01', days: 43, review: i % 2 === 0, owner: 'Ana', plan: 'cancel', note: 'line one\nline\ttwo', source: 'https://www.sec.gov/x' }));
+test('plug in: Sheets text is tab separated, one line per row, formulas made plain', () => {
+  const t = sheetsTSV(IT(2)); const L = t.trim().split('\n');
+  assert.equal(L.length, 3); assert.ok(L.every(l => l.split('\t').length === 9)); assert.match(L[1], /\tline one line two\t/);
+  assert.equal(tsvCell('=SUM(A1)'), "'=SUM(A1)"); assert.equal(tsvCell('+1 555'), "'+1 555"); assert.equal(tsvCell('-30'), '-30'); assert.equal(tsvCell('@x'), "'@x");
+});
+test('plug in: email draft is short and says when it was cut', () => {
+  const s = mailtoList(IT(3), { to: 'stan@example.com', asOf: AS }); assert.equal(s.shown, 3); assert.match(s.url, /^mailto:stan%40example\.com\?subject=Contract%20notice%20deadlines%20as%20of%202026-10-19&body=3%20contracts/);
+  assert.ok(!/more%20not%20shown/.test(s.url));
+  const l = mailtoList(IT(60), { asOf: AS }); assert.ok(l.url.length <= MAILTO_MAX && l.shown < 60 && l.shown > 3);
+  assert.match(decodeURIComponent(l.url), new RegExp(`${60 - l.shown} more not shown: the list is too long for an email link\\. Use Export CSV for all of them\\.$`));
+});

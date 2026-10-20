@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, ctxOf, setCtx, ctxLine, planAction } from '/team.js';
+import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, ctxOf, setCtx, ctxLine, planAction, splitFiles, isDrive, driveId, driveDownload, DRIVE_BLOCKED, sheetsTSV, mailtoList } from '/team.js';
 import { windowOf, windowNote, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -134,6 +134,20 @@ $('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV
 $('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(current()), icsOpts()), 'text/calendar'));
 $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
 $('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf, cxOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
+// One list for Sheets and email: every live row, soonest first, pinned first.
+const listItems = () => { const cs = current(); const byId = new Map(cs.map(c => [c.id, c]));
+  return order(buildQueue(cs, asOf)).filter(r => r.section !== 'lapsed').map(r => { const c = byId.get(r.id); const x = ctxOf(team, c); const w = windowOf(r); const date = w?.day || r.actBy || '';
+    const action = !r.actBy ? 'No date found; a person needs to read the clause' : r.missed ? `Missed ${fmt(r.missed.actBy)}. Next: send notice by ${fmt(r.actBy)}` : w ? `Send notice on ${fmt(w.day)}` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(r.actBy)}` : `Ends ${fmt(r.actBy)}`;
+    return { name: c.name, action, date, days: date ? daysBetween(asOf, date) : '', review: !!r.needsReview, owner: x.owner, plan: x.plan, note: x.note, source: c.url || c.fileName || '' }; }); };
+const copyText = (t, done) => (navigator.clipboard?.writeText(t) || Promise.reject()).then(done, () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch { $('#status').textContent = 'Could not copy. Use Export CSV instead.'; } ta.remove(); });
+$('#exSheets').onclick = guard(() => { const it = listItems(); const t = sheetsTSV(it); window.__lastTsv = t; copyText(t, () => { $('#status').textContent = `Copied ${it.length} ${it.length === 1 ? 'row' : 'rows'} for Google Sheets. Click cell A1 in a sheet and paste.`; }); });
+$('#lqSheets').onclick = () => $('#exSheets').onclick();
+const icsFile = () => { const f = `contract-cliffs-${tag()}.ics`; download(f, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(current()), icsOpts()), 'text/calendar'); return f; };
+$('#exGcal').onclick = guard(() => { const f = icsFile(); const how = `Saved ${f} with every deadline. To add them all, open Google Calendar, go to Settings, then Import and export, and import this file.`;
+  $('#gcalHow').hidden = false; $('#gcalHow').innerHTML = `${esc(how)} <a href="https://calendar.google.com/calendar/r/settings/export" target="_blank" rel="noopener">Open Google Calendar import ↗</a>`; $('#status').textContent = how; });
+$('#lqGcal').onclick = () => $('#exGcal').onclick();
+const mailNow = () => mailtoList(listItems(), { to: team.signer.email, asOf });
+['#exMail', '#lqMail'].forEach(s => { $(s).addEventListener('click', e => { if (!current().length) { e.preventDefault(); $('#status').textContent = 'Nothing to export yet: add a contract first.'; return; } const m = mailNow(); e.currentTarget.href = m.url; $('#status').textContent = m.shown < m.total ? `Email draft opened with the first ${m.shown} of ${m.total} contracts; the rest did not fit in an email link. Export CSV has all of them.` : `Email draft opened with ${m.total} ${m.total === 1 ? 'contract' : 'contracts'}.`; }); });
 $('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf, cxOf), 'text/html'));
 
 let n = 0;
@@ -319,18 +333,31 @@ async function readFile(f) {
   }
   throw new Error('unsupported file type (use PDF, .docx, .txt or .htm)');
 }
-async function addFiles(files) {
+async function addFiles(all) {
+  const { ok: files, skipped } = all.length > 1 ? splitFiles(all) : { ok: all, skipped: [] }; // one file of the wrong type gets the full error below
+  const skipNote = skipped.length ? ` Skipped ${skipped.length} ${skipped.length === 1 ? 'file' : 'files'} that ${skipped.length === 1 ? 'is not' : 'are not'} PDF, Word, text or HTML.` : '';
+  if (!files.length) { $('#status').textContent = all.length ? `No PDF, Word, text or HTML files there.${skipNote}` : 'No files found.'; return; }
   const many = files.length > 1; let added = 0; const failed = [];
   for (let k = 0; k < files.length; k++) { const f = files[k]; if (many) bulk = { i: k + 1, n: files.length };
     try { $('#status').textContent = (many ? `File ${k + 1} of ${files.length}: ` : '') + 'Reading ' + f.name + '…'; await stage(1, f.name); if (await addDoc(f.name, await readFile(f))) added++; else failed.push(f.name); } catch (err) { failed.push(f.name); dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + f.name + ': ' + plainErr(err.message || ''); } }
   bulk = null;
-  if (many) { busyDone(); $('#drop').classList.remove('err'); $('#status').textContent = `Read ${files.length} files: ${added} added${failed.length ? `, ${failed.length} not added (${failed.join(', ').slice(0, 160)})` : ''}. ${mine.length} contracts in the queue.`; }
+  if (many) { busyDone(); $('#drop').classList.remove('err'); $('#status').textContent = `Read ${files.length} files: ${added} added${failed.length ? `, ${failed.length} not added (${failed.join(', ').slice(0, 160)})` : ''}. ${mine.length} contracts in the queue.${skipNote}`; }
+  else if (skipNote) $('#status').textContent += skipNote;
 }
 $('#file').onchange = async e => { await addFiles([...e.target.files]); e.target.value = ''; };
+$('#folder').onchange = async e => { await addFiles([...e.target.files]); e.target.value = ''; };
+$('#folderBtn').onclick = e => { e.stopPropagation(); $('#folder').click(); };
+// A dropped folder arrives as directory entries: walk them for the files inside.
+async function dropFiles(dt) {
+  const ents = [...(dt.items || [])].map(i => i.kind === 'file' && i.webkitGetAsEntry ? i.webkitGetAsEntry() : null).filter(Boolean); const plain = [...(dt.files || [])];
+  if (!ents.some(e => e.isDirectory)) return plain;
+  const out = []; const walk = async en => { if (en.isFile) out.push(await new Promise((res, rej) => en.file(res, rej))); else if (en.isDirectory) { const rd = en.createReader(); let b; do { b = await new Promise((res, rej) => rd.readEntries(res, rej)); for (const x of b) await walk(x); } while (b.length); } };
+  for (const e of ents) await walk(e); return out;
+}
 // The whole page is a drop target.
 ['dragenter', 'dragover'].forEach(ev => window.addEventListener(ev, e => { e.preventDefault(); document.body.classList.add('dragging'); }));
 ['dragleave', 'drop'].forEach(ev => window.addEventListener(ev, e => { e.preventDefault(); if (ev === 'drop' || !e.relatedTarget) document.body.classList.remove('dragging'); }));
-window.addEventListener('drop', e => { if (e.dataTransfer?.files?.length) addFiles([...e.dataTransfer.files]); });
+window.addEventListener('drop', e => { if (e.dataTransfer?.files?.length || e.dataTransfer?.items?.length) dropFiles(e.dataTransfer).then(addFiles, () => { $('#status').textContent = 'Could not read that folder. Choose the files instead.'; }); });
 document.querySelectorAll('[data-sample]').forEach(b => b.onclick = async () => { const name = b.dataset.sample.split('/').pop(); try { $('#status').textContent = 'Reading ' + name + '…'; await stage(1, name); const blob = await (await fetch(b.dataset.sample)).blob(); await addDoc(name, await readFile(new File([blob], name))); } catch (err) { dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + name + ': ' + plainErr(err.message || ''); } });
 $('#addPaste').onclick = async e => { e?.stopPropagation?.(); const t = $('#paste').value.trim(); if (!t) { $('#status').textContent = 'Paste some contract text first.'; return; } const name = 'Pasted text ' + (n + 1); await stage(1, name); if (await addDoc(name, t.split(/\r?\n/))) $('#paste').value = ''; };
 // One click: a single real SEC contract (Star Brands / Schwazze licence), read the same way as your files.
@@ -339,7 +366,17 @@ $('#tryOne').onclick = async () => {
   catch (err) { busyDone(); $('#status').textContent = 'Could not load the example. Reload the page and try again.'; }
 };
 $('#fetchUrl').onclick = async () => {
-  const u = $('#url').value.trim(); if (!/^https:\/\/(www\.)?sec\.gov\//i.test(u)) { $('#status').textContent = 'Could not fetch: only https://www.sec.gov links are accepted.'; return; }
+  const u = $('#url').value.trim();
+  if (isDrive(u)) { // try the browser fetch; Drive almost always refuses it (CORS or sign-in), and we say so
+    const id = driveId(u); $('#status').textContent = 'Asking Google Drive…';
+    try { if (!id) throw new Error('no file id'); const r = await fetch(driveDownload(id), { credentials: 'omit' }); const b = await r.blob(); const ct = r.headers.get('content-type') || b.type;
+      if (!r.ok || !b.size || /html/i.test(ct)) throw new Error('blocked');
+      const cd = (r.headers.get('content-disposition') || '').match(/filename="?([^";]+)/); const name = cd ? decodeURIComponent(cd[1]) : `drive-${id}.pdf`;
+      await stage(1, name); await addDoc(name, await readFile(new File([b], /\.(pdf|docx|txt|html?)$/i.test(name) ? name : name + '.pdf')), { url: u, kind: 'Google Drive file' });
+    } catch { busyDone(); $('#status').textContent = DRIVE_BLOCKED; }
+    return;
+  }
+  if (!/^https:\/\/(www\.)?sec\.gov\//i.test(u)) { $('#status').textContent = 'Could not fetch: only https://www.sec.gov and Google Drive links are accepted.'; return; }
   $('#status').textContent = 'Fetching from sec.gov…'; const name = decodeURIComponent(u.split('/').pop() || 'SEC document');
   try { await stage(1, name); const r = await fetch('/api/edgar?url=' + encodeURIComponent(u)); const t = await r.text(); if (!r.ok) throw Object.assign(new Error(String(t || 'sec.gov answered ' + r.status).replace(/<[^>]*>/g, '').slice(0, 160)), { fromServer: true });
     const lines = /<html|<body|<p[\s>]|<div[\s>]/i.test(t) ? htmLines(t) : t.split(/\r?\n/);
@@ -403,7 +440,7 @@ $('#tSave').onchange = e => { try { if (e.target.checked) { localStorage.setItem
 $('#teamBox').addEventListener('toggle', teamStatus);
 fillTeam(); teamStatus();
 if (params.get('demo') === '1') { document.body.classList.add('guided'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
-new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
+new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared|Drive blocks)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 if (set === 'edgar') loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
 else if (set === 'holdout') $('#setHoldout').onclick();
 else render();

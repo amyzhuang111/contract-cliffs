@@ -22,6 +22,7 @@ const shot = async (p, name, w) => { if (SHOTS) await p.screenshot({ path: path.
 const auto = p => p.waitForFunction(() => !document.querySelector('#answer').hidden && document.querySelector('#answer .iname'), { timeout: 5000 });
 const demo3 = async p => { await auto(p); await p.click('#trySecond'); await waitStatus(p, /2 contracts/); await p.click('#trySecond'); await waitStatus(p, /3 contracts/); await sleep(700); };
 const drop = (p, files) => p.evaluate(files => { const dt = new DataTransfer(); for (const [name, b64, type] of files) { const s = atob(b64); const u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); dt.items.add(new File([u], name, { type })); } window.dispatchEvent(new DragEvent('drop', { dataTransfer: dt, bubbles: true, cancelable: true })); }, files);
+const f64 = n => fs.readFileSync(fx(n)).toString('base64');
 const dl = async p => (await lastDl(p)).buf.toString();
 const add3 = async p => { await p.click('#tryOne'); await auto(p); await p.click('#trySecond'); await waitStatus(p, /2 contracts/); await p.click('#trySecond'); await waitStatus(p, /3 contracts/); await sleep(300); };
 const openTeam = p => p.evaluate(() => { const d = document.querySelector('#teamBox'); d.open = true; d.scrollIntoView(); });
@@ -77,6 +78,43 @@ for (const w of [1440, 375]) {
     await p.evaluate(() => document.querySelector('#exIcs').click()); ok(/Owner: Ana Ruiz\. Plan: renew\. Note: =HYPERLINK/.test((await dl(p)).replace(/\r\n /g, '')), `${w}: .ics description carries the context`);
     ok(await p.evaluate(() => localStorage.getItem('cc-team') === null), `${w}: context is not stored without consent`);
     await p.ctx.close(); }
+  // 3. plugging in: folder, many files, Drive link, all-in-one calendar, Sheets, email, coming next
+  { const p = await fresh('/?asof=2026-10-19', w);
+    ok(await p.evaluate(() => { const i = document.querySelector('#folder'); return i.webkitdirectory && i.multiple && /Choose folder/.test(document.querySelector('#folderBtn').textContent); }), `${w}: Choose folder button with a webkitdirectory input`);
+    await (await p.$('#folder')).uploadFile(fx('folder-drop')); // a real directory, with a subfolder, a .png and a .DS_Store
+    await waitStatus(p, /^Read 3 files/, 30000); const st = await status(p);
+    ok(/^Read 3 files: 3 added\./.test(st) && /Skipped 2 files that are not PDF, Word, text or HTML\./.test(st), `${w}: a folder of files is read at once, other files skipped and counted (${st.slice(0, 90)})`);
+    ok(await p.evaluate(() => document.querySelectorAll('#lq .lrow').length === 2 && !document.querySelector('#answer').hidden), `${w}: all 3 land in the answer and the queue`);
+    await shot(p, 'folder', w);
+    // the whole list in one .ics, with the import how-to
+    await p.evaluate(() => document.querySelector('#lqGcal').click()); const ics = await dl(p);
+    ok((ics.match(/BEGIN:VEVENT/g) || []).length >= 2 && await p.evaluate(() => { const h = document.querySelector('#gcalHow'); return !h.hidden && /Settings, then Import and export/.test(h.textContent) && h.querySelector('a[href="https://calendar.google.com/calendar/r/settings/export"]'); }), `${w}: Add all to Google Calendar saves one .ics with every deadline and says how to import it`);
+    ok(await p.evaluate(() => !/Subscribe/i.test(document.body.innerText)), `${w}: no fake Subscribe button`);
+    // Sheets
+    await p.evaluate(() => document.querySelector('#lqSheets').click()); await waitStatus(p, /Copied 3 rows for Google Sheets/);
+    const tsv = await p.evaluate(() => window.__lastTsv); const L = tsv.trim().split('\n');
+    ok(L.length === 4 && L.every(l => l.split('\t').length === 9) && L[0].startsWith('Contract\tAction\tDate'), `${w}: Copy for Google Sheets puts 3 tab-separated rows on the clipboard`);
+    // email
+    await p.evaluate(() => { document.addEventListener('click', e => { if (e.target.closest('a[href^="mailto:"]')) e.preventDefault(); }); document.querySelector('#lqMail').click(); });
+    const href = await p.$eval('#lqMail', a => a.href);
+    ok(/^mailto:\?subject=Contract%20notice%20deadlines%20as%20of%202026-10-19&body=3%20contracts/.test(href) && href.length <= 1800 && /Email draft opened with 3 contracts/.test(await status(p)), `${w}: Email me this list opens a short mailto draft`);
+    ok(await p.evaluate(() => /Coming next, not built yet: watching a Google Drive folder for new contracts, and Slack reminders\./.test(document.querySelector('#comingNext').textContent)), `${w}: Drive folder watch and Slack are labelled coming next`);
+    await p.ctx.close(); }
+  // many files dropped at once
+  { const p = await fresh('/?asof=2026-10-19', w);
+    await drop(p, [['c3-dragonfly.edgar.txt', f64('c3-dragonfly.edgar.txt'), 'text/plain'], ['armlogi.htm', f64('armlogi-goldensee-ex10-11.edgar.htm'), 'text/html']]);
+    await waitStatus(p, /^Read 2 files/, 30000); ok(/^Read 2 files: 2 added\./.test(await status(p)), `${w}: many files dropped at once are all read`);
+    await p.ctx.close(); }
+  // Drive link: the browser is refused (CORS or sign-in); say so and never pretend
+  for (const how of ['abort', 'signin']) { const p = await fresh('/?asof=2026-10-19', w);
+    await p.setRequestInterception(true); p.on('request', r => { if (/google\.com/.test(r.url())) { if (how === 'abort') r.abort('blockedbyclient'); else r.respond({ status: 200, contentType: 'text/html', body: '<html>Sign in</html>' }); } else r.continue(); });
+    await p.evaluate(() => { document.querySelector('#edgarUrl').open = true; document.querySelector('#url').value = 'https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing'; document.querySelector('#fetchUrl').click(); });
+    await waitStatus(p, /Drive blocks/);
+    ok(await status(p) === 'Drive blocks this from the browser; download the PDF and drop it here.' && await p.evaluate(() => document.querySelector('#answer').hidden && !document.querySelector('#lq .lrow')), `${w}: Drive link (${how}) says plainly that Drive blocks it and adds nothing`);
+    if (how === 'abort') await shot(p, 'drive', w);
+    await p.ctx.close(); }
 }
-ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
+// the Drive test makes the browser log its own CORS refusal; that is the expected result, not a page error
+const real = errors.filter(e => !/drive\.google\.com|ERR_BLOCKED_BY_CLIENT|net::ERR_FAILED/.test(e));
+ok(!real.length, 'no page errors' + (real.length ? ': ' + real.slice(0, 3).join(' | ') : ''));
 console.log(`\n${pass} passed, ${fail} failed`); await browser.close(); process.exit(fail ? 1 : 0);

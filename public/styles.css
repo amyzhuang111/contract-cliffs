@@ -785,3 +785,8 @@ body.has-any .weekstrip{display:none}
 .rctx{display:block;color:var(--mute);font:400 13px/18px var(--mono);text-transform:uppercase}
 .wk-p{display:block;color:var(--body);font:14px/20px var(--sans)}
 @media (max-width:480px){.ctxf{grid-template-columns:1fr}}
+.howto{margin:8px 0 0;color:var(--body);font:15px/22px var(--sans)}.howto a{text-decoration:underline;text-underline-offset:4px}
+#comingNext{margin-top:12px}
+.lq-tools a.tl{display:inline-flex;align-items:center}
+.lq-plug{display:flex;flex-wrap:wrap;gap:0 24px;margin:4px 0 0}.lq-plug .tl{display:inline-flex;align-items:center;min-height:44px}
+@media (max-width:480px){.dz-folder{display:none}.lq-plug{gap:0 16px}}

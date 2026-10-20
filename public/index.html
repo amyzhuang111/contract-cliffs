@@ -28,8 +28,8 @@
   <h1 class="lede" id="lede">Know the <span class="ld">last day</span> to stop a contract renewing.</h1>
   <p class="subline">Drop in GI&rsquo;s contracts. See which notice deadlines you must act on this week, then put them on your calendar.</p>
   <ol class="weekstrip" aria-label="How it fits your week">
-    <li><span class="wn">1</span><b>Drop contracts in</b><span class="wm"> · works today</span><span class="wp">Google Drive folder: planned, not built</span><span class="wt">PDF, Word or pasted text works now, and <span class="plan">a Google Drive folder is planned, not built.</span></span></li>
-    <li><span class="wn">2</span><b>Act on this week&rsquo;s list</b><span class="wm"> · works today</span><span class="wp">Slack reminder: planned, not built</span><span class="wt">Each deadline gets a calendar alarm and a draft notice letter today; <span class="plan">a Slack reminder is planned, not built.</span></span></li>
+    <li><span class="wn">1</span><b>Drop contracts in</b><span class="wm"> · works today</span><span class="wp">Drive folder watch: coming next</span><span class="wt">Files, whole folders or pasted text work now; <span class="plan">a Google Drive folder watch is coming next, not built.</span></span></li>
+    <li><span class="wn">2</span><b>Act on this week&rsquo;s list</b><span class="wm"> · works today</span><span class="wp">Slack reminder: coming next</span><span class="wt">Each deadline gets a calendar alarm and a draft notice letter today; <span class="plan">a Slack reminder is coming next, not built.</span></span></li>
     <li><span class="wn">3</span><b>Send the audit pack when asked</b><span class="wm"> · works today</span><span class="wt">It is one CSV with the clause behind each date.</span></li>
   </ol>
   <div class="cliff-strip" aria-hidden="true"><span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AUG</span><span>SEP</span><span>OCT</span><span>NOV</span><span>DEC</span><i class="cliff-mark"><b>your notice date</b></i></div>
@@ -40,7 +40,7 @@
       <p class="dz-big" id="dzTitle"><span class="dz-desk">Drop a contract PDF</span><span class="dz-phone">Choose a contract</span><span class="dz-more">Drop another contract</span></p>
       <p class="dz-sub">We quote the clause and give you the date.</p>
       <p class="dz-hint" id="dzHint">PDF, Word or plain text</p>
-      <button class="tl dz-pastelink" id="pasteLink" type="button">Paste text</button>
+      <button class="tl dz-pastelink" id="pasteLink" type="button">Paste text</button><button class="tl dz-pastelink dz-folder" id="folderBtn" type="button">Choose folder</button>
       <button class="btn-secondary sm dz-add" id="addBar" type="button">Add a contract</button>
     </div>
     <div class="dz-paste" id="pasteBox" hidden>
@@ -58,15 +58,16 @@
       <button class="btn-secondary sm" id="tryAnother" type="button">Try another file</button>
     </div>
     <input id="file" type="file" multiple hidden accept=".pdf,.docx,.txt,.htm,.html,text/plain,text/html,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Upload contracts (PDF, Word, text or HTML)">
+    <input id="folder" type="file" webkitdirectory multiple hidden aria-label="Choose a folder of contracts">
   </div>
   <p class="proof">Reads the term, the renewal and the notice period · quotes the exact clause · your files stay in your browser</p>
   <div class="btnrow">
     <button id="tryOne" class="btn-primary">Try a real SEC contract →</button>
     <span class="or">or</span>
     <button id="pasteBtn" class="btn-secondary" type="button">Paste text</button>
-    <details class="edgar-url" id="edgarUrl"><summary class="tl">Or fetch an SEC filing link</summary>
-      <div class="row"><input id="url" type="url" placeholder="https://www.sec.gov/Archives/edgar/data/…" aria-label="SEC filing or exhibit URL"><button id="fetchUrl" class="btn-secondary sm">Fetch</button></div>
-      <p class="dz-hint">Our server fetches the page from sec.gov only (declared User-Agent) and keeps nothing; the text is then read in your browser.</p>
+    <details class="edgar-url" id="edgarUrl"><summary class="tl">Or paste an SEC or Google Drive link</summary>
+      <div class="row"><input id="url" type="url" placeholder="https://www.sec.gov/Archives/edgar/data/…" aria-label="SEC filing or Google Drive link"><button id="fetchUrl" class="btn-secondary sm">Fetch</button></div>
+      <p class="dz-hint">SEC links: our server fetches the page from sec.gov only and keeps nothing. Drive links: your browser asks Drive directly, and Drive usually says no.</p>
     </details>
   </div>
   <p class="caption">Star Brands / Schwazze license · EX-10.21 · SEC filing</p>
@@ -93,6 +94,8 @@
 <section class="liveq" id="liveQ" hidden aria-labelledby="lqh">
   <div class="lq-head"><h2 class="lab" id="lqh"></h2><div class="lq-tools"><button class="tl" id="lqIcs">Export .ics</button><button class="tl" id="lqCsv">Export CSV</button><button class="tl" id="lqAudit">Audit CSV</button><button class="tl mute" id="clearAll">Clear all</button></div></div>
   <div class="portfolio" id="portfolio" aria-label="Portfolio summary"></div>
+  <div class="lq-plug" id="lqPlug"><button class="tl" id="lqGcal">Add all to Google Calendar</button><button class="tl" id="lqSheets">Copy for Google Sheets</button><a class="tl" id="lqMail" href="mailto:">Email me this list</a></div>
+  <p class="howto" id="gcalHow" hidden></p>
   <p class="lab lqsum" id="lqSum"></p>
   <ol class="lq" id="lq"></ol>
   <div id="lqExpired"></div>
@@ -148,7 +151,11 @@
       <button id="exIcs" class="tl">Export calendar (.ics)</button>
       <button id="exPack" class="tl">Export audit pack (HTML)</button>
       <button id="exAudit" class="tl">Export audit pack (CSV)</button>
-    </div></div>
+      <button id="exGcal" class="tl">Add all to Google Calendar</button>
+      <button id="exSheets" class="tl">Copy for Google Sheets</button>
+      <a id="exMail" class="tl" href="mailto:">Email me this list</a>
+    </div>
+    <p class="status" id="comingNext">Coming next, not built yet: watching a Google Drive folder for new contracts, and Slack reminders.</p></div>
   </div>
 </section>
 <section class="sec" aria-labelledby="howh">

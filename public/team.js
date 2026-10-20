@@ -44,3 +44,28 @@ export function setCtx(team, c, patch) { const k = ckey(c); const v = normTeam({
 export const ctxLine = x => [x?.owner && `Owner: ${x.owner}.`, x?.plan && `Plan: ${x.plan}.`, x?.note && `Note: ${x.note}`].filter(Boolean).join(' ');
 // The plan changes the action: cancel or renegotiate puts the notice letter first; renew is a plain reminder.
 export const planAction = plan => plan === 'renew' ? { letter: false, letterFirst: false, text: 'Plan: renew. No notice to send; this is a reminder of the date.' } : plan === 'cancel' || plan === 'renegotiate' ? { letter: true, letterFirst: true, text: `Plan: ${plan}. Draft the notice first.` } : { letter: true, letterFirst: false, text: '' };
+
+// ---------- Plugging in: folders, Drive links, Sheets, email ----------
+export const OK_EXT = ['pdf', 'docx', 'txt', 'htm', 'html'];
+// Keep the files we can read; skip hidden files and other types, and say how many were skipped.
+export function splitFiles(files) { const ok = [], skipped = []; for (const f of files) { const n = String(f.name || ''); (n.startsWith('.') || !OK_EXT.includes(n.toLowerCase().split('.').pop()) ? skipped : ok).push(f); } return { ok, skipped }; }
+export const DRIVE_BLOCKED = 'Drive blocks this from the browser; download the PDF and drop it here.';
+export const isDrive = u => /^https:\/\/(drive|docs)\.google\.com\//i.test(String(u || '').trim());
+export function driveId(u) { const s = String(u || ''); const m = s.match(/\/(?:file|document)\/d\/([A-Za-z0-9_-]{10,})/) || s.match(/[?&]id=([A-Za-z0-9_-]{10,})/); return m ? m[1] : ''; }
+export const driveDownload = id => `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
+// Tab-separated text for Google Sheets: one row per contract, no tabs or line breaks inside a cell,
+// and a leading = + - @ is made plain text so Sheets never runs it as a formula.
+export const tsvCell = v => { const s = String(v ?? '').replace(/[\t\r\n]+/g, ' ').trim(); return /^[=+\-@]/.test(s) && !/^-?\d+(\.\d+)?$/.test(s) ? "'" + s : s; };
+export const SHEET_HEAD = ['Contract', 'Action', 'Date', 'Days left', 'Needs review', 'Owner', 'Plan', 'Note', 'Source'];
+export const sheetsTSV = items => [SHEET_HEAD, ...items.map(i => [i.name, i.action, i.date, i.days, i.review ? 'yes' : 'no', i.owner, i.plan, i.note, i.source])].map(r => r.map(tsvCell).join('\t')).join('\n') + '\n';
+// mailto drafts break past about 2,000 characters in some mail apps, so the body is cut with a note.
+export const MAILTO_MAX = 1800;
+export function mailtoList(items, { to = '', asOf = '' } = {}) {
+  const subject = `Contract notice deadlines as of ${asOf}`;
+  const lines = items.map(i => `${i.date || 'No date'}: ${i.name}. ${i.action}${i.plan ? ` (plan: ${i.plan})` : ''}${i.owner ? `, owner ${i.owner}` : ''}`);
+  const url = body => `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const head = `${items.length} contract${items.length === 1 ? '' : 's'}, soonest first:\n\n`;
+  let k = lines.length; const tail = n => n < lines.length ? `\n\n${lines.length - n} more not shown: the list is too long for an email link. Use Export CSV for all of them.` : '';
+  while (k > 0 && url(head + lines.slice(0, k).join('\n') + tail(k)).length > MAILTO_MAX) k--;
+  return { url: url(head + lines.slice(0, k).join('\n') + tail(k)), shown: k, total: lines.length };
+}
