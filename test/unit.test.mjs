@@ -571,3 +571,51 @@ for (const [f, e] of Object.entries(EXPECT2)) test(`batch2 ${f} → ${(Array.isA
   assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); if (!act) assert.equal(r.needsReview, true);
   assert.doesNotMatch(r.tag || '', /minus|end of the term/i);
 });
+// ---- reviewer 8200b4e blockers ----
+test('B1 Green Plains: "commence on 00:00 a.m. (CST) on <date> and continue for five years" → 24 Oct 2029', () => {
+  const { x, r } = fx('greenplains-eco-ex10-1.edgar.htm');
+  assert.equal(x.term.start, '2025-04-23'); assert.equal(x.term.end, '2030-04-22'); assert.equal(r.actBy, '2029-10-24'); assert.equal(r.confidence, 'high');
+});
+test('B2 GEVI/Conboy: anchorless "period of 24 months" runs from the Effective Date at Check confidence → 29 Jan 2027', () => {
+  const { x, r } = fx('gevi-conboy-ex10-3.edgar.htm');
+  assert.equal(x.term.end, '2027-02-28'); assert.equal(r.actBy, '2027-01-29'); assert.equal(r.confidence, 'medium'); assert.equal(r.needsReview, true);
+});
+test('B3 VerifyMe/Pentant: first-term-only notice passed, then quarterly renewal', () => {
+  const { r } = fx('verifyme-pentant-ex10-3.edgar.htm');
+  assert.equal(r.why, 'Send-notice date passed (1 Apr 2025). Now renews every 3 months; the contract gives no non-renewal notice for later periods. Check the termination section.');
+  assert.doesNotMatch(JSON.stringify(r), /No notice period found/i); assert.equal(r.tag, '');
+});
+test('B4 Spin AI: term length found, signing date not in document', () => {
+  const { x, r } = fx('spinai-saas-ex10-8.edgar.htm');
+  assert.equal(x.term.why, "Term is 36 months from signing; the signing date isn't in the document.");
+  assert.doesNotMatch(r.why + r.tag, /no term found/i);
+});
+test('B4 drawer: no file name standing in for the other company', () => {
+  const app = fs.readFileSync(new URL('../public/app.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(app, /counterparty:\s*meta\.counterparty\s*\|\|\s*base/); assert.match(app, /other company/); assert.doesNotMatch(app, /· counterparty /);
+});
+test('party names: junk second parties dropped or repaired', () => {
+  const P = f => partiesFromPreamble(fx(f + '.edgar.htm').L);
+  assert.equal(P('smenergy-ex10-1'), 'SM Energy'); assert.equal(P('thirdcoast-ex10-1'), 'Jeff Wilkinson / Third Coast Bank');
+  assert.equal(P('gormanrupp-ex10-1'), 'Gorman-Rupp'); assert.equal(P('idexx-ex10-56'), 'IDEXX Laboratories'); assert.equal(P('glacier-ex10-l'), 'Glacier Bancorp / Glacier Bank');
+  assert.equal(P('sugar-hill-ex10-13'), 'Sugar Auto Parts / Michael Hill');
+});
+// ---- 21-exhibit sweep (stated starts, "period of N", first-term notice, services/supply/licence/employment); hand-worked as of 2026-10-19 ----
+const EXPECT3 = {
+  'stark-szot-ex10-1': ['2027-08-08', '2027-08-06'], 'insight-azagury-ex10-3': '2027-02-11', 'angi-hoarau-ex10-1': ['2026-12-27', '2026-12-24'],
+  'stbancorp-mccomish-ex10-1': '2029-07-05', 'cipher-page-ex10-1': ['2029-05-06', '2029-05-04'], 'sugar-hill-ex10-13': ['2028-01-30', '2028-01-28'],
+  'hffoods-mcgarry-ex10-2': '2027-06-29', 'shift4-cruz-ex10-1': ['2028-05-07', '2028-05-05'], 'nextboat-ex10-1': ['2030-06-29', '2030-06-28'],
+  'redwire-edmunds-ex10-1': '2028-11-01', 'benchmark-moezidis-ex10-1': ['2028-01-01', '2027-12-30'], 'aspen-thoele-ex10-1': '2027-08-02',
+  'argent-splash-license-ex10-1': '2045-07-05', 'splash-lupvindol-ex10-1': '2031-05-01', 'haverhill-coke-ex10-1': ['2027-12-31', '2027-12-30'],
+  'fsi-nanochem-supply-ex10-4': '2030-05-08', 'realloys-consulting-ex10-2': ['2028-03-25', '2028-03-24'], 'greendot-separation-ex10-1': '2032-05-26',
+  // flagged, no date: notice redacted (Curant, Vaxcyte); start "the date after both Parties sign" and no notice (WuXi)
+  'corcept-curant-ex10-24': '', 'vaxcyte-manuf-ex10-1': '', 'wuxi-viridian-ex10-1': '',
+};
+for (const [f, e] of Object.entries(EXPECT3)) test(`batch3 ${f} → ${(Array.isArray(e) ? e[0] : e) || 'flagged'}`, () => {
+  const [act, safe] = Array.isArray(e) ? e : [e]; const { r } = fx(f + '.edgar.htm');
+  assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); if (!act) assert.equal(r.needsReview, true);
+  assert.doesNotMatch(r.tag || '', /minus|end of the term/i);
+});
+test('batch3 review flags: conditional extension, blank MSA date, Production Commencement Date', () => {
+  for (const f of ['splash-lupvindol-ex10-1', 'greendot-separation-ex10-1', 'fsi-nanochem-supply-ex10-4']) assert.equal(fx(f + '.edgar.htm').r.needsReview, true, f);
+});
