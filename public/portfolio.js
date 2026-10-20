@@ -56,3 +56,10 @@ export function firstSentence(rows) {
   const n = rows.filter(r => ['passed', 'd30'].includes(r.st.bucket)).length;
   return n ? `The ${n === 1 ? 'contract' : n + ' contracts'} you need to act on first ${n === 1 ? 'is' : 'are'} listed first.` : 'Nothing is due in the next 30 days. The next deadlines are listed first.';
 }
+
+// Opening view: the 3 contracts to act on first, each with company, action and days left.
+export function top3Html(rows) {
+  return byUrgency(rows).slice(0, 3).map(r => { const now = ['passed', 'd30'].includes(r.st.bucket);
+    const note = [r.missed && `Missed ${esc(fmt(r.missed.actBy))}`, r.st.flags.includes('review') && '<span class="rvnote">Needs review</span>'].filter(Boolean).join(' · ');
+    return `<li class="t3${now ? ' now' : ''}"><a href="#pf-${esc(r.id)}"><span class="t3n">${esc(r.c.name)}</span><span class="t3a">Send notice by ${esc(fmt(r.actBy))}</span><span class="t3d">${r.days === 0 ? 'Today' : `${dayWord(r.days)} left`}</span>${note ? `<span class="t3x">${note}</span>` : ''}</a></li>`; }).join('');
+}

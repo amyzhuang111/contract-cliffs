@@ -345,7 +345,7 @@ $('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember');
 let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
-  $('#pfCount').textContent = pfRows.length; $('#pfFirst').textContent = P.firstSentence(pfRows);
+  $('#pfCount').textContent = pfRows.length; $('#pfFirst').textContent = P.firstSentence(pfRows); $('#pfTop3').innerHTML = P.top3Html(pfRows);
   $('#pfSub').textContent = `Stand-ins for a company's own agreements: ${pfRows.length} public contracts filed with the SEC (licence, supply, services and network deals, plus some executive and consulting agreements), each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
   $('#pfStrip').innerHTML = stripHtml(portfolio(pfRows));
   $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);
@@ -353,7 +353,9 @@ function renderPf() {
   document.querySelectorAll('.pfsort [data-sort]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.sort === pfSort)); b.onclick = () => { pfDir = pfSort === b.dataset.sort ? -pfDir : 1; pfSort = b.dataset.sort; $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf); document.querySelectorAll('.pfsort [data-sort]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.sort === pfSort))); }; });
 }
 { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
-  try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+  try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf);
+    $('#pfIcs').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.ics`, withAlarms(toICS(cs, asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), Object.fromEntries(cs.map(c => [c.id, exitNote(c)?.text]).filter(e => e[1]))), 'text/calendar');
+    $('#pfCsv').onclick = () => download(`contract-cliffs-portfolio-asof-${asOf}.csv`, auditCSV(cs, asOf), 'text/csv'); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
   catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
 if (params.get('demo') === '1') { document.body.classList.add('guided'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
 new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });

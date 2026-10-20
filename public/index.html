@@ -71,10 +71,12 @@
 <div class="pfload" id="pfLoad"><button class="btn-secondary" id="loadPf">Load 25 real public contracts</button><p class="caption pfnote">Public SEC filings, standing in for your own agreements.</p></div>
 <section class="pfv" id="pfView" hidden aria-labelledby="pfh">
   <p class="lab">Portfolio · <span id="pfCount"></span> contracts</p>
-  <h2 id="pfh">Every renewal deadline, in one view</h2>
-  <p class="pffirst" id="pfFirst"></p>
-  <p class="sub" id="pfSub"></p>
+  <h2 id="pfh"><span id="pfFirst"></span></h2>
+  <ol class="top3" id="pfTop3" aria-label="Act on these first"></ol>
   <div class="portfolio" id="pfStrip" aria-label="Portfolio summary"></div>
+  <div class="pfexport"><button class="btn-secondary" id="pfIcs">Add all deadlines to your calendar (.ics)</button><button class="btn-secondary" id="pfCsv">Download as a spreadsheet (.csv)</button></div>
+  <h3 class="pfall">Every renewal deadline, in one view</h3>
+  <p class="sub" id="pfSub"></p>
   <div class="pftl" id="pfTimeline"></div>
   <div class="row pfsort" role="group" aria-label="Sort the list"><span class="lab">Sort by</span><button data-sort="status" aria-pressed="true">Urgency</button><button data-sort="date" aria-pressed="false">Date</button><button data-sort="days" aria-pressed="false">Days left</button><button data-sort="name" aria-pressed="false">Parties</button><button data-sort="conf" aria-pressed="false">Confidence</button></div>
   <div class="pfhead lab" aria-hidden="true"><span>Parties</span><span>Send notice by</span><span>Days left</span><span>Confidence</span><span>Status</span><span>Source</span></div>
