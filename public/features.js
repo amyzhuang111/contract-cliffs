@@ -62,11 +62,11 @@ export function exitNote(c) {
   const text = `${after ? `After the first ${after.replace(/^Initial Term$/, 'term')}, ` : ''}${who} can also end it on ${dur}' notice for any reason (${t.source.location}).`.replace(/^./, m => m.toUpperCase()).replace(/days' /, "days' ").replace(/(\d) day' /, "$1 day's ");
   return { text, quote: q, location: t.source.location, who, after, notice: dur };
 }
-export function gcalLink({ name, actBy, asOf, quote = '', location = '', url = '', note = '' }) {
-  const d = sendDay(actBy, asOf); if (!d) return '';
+export function gcalLink({ name, actBy, asOf, quote = '', location = '', url = '', note = '', within = null, windowNote: wn = '' }) {
+  const d = within ? within.from : sendDay(actBy, asOf); if (!d) return '';
   const end = ymd(addDays(new Date(d + 'T00:00:00Z'), 1));
-  const q = norm(quote); const details = [`Last day to send non-renewal notice: ${actBy}.`, d !== actBy ? `Event is on ${d}, the last business day you can safely send it.` : '', location ? `Clause (${location}): "${q.length > 600 ? q.slice(0, 600) + '...' : q}"` : '', note || '', url ? `Source: ${url}` : '', 'Made with Contract Cliffs. Check the clause before relying on this date.'].filter(Boolean).join('\n');
-  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Send non-renewal notice: ' + name) + '&dates=' + DAY(d) + '/' + DAY(end) + '&details=' + encodeURIComponent(details);
+  const q = norm(quote); const details = [within ? `${within.label} ${within.fromW}. ${wn}.` : `Last day to send non-renewal notice: ${actBy}.`, within ? '' : d !== actBy ? `Event is on ${d}, the last business day you can safely send it.` : '', location ? `Clause (${location}): "${q.length > 600 ? q.slice(0, 600) + '...' : q}"` : '', note || '', url ? `Source: ${url}` : '', 'Made with Contract Cliffs. Check the clause before relying on this date.'].filter(Boolean).join('\n');
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent((within ? `Window opens: send notice from ${within.fromW.slice(4)}: ` : 'Send non-renewal notice: ') + name) + '&dates=' + DAY(d) + '/' + DAY(end) + '&details=' + encodeURIComponent(details);
 }
 
 // ---------- F3: more obligations ----------
@@ -165,7 +165,7 @@ export function letter(c, r, asOf) {
     q?.quote ? `Renewal clause (${q.location}): "${norm(q.quote)}"` : `Renewal clause: ${fill('renewal clause')} (no renewal clause found)`,
     '',
     ...(ex ? [`Note: ${ex.text} If that option fits better, it may be quicker than waiting for the term to end. Termination clause (${ex.location}): "${ex.quote}"`, ''] : []),
-    r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${fill('last day to give notice')} (no date could be worked out from the contract).`,
+    windowOf(r) ? `This notice is given within the ${windowOf(r).n} ${windowOf(r).unit}${windowOf(r).n === 1 ? '' : 's'} before the end of the current term, on or after ${fmtLong(windowOf(r).from)}, as the clause above requires (${windowNote(r)}).` : r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${fill('last day to give notice')} (no date could be worked out from the contract).`,
     '',
     'Please confirm receipt of this notice in writing.',
     '',
@@ -259,7 +259,7 @@ export function parseSaved(raw) {
 // "Within N days prior" clauses: the window opens on the send-notice date (moved forward to a business day) and closes when the term ends.
 const dShort = (d, y) => { const [yy, m, dd] = d.split('-'); return `${+dd} ${MON3[+m - 1]}${y ? ' ' + yy : ''}`; };
 export function windowOf(r) {
-  const i = r?.item || r; const at = r?.actBy || i?.date; if (!i?.within || !at || !i.termEnd) return null;
+  const i = r?.item || r; const at = typeof r?.actBy === 'string' && r.actBy ? r.actBy : i?.date; if (!i?.within || !at || !i.termEnd) return null;
   const from = safeSendBy(at, true).date || at, to = i.termEnd, dt = new Date(from + 'T00:00:00Z');
   return { from, to, label: 'Send notice on or after', fromW: `${WD3[dt.getUTCDay()]} ${dShort(from, true)}`, range: `send between ${dShort(from, from.slice(0, 4) !== to.slice(0, 4))} and ${dShort(to, true)}`, n: i.notice?.n, unit: i.notice?.unit };
 }

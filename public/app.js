@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
+import { windowOf, windowNote, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -56,9 +56,9 @@ function render() {
   $('#setnote').innerHTML = set === 'edgar' ? '10 real public contracts filed with the SEC: supply, licence, data licence, cloud and managed services. Each card links to the filing it came from.' : set === 'holdout' ? 'Test set: 10 SEC contracts kept out of tuning. It can still get a date wrong. When it can’t tell, it says so and flags the row for a person to check.' : 'Your documents. Processed only in this browser tab; nothing is uploaded.';
   const li = r => { const past = r.section === 'lapsed';
     return `<li data-id="${esc(r.id)}" role="button" class="${past ? 'past' : ''}${r.section === 'missed' ? ' missed' : ''}${r.days != null && r.days >= 0 && r.days <= 90 ? ' soon' : ''}" tabindex="0">
-    <span class="d">${r.missed ? `<span class="rn">Renews</span> ${esc(fmt(r.missed.renews))}` : r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
+    <span class="d">${r.missed ? `<span class="rn">Renews</span> ${esc(fmt(r.missed.renews))}` : windowOf(r) ? `<span class="rn">${esc(windowOf(r).label)}</span> ${esc(fmt(windowOf(r).from))}` : r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
     <span class="n">${r.days == null ? '' : r.missed ? `in ${dayWord(daysBetween(asOf, r.missed.renews))}` : past ? `<span class="lapsed">Expired</span> · ${dayWord(-r.days)} ago` : r.days === 0 ? 'today' : `in ${dayWord(r.days)}`}</span>
-    <span class="c"><b>${esc(r.name)}</b><div class="why-here"><span class="wl">Why it’s here</span> ${esc(r.why)}</div>${r.safe ? `<div class="safe">${esc(r.safe.note)}</div>` : ''}</span>
+    <span class="c"><b>${esc(r.name)}</b><div class="why-here"><span class="wl">Why it’s here</span> ${esc(r.why)}</div>${r.safe ? `<div class="safe">${esc(r.safe.note)}</div>` : ''}${windowNote(r) ? `<div class="safe win">${esc(windowNote(r))}</div>` : ''}</span>
     <span class="s">${r.needsReview ? rv(r.tag) + '<br>' : ''}${esc(sure(r.confidence))}</span></li>`; };
   // optional grouping by party: counterparty or filer (the public company)
   ['none', 'counterparty', 'filer'].forEach(g => $('#g-' + g).setAttribute('aria-pressed', groupBy === g));
@@ -71,7 +71,7 @@ function render() {
   $('#cards').innerHTML = cs.map(c => { const r = rows.find(x => x.id === c.id);
     return `<button class="card" data-id="${esc(c.id)}"><div class="tile" aria-hidden="true">${esc(initials(c.name, c.counterparty))}</div>
     <div class="t">${esc(c.name)}</div><div class="m">${esc(c.kind || 'Uploaded')}${c.filed ? ' · filed ' + esc(fmt(c.filed)) : ''}</div>
-    <div class="a">${r?.actBy ? (r.missed ? `Renews ${esc(fmt(r.missed.renews))} · send-notice deadline missed${r.safe ? `</div><div class="a safe">Next deadline: ${esc(r.safe.note)}` : ''}` : `${r.days < 0 ? '<span class="lapsed">Expired</span> · ' : ''}${esc(r.label)} ${esc(fmt(r.actBy))}${r.safe ? `</div><div class="a safe">${esc(r.safe.note)}` : ''}`) : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.tag)}</div>` : ''}</button>`; }).join('');
+    <div class="a">${r?.actBy ? (r.missed ? `Renews ${esc(fmt(r.missed.renews))} · send-notice deadline missed${r.safe ? `</div><div class="a safe">Next deadline: ${esc(r.safe.note)}` : ''}` : `${r.days < 0 ? '<span class="lapsed">Expired</span> · ' : ''}${esc(windowOf(r) ? windowOf(r).label : r.label)} ${esc(fmt(windowOf(r)?.from || r.actBy))}${r.safe ? `</div><div class="a safe">${esc(r.safe.note)}` : ''}${windowNote(r) ? `</div><div class="a safe win">${esc(windowNote(r))}` : ''}`) : `<span class="nd">No date found</span>`}</div>${r?.needsReview ? `<div class="a">${rv(r.tag)}</div>` : ''}</button>`; }).join('');
   document.querySelectorAll('[data-id]:not(.grp):not(.lrow):not(.acard)').forEach(el => { el.onclick = () => openDrawer(el.dataset.id); el.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDrawer(el.dataset.id); } }; });
 }
 let lastFocus = null;
@@ -88,7 +88,7 @@ function openDrawer(id) {
    ${c.x.reviewNotes.map(n => `<p class="note">${esc(n)}</p>`).join('')}
    ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(reason(i.why))}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? dayWord(-d) + ' ago' : 'in ' + dayWord(d))(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
-     <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} ${esc(sure(i.confidence))}.</p>
+     <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} ${esc(sure(i.confidence))}.</p>${windowOf(i) && i.status !== 'past' ? `<p class="safe win">${esc(windowOf(i).label)} ${esc(windowOf(i).fromW)}. ${esc(windowNote(i))}.</p>` : ''}
      ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(showQuote(i.via.quote).slice(0, 220))}${showQuote(i.via.quote).length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}<div class="lettr"><button class="btn-secondary sm" id="drawerLetter">Draft notice letter</button></div>${obligationsHtml(c)}`;
   $('#drawerLetter').onclick = () => openLetter(id);
   $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on'); $('#drawer').scrollTop = 0; $('#close').focus({ preventScroll: true });
@@ -177,7 +177,7 @@ function oneThing(r) {
 const sendBy = r => { const d = r.safe?.date || r.actBy; return `${weekday(d).slice(0, 3)} ${fmt(d)}`; };
 const days = (n, u) => `${n} ${u}${+n === 1 ? '' : 's'}`;
 const renewsFor = c => { const p = c.x.renewal?.period; return p ? `${p.n} more ${p.unit}${p.n > 1 ? 's' : ''}` : ''; };
-const gcal = (c, r) => { if (!r.actBy || r.section === 'lapsed' || (r.days != null && r.days < 0) || !/send-notice/i.test(r.label || '')) return ''; const u = gcalLink({ name: c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: c.url, note: exitNote(c)?.text }); return u ? `<a class="gcal" href="${esc(u)}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ''; };
+const gcal = (c, r) => { if (!r.actBy || r.section === 'lapsed' || (r.days != null && r.days < 0) || !/send-notice/i.test(r.label || '')) return ''; const u = gcalLink({ name: c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: c.url, note: exitNote(c)?.text, within: windowOf(r), windowNote: windowNote(r) }); return u ? `<a class="gcal" href="${esc(u)}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ''; };
 function card(c, r) {
   const more = renewsFor(c); const ex = exitNote(c); const cons = (more ? `or it renews for ${more}.` : 'or it renews automatically.') + (ex ? ' ' + ex.text : '');
   const src = r.item?.source; const [cw, seg] = confWord(r.confidence);
@@ -187,6 +187,7 @@ function card(c, r) {
     hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(r.missed.actBy))}</span>`;
     sub = esc(`It renews on ${fmt(r.missed.renews)}${more ? ` for ${more}` : ''}.${ex ? ' ' + ex.text : ''}`);
   } else if (r.section === 'lapsed') { kicker = 'No action needed'; cls = 'expired'; hero = `Expired ${esc(fmt(r.actBy))}`; sub = r.label === 'Send-notice deadline' ? 'The send-notice date has passed; check whether it renewed.' : 'No automatic renewal left.'; }
+  else if (r.actBy && /Send-notice/.test(r.label) && windowOf(r)) { kicker = windowOf(r).label; hero = esc(fmt(windowOf(r).from)); sub = esc(cons); }
   else if (r.actBy && /Send-notice/.test(r.label)) { kicker = r.needsReview ? 'Send notice by (best reading)' : 'Send notice by'; hero = esc(fmt(r.actBy)); sub = esc(cons); }
   else if (r.actBy) { kicker = 'Ends on'; hero = esc(fmt(r.actBy)); sub = r.renewHint ? 'No automatic renewal was read, but the document mentions renewal or extension. Check the clause before relying on this date.' : 'No automatic renewal. Plan the replacement before then.'; }
   else if (r.item?.initialOnlyPassed) { const it0 = r.item; kicker = 'Send-notice date passed'; cls = 'passed'; hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(it0.prevActBy))}</span>`; sub = esc(`Now renews every ${days(it0.renewEvery.n, it0.renewEvery.unit)}; the contract gives no non-renewal notice for later periods. Check the termination section.`); }
@@ -200,7 +201,7 @@ function card(c, r) {
     <div class="agrid"><div class="aleft">
       <p class="lab">${esc(kicker)}</p>
       <p class="hero-date${r.needsReview && r.actBy ? ' best' : ''}" id="answerBig">${hero}</p>
-      ${r.actBy && !r.missed && cls !== 'expired' ? `<p class="lab wd">${weekday(r.actBy)}</p>` : ''}
+      ${r.actBy && !r.missed && cls !== 'expired' ? `<p class="lab wd">${weekday(windowOf(r)?.from || r.actBy)}</p>` : ''}${windowNote(r) && !r.missed ? `<p class="safe win">${esc(windowNote(r))}.</p>` : ''}
       <p class="cons">${sub}</p>
       ${r.missed ? `<p class="next">Next: send notice by ${esc(sendBy(r))} · in ${dayWord(daysBetween(asOf, r.safe?.date || r.actBy))}</p>` : ''}
       <div class="chips">${chip(r)}</div>${r.actBy && !r.missed && r.days >= 0 && cls !== 'expired' ? `<div class="cliff${r.days < 150 ? ' near' : ''}" style="--p:${Math.min(r.days, 365) / 365 * 100}%" aria-hidden="true"><span class="cl-t">Today</span><i></i><span class="cl-d">${esc(fmt(r.actBy))}</span></div>` : ''}
@@ -222,7 +223,7 @@ function row(c, r) {
   const d = r.missed ? r.missed.actBy : r.actBy;
   const cons = r.missed ? `Renews ${fmt(r.missed.renews)}. Next: send notice by ${sendBy(r)}.` : r.section === 'lapsed' ? 'Expired. No action needed.' : r.item?.initialOnlyPassed ? `Send-notice date passed ${fmt(r.item.prevActBy)}. Now renews every ${days(r.item.renewEvery.n, r.item.renewEvery.unit)}; no later non-renewal notice.` : !r.actBy ? (r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No date found.') : /Send-notice/.test(r.label) ? (renewsFor(c) ? `or it renews for ${renewsFor(c)}.` : 'or it renews automatically.') : r.renewHint ? 'Renewal wording found but not read; check it.' : 'No automatic renewal.';
   return `<li class="lrow${newIds.has(c.id) ? ' new' : ''}" data-id="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(c.name)}: show the answer">
-    <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? 'Send notice by' : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
+    <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? (windowOf(r) ? windowOf(r).label : 'Send notice by') : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${windowNote(r) && !passed ? `<span class="rsafe">${esc(windowNote(r))}</span>` : r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
     <div class="ln"><span class="rname">${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span></div>
     <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">Filing ↗</a>` : ''}</span>${gcal(c, r)}</div>
