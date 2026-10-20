@@ -93,7 +93,7 @@ function openDrawer(id) {
   const extra = [...c.x.payments.map(p => ({ type: 'Payment · ' + p.rule, date: nextFixed(p.rule, asOf), event: true, confidence: p.confidence, needsReview: p.needsReview, why: (p.trigger && p.trigger !== 'event' && p.trigger !== 'recurring' ? `Clock starts at: ${p.trigger}. ` : '') + 'Recurring or triggered by an event (invoice, delivery). No single calendar date is stated, so none is invented.', source: p.source })),
     ...c.x.other.map(p => ({ type: 'Termination for convenience · ' + p.rule + (p.who ? ' · ' + p.who : ''), date: '', event: true, confidence: p.confidence, needsReview: p.needsReview, why: p.why || 'A right, not a deadline.', source: p.source }))];
   const srcLinks = s => !s ? '' : `<div class="loc"><span>${esc(s.location)}</span>${c.url ? `<a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">SEC filing ↗</a><a href="/source/?id=${esc(c.id)}&from=${s.lineStart}&to=${s.lineEnd}#L${s.lineStart}" target="_blank" rel="noopener">Saved text, ${esc(s.location)}</a>` : ''}</div>`;
-  $('#dbody').innerHTML = `<div class="lab">${esc(c.kind || 'Uploaded document')}${c.exhibit ? ' · ' + esc(c.exhibit) : ''}</div><h3>${esc(c.name)}</h3>
+  $('#dbody').innerHTML = `<div class="lab">${esc(c.kind || 'Uploaded document')}${c.exhibit ? ' · ' + esc(c.exhibit) : ''}</div><h3>${esc(c.name)}</h3>${(rv => rv ? `<p class="planline" id="drawerRenew">Plan: renew. Renews ${esc(fmt(rv.on))}, ${rv.days <= 0 ? 'today' : 'in ' + dayWord(rv.days)}. ${esc(lastLine(rv))}. Nothing to send.</p>` : '')(renewView(c, buildQueue([c], asOf)[0]))}
    <p class="why" style="color:var(--mute);font-size:13px">${esc(c.title || c.fileName || '')}${c.filer ? ` · filed by ${esc(c.filer)}` : ''}${c.filed ? ` on ${esc(fmt(c.filed))}` : ''}${c.counterparty && c.counterparty !== c.fileName?.replace(/\.[a-z0-9]+$/i, '') ? ` · other company ${esc(c.counterparty)}` : ''}</p>
    ${c.url ? `<p style="font-size:13px"><a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">Open the filing on SEC Filing ↗</a></p>` : ''}
    ${c.x.reviewNotes.map(n => `<p class="note">${esc(n)}</p>`).join('')}
@@ -184,7 +184,11 @@ const order = rows => { // pinned first; then 1 passed but renewing, 2 dated soo
   const rank = r => r.missed ? 0 : r.section === 'lapsed' ? 3 : r.actBy ? 1 : 2;
   return pinFirst(rows.slice().sort((a, b) => rank(a) - rank(b) || (a.actBy && b.actBy && rank(a) === 1 ? a.actBy.localeCompare(b.actBy) : 0) || a.name.localeCompare(b.name)), team, rowKey);
 };
-function chip(r) {
+// Plan renew: lead with the renewal date; the notice date becomes the last day to change your mind.
+const renewView = (c, r) => { if (!c || ctxOf(team, c).plan !== 'renew' || !r?.item?.termEnd || r.missed || r.section === 'lapsed' || !r.actBy) return null; const on = ymd(addDays(new Date(r.item.termEnd + 'T00:00:00Z'), 1)); return { on, last: windowOf(r)?.day || r.actBy, days: daysBetween(asOf, on) }; };
+const lastLine = v => `Last day to change your mind: ${fmt(v.last)}`;
+function chip(r, rv) {
+  if (rv) return `<span class="chip ${rv.days <= 30 ? 'u30' : rv.days <= 90 ? 'u90' : 'u365'}">${rv.days <= 0 ? 'Renews today' : `Renews in ${dayWord(rv.days)}`}</span>`;
   if (r.missed) { const ago = daysBetween(r.missed.actBy, asOf); return `<span class="chip passed">Passed ${dayWord(ago)} ago</span>`; }
   if (r.section === 'lapsed' || r.days == null) return '';
   if (r.days < 0) return `<span class="chip passed">Passed ${dayWord(-r.days)} ago</span>`;
@@ -208,11 +212,12 @@ const gcal = (c, r) => { if (!r.actBy || r.section === 'lapsed' || (r.days != nu
 const PLAN_OPTS = [['', 'Not decided'], ['renew', 'Renew'], ['cancel', 'Cancel'], ['renegotiate', 'Renegotiate']];
 const ctxHtml = c => { const x = ctxOf(team, c); return `<details class="ctx" id="ctxBox"${x.owner || x.plan || x.note ? ' open' : ''}><summary class="tl">Owner, plan and note</summary><div class="ctxf"><label class="tf">Owner<input id="cOwner" maxlength="120" value="${esc(x.owner)}"></label><label class="tf">Plan<select id="cPlan">${PLAN_OPTS.map(([v, l]) => `<option value="${v}"${x.plan === v ? ' selected' : ''}>${l}</option>`).join('')}</select></label><label class="tf ctxn">Note<textarea id="cNote" maxlength="2000" rows="2">${esc(x.note)}</textarea></label></div></details>`; };
 function card(c, r) {
-  const pa = planAction(ctxOf(team, c).plan);
+  const pa = planAction(ctxOf(team, c).plan); const rv = renewView(c, r);
   const more = renewsFor(c); const ex = exitNote(c); const cons = (more ? `or it renews for ${more}.` : 'or it renews automatically.') + (ex ? ' ' + ex.text : '');
   const src = r.item?.source; const [cw, seg] = confWord(r.confidence);
   let kicker, hero, sub = '', cls = '';
-  if (r.missed) {
+  if (rv) { kicker = 'Renews'; hero = esc(fmt(rv.on)); sub = esc(`${lastLine(rv)}, the last day to send a non-renewal notice.`); }
+  else if (r.missed) {
     kicker = 'Send-notice date passed'; cls = 'passed';
     hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(r.missed.actBy))}</span>`;
     sub = esc(`It renews on ${fmt(r.missed.renews)}${more ? ` for ${more}` : ''}.${ex ? ' ' + ex.text : ''}`);
@@ -231,11 +236,11 @@ function card(c, r) {
     <div class="agrid"><div class="aleft">
       <p class="lab">${esc(kicker)}</p>
       <p class="hero-date${r.needsReview && r.actBy ? ' best' : ''}" id="answerBig">${hero}</p>
-      ${r.actBy && !r.missed && cls !== 'expired' ? `<p class="lab wd">${weekday(windowOf(r)?.day || r.actBy)}</p>` : ''}${windowNote(r) && !r.missed ? `<p class="safe win">${esc(windowNote(r))}.</p>` : ''}
+      ${r.actBy && !r.missed && cls !== 'expired' ? `<p class="lab wd">${weekday(rv ? rv.on : windowOf(r)?.day || r.actBy)}</p>` : ''}${windowNote(r) && !r.missed && !rv ? `<p class="safe win">${esc(windowNote(r))}.</p>` : ''}
       <p class="cons">${sub}</p>
       ${r.missed ? `<p class="next">Next: send notice by ${esc(sendBy(r))} · in ${dayWord(daysBetween(asOf, r.safe?.date || r.actBy))}</p>` : ''}
-      <div class="chips">${chip(r)}</div>${r.actBy && !r.missed && r.days >= 0 && cls !== 'expired' ? `<div class="cliff${r.days < 150 ? ' near' : ''}" style="--p:${Math.min(windowOf(r) ? daysBetween(asOf, windowOf(r).day) : r.days, 365) / 365 * 100}%" aria-hidden="true"><span class="cl-t">Today</span><i></i><span class="cl-d">${windowOf(r) ? 'Window opens ' + esc(fmt(windowOf(r).day)) : esc(fmt(r.actBy))}</span></div>` : ''}
-      ${r.safe && !r.missed ? `<p class="safe">${esc(r.safe.note.replace(/ · (\w)/, (m, c) => '. ' + c.toUpperCase()).replace(/ to be safe$/, ' to be safe.'))}</p>` : ''}
+      <div class="chips">${chip(r, rv)}</div>${r.actBy && !r.missed && r.days >= 0 && cls !== 'expired' ? `<div class="cliff${r.days < 150 ? ' near' : ''}" style="--p:${Math.min(rv ? rv.days : windowOf(r) ? daysBetween(asOf, windowOf(r).day) : r.days, 365) / 365 * 100}%" aria-hidden="true"><span class="cl-t">Today</span><i></i><span class="cl-d">${rv ? 'Renews ' + esc(fmt(rv.on)) : windowOf(r) ? 'Window opens ' + esc(fmt(windowOf(r).day)) : esc(fmt(r.actBy))}</span></div>` : ''}
+      ${r.safe && !r.missed && !rv ? `<p class="safe">${esc(r.safe.note.replace(/ · (\w)/, (m, c) => '. ' + c.toUpperCase()).replace(/ to be safe$/, ' to be safe.'))}</p>` : ''}
       <div class="ident"><p class="iname">${esc(c.name)}</p><p class="lab meta">${meta}</p></div>
     </div><div class="aright">
       <p class="lab">From the contract</p>
@@ -246,18 +251,18 @@ function card(c, r) {
       ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
       ${ctxHtml(c)}${pa.text ? `<p class="planline" id="planLine">${esc(pa.text)}</p>` : ''}
-      <div class="acts">${pa.letterFirst ? '<button id="answerLetter" class="btn-primary sm">Draft notice letter</button>' : ''}<button id="answerMore" class="btn-secondary sm">See every date and clause</button>${pa.letter && !pa.letterFirst ? '<button id="answerLetter" class="btn-secondary sm">Draft notice letter</button>' : ''}${gcal(c, r)}<button id="answerPin" class="tl" type="button" aria-pressed="${isPinned(team, c)}">${isPinned(team, c) ? 'Pinned' : 'Pin this contract'}</button></div>
+      <div class="acts">${pa.letterFirst ? '<button id="answerLetter" class="btn-primary sm">Draft notice letter</button>' : ''}<button id="answerMore" class="btn-secondary sm">See every date and clause</button>${pa.letter && !pa.letterFirst ? '<button id="answerLetter" class="btn-secondary sm">Draft notice letter</button>' : ''}${rv ? '' : gcal(c, r)}<button id="answerPin" class="tl" type="button" aria-pressed="${isPinned(team, c)}">${isPinned(team, c) ? 'Pinned' : 'Pin this contract'}</button></div>
     </div></div></article>`;
 }
 function row(c, r) {
-  const passed = !!r.missed || r.section === 'lapsed';
+  const passed = !!r.missed || r.section === 'lapsed'; const rv = renewView(c, r);
   const d = r.missed ? r.missed.actBy : r.actBy;
   const cons = r.missed ? `Renews ${fmt(r.missed.renews)}. Next: send notice by ${sendBy(r)}.` : r.section === 'lapsed' ? 'Expired. No action needed.' : r.item?.initialOnlyPassed ? `Send-notice date passed ${fmt(r.item.prevActBy)}. Now renews every ${days(r.item.renewEvery.n, r.item.renewEvery.unit)}; no later non-renewal notice.` : !r.actBy ? (r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No date found.') : /Send-notice/.test(r.label) ? (renewsFor(c) ? `or it renews for ${renewsFor(c)}.` : 'or it renews automatically.') : r.renewHint ? 'Renewal wording found but not read; check it.' : 'No automatic renewal.';
   return `<li class="lrow${newIds.has(c.id) ? ' new' : ''}" data-id="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(c.name)}: show the answer">
-    <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? (windowOf(r) ? windowOf(r).label : 'Send notice by') : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${windowNote(r) && !passed ? `<span class="rsafe">${esc(windowNote(r))}</span>` : r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
-    <div class="lc">${chip(r)}</div>
-    <div class="ln"><span class="rname">${isPinned(team, c) ? '<span class="pin">Pinned</span> ' : ''}${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span>${(x => x ? `<span class="rctx">${esc([x.owner && 'Owner: ' + x.owner, x.plan && 'Plan: ' + x.plan].filter(Boolean).join(' · '))}</span>` : '')(cxOf(c))}</div>
-    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">Filing ↗</a>` : ''}</span>${gcal(c, r)}</div>
+    ${rv ? `<div class="ld"><span class="rdate">${esc(fmt(rv.on))}</span><span class="lab">Renews · ${weekday(rv.on)}</span><span class="rsafe">${esc(lastLine(rv))}</span></div>` : `<div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? (windowOf(r) ? windowOf(r).label : 'Send notice by') : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${windowNote(r) && !passed ? `<span class="rsafe">${esc(windowNote(r))}</span>` : r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>`}
+    <div class="lc">${chip(r, rv)}</div>
+    <div class="ln"><span class="rname">${isPinned(team, c) ? '<span class="pin">Pinned</span> ' : ''}${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(rv ? 'Plan: renew. Nothing to send; this is a reminder of the renewal date.' : cons)}</span>${(x => x ? `<span class="rctx">${esc([x.owner && 'Owner: ' + x.owner, x.plan && 'Plan: ' + x.plan].filter(Boolean).join(' · '))}</span>` : '')(cxOf(c))}</div>
+    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">Filing ↗</a>` : ''}</span>${rv ? '' : gcal(c, r)}</div>
   </li>`;
 }
 function live(cs) {

@@ -150,6 +150,18 @@ for (const w of [1440, 375]) {
     await p.evaluate(() => document.querySelector('#exCsv').click()); { const csv = await dl(p); ok(/Goldensee[^\n]*,2027-06-20,\d+,2026-10-20,2027-06-20,/.test(csv) && !/2027-06-17/.test(csv), `${w}: CSV send-by for 'within' is 2027-06-20`); }
     await p.evaluate(() => document.querySelector('#exAudit').click()); ok(!/2027-06-17/.test(await dl(p)), `${w}: audit CSV has no 2027-06-17`);
     await p.evaluate(() => { document.querySelector('#ctxBox').open = true; }); await type(p, '#cPlan', 'renew');
+    { const want = Math.round((Date.UTC(2027, 6, 21) - Date.UTC(2026, 9, 20)) / 864e5);
+      const cd = await p.evaluate(() => ({ k: document.querySelector('#answer .aleft > .lab').textContent, h: document.querySelector('#answerBig').textContent, sub: document.querySelector('#answer .cons').textContent, chip: document.querySelector('#answer .chips').textContent, cl: document.querySelector('#answer .cl-d')?.textContent || '', win: !!document.querySelector('#answer .safe.win') }));
+      ok(cd.k === 'Renews' && cd.h === '21 Jul 2027' && /^Last day to change your mind: 20 Jun 2027/.test(cd.sub) && cd.chip === `Renews in ${want} days` && cd.cl === 'Renews 21 Jul 2027' && !cd.win, `${w}: renew plan: card leads with Renews 21 Jul 2027, last day to change your mind 20 Jun 2027, ${want} days to go`);
+      await shot(p, 'renew', w);
+      await p.evaluate(() => document.querySelector('#answerMore').click()); await p.waitForSelector('#drawerRenew');
+      ok(new RegExp(`^Plan: renew\\. Renews 21 Jul 2027, in ${want} days\\. Last day to change your mind: 20 Jun 2027\\. Nothing to send\\.$`).test(await p.$eval('#drawerRenew', e => e.textContent)), `${w}: renew plan: drawer says the same`);
+      await p.evaluate(() => document.querySelector('#close').click());
+      await p.evaluate(() => [...document.querySelectorAll('#lq .lrow')].find(l => /Dragonfly/.test(l.textContent)).click());
+      await p.waitForFunction(() => [...document.querySelectorAll('#lq .lrow')].some(l => /Goldensee/.test(l.textContent)));
+      const q = await p.evaluate(() => [...document.querySelectorAll('#lq .lrow')].find(l => /Goldensee/.test(l.textContent)).innerText);
+      ok(/21 Jul 2027/.test(q) && /RENEWS|Renews/.test(q) && /Last day to change your mind: 20 Jun 2027/.test(q) && new RegExp(`Renews in ${want} days`).test(q) && !/Send notice|Window opens/i.test(q), `${w}: renew plan: queue card says the same`);
+      await p.evaluate(() => [...document.querySelectorAll('#lq .lrow')].find(l => /Goldensee/.test(l.textContent)).click()); await p.waitForFunction(() => /Goldensee/.test(document.querySelector('#answer .iname')?.textContent || '')); }
     await p.evaluate(() => document.querySelector('#exIcs').click()); const ics = (await dl(p)).replace(/\r\n /g, '');
     const ev = ics.split("BEGIN:VEVENT").find(e => /goldensee/i.test(e)) || '';
     ok(/SUMMARY:Renews 21 July 2027 \(plan: renew\)/.test(ev) && /reminder of the renewal date/.test(ev) && /days to the renewal date/.test(ev) && !/send notice|send-notice|window opens/i.test(ev), `${w}: renew plan: Armlogi's .ics event is a renewal-date reminder with no send-notice wording`);
