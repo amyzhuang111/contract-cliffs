@@ -1,7 +1,7 @@
 // Portfolio view (button on every URL): 25 real public contracts from test/fixtures, bundled in /data/portfolio.json.
 // Every row's date is the tool's own output; the bundle only holds fixtures whose hand-checked answer matches it.
 import { extract, buildQueue, daysBetween, dayWord, ymd, addDays } from './extract.js';
-import { bucket, flagsOf, rowLabel, BUCKETS, FLAGS } from './features.js';
+import { bucket, flagsOf, rowLabel, BUCKETS, FLAGS, sendByNote } from './features.js';
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const fmt = d => { if (!d) return ''; const [y, m, dd] = d.split('-'); return `${+dd} ${MON[+m - 1]} ${y}`; };
@@ -15,7 +15,7 @@ export function pfStatus(r, asOf = r.asOf) { const b = bucket(r), f = flagsOf(r)
 const mkClass = r => ['mk', r.st.bucket, ...r.st.flags].join(' ');
 export const confWord = r => r.needsReview && !r.actBy ? 'Can’t tell' : r.needsReview || r.confidence !== 'high' ? 'Check' : 'Clear';
 export const pos = (d, asOf, end = END) => Math.max(0, Math.min(1, daysBetween(asOf, d) / daysBetween(asOf, end)));
-export function rowsFor(cs, asOf) { const byId = new Map(cs.map(c => [c.id, c])); return buildQueue(cs, asOf).map(r => ({ ...r, c: byId.get(r.id), st: pfStatus(r, asOf), conf: confWord(r) })); }
+export function rowsFor(cs, asOf) { const byId = new Map(cs.map(c => [c.id, c])); return buildQueue(cs, asOf).map(r => ({ ...r, c: byId.get(r.id), asOf, st: pfStatus(r, asOf), conf: confWord(r) })); }
 const RANK = Object.fromEntries(BUCKETS.map(([k], i) => [k, i]));
 export function sortRows(rows, by, dir = 1) {
   const k = { date: r => r.actBy || '9999', name: r => r.c.name.toLowerCase(), days: r => r.days ?? 1e9, conf: r => ['Clear', 'Check', 'Can’t tell'].indexOf(r.conf), status: r => String(RANK[r.st.bucket]).padStart(2, '0') + (r.actBy || '9999') }[by] || (r => r.actBy || '9999');
@@ -41,7 +41,7 @@ export function timelineHtml(rows, asOf, nLabels = 4) {
 export function listHtml(rows, asOf) {
   return rows.map((r, k) => `<li id="pf-${esc(r.id)}" class="pr ${r.st.bucket} ${r.st.flags.join(' ')}" style="--i:${k}">
     <span class="pn">${esc(r.c.name)}</span>
-    <span class="pd">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}</span>
+    <span class="pd">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}${r.actBy && sendByNote(r.actBy, r.asOf) ? `<span class="psafe">${esc(sendByNote(r.actBy, r.asOf))}</span>` : ''}</span>
     <span class="pl">${r.days == null ? '' : r.days < 0 ? `${dayWord(-r.days)} ago` : r.days === 0 ? 'today' : `${dayWord(r.days)} left`}</span>
     <span class="pc"><span class="tag ${r.conf === 'Clear' ? 'clear' : r.conf === 'Check' ? 'check' : 'cttag'}">${esc(r.conf)}</span></span>
     <span class="ps">${esc(r.st.label)}</span>
@@ -63,6 +63,6 @@ export function firstSentence(rows) {
 // Opening view: the 3 contracts to act on first, each with company, action and days left.
 export function top3Html(rows) {
   return byUrgency(rows).slice(0, 3).map(r => { const now = ['passed', 'd30'].includes(r.st.bucket);
-    const note = [r.missed && `Missed ${esc(fmt(r.missed.actBy))}`, r.st.flags.includes('review') && '<span class="rvnote">Needs review</span>'].filter(Boolean).join(' · ');
+    const note = [r.actBy && sendByNote(r.actBy, r.asOf) && esc(sendByNote(r.actBy, r.asOf)), r.missed && `Missed ${esc(fmt(r.missed.actBy))}`, r.st.flags.includes('review') && '<span class="rvnote">Needs review</span>'].filter(Boolean).join(' · ');
     return `<li class="t3${now ? ' now' : ''}"><a href="#pf-${esc(r.id)}"><span class="t3n">${esc(r.c.name)}</span><span class="t3a">Send notice by ${esc(fmt(r.actBy))}</span><span class="t3d">${r.days === 0 ? 'Today' : `${dayWord(r.days)} left`}</span>${note ? `<span class="t3x">${note}</span>` : ''}</a></li>`; }).join('');
 }

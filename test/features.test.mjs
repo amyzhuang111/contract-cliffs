@@ -177,3 +177,13 @@ test('letter placeholders all name what to fill in; no NOT FOUND in the letter o
     for (const m of t.match(/\[[^\]]*FILL IN\]/g)) assert.match(m, /^\[[A-Z][A-Z ,]+, FILL IN\]$/, m);
     assert.ok(!/NOT FOUND/.test(new TextDecoder().decode(docx(t))), c.id); }
 });
+test('send-by: US federal holidays 2026 to 2035 move the send date, in plain words', async () => {
+  const { sendByNote } = await import('../public/features.js'); const { usHolidays, safeSendBy } = await import('../public/extract.js');
+  assert.equal(sendByNote('2026-11-26', '2026-10-19'), 'Falls on Thanksgiving. Send by Wed 25 Nov');
+  assert.equal(sendByNote('2026-12-25', '2026-10-19'), 'Falls on Christmas Day. Send by Thu 24 Dec');
+  assert.equal(sendByNote('2027-07-04', '2026-10-19'), 'Falls on a Sunday. Send by Fri 2 Jul 2027'); // 5 Jul 2027 is the observed holiday; 3 Jul is a Saturday
+  assert.equal(sendByNote('2026-12-16', '2026-10-19'), '');
+  for (let y = 2026; y <= 2035; y++) { const h = usHolidays(y); assert.equal(h.size >= 11, true, String(y));
+    for (const d of h.keys()) { const sb = safeSendBy(d); assert.ok(sb.changed && sb.date < d && !h.has(sb.date), d); } }
+  assert.equal(safeSendBy('2035-11-22').date, '2035-11-21'); // Thanksgiving 2035
+});

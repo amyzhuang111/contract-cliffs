@@ -68,3 +68,6 @@ test('portfolio: default order is by urgency and the opening sentence count matc
   assert.ok(u.slice(0, n).every(r => ['passed', 'd30'].includes(r.st.bucket)) && u.slice(-4).every(r => !r.actBy));
   assert.equal(firstSentence(rows.filter(r => r.st.bucket !== 'd30')), 'Nothing is due this month. These 3 are next.');
 });
+test('portfolio: a send-notice date on a weekend or holiday says when to send', () => {
+  const l = listHtml(rowsFor(cs, AS), AS); assert.match(l, /<span class="psafe">Falls on a Sunday\. Send by Fri 2 Jul 2027<\/span>/);
+});

@@ -1,6 +1,6 @@
 // Product features layered on the extractor: calendar links and alarms, notice letter (.docx), more obligations,
 // portfolio summary, per-contract audit CSV and safe local storage. Pure functions; no network, no invented data.
-import { fold, csvCell, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
+import { fold, csvCell, usHoliday, usHolidays, toSentences, locLabel, trimQuote, safeSendBy, buildQueue, daysBetween, ymd, addDays, sure } from './extract.js';
 
 const txt = l => typeof l === 'string' ? l : (l?.text ?? '');
 const norm = s => String(s ?? '').replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\s+/g, ' ').trim();
@@ -16,6 +16,17 @@ const DAY = d => d.replace(/-/g, '');
 export function sendDay(actBy, asOf) {
   const sb = safeSendBy(actBy); if (!sb.date) return '';
   return sb.changed && sb.date < asOf && actBy >= asOf ? asOf : sb.date;
+}
+// Plain note when a send-notice date is not a business day, e.g. "Falls on Thanksgiving. Send by Wed 25 Nov".
+// Weekends and US federal holidays (computed by rule for any year, observed dates included).
+const SHORTH = { 'Thanksgiving Day': 'Thanksgiving', 'Christmas Day': 'Christmas Day' };
+const WD3 = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], MON3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export function sendByNote(actBy, asOf) {
+  const sb = safeSendBy(actBy); if (!sb.changed) return '';
+  const wd = new Date(actBy + 'T00:00:00Z').getUTCDay(), h = usHoliday(actBy);
+  const why = wd === 0 || wd === 6 ? `Falls on a ${['Sunday', '', '', '', '', '', 'Saturday'][wd]}` : `Falls on ${SHORTH[h] || h}`;
+  const d = sendDay(actBy, asOf || sb.date), dt = new Date(d + 'T00:00:00Z');
+  return `${why}. Send by ${WD3[dt.getUTCDay()]} ${dt.getUTCDate()} ${MON3[dt.getUTCMonth()]}${d.slice(0, 4) !== (asOf || d).slice(0, 4) ? ' ' + d.slice(0, 4) : ''}`;
 }
 export const ALARM_DAYS = [30, 14, 7];
 const icsText = t => String(t).replace(/[\u200b\u200c\u200d\u2060\ufeff]/g, '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
