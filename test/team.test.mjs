@@ -115,3 +115,7 @@ test('copy: no doubled full stop after Inc.; email says pinned first when pins l
   assert.match(decodeURIComponent(mailtoList(IT(2), { asOf: AS }).url), /2 contracts, soonest first:/);
   const src = fs.readFileSync(new URL('../public/app.js', import.meta.url), 'utf8'); assert.match(src, /const stop = t => \/\[\.!\?\]\$\/\.test\(t\)/);
 });
+test('email: the plan is named once', () => {
+  const u = decodeURIComponent(mailtoList([{ ...IT(1)[0], plan: 'renew', action: 'Renews 21 Jul 2027; reminder only, nothing to send (plan: renew)' }, { ...IT(1)[0], plan: 'cancel' }], { asOf: AS }).url);
+  assert.equal((u.match(/\(plan: renew\)/g) || []).length, 1); assert.equal((u.match(/\(plan: cancel\)/g) || []).length, 1);
+});
