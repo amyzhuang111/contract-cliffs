@@ -30,9 +30,10 @@
   <hr class="gridline">
   <div class="drop" id="drop" role="button" tabindex="0" aria-label="Drop a contract or paste text. Press Enter to choose a file.">
     <div class="dz-idle">
-      <p class="dz-big" id="dzTitle"><span class="dz-desk">Drop a contract or paste text</span><span class="dz-phone">Choose a contract or paste text</span><span class="dz-more">Drop another contract</span></p>
+      <p class="dz-big" id="dzTitle"><span class="dz-desk">Drop a contract or paste text</span><span class="dz-phone">Choose a contract</span><span class="dz-more">Drop another contract</span></p>
       <p class="dz-hint" id="dzHint">PDF, Word or plain text · stays in your browser</p>
       <button class="tl dz-pastelink" id="pasteLink" type="button">Paste text</button>
+      <button class="btn-secondary sm dz-add" id="addBar" type="button">Add a contract</button>
     </div>
     <div class="dz-paste" id="pasteBox" hidden>
       <textarea id="paste" placeholder="Paste the contract text here" aria-label="Paste contract text"></textarea>
@@ -100,12 +101,12 @@
     <label class="lab" for="asof">As of</label>
     <input id="asof" type="date">
     <p class="status">“Today” for the list. Change it to see what will be due later. Past dates stay visible.</p>
-    <span class="lab" style="margin-top:18px">Export</span>
+    <div class="exports"><span class="lab" style="margin-top:18px">Export</span>
     <div class="row">
       <button id="exCsv" class="tl">Export CSV</button>
       <button id="exIcs" class="tl">Export calendar (.ics)</button>
       <button id="exPack" class="tl">Export audit pack (HTML)</button>
-    </div>
+    </div></div>
   </div>
 </section>
 <section class="sec" aria-labelledby="howh">
@@ -128,7 +129,7 @@
 <footer>
   <p class="foot">Data: public SEC EDGAR filings. Not legal advice. Check the clause before you act.</p>
   <hr class="hair" style="margin-bottom:28px">
-  <details class="method"><summary><span class="lab">Method and accuracy</span> <span class="gn">how dates are worked out, how often they are right</span></summary>
+  <details class="method"><summary><span class="lab">Method and accuracy</span> <span class="gn">· How dates are worked out and how often they are right</span></summary>
   <p>Extraction is deterministic: regular expressions plus date and duration parsing (“sixty (60) days”, “one hundred and eighty (180) days”, “Eighty-Four (84) months”). No language model and no network call touches your documents; uploads stay in this browser tab. A term of N months “commencing on” a date ends the day before the anniversary; “until N years following” ends on the anniversary. When words and numerals disagree, or a value is redacted, the field is left blank and marked for review.</p>
   <p>Accuracy, stated plainly: tuned on the 10 example SEC contracts (all hand-checked). On a test set of 10 more EDGAR agreements it had never seen, run once before any change: 3 send-notice deadline dates right, 6 correctly left blank for review, 1 missed, 0 wrong send-notice deadline dates, plus one wrong "current term" date that has since been fixed. An earlier set of 14 is now tuning data (first pass there: 2 right, 5 flagged, 6 missed, 1 wrong) (<a href="https://github.com/amyzhuang111/contract-cliffs/blob/main/edgar/holdout/HOLDOUT.md">details</a>).</p>
   <p>Real contracts are material agreements filed with the SEC, fetched from EDGAR with a declared User-Agent under SEC fair-access rules. Send-notice deadlines that land on a weekend or a US federal holiday get a “send by” business day: weekends and US federal holidays flagged; local holidays not modelled. The contract’s own date is always shown unchanged. Dates projected past the initial term assume the agreement was not terminated or amended. Not legal advice.</p>

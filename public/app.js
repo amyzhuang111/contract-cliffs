@@ -1,4 +1,4 @@
-import { htmlToLines, partiesFromPreamble, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
+import { checkLine, htmlToLines, partiesFromPreamble, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -152,9 +152,10 @@ const confTag = r => r.needsReview || !['high', 'medium'].includes(r.confidence)
 // The one thing to check, in one line, from the parser's own reason.
 function oneThing(r) {
   const it = r.item || {};
-  if (it.renewed > 0 && it.initialEnd && !r.needsReview) return `Check: has either side sent notice since ${fmt(ymd(addDays(new Date(it.initialEnd + 'T00:00:00Z'), 1)))}? If not, the term rolled over ${it.renewed === 1 ? 'once' : it.renewed + ' times'}.`;
+  if (it.renewed > 0 && it.prevActBy && !r.needsReview) return checkLine(it);
   return r.tag ? `Check: ${r.tag}.` : 'Check the quoted clause before relying on this date.';
 }
+const sendBy = r => { const d = r.safe?.date || r.actBy; return `${weekday(d).slice(0, 3)} ${fmt(d)}`; };
 const days = (n, u) => `${n} ${u}${+n === 1 ? '' : 's'}`;
 const renewsFor = c => { const p = c.x.renewal?.period; return p ? `${p.n} more ${p.unit}${p.n > 1 ? 's' : ''}` : ''; };
 function card(c, r) {
@@ -180,15 +181,15 @@ function card(c, r) {
       <p class="hero-date${r.needsReview && r.actBy ? ' best' : ''}" id="answerBig">${hero}</p>
       ${r.actBy && !r.missed && cls !== 'expired' ? `<p class="lab wd">${weekday(r.actBy)}</p>` : ''}
       <p class="cons">${sub}</p>
-      ${r.missed ? `<p class="next">Next: send notice by ${esc(fmt(r.actBy))} · ${weekday(r.actBy)} · in ${dayWord(r.days)}</p>` : ''}
+      ${r.missed ? `<p class="next">Next: send notice by ${esc(sendBy(r))} · in ${dayWord(daysBetween(asOf, r.safe?.date || r.actBy))}</p>` : ''}
       <div class="chips">${chip(r)}</div>
-      ${r.safe ? `<p class="safe">${esc(r.safe.note.replace(/ · (\w)/, (m, c) => '. ' + c.toUpperCase()).replace(/ to be safe$/, ' to be safe.'))}</p>` : ''}
+      ${r.safe && !r.missed ? `<p class="safe">${esc(r.safe.note.replace(/ · (\w)/, (m, c) => '. ' + c.toUpperCase()).replace(/ to be safe$/, ' to be safe.'))}</p>` : ''}
       <div class="ident"><p class="iname">${esc(c.name)}</p><p class="lab">${esc(meta)}</p></div>
     </div><div class="aright">
       <p class="lab">From the contract</p>
       ${quoteHtml ? `<blockquote class="aq">“${quoteHtml}”</blockquote>` : '<p class="cons">No clause with a date was found.</p>'}
-      <p class="prov lab">${src?.location ? `<span>${esc(src.location)}</span> · ` : ''}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">Open on SEC EDGAR ↗</a> · ` : ''}${src?.quote ? `<button class="tl copyq" type="button">Copy clause</button>` : ''}</p>
-      <p class="conf"><span class="lab">Confidence:</span> <span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span> <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
+      <p class="prov lab">${src?.location ? `<span>${esc(src.location)}</span><span class="dot">·</span>` : ''}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">Open on SEC EDGAR ↗</a><span class="dot">·</span>` : ''}${src?.quote ? `<button class="tl copyq" type="button">Copy clause</button>` : ''}</p>
+      <p class="conf"><span class="lab">Confidence:</span> ${confTag(r)[1] === 'rvtag' ? `<span class="cw">${esc(cw)}</span>` : `<span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span>`} <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
       ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
       <button id="answerMore" class="btn-secondary sm">See every date and clause</button>
@@ -197,7 +198,7 @@ function card(c, r) {
 function row(c, r) {
   const passed = !!r.missed || r.section === 'lapsed';
   const d = r.missed ? r.missed.actBy : r.actBy;
-  const cons = r.missed ? `Renews ${fmt(r.missed.renews)}. Next send-notice date ${fmt(r.actBy)}.` : r.section === 'lapsed' ? 'Expired. No action needed.' : !r.actBy ? (r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No date found.') : /Send-notice/.test(r.label) ? (renewsFor(c) ? `or it renews for ${renewsFor(c)}.` : 'or it renews automatically.') : 'No automatic renewal.';
+  const cons = r.missed ? `Renews ${fmt(r.missed.renews)}. Next: send notice by ${sendBy(r)}.` : r.section === 'lapsed' ? 'Expired. No action needed.' : !r.actBy ? (r.tag ? r.tag[0].toUpperCase() + r.tag.slice(1) + '.' : 'No date found.') : /Send-notice/.test(r.label) ? (renewsFor(c) ? `or it renews for ${renewsFor(c)}.` : 'or it renews automatically.') : 'No automatic renewal.';
   return `<li class="lrow${newIds.has(c.id) ? ' new' : ''}" data-id="${esc(c.id)}" tabindex="0" role="button" aria-label="${esc(c.name)}: show the answer">
     <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? 'Send notice by' : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
@@ -240,6 +241,7 @@ const plainErr = m => /no text layer/.test(m) ? 'This PDF is a scanned image. Pa
 $('#tryAnother').onclick = e => { e.stopPropagation(); show(null); $('#drop').classList.remove('err'); $('#file').click(); };
 const openPaste = () => { show('pasteBox'); $('#paste').focus(); };
 $('#pasteLink').onclick = e => { e.stopPropagation(); openPaste(); };
+$('#addBar').onclick = e => { e.stopPropagation(); $('#file').click(); };
 $('#pasteBtn').onclick = openPaste;
 $('#pasteCancel').onclick = e => { e.stopPropagation(); show(null); };
 $('#drop').addEventListener('click', e => { if (e.target === $('#drop') || e.target.closest('.dz-idle') && !e.target.closest('button')) $('#file').click(); });

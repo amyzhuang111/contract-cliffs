@@ -14,12 +14,21 @@ const SUFFIX = /,?\s+(?:Inc|Corp|Corporation|LLC|L\.L\.C|Ltd|Limited|Co|Company|
 const shortParty = t => { let x = t.replace(/^\s*(?:the\s+)?/i, '').replace(/\s+/g, ' ').trim(); for (let i = 0; i < 2; i++) x = x.replace(SUFFIX, '').trim(); return x.replace(/[,.;:]+$/, '').slice(0, 40); };
 export function partiesFromPreamble(lines) {
   const text = lines.slice(0, 80).map(l => typeof l === 'string' ? l : l.text).join(' ').replace(/\s+/g, ' ').slice(0, 6000);
-  const m = /\b(?:by\s+and\s+between|(?:made|entered\s+into|dated)[^.]{0,160}?\bbetween)\s+(.{2,200}?)\s+and\s+(.{2,200}?)(?:\s*[(“"]|;|$)/i.exec(text); if (!m) return '';
+  const m = /\b(?:by\s+and\s+between|(?:made|entered\s+into|dated)[^.]{0,160}?\bbetween):?\s+(.{4,700})/i.exec(text); if (!m) return '';
+  const seg = m[1]; let a = '', b = '';
+  for (const re of [/[)”"]\s*[;,]?\s+and\s+/i, /;\s*and\s+/i, /,\s+and\s+/i, /\s+and\s+/i]) { const k = seg.search(re); if (k > 1 && k < 400) { a = seg.slice(0, k + 1); b = seg.slice(k).replace(re, ''); break; } }
+  if (!a) return '';
   const tc = x => /[a-z]/.test(x) ? x : x.replace(/\b([A-Z])([A-Z]+)\b/g, (w, f, r) => w.length <= 2 ? w : f + r.toLowerCase());
-  const one = x => tc(shortParty(x.split(/\s*[(“"]|,|\s+(?:dba|d\/b\/a)\s/i)[0]));
-  const a = one(m[1]), b = one(m[2]);
-  return a.length > 1 && b.length > 1 && !/^(?:the\s+)?(?:parties|undersigned)/i.test(a + ' ' + b) && !/undersigned/i.test(b) ? `${a} / ${b}` : '';
+  const withheld = x => /^\W*\(?\s*(?:omitted|redacted|\[\*+\]|\*{3})/i.test(x);
+  const one = x => withheld(x) ? 'party withheld in filing' : tc(shortParty(x.split(/\s*[(“"]|,|;|\s+(?:dba|d\/b\/a)\s/i)[0]));
+  // a defined short name that starts the full name ("Nanochem Solutions, Inc. ... (“Nanochem”)") is preferred
+  const short = (x, full) => { const d = [...x.matchAll(/[“"]([^”"]{2,30})[”"]/g)].map(q => q[1]).find(q => full.toLowerCase().startsWith(q.toLowerCase() + ' ')); return d || full; };
+  let A = one(a), B = one(b); if (A !== 'party withheld in filing') A = short(a, A); if (B !== 'party withheld in filing') B = short(b, B);
+  return A.length > 1 && B.length > 1 && !/^(?:the\s+)?(?:parties|undersigned)/i.test(A + ' ' + B) && !/undersigned/i.test(B) && A !== 'party withheld in filing' ? `${A} / ${B}` : '';
 }
+// The one thing to check when a date is projected past a renewal: was notice sent in the previous cycle?
+const fmtD2 = d => { const [y, m, dd] = d.split('-'); return `${+dd} ${['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m - 1]} ${y}`; };
+export const checkLine = it => `Check: did either side send notice by ${fmtD2(it.prevActBy)}? If not, it renewed on ${fmtD2(it.prevRenewedOn)}.`;
 export const plural = (n, u) => `${n} ${u}${+n === 1 ? '' : 's'}`;
 export const DURATION_RE = new RegExp(`((?:${NUMWORD_RE})?\\s*(?:\\(\\s*\\d+\\s*\\))?|\\d+|${REDACT_RE})\\s*-?\\s*(?:consecutive\\s+)?(?:calendar\\s+|business\\s+)?(day|month|year|week)s?(?:['’]s?)?`, 'i');
 
@@ -430,7 +439,7 @@ export function schedule(x, asOf) {
       if (x.notice.via) c.push('medium');
       // A dated send-notice deadline is never 'none': at worst 'low' (the date is computed, the inputs need review).
       const conf = c.includes('none') || c.includes('low') ? 'low' : c.includes('medium') ? 'medium' : 'high';
-      items.push({ type: 'Send-notice deadline', date: ymd(actBy), actBy: true, who: x.notice.who, via: x.notice.via, confidence: conf, needsReview: nRev || !!x.notice.via || conf === 'low', termEnd: ymd(end), notice: { n: np.n, unit: np.unit }, renewed: k, initialEnd: x.term.end, why: `${x.notice.why} Worked out as ${ymd(end)} minus ${plural(np.n, np.unit)}.${projNote}${x.warnings ? ' ' + x.warnings[0] : ''}${x.renewal.needsReview && /conditional/.test(x.renewal.why) ? ' ' + x.renewal.why.replace(/^.*?(Renewal is conditional)/, '$1') : ''}`, source: x.notice.source, status: actBy < as ? 'past' : '' });
+      items.push({ type: 'Send-notice deadline', date: ymd(actBy), actBy: true, who: x.notice.who, via: x.notice.via, confidence: conf, needsReview: nRev || !!x.notice.via || conf === 'low', termEnd: ymd(end), notice: { n: np.n, unit: np.unit }, renewed: k, prevActBy: k > 0 ? ymd(actByOf(endOf(k - 1))) : '', prevRenewedOn: k > 0 ? ymd(addDays(endOf(k - 1), 1)) : '', initialEnd: x.term.end, why: `${x.notice.why} Worked out as ${ymd(end)} minus ${plural(np.n, np.unit)}.${projNote}${x.warnings ? ' ' + x.warnings[0] : ''}${x.renewal.needsReview && /conditional/.test(x.renewal.why) ? ' ' + x.renewal.why.replace(/^.*?(Renewal is conditional)/, '$1') : ''}`, source: x.notice.source, status: actBy < as ? 'past' : '' });
     } else items.push({ type: 'Send-notice deadline', date: '', confidence: 'none', needsReview: true, why: x.notice?.why || 'No notice period found.', source: x.notice?.source || null });
   }
   return items;

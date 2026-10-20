@@ -458,3 +458,21 @@ test('party names from the preamble, falling back to nothing', async () => {
   assert.equal(partiesFromPreamble(['This Agreement is made by and between ACME CORP., a Delaware corporation ("Acme"), and Beta LLC ("Beta").']), 'Acme / Beta');
   assert.equal(partiesFromPreamble(['Shopping list: eggs and milk.']), '');
 });
+
+// ---- independent review of a882e8b ----
+test('Star Brands check line is built from the previous cycle', async () => {
+  const { checkLine } = await import('../public/extract.js');
+  assert.equal(checkLine(buildQueue([C.c5], '2026-10-20')[0].item), 'Check: did either side send notice by 16 Dec 2024? If not, it renewed on 15 Jun 2025.');
+});
+test('party names: "between:" with a colon (Argent / Splash) and an omitted party (Nanochem)', async () => {
+  const { htmlToLines, partiesFromPreamble } = await import('../public/extract.js');
+  const rd = f => htmlToLines(fs.readFileSync(new URL('./fixtures/' + f, import.meta.url), 'utf8'));
+  const arg = rd('argent-splash-ex10-1.edgar.htm'), nan = rd('nanochem-supply-ex10-3.edgar.htm');
+  assert.equal(partiesFromPreamble(arg), 'Argent Biopharma / Splash Beverage Group'); assert.equal(partiesFromPreamble(nan), 'Nanochem / party withheld in filing');
+  assert.equal(buildQueue([{ id: 'a', name: 'a', lines: arg, x: extract(arg) }], '2026-10-19')[0].actBy, '2045-07-05');
+  assert.equal(buildQueue([{ id: 'n', name: 'n', lines: nan, x: extract(nan) }], '2026-10-19')[0].actBy, '2029-07-10');
+});
+test('holidays by rule for any year (2045, 2099)', () => {
+  const h45 = usHolidays(2045); assert.equal(h45.size, 11); assert.equal(h45.get('2045-07-04'), 'Independence Day'); assert.equal(h45.get('2045-11-23'), 'Thanksgiving Day');
+  assert.equal(usHoliday('2099-01-19'), 'Martin Luther King Jr. Day'); assert.equal(safeSendBy('2045-12-25').changed, true);
+});

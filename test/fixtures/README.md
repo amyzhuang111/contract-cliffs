@@ -25,3 +25,11 @@ Reviewer's unseen EDGAR exhibits (verbatim HTML as served by sec.gov, fetched Oc
 | alphega-ceo-ex10-1.edgar.htm | Alphega Innovations Corp. 8-K (0002038564-26-000012), EX-10.1 Executive Employment Agreement: https://www.sec.gov/Archives/edgar/data/2038564/000203856426000012/alpga_ex10-1.htm |
 
 Expected (reviewer's hand calculation, checked against the clauses): ReposiTrak term "three (3) years commencing on the Effective Date" (18 Aug 2026) ends 2029-08-17; 60 days' notice gives 2029-06-18. Alphega "continue through December 31, 2028" (explicit, high confidence), "one (1)-year" renewals, ≥90 days' notice gives 2028-10-02.
+More unseen exhibits from the independent review of a882e8b (verbatim, fetched Oct 19, 2026):
+
+| file | source |
+|---|---|
+| nanochem-supply-ex10-3.edgar.htm | Flexible Solutions International 8-K (0001493152-25-003527), EX-10.3 supply agreement (counterparty "(Omitted)" in the filing): https://www.sec.gov/Archives/edgar/data/1069394/000149315225003527/ex10-3.htm |
+| argent-splash-ex10-1.edgar.htm | Splash Beverage Group 8-K (0001731122-26-000917), EX-10.1 licence agreement ("by and between:" with a colon): https://www.sec.gov/Archives/edgar/data/1553788/000173112226000917/e7760_ex10-1.htm |
+
+Expected (independent reviewer's hand calculation): Nanochem 6 Jan 2030 minus 180 days = 2029-07-10; Argent 5 Jul 2046 minus 12 months = 2045-07-05. Names: "Nanochem / party withheld in filing", "Argent Biopharma / Splash Beverage Group".

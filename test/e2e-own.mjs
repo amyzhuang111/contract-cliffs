@@ -10,13 +10,13 @@ async function fresh(q = '/', w = 1440) { const p = await browser.newPage(); awa
 const status = p => p.$eval('#status', e => e.textContent);
 const big = p => p.$eval('#answer', e => e.hidden ? '' : [...e.querySelectorAll('.aleft > .lab, .hero-date, .wd, .cons, .next, .chip')].map(x => x.textContent.trim()).join(' | '));
 const waitStatus = (p, re, t = 20000) => p.waitForFunction(r => new RegExp(r).test(document.querySelector('#status').textContent), { timeout: t }, re.source);
-const DF = /^Send-notice date passed \| Passed19 Sep 2026 \| It renews on 19 Nov 2026 for 12 more months\. \| Next: send notice by 19 Sep 2027 · Sunday · in 335 days \| Passed 30 days ago$/;
+const DF = /^Send-notice date passed \| Passed19 Sep 2026 \| It renews on 19 Nov 2026 for 12 more months\. \| Next: send notice by Fri 17 Sep 2027 · in 333 days \| Passed 30 days ago$/;
 
 // 1. empty first screen: three things, nothing preloaded
 for (const w of [1440, 375]) {
   const p = await fresh('/?asof=2026-10-19', w);
   const s = await p.evaluate(() => ({ lede: document.querySelector('#lede').textContent.trim(), dz: [...document.querySelectorAll('#dzTitle span')].find(x => x.offsetParent)?.textContent.trim(), sub: document.querySelector('.subline').textContent.trim(), eb: document.querySelector('.eyebrow').innerText.trim(), cap: document.querySelector('.caption').innerText.trim(), hint: document.querySelector('#dzHint').textContent.trim(), cta: document.querySelector('#tryOne').textContent.trim(), ans: document.querySelector('#answer').hidden, q: document.querySelector('#queueSec').hidden, cards: document.querySelector('#ch').closest('section').hidden, addTop: document.querySelector('#about').getBoundingClientRect().top, ctaBottom: document.querySelector('#tryOne').getBoundingClientRect().bottom, sw: document.documentElement.scrollWidth }));
-  ok(s.eb === 'CONTRACT RENEWAL DEADLINES' && s.lede === 'Find the date you must send notice, before it renews.' && s.sub === 'Drop in a contract. Get the deadline, the exact clause it comes from, and a link to the source.' && s.dz === (w === 375 ? 'Choose a contract or paste text' : 'Drop a contract or paste text') && s.hint === 'PDF, Word or plain text · stays in your browser' && s.cta === 'Try a real SEC contract →' && s.cap === 'STAR BRANDS / SCHWAZZE LICENSE · EX-10.21 · SEC EDGAR', `${w}: first screen copy exactly as specced: ` + JSON.stringify([s.eb, s.lede, s.dz, s.cta, s.cap]));
+  ok(s.eb === 'CONTRACT RENEWAL DEADLINES' && s.lede === 'Find the date you must send notice, before it renews.' && s.sub === 'Drop in a contract. Get the deadline, the exact clause it comes from, and a link to the source.' && s.dz === (w === 375 ? 'Choose a contract' : 'Drop a contract or paste text') && s.hint === 'PDF, Word or plain text · stays in your browser' && s.cta === 'Try a real SEC contract →' && s.cap === 'STAR BRANDS / SCHWAZZE LICENSE · EX-10.21 · SEC EDGAR', `${w}: first screen copy exactly as specced: ` + JSON.stringify([s.eb, s.lede, s.dz, s.cta, s.cap]));
   ok(s.ans && s.q && s.cards, `${w}: no answer, list or cards before input`);
   ok(s.addTop >= (w === 1440 ? 900 : 812) && s.ctaBottom <= (w === 1440 ? 900 : 812), `${w}: one-click button above the fold, examples/exports/method below it (more at ${Math.round(s.addTop)}px)`);
   ok(s.sw <= w, `${w}: no sideways scroll`);
@@ -26,7 +26,7 @@ for (const w of [1440, 375]) {
 }
 // 2. demo: ?demo=1 -> one-click state -> deadline in < 2 s
 { const p = await fresh('/?demo=1&asof=2026-10-19');
-  ok(await p.evaluate(() => document.activeElement?.id === 'tryOne' && getComputedStyle(document.querySelector('#add')).display === 'none' && getComputedStyle(document.querySelector('#how').closest('section')).display !== 'none'), '?demo=1 focuses the one-click button and hides the extras');
+  ok(await p.evaluate(() => document.activeElement?.id === 'tryOne' && getComputedStyle(document.querySelector('#about')).display === 'none'), '?demo=1 focuses the one-click button and hides the extras');
   const t0 = Date.now(); await p.keyboard.press('Enter'); await p.waitForFunction(() => !document.querySelector('#answer').hidden, { timeout: 2000 }).catch(() => {}); const dt = Date.now() - t0;
   const b = await big(p); ok(/^Send notice by \| 16 Dec 2026 \| Wednesday \| or it renews for 24 more months\. \| 58 days left$/.test(b) && dt < 2000, `one click shows Star Brands/Schwazze's deadline in ${dt} ms: ${b}`);
   ok(await p.$eval('#answer', e => /“.{40,}/.test(e.querySelector('blockquote.aq')?.textContent || '') && !!e.querySelector('a[href*="sec.gov"]') && /lines 24–29/.test(e.textContent) && !!e.querySelector('.aq mark')), 'answer card: clause quoted beside the date with operative words marked, line ref and EDGAR link');
@@ -51,7 +51,7 @@ for (const w of [1440, 375]) {
 for (const f of ['c3-dragonfly.edgar.txt', 'c3-dragonfly.generated.pdf']) {
   const p = await fresh('/?asof=2026-10-19'); await (await p.$('#file')).uploadFile(fx(f)); await waitStatus(p, /^Read c3-dragonfly/);
   ok(DF.test(await big(p)), `${f}: ${await big(p)}`);
-  ok(/Falls on a Sunday\. Send by Fri 17 Sep 2027 to be safe\./.test(await p.$eval('#answer', e => e.textContent)) && /Needs review · unclear which term the notice counts from/i.test(await p.$eval('#answer .rvbar', e => e.textContent)), `${f}: weekend flag and the yellow needs-review bar`);
+  ok(!/Falls on a Sunday/.test(await p.$eval('#answer', e => e.textContent)) && /^Renews 19 Nov 2026\. Next: send notice by Fri 17 Sep 2027\.$/.test(await p.evaluate(() => { const c = document.querySelector('#answer'); return 'Renews 19 Nov 2026. Next: send notice by ' + (c.querySelector('.next').textContent.match(/by (.*?) ·/) || [])[1] + '.'; })) && /Needs review · unclear which term the notice counts from/i.test(await p.$eval('#answer .rvbar', e => e.textContent)), `${f}: weekend flag and the yellow needs-review bar`);
   await p.click('#answerMore'); await p.waitForSelector('#drawer.on'); ok(/19 Nov 2026/.test(await p.$eval('#drawer', e => e.textContent)), `${f}: drawer opens with every date`);
   await p.close(); }
 // 4. several files at once
@@ -130,8 +130,8 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w); co
   // same confidence word on card and row
   const ids = await p.$$eval('#lq li[data-id]', ls => ls.map(l => [l.dataset.id, l.querySelector('.lt .tag').textContent]));
   const cardTag0 = await p.$eval('#answer .conf .tag', e => e.textContent); const mism = [];
-  ok(cardTag0 === 'Check one thing' && await p.$eval('#answer .conf .tag', e => getComputedStyle(e).borderTopColor === 'rgb(134, 161, 182)' && getComputedStyle(e).borderTopWidth === '1px') && /^Check: has either side sent notice since 15 Jun 2025\? If not, the term rolled over once\.$/.test(await p.$eval('#answer .one', e => e.textContent)), `${w}: Star Brands: "Check one thing" with a 1px #86A1B6 outline and the one thing in one line: ` + cardTag0 + ' / ' + await p.$eval('#answer .one', e => e.textContent).catch(() => 'none'));
-  for (const [id, tag] of ids) { await p.$eval(`#lq li[data-id="${id}"]`, e => e.click()); await sleep(100); const ct = await p.$eval('#answer .conf .tag', e => e.textContent); if (ct !== tag) mism.push(id + ':' + tag + '/' + ct); }
+  ok(cardTag0 === 'Check one thing' && await p.$eval('#answer .conf .tag', e => getComputedStyle(e).borderTopColor === 'rgb(134, 161, 182)' && getComputedStyle(e).borderTopWidth === '1px') && /^Check: did either side send notice by 16 Dec 2024\? If not, it renewed on 15 Jun 2025\.$/.test(await p.$eval('#answer .one', e => e.textContent)), `${w}: Star Brands: "Check one thing" with a 1px #86A1B6 outline and the one thing in one line: ` + cardTag0 + ' / ' + await p.$eval('#answer .one', e => e.textContent).catch(() => 'none'));
+  for (const [id, tag] of ids) { await p.$eval(`#lq li[data-id="${id}"]`, e => e.click()); await sleep(100); const ct = await p.$eval('#answer', e => e.querySelector('.conf .tag')?.textContent || (e.querySelector('.rvbar') && !e.querySelector('.conf .tag') ? 'Needs review' : '')); if (ct !== tag) mism.push(id + ':' + tag + '/' + ct); }
   const back = await p.$eval('#lq', e => [...e.querySelectorAll('li')].find(l => /Star Brands/.test(l.textContent))?.querySelector('.lt .tag').textContent);
   ok(!mism.length && back === 'Check one thing', `${w}: confidence word identical on card and row for all 3 (Star Brands row: ${back})` + (mism.length ? ' ' + mism.join(', ') : ''));
   const ui = await p.evaluate(() => { const vis = e => e.offsetParent && getComputedStyle(e).visibility !== 'hidden' && e.getBoundingClientRect().width > 0 && e.getBoundingClientRect().height > 0 && !e.closest('details:not([open]) > :not(summary)');
@@ -144,7 +144,7 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w); co
 // 14. independent review of 7593ee9: real unseen exhibits through the UI, card math only, 375 scroll
 for (const [f, name, date] of [['repositrak-cfo-ex10-1.edgar.htm', 'ReposiTrak / John R. Merrill', '18 Jun 2029'], ['alphega-ceo-ex10-1.edgar.htm', 'Alphega Innovations / Luis Carlos Ung', '2 Oct 2028']]) {
   const p = await fresh('/?asof=2026-10-19'); await (await p.$('#file')).uploadFile(fx(f)); await waitStatus(p, /^Read /);
-  const c = await p.$eval('#answer', e => ({ name: e.querySelector('.iname').textContent, date: e.querySelector('.hero-date').textContent, cons: e.querySelector('.cons').textContent, math: e.querySelector('.math')?.textContent || '', tag: e.querySelector('.conf .tag').textContent, all: e.innerText }));
+  const c = await p.$eval('#answer', e => ({ name: e.querySelector('.iname').textContent, date: e.querySelector('.hero-date').textContent, cons: e.querySelector('.cons').textContent, math: e.querySelector('.math')?.textContent || '', tag: e.querySelector('.conf .tag')?.textContent || '', all: e.innerText }));
   ok(c.name === name && c.date === date && c.cons === 'or it renews for 1 more year.', `${f}: ${c.name} · ${c.date} · ${c.cons}`);
   ok(/^Term ends \d{1,2} \w{3} \d{4}\. Minus \d+ days = /.test(c.math) && !/\(s\)|\)\.|Projected|Worked out/.test(c.all), `${f}: card shows only "Term ends X. Minus N days = Y." (${c.math})`);
   if (/alphega/.test(f)) ok(c.tag === 'Clear', 'Alphega: explicit end date gives high confidence (Clear)');
@@ -155,5 +155,23 @@ for (const [f, name, date] of [['repositrak-cfo-ex10-1.edgar.htm', 'ReposiTrak /
 { const p = await fresh('/?asof=2026-10-19', 375); await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden); await sleep(900);
   const r = await p.evaluate(() => ({ chip: document.querySelector('#answer .chip').getBoundingClientRect().bottom, date: document.querySelector('#answer .hero-date').getBoundingClientRect().top }));
   ok(r.date >= 0 && r.chip <= 812, `375: after the first result the date and the days-left chip are on screen (date top ${Math.round(r.date)}, chip bottom ${Math.round(r.chip)})`); await p.close(); }
+// 15. re-review a882e8b
+for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
+  await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden); await sleep(300);
+  const h = await p.$eval('#answer .hero-date', e => ({ h: e.getBoundingClientRect().height, fs: parseFloat(getComputedStyle(e).fontSize), lab: getComputedStyle(document.querySelector('#answer .lab')).fontSize }));
+  ok(h.h <= h.fs * 1.3, `${w}: hero date on one line (${Math.round(h.h)}px tall at ${h.fs}px)`);
+  ok(w === 375 ? h.lab === '12px' : h.lab === '14px', `${w}: labels ${h.lab} (14/20 at >=1200, 12/16 below)`);
+  ok(await p.$eval('#addBar', e => e.offsetParent && e.textContent === 'Add a contract' && e.getBoundingClientRect().height >= 44), `${w}: the 56px bar has an "Add a contract" button`);
+  await p.click('#trySecond'); await waitStatus(p, /2 contracts/); await p.click('#trySecond'); await waitStatus(p, /3 contracts/); await sleep(600);
+  const df = await p.$$eval('#lq li', ls => ls.map(l => l.querySelector('.rcons').textContent).find(t => /Renews 19 Nov/.test(t)));
+  ok(df === 'Renews 19 Nov 2026. Next: send notice by Fri 17 Sep 2027.', `${w}: Dragonfly row leads with the safe date: ${df}`);
+  ok(await p.$$eval('#lq .rdate', ds => ds.every(d => d.getBoundingClientRect().height <= parseFloat(getComputedStyle(d).fontSize) * 1.6)), `${w}: queue dates never wrap`);
+  const ab = await p.evaluate(() => { const a = document.querySelector('#about'); const f = document.querySelector('footer .foot'); const gap = f.getBoundingClientRect().top - a.getBoundingClientRect().bottom; a.open = true; const ex = document.querySelector('#exCsv').offsetParent; const sm = [...a.querySelectorAll('a, button, input:not(label input), label:not([for]), summary')].filter(e => e.offsetParent && e.getBoundingClientRect().height < 44).map(e => e.id || e.textContent.trim().slice(0, 20)); return { gap: Math.round(gap), ex: !!ex, sm }; });
+  ok(ab.gap <= 48, `${w}: no dead gap under About (${ab.gap}px to the footer line)`);
+  ok(!ab.ex && !ab.sm.length, `${w}: About panel has no export blocks and every control is 44px` + (ab.sm.length ? ': ' + ab.sm.join(' | ') : ''));
+  const ft = await p.$eval('footer details.method summary', e => ({ t: e.innerText.replace(/\s+/g, ' ').trim(), h: e.getBoundingClientRect().height }));
+  ok(/^METHOD AND ACCURACY · How dates are worked out and how often they are right$/.test(ft.t) && ft.h >= 44, `${w}: footer link "${ft.t}" ${Math.round(ft.h)}px`);
+  if (w === 375) ok(await p.$eval('#answer .conf', e => { const t = e.querySelector('.tag').getBoundingClientRect(), s = e.querySelector('.seg').getBoundingClientRect(); return Math.abs(t.top + t.height / 2 - (s.top + s.height / 2)) < 8; }), '375: confidence meter inline with the chip');
+  await p.close(); }
 ok(errors.length === 0, 'no page errors' + (errors.length ? ': ' + errors.join(' | ') : ''));
 await browser.close(); console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);
