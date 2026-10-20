@@ -439,7 +439,7 @@ footer .foot{margin-top:0}
 .about[open] > summary{margin-bottom:16px}
 @media (min-width:768px){body:not(.has-any) .dz-pastelink{display:none}}
 .lq-head h2{text-wrap:balance}
-.about .samples{display:block}
 @media (max-width:480px){.about .samples .chips{display:flex;gap:8px;margin-top:8px}.about .samples button[data-sample]{min-height:44px}}
 .about:not([open]) ~ footer{margin-top:24px}
-@media (min-width:481px){.samples{display:flex;gap:8px;flex-wrap:nowrap;align-items:center}}
+@media (min-width:481px){.samples{display:flex;gap:8px;flex-wrap:nowrap;align-items:center}.samples .chips{display:inline-flex;gap:8px;align-items:center;white-space:nowrap}}
+@media (max-width:480px){.about .samples{display:block}}
