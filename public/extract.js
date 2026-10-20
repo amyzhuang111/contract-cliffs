@@ -222,6 +222,12 @@ export function extract(lines) {
   const res = { effective: null, term: null, renewal: null, notice: null, payments: [], other: [], reviewNotes: [] };
 
   for (const s of S) s.text = s.text.replace(/\b([Tt])e1m/g, '$1erm');
+  // Common typos in filed text ("comence", "commencment", "recieve").
+  for (const s of S) s.text = s.text.replace(/\b([Cc])om+enc(e|es|ed|ing)\b/g, '$1ommenc$2').replace(/\b([Cc])ommencment\b/g, '$1ommencement').replace(/\b([Rr])eciev(e|ed|es)\b/g, '$1eceiv$2');
+  // Recitals / background: from a RECITALS, BACKGROUND or WHEREAS opening to "NOW, THEREFORE" / "agree as follows". They describe other or prior agreements, not this one's term.
+  { const r0 = S.slice(0, 80).findIndex(x => /^\W*(?:RECITALS?|BACKGROUND|PRELIMINARY\s+STATEMENTS?|WHEREAS)\b/.test(x.text));
+    if (r0 >= 0) { let r1 = S.findIndex((x, i) => i > r0 && /\bNOW,?\s+THEREFORE\b|\bagree[sd]?\s+as\s+follows\b|^\W*(?:AGREEMENT|TERMS)\W*$/i.test(x.text)); if (r1 < 0 || r1 - r0 > 40) r1 = -1; if (r1 > 0) for (let i = r0; i < r1; i++) S[i].recital = true; }
+    for (const x of S) if (/^\W*WHEREAS\b/.test(x.text)) x.recital = true; }
   // Template brackets around a date or number ("[2024.08.07]", "[one (1)] year", "[3]"): read the value, remember it was bracketed.
   for (const s of S) { const t0 = s.text; s.text = s.text.replace(new RegExp(`\\[\\s*(${DATE_ANY}|(?:${NUMWORD_RE})?\\s*(?:\\(\\s*\\d+\\s*\\))?|\\d+)\\s*\\]`, 'gi'), (m, v) => v.trim() ? v.trim() : m); if (s.text !== t0) s.template = true; }
   // 1. Effective date
@@ -236,6 +242,11 @@ export function extract(lines) {
       const adj = /may\s+be\s+(?:adjusted|changed|modified)|or\s+such\s+(?:other|later|earlier)\s+date/i.test(s.text.slice(dm.index, dm.index + 160));
       res.effective = { date: ymd(last.date), confidence: adj ? 'medium' : 'high', needsReview: adj, label, why: `Date is expressly defined as the "${label}".` + (adj ? ' The clause lets this date be moved by agreement; confirm the actual start.' : ''), source: src(s) };
     } }
+  // A definitions-list entry: "“Effective Date” shall mean Monday, May 4, 2026." (anywhere, e.g. an Exhibit A of definitions).
+  if (!res.effective) for (const s of S) { const dm = s.text.match(/[“"]\s*(Effective|Commencement|Start)\s+Date\s*[”"]\s+(?:shall\s+mean|means|is|shall\s+be)\s+(?:(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday),?\s+)?/i); if (!dm) continue;
+    const d = parseDate(s.text.slice(dm.index + dm[0].length, dm.index + dm[0].length + 40)); if (!d || d.index > 0) continue;
+    const label = dm[1][0].toUpperCase() + dm[1].slice(1).toLowerCase() + ' Date';
+    res.effective = { date: ymd(d.date), confidence: 'high', needsReview: false, label, why: `Date is expressly defined in a definitions list: "${label}" means ${d.text}.`, source: src(s) }; break; }
   const effRe = /(?:made\s+(?:and\s+is\s+)?effective\s+as\s+of|entered\s+into\s+(?:effective\s+)?as\s+of|is\s+effective\s+as\s+of|is\s+made\s+on|dated\s+as\s+of|dated\s+and\s+effective\s+as\s+of|effective\s+as\s+of|dated|made\s+and\s+entered\s+into\s+as\s+of|made\s+as\s+of)\s+(?:this\s+|the\s+)?/i;
   // An Effective / Commencement / Start Date set by an event ("upon completion of Closing under the SPA (the “Effective Date”)") has no date in the document:
   // record it and never fall back to some other "dated" date for it.
@@ -270,7 +281,7 @@ export function extract(lines) {
   const isAmendment = /\bamendment\b/i.test(S.slice(0, 8).map(s => s.text).join(' ').slice(0, 1500));
   const OTHER_AGR = /\b(?:initial\s+)?term\s+of\s+(?:the|that|such|each)\s+(?:[A-Z][\w&’'-]*\s+){1,5}(?:Agreement|Lease|Contract|License)\b/;
   const otherAgr = t => !isAmendment && OTHER_AGR.test(t) && !/\bthis\s+(?:Agreement|Amendment)\b/i.test(t.match(OTHER_AGR)[0]);
-  const termCands = S.filter(s => /\b(initial\s+(term|license\s+period|period)|the\s+term\s+of\s+this|remain\s+in\s+effect|agreement\s+shall\s+have\s+an?\s+[\w()-]+\s+term|have\s+a\s+term|shall\s+commence|will\s+commence|shall\s+begin\s+on|(?:this\s+agreement|the\s+term(?:\s+of\s+this\s+agreement)?)\s+(?:shall|will)\s+(?:continue|extend|remain)|is\s+(?:hereby\s+)?extended\s+(?:through|until|to)|subscription\s+term\s+shall\s+be\s+(?=[^.\[]{0,20}\d)|(?:commence|begin)s?\s+on\s+\d{1,2}:\d{2}|ending\s+on\s+the\s+\w+\s+(?:\(\d+\w*\)\s+)?anniversary\s+of\s+the\s+Effective\s+Date|shall\s+continue\s+until\s+the\s+\w+\s+(?:\(\d+\w*\)\s+)?anniversary|remains?\s+in\s+full\s+force\s+and\s+effect[^.]{0,60}for\s+a\s+period\s+of|^\W{0,6}term\s*:|\bterm\s+of\s+(?:this\s+)?(?:license|agreement)\s*:|\bfor\s+a\s+period\s+beginning\s+on\b|\bterm\s+of\s+(?:the\s+)?(?:Employment|Engagement|Services|Consulting|Executive[’']s\s+employment)\s+(?:shall|will|is)\b|\b(?:commenc(?:es?|ing)|begin(?:s|ning)?)\s+on\s+the\s+[A-Z][\w ]{2,40}?Date\s+and\s+end|(?:this\s+agreement|the\s+term)\s+(?:shall|will)\s+(?:terminate|expire)\s+on\s+(?=[A-Z][a-z]+\s+\d|\d)|\bterm\s+of\s+the\s+Agreement\s+shall\s+be\s+(?=[^.]{0,20}\d))/i.test(s.text) && !/automatically\s+(renew|extend)/i.test(s.text.slice(0, 40)) && !/^\W{0,3}[“"][^”"]{1,60}[”"]\s+(?:means|has\s+the\s+meaning|shall\s+mean)/i.test(s.text) && !/following\s+(?:the\s+)?(?:termination|expiration)|surviv/i.test(s.text) && !NOT_TERM.test(s.text) && !otherAgr(s.text) && !/^\W*WHEREAS\b/.test(s.text) && (s.text.match(/[a-z]/g) || []).length > (s.text.match(/[A-Z]/g) || []).length);
+  const termCands = S.filter(s => !s.recital && /\b(initial\s+(term|license\s+period|period)|the\s+term\s+of\s+this|remain\s+in\s+effect|agreement\s+shall\s+have\s+an?\s+[\w()-]+\s+term|have\s+a\s+term|shall\s+commence|will\s+commence|shall\s+begin\s+on|(?:this\s+agreement|the\s+term(?:\s+of\s+this\s+agreement)?)\s+(?:shall|will)\s+(?:continue|extend|remain)|is\s+(?:hereby\s+)?extended\s+(?:through|until|to)|subscription\s+term\s+shall\s+be\s+(?=[^.\[]{0,20}\d)|(?:commence|begin)s?\s+on\s+\d{1,2}:\d{2}|ending\s+on\s+the\s+\w+\s+(?:\(\d+\w*\)\s+)?anniversary\s+of\s+the\s+Effective\s+Date|shall\s+continue\s+until\s+the\s+\w+\s+(?:\(\d+\w*\)\s+)?anniversary|remains?\s+in\s+full\s+force\s+and\s+effect[^.]{0,60}for\s+a\s+period\s+of|^\W{0,6}term\s*:|\bterm\s+of\s+(?:this\s+)?(?:license|agreement)\s*:|\bfor\s+a\s+period\s+beginning\s+on\b|\bterm\s+of\s+(?:the\s+)?(?:Employment|Engagement|Services|Consulting|Executive[’']s\s+employment)\s+(?:shall|will|is)\b|\b(?:commenc(?:es?|ing)|begin(?:s|ning)?)\s+on\s+the\s+[A-Z][\w ]{2,40}?Date\s+and\s+end|(?:this\s+agreement|the\s+term)\s+(?:shall|will)\s+(?:terminate|expire)\s+on\s+(?=[A-Z][a-z]+\s+\d|\d)|\bterm\s+of\s+the\s+Agreement\s+shall\s+be\s+(?=[^.]{0,20}\d))/i.test(s.text) && !/automatically\s+(renew|extend)/i.test(s.text.slice(0, 40)) && !/^\W{0,3}[“"][^”"]{1,60}[”"]\s+(?:means|has\s+the\s+meaning|shall\s+mean)/i.test(s.text) && !/following\s+(?:the\s+)?(?:termination|expiration)|surviv/i.test(s.text) && !NOT_TERM.test(s.text) && !otherAgr(s.text) && !/^\W*WHEREAS\b/.test(s.text) && (s.text.match(/[a-z]/g) || []).length > (s.text.match(/[A-Z]/g) || []).length);
   // A clearly-worded initial-term sentence beats an earlier passing mention of "the term" (e.g. a redacted forecast clause).
   const decFirst = termCands.find(s => /\buntil\s+December\s+31(?:st)?\s+of\s+the\s+(?!\d)/i.test(s.text) && /Initial\s+Term/.test(s.text));
   for (const s of decFirst ? [decFirst, ...termCands.filter(x => x !== decFirst)] : termCands) {
@@ -301,7 +312,7 @@ export function extract(lines) {
       res.term = { start: res.effective.date, end: ymd(addDays(addMonths(new Date(res.effective.date + 'T00:00:00Z'), 12 * n), untilAnn ? -1 : 0)), duration: { n, unit: 'year', text: ann[0] }, confidence: res.effective.needsReview ? 'medium' : 'high', needsReview: !!res.effective.needsReview, why: untilAnn ? `"${ann[0]}": the term runs until the anniversary, so its last day is the day before.` : `"${ann[0]}": the term runs through the anniversary date itself.`, source: src(s), rule: 'anniversary' };
       break;
     }
-    const thr = t.match(new RegExp(`\\b(?:through(?:\\s+and\\s+including)?|until|extend\\s+to|ending(?:\\s+on)?|expires?\\s+on|ends?\\s+on|(?:shall|will)\\s+(?:terminate|expire)\\s+on|shall\\s+end(?:\\s+on)?)\\s+(?:\\d{1,2}:\\d{2}\\s*[ap]\\.?m\\.?,?\\s+(?:[A-Z][a-z]+\\s+)?Time,?\\s+on\\s+)?(${DATE_ANY})`, 'i'));
+    const thr = t.match(new RegExp(`\\b(?:through(?:\\s+and\\s+including)?|until|extend\\s+to|ending(?:\\s+on)?|expires?\\s+on|ends?\\s+on|(?:shall|will)\\s+(?:terminate|expire)\\s+on|end(?:s|ing)?\\s+on\\s+the\\s+earlier\\s+of:?\\s*\\(?(?:a|i|1)\\)|shall\\s+end(?:\\s+on)?)\\s+(?:\\d{1,2}:\\d{2}\\s*[ap]\\.?m\\.?,?\\s+(?:[A-Z][a-z]+\\s+)?Time,?\\s+on\\s+)?(${DATE_ANY})`, 'i'));
     if (thr && parseDate(thr[1])) {
       const b = parseDate(thr[1]); const st = t.match(new RegExp(`\\b(?:begin|commence)s?\\s+on\\s+(${DATE_ANY})`, 'i'));
       res.term = { start: st && parseDate(st[1]) ? ymd(parseDate(st[1]).date) : (res.effective?.date || ''), end: ymd(b.date), confidence: s.template ? 'medium' : 'high', needsReview: !!s.template, why: (st ? 'Explicit start and end dates' : 'Explicit end date') + (st && /\bfor\s+(?:a\s+period\s+of\s+)?\S/i.test(t) ? '; the stated end date is used over the length' : '') + '.' + (s.template ? TEMPLATE_NOTE : ''), source: src(s), rule: 'explicit' };
@@ -370,9 +381,13 @@ export function extract(lines) {
     res.term = { start: res.effective.date, end: ymd(addDays(addMonths(new Date(res.effective.date + 'T00:00:00Z'), 12 * n), -1)), duration: { n, unit: 'year', text: fa[0] }, confidence: res.effective.needsReview ? 'medium' : 'high', needsReview: !!res.effective.needsReview, why: `No fixed term; it extends "${fa[0].replace(/^on\s+/i, '')}", so the first term ends the day before that anniversary.`, source: src(s), rule: 'anniversary' };
     break;
   }
+  // Guard: a term read from a sentence that talks about another or prior agreement is outside the operative term clause, so never Clear.
+  if (res.term?.end && res.term.confidence === 'high') {
+    const tt = res.term.source?.quote || '';
+    if (/\b(?:Prior|Original|Existing|Previous|Predecessor)\s+(?:[A-Z][a-z]+\s+)?Agreement\b|\bthat\s+certain\b|\bwhich\s+has\s+an?\s+(?:initial\s+)?term\b/.test(tt)) { res.term.confidence = 'medium'; res.term.needsReview = true; res.term.why += ' The sentence also describes another or prior agreement; confirm this is this agreement\'s own term.'; } }
   // 3. Renewal + 4. notice
   const NOT_AGREEMENT = /letter\s+of\s+credit|insurance\s+polic|security\s+deposit|surety\s+bond|[“"](?:Letter\s+of\s+Credit|Security|L\/C)[^”"]{0,30}[”"]\s+(?:means|shall\s+mean)/i;
-  const isRen = s => !NOT_AGREEMENT.test(s.text) && !otherAgr(s.text) && !/Termination\s+Date\s+shall\s+automatically\s+be\s+extended/i.test(s.text) && !/in\s+the\s+event\s+of\s+a\s+Change\s+(?:in|of)\s+Control[^.]{0,80}automatically\s+renew/i.test(s.text) && !/at\s+the\s+option\s+of\s+\w+[^.]{0,40}automatically\s+extended|\bif\s+an?\s+[^.]{0,80}\boccurs\b[^.]{0,200}automatically\s+extended/i.test(s.text) && /automatically\s+(?:be\s+)?(renew|extend)|renew\s+automatically|automatic(ally)?\s+renewal/i.test(s.text) && /renew|(?:term|agreement|period|employment|termination\s+date)[^.]{0,40}automatically\s+(?:be\s+)?extend/i.test(s.text) && !/^\W*If\s+this\s+Agreement\s+has\s+been\s+automatically\s+extended/i.test(s.text) && !/prevent\s+such/i.test(s.text.slice(0, 20));
+  const isRen = s => !s.recital && !NOT_AGREEMENT.test(s.text) && !otherAgr(s.text) && !/Termination\s+Date\s+shall\s+automatically\s+be\s+extended/i.test(s.text) && !/in\s+the\s+event\s+of\s+a\s+Change\s+(?:in|of)\s+Control[^.]{0,80}automatically\s+renew/i.test(s.text) && !/at\s+the\s+option\s+of\s+\w+[^.]{0,40}automatically\s+extended|\bif\s+an?\s+[^.]{0,80}\boccurs\b[^.]{0,200}automatically\s+extended/i.test(s.text) && /automatically\s+(?:be\s+)?(renew|extend)|renew\s+automatically|automatic(ally)?\s+renewal/i.test(s.text) && /renew|(?:term|agreement|period|employment|termination\s+date)[^.]{0,40}automatically\s+(?:be\s+)?extend/i.test(s.text) && !/^\W*If\s+this\s+Agreement\s+has\s+been\s+automatically\s+extended/i.test(s.text) && !/prevent\s+such/i.test(s.text.slice(0, 20));
   let ri = S.findIndex(s => isRen(s) && /automatically\s+renew|renew\w*\s+automatically/i.test(s.text)); if (ri < 0) ri = S.findIndex(isRen);
   if (ri >= 0) {
     const s = S[ri], t = s.text;
@@ -525,6 +540,13 @@ export function extract(lines) {
   for (const s of S) for (const m of s.text.matchAll(new RegExp(`${MONTH_RE}\\s+(\\d{1,2}),?\\s*(\\d{4})`, 'gi'))) { const mo = MONTHS[m[1].toLowerCase().replace('.', '').slice(0, 3)]; if (mo && !mkDate(+m[3], mo, +m[2])) bad.add(m[0]); }
   if (bad.size) res.reviewNotes.push(`Invalid calendar date in the text (${[...bad].slice(0, 3).map(b => '"' + b + '"').join(', ')}); ignored, not rolled over.`);
   if (/\[\s*\*+\s*\]/.test(S.map(s => s.text).join(' '))) res.reviewNotes.push('Public filing contains redactions ([***]). Some terms may be hidden.');
+  // Either side can end it at any time on N days' notice: a renewal then has no deadline that matters.
+  if (res.renewal) { const NDAYS = /(?:at\s+least\s+)?((?:[a-z]+\s+)?\(?\d+\)?|[a-z]+)\s*(?:calendar\s+)?(day|month)s?['’]?\s+(?:prior\s+)?(?:written\s+)?notice/i;
+    const rs = res.renewal.source && S.find(x => src(x).line === res.renewal.source.line && /renew|extend/i.test(x.text));
+    const either = S.find(x => /\b(?:either|each|any)\s+[Pp]arty\b[^.]{0,40}\bmay\s+terminate\s+(?:this\s+Agreement\s+)?(?:\([^)]*\)\s*)?at\s+any\s+time\b/i.test(x.text) && NDAYS.test(x.text.slice(x.text.search(/at\s+any\s+time/i))));
+    const until = S.find(x => /renew\w*[^.]{0,80}\buntil\s+terminated\s+by\s+\w+\s+(?:upon|on|with)\b/i.test(x.text) && NDAYS.test(x.text)) ;
+    const hit = (either && !res.notice?.period ? either : null) || (until && S.some(x => /\b(?:Company|Client|Customer)\s+may\s+terminate\s+(?:this\s+Agreement\s+)?(?:\([^)]*\)\s*)?at\s+any\s+time\b/i.test(x.text)) ? until : null);
+    if (hit) { const m = hit.text.slice(hit === either ? hit.text.search(/at\s+any\s+time/i) : 0).match(NDAYS); const d = parseDuration(m[0]); if (d && d.n) res.anyTimeExit = { n: d.n, unit: d.unit, source: src(hit), why: `Can be ended any time on ${plural(d.n, d.unit)}' notice, so no renewal deadline: "${hit.text.slice(0, 180)}"` }; } }
   // Safety net: renewal or extension wording that was not modelled must never read as Clear.
   if (!res.renewal) { const h = S.find(s => /\b(?:automatic\w*\s+(?:be\s+)?(?:renew|extend)\w*|renew(?:s|ed|al)?\b|(?:term|agreement|employment)[^.]{0,40}\b(?:be|is|shall\s+be)\s+extended)/i.test(s.text) && /\b(?:term|agreement|employment|period)\b/i.test(s.text)); if (h) res.renewHint = { text: h.text.slice(0, 200), other: NOT_AGREEMENT.test(h.text), source: src(h) }; }
   return res;
@@ -669,6 +691,7 @@ const fmtD = d => { const [y, m, dd] = d.split('-'); return `${+dd} ${['Jan','Fe
 export function buildQueue(contracts, asOf) {
   const rows = [];
   for (const c of contracts) {
+    if (c.x.anyTimeExit && c.x.renewal) { const e = c.x.anyTimeExit, txt = `can be ended any time on ${plural(e.n, e.unit)}' notice, so no renewal deadline`; rows.push({ safe: null, tag: txt, id: c.id, name: c.name, actBy: '', days: null, missed: null, item: { type: 'Send-notice deadline', why: e.why, source: e.source, confidence: 'medium', needsReview: false }, section: 'resolve', window: -1, lockMonths: durMonths(c.x.renewal.period), noticeLong: false, why: `No renewal deadline · ${txt}`, label: 'Send-notice deadline', expired: false, needsReview: false, anyTimeExit: e, confidence: 'none' }); continue; }
     const items = schedule(c.x, asOf);
     const act = items.find(i => i.type === 'Send-notice deadline');
     const exp = items.find(i => i.finalTerm) || items.find(i => /term|Expired/i.test(i.type));

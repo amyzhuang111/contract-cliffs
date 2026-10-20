@@ -81,3 +81,21 @@ Answers were worked out by hand from each filing before running the tool. Source
 | Polar Power consulting | no clear deadline (month-to-month, consultant may end on 30 days) | 20 Jun 2027, Check | debatable |
 | General Enterprise Ventures (PDF text) | 1 Mar 2027 | 1 Mar 2027, Check | right |
 | BTCS / Allen | 23 Dec 2027 | 23 Dec 2027, Clear | right |
+
+## Blind test 3, October 2026 (13 unseen agreements; PDF, DOCX, text and HTML uploaded through the browser; no code changes after)
+
+| Filing | Input | Hand answer (as of 19 Oct 2026) | Card | Result |
+|---|---|---|---|---|
+| Baxter / Hider | HTML | 19 Aug 2027 | 19 Aug 2027 | right |
+| Constellation / Fink | PDF | passed 1 Sep 2026; next 1 Sep 2027 | 1 Sep 2027, no passed warning | partial |
+| Global Asset Mgmt / Alpine letter | HTML | unclear (4 vs 6 months); about 12 Dec 2026 | no date | missed, flagged |
+| LSB Industries CIC | PDF | passed 17 Oct 2026; next 17 Oct 2027 | 17 Oct 2027, no passed warning | partial |
+| Solar Wind / Pickett | DOCX | passed 2 Oct 2026; next 2 Oct 2027; final expiry 31 Dec 2028 | "Expired 31 Dec 2019" | **wrong** (read "up to ten additional years" as one renewal) |
+| Timken / Boldea | HTML | passed 30 Sep 2026; next 30 Sep 2027 | no date | missed, flagged |
+| F&M Bank / Michael | HTML | passed 2 Oct 2026; next 2 Oct 2027 | 2 Oct 2027, no passed warning | partial |
+| DLH / Parker | DOCX | 2 Jul 2028 | no date | missed, flagged |
+| Lindsay / Magnusson | HTML | no deadline (extends daily) | no date | right |
+| UGI / Hartz | text | 28 May 2027 | 27 May 2027, Check | right (day-before convention) |
+| Chart / Belling | HTML | no deadline (no notice clause) | no date | right |
+| Hain Celestial / Lewis | PDF | 12 Jun 2028 | 11 Jun 2028, Check | right (day-before convention) |
+| Haley (Jan 2026 A&R) | DOCX | ambiguous renewal wording | no date | right to leave blank |

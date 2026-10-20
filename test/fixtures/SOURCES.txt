@@ -105,3 +105,13 @@ carvana-caret-amend2-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/17
 duos-polimeni-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1396536/000107997326001340/ex10x2.htm
 armlogi-goldensee-ex10-11.edgar.htm https://www.sec.gov/Archives/edgar/data/1972529/000121390026103636/ea030633901ex10-11.htm
 aibotics-gmoore-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1763329/000109690626001565/aibt_ex10z2.htm
+# 7e1cb4e held-out batch (m*), now tuning data (sec.gov, fetched Oct 19, 2026)
+polarpower-lu2-ex10-7.edgar.htm https://www.sec.gov/Archives/edgar/data/1622345/000149315226034876/ex10-7.htm
+kingfish-matthews-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1374881/000147793226004486/king_ex101.htm
+nhp-anderson-amend-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1561032/000156103226000048/nhp-amendmenttoemploymenta.htm
+sera-consulting-ex10-2.edgar.htm https://www.sec.gov/Archives/edgar/data/1534969/000119312526346862/sera-ex10_2.htm
+btcs-allen-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1436229/000149315226012916/ex10-1_b.htm
+birchtech-macpherson-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/728385/000147793226002802/meec_ex101.htm
+expeditors-wall-ex10-20.edgar.htm https://www.sec.gov/Archives/edgar/data/746515/000119312526208834/expd-ex10_20.htm
+unionbank-weidley-ex10-6.edgar.htm https://www.sec.gov/Archives/edgar/data/706863/000070686326000029/a123125ex106-employagree.htm
+immunic-tardio-ex10-1.edgar.htm https://www.sec.gov/Archives/edgar/data/1280776/000128077626000010/tardioemployagmta05.htm

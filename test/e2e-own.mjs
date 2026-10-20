@@ -183,7 +183,7 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
   ok(t.meta, `${w}: the filed date never splits`);
   const ab = await p.evaluate(() => { const a = document.querySelector('#about'); a.open = true; return { h: a.querySelector('h2').textContent, rem: !!document.querySelector('#remember').offsetParent, how: !!document.querySelector('#how').offsetParent, howLink: /\(\s*how\s*\)/i.test(a.innerText), ts: document.querySelector('#testset').textContent }; });
   ok(ab.h === 'How it works and how to trust it' && !ab.rem && !ab.how && !ab.howLink, `${w}: About panel: heading "How it works and how to trust it", no Remember, no "( how )", no empty How it works block`);
-  ok(ab.ts === 'Latest blind test, 13 SEC contracts it had never seen: 3 dates right, 5 correctly left blank, 3 missed, 1 debatable and 1 wrong. When it can’t tell, it says so and flags the row for a person to check.', `${w}: test-set line adds up to 10 (3 + 6 + 1 + 0)`);
+  ok(ab.ts === 'Latest blind test, 13 SEC contracts it had never seen: 3 dates right, 3 correctly left blank, 3 with the right next date but no warning that an earlier one had passed, 3 missed and 1 wrong. When it can’t tell, it says so and flags the row for a person to check.', `${w}: test-set line adds up to 10 (3 + 6 + 1 + 0)`);
   await p.close(); }
 // 17. reviewer ab9a38e: real VerifyMe, Simwon, Altech, Industrious, National Vision filings through the UI (card headline, as of 2026-10-19)
 const CARDS = [

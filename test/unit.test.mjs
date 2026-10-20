@@ -765,3 +765,24 @@ test('b1eb7bd #5 party names', () => {
   assert.equal(partiesFromPreamble(fx('armlogi-goldensee-ex10-11.edgar.htm').L), 'Goldensee / Armstrong Logistic');
   assert.equal(partiesFromPreamble(fx('duos-polimeni-ex10-2.edgar.htm').L), 'Duos Technologies Group / Matthew Polimeni');
 });
+// ---- 7e1cb4e follow-up (hand-worked as of 2026-10-19) ----
+test('7e1cb4e #1 Birchtech: the prior agreement in the recitals is ignored → 31 May 2030 − 60 days = 1 Apr 2030', () => {
+  const g = fx('birchtech-macpherson-ex10-1.edgar.htm'); assert.equal(g.x.term.end, '2030-05-31'); assert.equal(g.r.actBy, '2030-04-01');
+});
+test('7e1cb4e #1 guard: a term sentence that also describes a prior agreement is never Clear', () => {
+  const L = ['This Agreement is dated as of May 1, 2026 (the “Effective Date”) between Alpha Corp. and Beta LLC.', 'The term of this Agreement shall continue until May 31, 2028, replacing that certain Prior Agreement which has an initial term through May 31, 2027.', 'This Agreement shall automatically renew for successive one-year periods unless either party gives notice at least 60 days prior to the end of the then-current term.'];
+  const x = extract(L), r = buildQueue([{ id: 'a', name: 'a', lines: L, x }], AS)[0]; assert.equal(r.actBy, '2028-04-01'); assert.notEqual(r.confidence, 'high');
+});
+test('7e1cb4e #2 Union Bankshares: "“Effective Date” shall mean Monday, May 4, 2026" → 3 Feb 2029', () => {
+  const g = fx('unionbank-weidley-ex10-6.edgar.htm'); assert.equal(g.x.effective.date, '2026-05-04'); assert.equal(g.r.actBy, '2029-02-03');
+});
+test('7e1cb4e #3 Immunic: "comence … end on the earlier of (a) December 31, 2024" + yearly renewals → missed 2 Oct 2026, next 2 Oct 2027', () => {
+  const r = fx('immunic-tardio-ex10-1.edgar.htm').r; assert.equal(r.missed.actBy, '2026-10-02'); assert.equal(r.actBy, '2027-10-02');
+});
+test('7e1cb4e #4 NHP amendment: "at least 90 days’ prior to the applicable Term Date" → 29 Jun 2030 (HTML and PDF text)', () => {
+  for (const g of [fx('nhp-anderson-amend-ex10-1.edgar.htm'), fxt('nhp-anderson-amend-ex10-1.pdftotext.txt')]) { assert.equal(g.x.notice.period.n, 90); assert.equal(g.r.actBy, '2030-06-29'); }
+});
+test('7e1cb4e #5 any-time exit on N days: Sera and Polar have no renewal deadline', () => {
+  for (const f of ['sera-consulting-ex10-2', 'polarpower-lu2-ex10-7']) { const r = fx(f + '.edgar.htm').r; assert.equal(r.actBy, ''); assert.equal(r.tag, "can be ended any time on 30 days' notice, so no renewal deadline"); }
+  assert.equal(fx('kingfish-matthews-ex10-1.edgar.htm').r.actBy, '2027-04-16'); assert.equal(fx('btcs-allen-ex10-1.edgar.htm').r.actBy, '2027-12-23');
+});
