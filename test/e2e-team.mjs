@@ -1,5 +1,5 @@
 // e2e for team setup, per-contract context, plugging in (folder, Drive, exports) and progress. Both widths.
-import puppeteer from 'puppeteer-core'; import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
+import puppeteer from 'puppeteer-core'; import ExcelJS from 'exceljs'; import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
 const BASE = (process.env.BASE_URL || 'http://localhost:4173').replace(/\/$/, '');
 const SHOTS = process.env.SHOTS || '';
 const browser = await puppeteer.launch({ executablePath: process.env.CHROME || '/usr/bin/google-chrome', headless: 'new', args: ['--no-sandbox'] });
@@ -32,6 +32,7 @@ const setup = async p => { await openTeam(p); await type(p, '#tCompany', 'Genera
 for (const w of [1440, 375]) {
   // 1. setup panel: applied at once to the letter and the .ics; nothing stored without consent
   { const p = await fresh('/?asof=2026-10-19', w);
+    ok(await p.evaluate(() => !document.querySelector('script[src="/vendor/exceljs.min.js"]')), `${w}: exceljs is not loaded until a spreadsheet is asked for`);
     ok(await p.evaluate(() => !!document.querySelector('#teamBox summary') && /Set up for your team/.test(document.querySelector('#teamBox summary').textContent) && document.querySelector('#tWarn').value === '30'), `${w}: setup panel is there, warning days default to 30`);
     await add3(p); await setup(p);
     ok(await p.evaluate(() => localStorage.getItem('cc-team') === null && localStorage.getItem('cc-team-ok') === null), `${w}: setup is not stored without consent`);
@@ -88,7 +89,7 @@ for (const w of [1440, 375]) {
     ok(!(await acts()).some(a => a.startsWith('answerLetter')) && /Plan: renew\. No notice to send/.test(await p.$eval('#planLine', e => e.textContent)), `${w}: plan renew shows a plain reminder and no letter button`);
     ok(await p.evaluate(() => document.querySelector('#cOwner').value === 'Ana Ruiz' && document.querySelector('#cPlan').value === 'renew'), `${w}: context stays on the card after the re-render`);
     await p.evaluate(() => document.querySelector('#exCsv').click()); const csv = (await dl(p)).split('\r\n');
-    ok(/,owner,plan,note$/.test(csv[0]) && csv.some(l => /,Ana Ruiz,renew,"'=HYPERLINK\(""http:\/\/x""\)"$/.test(l)), `${w}: CSV has owner, plan and note, with the formula guard on the note`);
+    ok(/^\ufeffContract,Counterparty,Send notice by,Days left,Status,Plan,Owner,What to do,Note,Why,Filing link$/.test(csv[0]) && csv.some(l => /,renew,Ana Ruiz,[^,]*,"'=HYPERLINK\(""http:\/\/x""\)",/.test(l)) && !csv.join('\n').match(/\d{4}-\d{2}-\d{2}/), `${w}: CSV has the spreadsheet's columns, plan, owner and note, with the formula guard on the note and no ISO dates`);
     await p.evaluate(() => document.querySelector('#exAudit').click()); const au = await dl(p);
     ok(/Ana Ruiz,renew,"'=HYPERLINK/.test(au), `${w}: audit CSV carries the context`);
     await p.evaluate(() => document.querySelector('#exPack').click()); ok(/Owner: Ana Ruiz · Plan: renew · Note: =HYPERLINK/.test(await dl(p)), `${w}: audit pack carries the context`);
@@ -114,10 +115,19 @@ for (const w of [1440, 375]) {
     await p.evaluate(() => document.querySelector('#lqGcal').click()); const ics = await dl(p);
     ok((ics.match(/BEGIN:VEVENT/g) || []).length >= 2 && await p.evaluate(() => { const h = document.querySelector('#gcalHow'); return !h.hidden && /Settings, then Import and export/.test(h.textContent) && h.querySelector('a[href="https://calendar.google.com/calendar/r/settings/export"]'); }), `${w}: Add all to Google Calendar saves one .ics with every deadline and says how to import it`);
     ok(await p.evaluate(() => !/Subscribe/i.test(document.body.innerText)), `${w}: no fake Subscribe button`);
+    // Download as a spreadsheet: a real .xlsx, parsed back here
+    await p.evaluate(() => document.querySelector('#lqXlsx').click()); await waitStatus(p, /^Saved a spreadsheet with 3 contracts/, 20000);
+    { const d = await lastDl(p); const wb = new ExcelJS.Workbook(); await wb.xlsx.load(d.buf); const ws = wb.getWorksheet('Deadlines');
+      const dates = [3, 4, 5].map(n => ws.getCell(n, 3).value).filter(v => v instanceof Date).length;
+      ok(d.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' && wb.worksheets.map(x => x.name).join('|') === 'Deadlines|Needs a human look|About' && ws.rowCount === 5 && dates === 3 && typeof ws.getCell('D3').value === 'number' && ws.views[0].state === 'frozen' && ws.autoFilter === 'A2:K5', `${w}: Download as a spreadsheet gives a real .xlsx with 3 rows, real dates and numbers, frozen header and filter`);
+      const tsv0 = await p.evaluate(() => { document.querySelector('#lqSheets').click(); return new Promise(r => setTimeout(() => r(window.__lastTsv), 300)); });
+      ok(tsv0.split('\n')[0] === ws.getRow(2).values.slice(1).join('\t'), `${w}: Copy for Google Sheets has the spreadsheet's columns in the same order`);
+      if (SHOTS && w === 1440) { const f = path.join(SHOTS, 'xlsx-from-app.xlsx'); fs.writeFileSync(f, d.buf); execFileSync('node', [new URL('./xlsx-render.mjs', import.meta.url).pathname, f, SHOTS]); } }
+    ok(await p.evaluate(() => !!document.querySelector('script[src="/vendor/exceljs.min.js"]')), `${w}: exceljs is loaded from this site, only on first use`);
     // Sheets
     await p.evaluate(() => document.querySelector('#lqSheets').click()); await waitStatus(p, /Copied 3 rows for Google Sheets/);
-    const tsv = await p.evaluate(() => window.__lastTsv); const L = tsv.trim().split('\n');
-    ok(L.length === 4 && L.every(l => l.split('\t').length === 9) && L[0].startsWith('Contract\tAction\tDate'), `${w}: Copy for Google Sheets puts 3 tab-separated rows on the clipboard`);
+    const tsv = await p.evaluate(() => window.__lastTsv); const L = tsv.split('\n').filter(Boolean);
+    ok(L.length === 4 && L.every(l => l.split('\t').length === 11) && L[0] === 'Contract\tCounterparty\tSend notice by\tDays left\tStatus\tPlan\tOwner\tWhat to do\tNote\tWhy\tFiling link', `${w}: Copy for Google Sheets puts 3 tab-separated rows on the clipboard`);
     // email
     await p.evaluate(() => { document.addEventListener('click', e => { if (e.target.closest('a[href^="mailto:"]')) e.preventDefault(); }); document.querySelector('#lqMail').click(); });
     const href = await p.$eval('#lqMail', a => a.href);
@@ -145,23 +155,23 @@ for (const w of [1440, 375]) {
     await p.evaluate(() => { const li = [...document.querySelectorAll('#lq .lrow')].find(l => /goldensee/i.test(l.textContent)); if (li) li.click(); });
     await p.waitForFunction(() => /goldensee/i.test(document.querySelector("#answer .iname")?.textContent || ""));
     await p.evaluate(() => document.querySelector('#exSheets').click()); await waitStatus(p, /Copied/);
-    ok(/\tSend notice on 20 Jun 2027\t2027-06-20\t/.test((await p.evaluate(() => window.__lastTsv)).split('\n').find(l => /Goldensee/.test(l)) || ''), `${w}: Sheets send date for a 'within' clause is the Send notice on date`);
+    ok(/\t20 Jun 2027\t\d+\t[^\t]*\t\t\tSend notice on 20 Jun 2027 \(two readings\)\t/.test((await p.evaluate(() => window.__lastTsv)).split('\n').find(l => /Goldensee/.test(l)) || ''), `${w}: Sheets send date for a 'within' clause is the Send notice on date`);
     await p.evaluate(() => { document.addEventListener('click', e => { if (e.target.closest('a[href^="mailto:"]')) e.preventDefault(); }); document.querySelector('#exMail').click(); });
     ok(/2027-06-20: Goldensee/.test(decodeURIComponent(await p.$eval('#exMail', a => a.href))), `${w}: email list uses the same date`);
-    await p.evaluate(() => document.querySelector('#exCsv').click()); { const csv = await dl(p); ok(/Goldensee[^\n]*,2027-06-20,\d+,2026-10-20,2027-06-20,/.test(csv) && !/2027-06-17/.test(csv), `${w}: CSV send-by for 'within' is 2027-06-20`); }
+    await p.evaluate(() => document.querySelector('#exCsv').click()); { const csv = await dl(p); ok(/Goldensee[^\n]*,20 Jun 2027,\d+,/.test(csv) && !/17 Jun 2027/.test(csv), `${w}: CSV send-by for 'within' is 2027-06-20`); }
     await p.evaluate(() => document.querySelector('#exAudit').click()); ok(!/2027-06-17/.test(await dl(p)), `${w}: audit CSV has no 2027-06-17`);
     await p.evaluate(() => { document.querySelector('#ctxBox').open = true; }); await type(p, '#cPlan', 'renew');
     { const want = Math.round((Date.UTC(2027, 6, 21) - Date.UTC(2026, 9, 20)) / 864e5);
       const cd = await p.evaluate(() => ({ k: document.querySelector('#answer .aleft > .lab').textContent, h: document.querySelector('#answerBig').textContent, sub: document.querySelector('#answer .cons').textContent, chip: document.querySelector('#answer .chips').textContent, cl: document.querySelector('#answer .cl-d')?.textContent || '', win: !!document.querySelector('#answer .safe.win') }));
-      ok(cd.k === 'Renews' && cd.h === '21 Jul 2027' && cd.sub === 'Last day to change your mind: 20 Jun 2027, the date that satisfies both readings of "within one month before". Check with counsel which reading applies.' && !/the last day to send/.test(cd.sub) && cd.chip === `Renews in ${want} days` && cd.cl === 'Renews 21 Jul 2027' && !cd.win, `${w}: renew plan: card leads with Renews 21 Jul 2027, last day to change your mind 20 Jun 2027, ${want} days to go`);
+      ok(cd.k === 'Renews' && cd.h === '21 Jul 2027' && cd.sub === 'Last day to change your mind: 20 Jun 2027, the date that satisfies both readings of "within one month before". Check with counsel which reading applies. It is a Sunday, so check the notices clause allows delivery that day.' && !/the last day to send/.test(cd.sub) && cd.chip === `Renews in ${want} days` && cd.cl === 'Renews 21 Jul 2027' && !cd.win, `${w}: renew plan: card leads with Renews 21 Jul 2027, last day to change your mind 20 Jun 2027, ${want} days to go`);
       await shot(p, 'renew', w);
       await p.evaluate(() => document.querySelector('#answerMore').click()); await p.waitForSelector('#drawerRenew');
-      ok(new RegExp(`^Plan: renew\\. Renews 21 Jul 2027, in ${want} days\\. Last day to change your mind: 20 Jun 2027, the date that satisfies both readings of "within one month before"\\. Check with counsel which reading applies\\. Nothing to send\\.$`).test(await p.$eval('#drawerRenew', e => e.textContent)), `${w}: renew plan: drawer says the same`);
+      ok(new RegExp(`^Plan: renew\\. Renews 21 Jul 2027, in ${want} days\\. Last day to change your mind: 20 Jun 2027, the date that satisfies both readings of "within one month before"\\. Check with counsel which reading applies\\. It is a Sunday, so check the notices clause allows delivery that day\\. Nothing to send\\.$`).test(await p.$eval('#drawerRenew', e => e.textContent)), `${w}: renew plan: drawer says the same`);
       await p.evaluate(() => document.querySelector('#close').click());
       await p.evaluate(() => [...document.querySelectorAll('#lq .lrow')].find(l => /Dragonfly/.test(l.textContent)).click());
       await p.waitForFunction(() => [...document.querySelectorAll('#lq .lrow')].some(l => /Goldensee/.test(l.textContent)));
       const q = await p.evaluate(() => [...document.querySelectorAll('#lq .lrow')].find(l => /Goldensee/.test(l.textContent)).innerText);
-      ok(/21 Jul 2027/.test(q) && /RENEWS|Renews/.test(q) && /Last day to change your mind: 20 Jun 2027, the date that satisfies both readings of "within one month before"\. Check with counsel which reading applies/.test(q) && new RegExp(`Renews in ${want} days`).test(q) && !/Send notice|Window opens/i.test(q), `${w}: renew plan: queue card says the same`);
+      ok(/21 Jul 2027/.test(q) && /RENEWS|Renews/.test(q) && /Last day to change your mind: 20 Jun 2027, the date that satisfies both readings of "within one month before"\. Check with counsel which reading applies\. It is a Sunday, so check the notices clause allows delivery that day/.test(q) && new RegExp(`Renews in ${want} days`).test(q) && !/Send notice|Window opens/i.test(q), `${w}: renew plan: queue card says the same`);
       await p.evaluate(() => [...document.querySelectorAll('#lq .lrow')].find(l => /Goldensee/.test(l.textContent)).click()); await p.waitForFunction(() => /Goldensee/.test(document.querySelector('#answer .iname')?.textContent || '')); }
     { await p.evaluate(() => document.querySelector('#tryOne').click()); await waitStatus(p, /3 contracts/); await p.evaluate(() => [...document.querySelectorAll('#lq .lrow')].find(l => /Star Brands/.test(l.textContent))?.click()); await p.waitForFunction(() => /Star Brands/.test(document.querySelector('#answer .iname')?.textContent || ''));
       await p.evaluate(() => { document.querySelector('#ctxBox').open = true; }); await type(p, '#cPlan', 'renew');
@@ -174,7 +184,7 @@ for (const w of [1440, 375]) {
     ok(/SUMMARY:Renews 21 July 2027 \(plan: renew\)/.test(ev) && /reminder of the renewal date/.test(ev) && /days to the renewal date/.test(ev) && !/send notice|send-notice|window opens/i.test(ev), `${w}: renew plan: Armlogi's .ics event is a renewal-date reminder with no send-notice wording`);
     await p.evaluate(() => document.querySelector('#exSheets').click()); await waitStatus(p, /Copied/);
     const row = (await p.evaluate(() => window.__lastTsv)).split('\n').find(l => /Goldensee/.test(l)) || '';
-    ok(/Renews 21 Jul 2027; reminder only, nothing to send \(plan: renew\)\t2027-07-21/.test(row) && !/Send notice/.test(row), `${w}: renew plan: Sheets row says renewal reminder`);
+    ok(/\t20 Jun 2027\t243\tRenewing · review\trenew\t\tRenews 21 Jul 2027 \(in 274 days\); nothing to send\t/.test(row) && !/Send notice/.test(row), `${w}: renew plan: Sheets row says renewal reminder`);
     await p.ctx.close(); }
 }
 ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));

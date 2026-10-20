@@ -96,7 +96,7 @@ for (const c of edgar) {
 // exports
 const waitFile = async (re) => { for (let i = 0; i < 50; i++) { const f = fs.readdirSync(dl).find(n => re.test(n) && !n.endsWith('.crdownload')); if (f) return fs.readFileSync(path.join(dl, f), 'utf8'); await new Promise(r => setTimeout(r, 100)); } return null; };
 await page.click('#exCsv'); const csv = await waitFile(/\.csv$/);
-ok(csv && csv.startsWith('contract,filer,counterparty,item,who_acts,date') && csv.includes('2026-12-16') && csv.includes('https://www.sec.gov/Archives/edgar/'), 'CSV export downloaded with dates and EDGAR URLs');
+ok(csv && csv.startsWith('\ufeffContract,Counterparty,Send notice by,Days left,Status,Plan,Owner,What to do,Note,Why,Filing link') && csv.includes('16 Dec 2026') && csv.includes('https://www.sec.gov/Archives/edgar/'), 'CSV export downloaded with dates and EDGAR URLs');
 await page.click('#exIcs'); const ics = await waitFile(/\.ics$/);
 ok(ics && ics.startsWith('BEGIN:VCALENDAR') && (ics.match(/BEGIN:VEVENT/g) || []).length === 8 && ics.includes('DTSTART;VALUE=DATE:20261216') && !ics.includes('20240302'), 'ICS export: 7 upcoming send-notice deadlines + 1 MISSED renewal event (no expired Synacor event)');
 await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.includes('Audit pack') && (pk.match(/<section>/g) || []).length === 10, 'audit pack export');
@@ -107,7 +107,7 @@ await page.click('#exPack'); const pk = await waitFile(/\.html$/); ok(pk && pk.i
   const hits = Object.entries(texts).map(([k, v]) => [k, ((v || '').match(BANNED) || (v || '').match(BANNED_CS))?.[0]]).filter(([, m]) => m);
   ok(hits.length === 0, 'jargon sweep: no banned terms in the page, drawers, CSV, .ics or audit pack' + (hits.length ? ' ' + JSON.stringify(hits) : ''));
   ok(fs.readdirSync(dl).some(n => /^audit-pack-.*\.html$/.test(n)) && !fs.readdirSync(dl).some(n => /diligence/.test(n)), 'audit pack downloads as audit-pack-*.html');
-  ok(/MISSED: Dragonfly/.test(ics) && /DTSTART;VALUE=DATE:20261119/.test(ics) && /<b>MISSED<\/b>[^<]*<\/td><td>Renews 2026-11-19/.test(pk) && /MISSED send-notice deadline/.test(csv), 'exports mark Dragonfly MISSED with the 19 Nov 2026 renewal');
+  ok(/MISSED: Dragonfly/.test(ics) && /DTSTART;VALUE=DATE:20261119/.test(ics) && /<b>MISSED<\/b>[^<]*<\/td><td>Renews 2026-11-19/.test(pk) && /,Missed( · review)?,[^\n]*Missed; next notice by/.test(csv), 'exports mark Dragonfly MISSED with the 19 Nov 2026 renewal');
   await page.evaluate(() => { document.querySelectorAll('details').forEach(d => d.open = false); if (matchMedia('(min-width: 821px)').matches) document.getElementById('how').open = true; }); }
 // as-of control
 await page.$eval('#asof', e => { e.value = '2027-01-01'; e.dispatchEvent(new Event('change')); });

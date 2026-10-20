@@ -65,6 +65,7 @@ test('context: CSV, audit pack and .ics carry owner, plan and note; notes keep t
   const ics = withAlarms(toICS([E.c5], AS), { [E.c5.id]: ctxLine({ owner: 'Ana', plan: 'cancel', note: 'Switch' }) }).replace(/\r\n /g, '');
   assert.match(ics, /DESCRIPTION:[^\r\n]*Owner: Ana\. Plan: cancel\. Note: Switch/);
 });
+import { SHEET_COLS } from '../public/team.js';
 import { splitFiles, isDrive, driveId, DRIVE_BLOCKED, sheetsTSV, tsvCell, mailtoList, MAILTO_MAX } from '../public/team.js';
 test('plug in: folder files are filtered to what we can read', () => {
   const { ok, skipped } = splitFiles(['a.pdf', 'b.DOCX', 'c.txt', 'd.htm', 'e.html', 'logo.png', '.DS_Store', 'x.xlsx'].map(name => ({ name })));
@@ -78,8 +79,8 @@ test('plug in: Drive links are spotted and the blocked message is plain', () => 
 });
 const IT = n => Array.from({ length: n }, (_, i) => ({ name: `Vendor ${i + 1} / Acme Supply Company`, action: `Send notice by ${i + 1} Dec 2026`, date: '2026-12-01', days: 43, review: i % 2 === 0, owner: 'Ana', plan: 'cancel', note: 'line one\nline\ttwo', source: 'https://www.sec.gov/x' }));
 test('plug in: Sheets text is tab separated, one line per row, formulas made plain', () => {
-  const t = sheetsTSV(IT(2)); const L = t.trim().split('\n');
-  assert.equal(L.length, 3); assert.ok(L.every(l => l.split('\t').length === 9)); assert.match(L[1], /\tline one line two\t/);
+  const t = sheetsTSV(IT(2).map(i => ({ ...i, sendBy: '2026-12-01', todo: i.action }))); const L = t.split('\n').filter(Boolean);
+  assert.equal(L.length, 3); assert.ok(L.every(l => l.split('\t').length === 11)); assert.match(L[1], /\tline one line two\t/); assert.match(L[1], /\t1 Dec 2026\t43\t/); assert.equal(L[0], SHEET_COLS.join('\t'));
   assert.equal(tsvCell('=SUM(A1)'), "'=SUM(A1)"); assert.equal(tsvCell('+1 555'), "'+1 555"); assert.equal(tsvCell('-30'), '-30'); assert.equal(tsvCell('@x'), "'@x");
 });
 test('plug in: email draft is short and says when it was cut', () => {

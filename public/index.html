@@ -93,9 +93,9 @@
   <ol class="pflist" id="pfList"></ol>
 </section>
 <section class="liveq" id="liveQ" hidden aria-labelledby="lqh">
-  <div class="lq-head"><h2 class="lab" id="lqh"></h2><div class="lq-tools"><button class="tl" id="lqIcs">Export .ics</button><button class="tl" id="lqCsv">Export CSV</button><button class="tl" id="lqAudit">Audit CSV</button><button class="tl mute" id="clearAll">Clear all</button></div></div>
+  <div class="lq-head"><h2 class="lab" id="lqh"></h2><div class="lq-tools"><button class="tl" id="lqIcs">Export .ics</button><button class="tl mute" id="lqCsv">.csv</button><button class="tl" id="lqAudit">Audit CSV</button><button class="tl mute" id="clearAll">Clear all</button></div></div>
   <div class="portfolio" id="portfolio" aria-label="Portfolio summary"></div>
-  <div class="lq-plug" id="lqPlug"><button class="tl" id="lqGcal">Add all to Google Calendar</button><button class="tl" id="lqSheets">Copy for Google Sheets</button><a class="tl" id="lqMail" href="mailto:">Email me this list</a></div>
+  <div class="lq-plug" id="lqPlug"><button class="tl" id="lqXlsx">Download as a spreadsheet</button><button class="tl" id="lqGcal">Add all to Google Calendar</button><button class="tl" id="lqSheets">Copy for Google Sheets</button><a class="tl" id="lqMail" href="mailto:">Email me this list</a></div>
   <p class="howto" id="gcalHow" hidden></p>
   <p class="lab lqsum" id="lqSum"></p>
   <ol class="lq" id="lq"></ol>
@@ -149,7 +149,8 @@
     <p class="status">“Today” for the list. Change it to see what will be due later. Past dates stay visible.</p>
     <div class="exports"><span class="lab" style="margin-top:18px">Export</span>
     <div class="row">
-      <button id="exCsv" class="tl">Export CSV</button>
+      <button id="exXlsx" class="tl">Download as a spreadsheet</button>
+      <button id="exCsv" class="tl mute">.csv</button>
       <button id="exIcs" class="tl">Export calendar (.ics)</button>
       <button id="exPack" class="tl">Export audit pack (HTML)</button>
       <button id="exAudit" class="tl">Export audit pack (CSV)</button>

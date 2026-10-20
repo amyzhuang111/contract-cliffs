@@ -4,11 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test/unit.test.mjs test/features.test.mjs test/portfolio.test.mjs test/team.test.mjs",
+    "test": "node --test test/unit.test.mjs test/features.test.mjs test/portfolio.test.mjs test/team.test.mjs test/xlsx.test.mjs",
     "e2e": "node test/e2e.mjs && node test/e2e-own.mjs && node test/e2e-features.mjs && node test/e2e-portfolio.mjs",
     "serve": "node test/serve.mjs"
   },
   "devDependencies": {
+    "exceljs": "^4.4.0",
     "puppeteer-core": "^23.11.1"
   }
 }

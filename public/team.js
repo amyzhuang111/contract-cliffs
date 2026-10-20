@@ -57,8 +57,18 @@ export function driveId(u) { const s = String(u || ''); const m = s.match(/\/(?:
 // Tab-separated text for Google Sheets: one row per contract, no tabs or line breaks inside a cell,
 // and a leading = + - @ is made plain text so Sheets never runs it as a formula.
 export const tsvCell = v => { const s = String(v ?? '').replace(/[\t\r\n]+/g, ' ').trim(); return /^[=+\-@]/.test(s) && !/^-?\d+(\.\d+)?$/.test(s) ? "'" + s : s; };
-export const SHEET_HEAD = ['Contract', 'Action', 'Date', 'Days left', 'Needs review', 'Owner', 'Plan', 'Note', 'Source'];
-export const sheetsTSV = items => [SHEET_HEAD, ...items.map(i => [i.name, i.action, i.date, i.days, i.review ? 'yes' : 'no', i.owner, i.plan, i.note, i.source])].map(r => r.map(tsvCell).join('\t')).join('\n') + '\n';
+// One column list for the spreadsheet, the CSV and Copy for Google Sheets, in the same order.
+// The first 8 are the short main view; the long note, the reason and the filing link sit on the right.
+export const SHEET_COLS = ['Contract', 'Counterparty', 'Send notice by', 'Days left', 'Status', 'Plan', 'Owner', 'What to do', 'Note', 'Why', 'Filing link'];
+export const MAIN_COLS = 8;
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export const dmy = d => d ? `${+d.slice(8, 10)} ${MON[+d.slice(5, 7) - 1]} ${d.slice(0, 4)}` : '';
+// Text form of a row (CSV and Sheets): dates as "16 Dec 2026", numbers as numbers, nothing else.
+export const sheetText = i => [i.name, i.counterparty, dmy(i.sendBy), i.days, i.status, i.plan, i.owner, i.todo, i.note, i.why, i.link];
+export const sheetsTSV = items => [SHEET_COLS, ...items.map(sheetText)].map(r => r.map(tsvCell).join('\t')).join('\n') + '\n';
+// Tidy CSV: same columns, short cells, UTF-8 BOM so Excel reads the accents, formula guard on every text cell.
+const csvQ = v => { const s = tsvCell(v); return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+export const sheetCSV = items => '\ufeff' + [SHEET_COLS, ...items.map(sheetText)].map(r => r.map(csvQ).join(',')).join('\r\n') + '\r\n';
 // mailto drafts break past about 2,000 characters in some mail apps, so the body is cut with a note.
 export const MAILTO_MAX = 1800;
 export function mailtoList(items, { to = '', asOf = '' } = {}) {

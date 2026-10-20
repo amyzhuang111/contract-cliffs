@@ -1,6 +1,6 @@
-import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, clampWarn, ctxOf, setCtx, ctxLine, planAction, splitFiles, isDrive, DRIVE_BLOCKED, sheetsTSV, mailtoList } from '/team.js';
-import { windowOf, windowNote, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
+import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, usHoliday, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
+import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, clampWarn, ctxOf, setCtx, ctxLine, planAction, splitFiles, isDrive, DRIVE_BLOCKED, sheetsTSV, sheetCSV, mailtoList } from '/team.js';
+import { windowOf, windowNote, statusOf, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -131,16 +131,31 @@ $('#setHoldout').onclick = async () => { if (!holdout.length) { $('#status').tex
 function download(name, text, type) { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
 const tag = () => (set === 'edgar' ? 'sec-edgar' : 'my-docs') + '-asof-' + asOf;
 const guard = f => () => { if (!current().length) { $('#status').textContent = 'Nothing to export yet: add a contract first.'; return; } f(); };
-$('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf, cxOf), 'text/csv'));
+$('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, sheetCSV(listItems()), 'text/csv;charset=utf-8'));
+// Download as a spreadsheet: a formatted .xlsx built here with the vendored exceljs (loaded on first use only).
+let xlLib = null; const loadXl = () => xlLib || (xlLib = new Promise((res, rej) => { const s = document.createElement('script'); s.src = '/vendor/exceljs.min.js'; s.onload = () => res(window.ExcelJS); s.onerror = () => { xlLib = null; rej(new Error('load')); }; document.head.appendChild(s); }));
+$('#exXlsx').onclick = guard(async () => { $('#status').textContent = 'Building the spreadsheet…';
+  try { const [X, { buildXlsx, XLSX_TYPE }] = await Promise.all([loadXl(), import('/xlsx.js')]); const it = listItems(); const buf = await buildXlsx(X, it, { company: team.company, asOf });
+    download(`contract-cliffs-${tag()}.xlsx`, buf, XLSX_TYPE); $('#status').textContent = `Saved a spreadsheet with ${it.length} ${it.length === 1 ? 'contract' : 'contracts'}: Deadlines, Needs a human look and About.`; }
+  catch { $('#status').textContent = 'Could not build the spreadsheet. Use the CSV instead.'; } });
+$('#lqXlsx').onclick = () => $('#exXlsx').onclick();
 $('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), icsNotes(current()), icsOpts()), 'text/calendar'));
 $('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
 $('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf, cxOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
 // One list for Sheets and email: every live row, soonest first, pinned first.
+// One list for the spreadsheet, CSV, Sheets and email: every live row, sorted as the app sorts (pinned first, then urgency).
+const STATUS_SHORT = r => r.missed ? 'Missed' : r.days != null && r.days < 0 ? 'Passed' : !r.actBy ? 'No date found' : r.days <= 30 ? 'Due in 30 days' : r.days <= 90 ? 'Due in 90 days' : r.days <= 365 ? 'Due this year' : 'Later';
 const listItems = () => { const cs = current(); const byId = new Map(cs.map(c => [c.id, c]));
-  return order(buildQueue(cs, asOf)).filter(r => r.section !== 'lapsed').map(r => { const c = byId.get(r.id); const x = ctxOf(team, c); const w = windowOf(r); const date0 = w?.day || r.actBy || '';
-    const renewOn = x.plan === 'renew' && r.item?.termEnd && !r.missed ? ymd(addDays(new Date(r.item.termEnd + 'T00:00:00Z'), 1)) : '';
+  return order(buildQueue(cs, asOf)).filter(r => r.section !== 'lapsed').map(r => { const c = byId.get(r.id); const x = ctxOf(team, c); const w = windowOf(r); const date0 = w?.day || r.actBy || ''; const rv = renewView(c, r);
+    const renewOn = rv ? rv.on : '';
     const action = renewOn ? `Renews ${fmt(renewOn)}; reminder only, nothing to send (plan: renew)` : !r.actBy ? 'No date found; a person needs to read the clause' : r.missed ? `Missed ${fmt(r.missed.actBy)}. Next: send notice by ${fmt(r.actBy)}` : w ? `Send notice on ${fmt(w.day)}` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(r.actBy)}` : `Ends ${fmt(r.actBy)}`;
-    const date = renewOn || date0; return { name: c.name, action, date, days: date ? daysBetween(asOf, date) : '', pinned: isPinned(team, c), review: !!r.needsReview, owner: x.owner, plan: x.plan, note: x.note, source: c.url || c.fileName || '' }; }); };
+    const todo = rv ? `Renews ${fmt(rv.on)} (${rv.days <= 0 ? 'today' : 'in ' + dayWord(rv.days)}); nothing to send` : !r.actBy ? 'Read the clause: no date found' : r.missed ? `Missed; next notice by ${fmt(r.actBy)}` : w ? `Send notice on ${fmt(w.day)} (two readings)` : /Send-notice/.test(r.label || '') ? `Send notice by ${fmt(r.safe && !r.safe.passed ? r.safe.date : r.actBy)}` : `Ends ${fmt(r.actBy)}; plan the replacement`;
+    const sendBy = !r.actBy ? '' : w ? w.day : r.safe && !r.safe.passed ? r.safe.date : r.actBy;
+    const why = [rv ? lastLine(rv) + '.' : w ? `This date satisfies both readings of "${w.quote}"; check with counsel which reading applies.` : r.safe && !r.safe.passed && r.safe.date !== r.actBy ? r.safe.note.replace(/ · /g, ', ').replace(/([^.])$/, '$1.') : '', r.needsReview && !w ? `Needs review: ${r.tag || 'check the clause'}.` : ''].filter(Boolean).join(' ');
+    const status = rv ? 'Renewing' : STATUS_SHORT(r); const days = sendBy ? daysBetween(asOf, sendBy) : '';
+    const date = renewOn || date0;
+    return { name: c.name, counterparty: c.counterparty || '', sendBy, days, status: status + (r.needsReview ? ' · review' : ''), plan: x.plan, owner: x.owner, todo, note: x.note, why, link: c.url || '', review: !!r.needsReview, reason: r.tag || '', urgent: !rv && (!!r.missed || (days !== '' && days <= 30)),
+      action, date, pinned: isPinned(team, c), source: c.url || c.fileName || '' }; }); };
 const copyText = (t, done) => (navigator.clipboard?.writeText(t) || Promise.reject()).then(done, () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch { $('#status').textContent = 'Could not copy. Use Export CSV instead.'; } ta.remove(); });
 $('#exSheets').onclick = guard(() => { const it = listItems(); const t = sheetsTSV(it); window.__lastTsv = t; copyText(t, () => { $('#status').textContent = `Copied ${it.length} ${it.length === 1 ? 'row' : 'rows'} for Google Sheets. Click cell A1 in a sheet and paste.`; }); });
 $('#lqSheets').onclick = () => $('#exSheets').onclick();
@@ -187,7 +202,9 @@ const order = rows => { // pinned first; then 1 passed but renewing, 2 dated soo
 // Plan renew: lead with the renewal date; the notice date becomes the last day to change your mind.
 const renewView = (c, r) => { if (!c || ctxOf(team, c).plan !== 'renew' || !r?.item?.termEnd || r.missed || r.section === 'lapsed' || !r.actBy) return null; const on = ymd(addDays(new Date(r.item.termEnd + 'T00:00:00Z'), 1)); const w = windowOf(r); return { on, last: w?.day || r.actBy, days: daysBetween(asOf, on), within: !!w, quote: w?.quote || '' }; };
 // 'within N before' clauses read two ways: this date satisfies both, so say that and quote the clause's own words.
-const lastLine = v => v.within ? `Last day to change your mind: ${fmt(v.last)}, the date that satisfies both readings of ${v.quote ? `"${v.quote}"` : 'the notice clause'}. Check with counsel which reading applies` : `Last day to change your mind: ${fmt(v.last)}`;
+const offDay = d => { const h = usHoliday(d); if (h) return `It is ${h}`; const wd = new Date(d + 'T00:00:00Z').getUTCDay(); return wd === 0 ? 'It is a Sunday' : wd === 6 ? 'It is a Saturday' : ''; };
+const lastLine = v => (offDay(v.last) ? s0 => `${s0}. ${offDay(v.last)}, so check the notices clause allows delivery that day` : s0 => s0)(lastLine0(v));
+const lastLine0 = v => v.within ? `Last day to change your mind: ${fmt(v.last)}, the date that satisfies both readings of ${v.quote ? `"${v.quote}"` : 'the notice clause'}. Check with counsel which reading applies` : `Last day to change your mind: ${fmt(v.last)}`;
 function chip(r, rv) {
   if (rv) return `<span class="chip ${rv.days <= 30 ? 'u30' : rv.days <= 90 ? 'u90' : 'u365'}">${rv.days <= 0 ? 'Renews today' : `Renews in ${dayWord(rv.days)}`}</span>`;
   if (r.missed) { const ago = daysBetween(r.missed.actBy, asOf); return `<span class="chip passed">Passed ${dayWord(ago)} ago</span>`; }
@@ -217,7 +234,7 @@ function card(c, r) {
   const more = renewsFor(c); const ex = exitNote(c); const cons = (more ? `or it renews for ${more}.` : 'or it renews automatically.') + (ex ? ' ' + ex.text : '');
   const src = r.item?.source; const [cw, seg] = confWord(r.confidence);
   let kicker, hero, sub = '', cls = '';
-  if (rv) { kicker = 'Renews'; hero = esc(fmt(rv.on)); sub = esc(rv.within ? `${lastLine(rv)}.` : `${lastLine(rv)}, the last day to send a non-renewal notice.`); }
+  if (rv) { kicker = 'Renews'; hero = esc(fmt(rv.on)); sub = esc(rv.within ? `${lastLine(rv)}.` : `${lastLine0(rv)}, the last day to send a non-renewal notice${offDay(rv.last) ? `. ${offDay(rv.last)}, so check the notices clause allows delivery that day` : ''}.`); }
   else if (r.missed) {
     kicker = 'Send-notice date passed'; cls = 'passed';
     hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(r.missed.actBy))}</span>`;
