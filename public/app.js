@@ -1,4 +1,5 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
+import { withAlarms, gcalLink, letter, docx, obligations, portfolio, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -88,7 +89,23 @@ function openDrawer(id) {
    ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(reason(i.why))}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? dayWord(-d) + ' ago' : 'in ' + dayWord(d))(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
      <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} ${esc(sure(i.confidence))}.</p>
-     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}`;
+     ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(i.via.quote.slice(0, 220))}${i.via.quote.length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}<div class="lettr"><button class="btn-secondary sm" id="drawerLetter">Draft notice letter</button></div>${obligationsHtml(c)}`;
+  $('#drawerLetter').onclick = () => openLetter(id);
+  $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on'); $('#drawer').scrollTop = 0; $('#close').focus({ preventScroll: true });
+}
+function obligationsHtml(c) {
+  const ob = obligations(c);
+  const q = i => i.quote ? `<blockquote class="clause">${esc(showQuote(i.quote))}</blockquote><div class="loc"><span>${esc(i.location)}</span>${c.url ? `<a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR filing ↗</a>${i.lineStart ? `<a href="/source/?id=${esc(c.id)}&from=${i.lineStart}&to=${i.lineEnd || i.lineStart}#L${i.lineStart}" target="_blank" rel="noopener">Saved text, ${esc(i.location)}</a>` : ''}` : ''}</div>` : '';
+  return `<section class="obl" aria-label="More obligations"><h4 class="lab">More obligations</h4>${ob.map(o => `<div class="it ob-${o.key}"><div class="top"><span class="lab">${esc(o.label)}</span></div>${!o.found ? '<p class="why nd">Not found in this document.</p>' : o.items ? o.items.map(i => `${i.summary ? `<p class="why">${esc(i.summary)}</p>` : ''}${q(i)}`).join('') : `<p class="why">${esc(o.summary)}</p>${q(o)}${o.extra.map(a => `<p class="why">${esc(a.label)}:</p>${q(a)}`).join('')}`}</div>`).join('')}</section>`;
+}
+// F2: draft non-renewal letter, shown in the drawer with .docx download and Copy
+function openLetter(id) {
+  const c = current().find(x => x.id === id); if (!c) return;
+  const r = buildQueue([c], asOf)[0]; const t = letter(c, r, asOf);
+  if (!$('#drawer').classList.contains('on')) lastFocus = document.activeElement;
+  $('#dbody').innerHTML = `<div class="lab">Draft letter · ${esc(c.name)}</div><h3>Non-renewal notice (draft)</h3><p class="note">DRAFT. Check every line against the contract before sending. Anything marked [NOT FOUND, FILL IN] was not in the document.</p><div class="row lbtns"><button class="btn-primary sm" id="letterDocx">Download .docx</button><button class="btn-secondary sm" id="letterCopy">Copy</button></div><pre class="letter" id="letterText">${esc(t)}</pre>`;
+  $('#letterDocx').onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([docx(t)], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' })); a.download = `DRAFT-non-renewal-${c.name.replace(/[^A-Za-z0-9]+/g, '-').replace(/^-|-$/g, '')}.docx`; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); };
+  $('#letterCopy').onclick = e => { (navigator.clipboard?.writeText(t) || Promise.reject()).then(() => { e.target.textContent = 'Copied'; }, () => { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); e.target.textContent = 'Copied'; } catch { e.target.textContent = 'Copy failed: select the text'; } ta.remove(); }); };
   $('#drawer').classList.add('on'); $('#drawer').setAttribute('aria-hidden', 'false'); $('#scrim').classList.add('on'); $('#drawer').scrollTop = 0; $('#close').focus({ preventScroll: true });
 }
 const closeDrawer = () => { if (!$('#drawer').classList.contains('on')) return; $('#drawer').classList.remove('on'); $('#drawer').setAttribute('aria-hidden', 'true'); $('#scrim').classList.remove('on'); if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true }); };
@@ -104,7 +121,9 @@ function download(name, text, type) { const a = document.createElement('a'); a.h
 const tag = () => (set === 'edgar' ? 'sec-edgar' : 'my-docs') + '-asof-' + asOf;
 const guard = f => () => { if (!current().length) { $('#status').textContent = 'Nothing to export yet: add a contract first.'; return; } f(); };
 $('#exCsv').onclick = guard(() => download(`contract-cliffs-${tag()}.csv`, toCSV(current(), asOf), 'text/csv'));
-$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z'), 'text/calendar'));
+$('#exIcs').onclick = guard(() => download(`contract-cliffs-${tag()}.ics`, withAlarms(toICS(current(), asOf, new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z')), 'text/calendar'));
+$('#lqIcs').onclick = () => $('#exIcs').onclick(); $('#lqCsv').onclick = () => $('#exCsv').onclick();
+$('#exAudit').onclick = guard(() => download(`audit-pack-${tag()}.csv`, auditCSV(current(), asOf), 'text/csv')); $('#lqAudit').onclick = () => $('#exAudit').onclick();
 $('#exPack').onclick = guard(() => download(`audit-pack-${tag()}.html`, toPacket(current(), asOf), 'text/html'));
 
 let n = 0;
@@ -158,6 +177,7 @@ function oneThing(r) {
 const sendBy = r => { const d = r.safe?.date || r.actBy; return `${weekday(d).slice(0, 3)} ${fmt(d)}`; };
 const days = (n, u) => `${n} ${u}${+n === 1 ? '' : 's'}`;
 const renewsFor = c => { const p = c.x.renewal?.period; return p ? `${p.n} more ${p.unit}${p.n > 1 ? 's' : ''}` : ''; };
+const gcal = (c, r) => { if (!r.actBy || r.section === 'lapsed' || (r.days != null && r.days < 0) || !/send-notice/i.test(r.label || '')) return ''; const u = gcalLink({ name: c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: c.url }); return u ? `<a class="gcal" href="${esc(u)}" target="_blank" rel="noopener">Add to Google Calendar</a>` : ''; };
 function card(c, r) {
   const more = renewsFor(c); const cons = more ? `or it renews for ${more}.` : 'or it renews automatically.';
   const src = r.item?.source; const [cw, seg] = confWord(r.confidence);
@@ -194,7 +214,7 @@ function card(c, r) {
       <p class="conf"><span class="lab">Confidence:</span> ${confTag(r)[1] === 'rvtag' ? `<span class="cw">${esc(cw)}</span>` : `<span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span>`} <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
       ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
-      <button id="answerMore" class="btn-secondary sm">See every date and clause</button>
+      <div class="acts"><button id="answerMore" class="btn-secondary sm">See every date and clause</button><button id="answerLetter" class="btn-secondary sm">Draft notice letter</button>${gcal(c, r)}</div>
     </div></div></article>`;
 }
 function row(c, r) {
@@ -205,7 +225,7 @@ function row(c, r) {
     <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? 'Send notice by' : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
     <div class="ln"><span class="rname">${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span></div>
-    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR ↗</a>` : ''}</span></div>
+    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR ↗</a>` : ''}</span>${gcal(c, r)}</div>
   </li>`;
 }
 function live(cs) {
@@ -214,7 +234,7 @@ function live(cs) {
   if (!rows.length) { $('#answer').innerHTML = ''; $('#lq').innerHTML = ''; return; }
   const top = rows.find(r => r.id === expanded) || rows.find(r => r.id === cs[0].id) || rows[0];
   $('#answer').innerHTML = card(byId.get(top.id), top);
-  $('#answerMore').onclick = () => openDrawer(top.id);
+  $('#answerMore').onclick = () => openDrawer(top.id); $('#answerLetter').onclick = () => openLetter(top.id);
   $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(top.item.source.quote).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
   const rest = rows.filter(r => r !== top); const exp = rest.filter(r => r.section === 'lapsed'), act = rest.filter(r => r.section !== 'lapsed');
   $('#lqh').textContent = (matchMedia('(max-width:480px)').matches ? `Queue · ${cs.length} contracts · 1 open above` : `Queue · ${cs.length} contracts · by send-notice date · 1 open above`);
@@ -223,6 +243,7 @@ function live(cs) {
   const later = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days > 90).length; if (later) sum.push(`${later} later`);
   const nod = rows.filter(r => !r.actBy).length; if (nod) sum.push(`${nod} no date`); const ex = rows.filter(r => r.section === 'lapsed').length; if (ex) sum.push(`${ex} expired`);
   $('#lqSum').innerHTML = sum.join(' · ');
+  const pf = portfolio(rows); $('#portfolio').innerHTML = [['Due in 30 days', pf.d30, 'u30'], ['Due in 90 days', pf.d90, 'u90'], ['Due in 365 days', pf.d365, 'u365'], ['Passed', pf.passed, 'p'], ['Needs review', pf.review, 'r']].map(([k, v, c]) => `<div class="pf ${c}"><span class="lab">${k}</span><span class="sv">${v}</span></div>`).join('');
   $('#lq').innerHTML = act.map(r => row(byId.get(r.id), r)).join('');
   $('#lqExpired').innerHTML = exp.length ? `<button class="tl" id="showExp">${exp.length} expired · ${shownExpired ? 'Hide' : 'Show'}</button>${shownExpired ? `<ol class="lq">${exp.map(r => row(byId.get(r.id), r)).join('')}</ol>` : ''}` : '';
   $('#showExp')?.addEventListener('click', () => { shownExpired = !shownExpired; render(); });
@@ -236,7 +257,8 @@ function live(cs) {
 // ---------- drop zone states: parsing steps tied to the real stages, errors in plain words ----------
 const STEPS = ['Reading 1 of 3: extracting text', '2 of 3: finding term and renewal clauses', '3 of 3: computing the send-notice date'];
 const show = id => ['pasteBox', 'busy', 'dzErr'].forEach(k => { $('#' + k).hidden = k !== id; }) || ($('.dz-idle').hidden = !!id);
-async function stage(i, name) { show('busy'); $('#drop').classList.remove('err'); $('#busyName').textContent = 'Reading ' + name.replace(/\.[a-z0-9]+$/i, ''); $('#busyStep').textContent = STEPS[i - 1]; $('#busyBar').style.width = Math.round(i / 3 * 100) + '%'; await new Promise(r => setTimeout(r, 250)); }
+let bulk = null; // { i, n } while several files are read
+async function stage(i, name) { show('busy'); $('#drop').classList.remove('err'); $('#busyName').textContent = (bulk ? `File ${bulk.i} of ${bulk.n} · ` : '') + 'Reading ' + name.replace(/\.[a-z0-9]+$/i, ''); $('#busyStep').textContent = STEPS[i - 1]; const f = bulk ? (bulk.i - 1 + i / 3) / bulk.n : i / 3; $('#busyBar').style.width = Math.round(f * 100) + '%'; $('#busy .bar').setAttribute('aria-valuenow', String(Math.round(f * 100))); await new Promise(r => setTimeout(r, 250)); }
 const busyDone = () => { show(null); };
 function dzError(msg) { show('dzErr'); $('#drop').classList.add('err'); $('#dzErrHint').textContent = msg; }
 const plainErr = m => /no text layer/.test(m) ? 'This PDF is a scanned image. Paste the text instead.' : /unsupported/.test(m) ? 'File type not supported. Use PDF, Word or text.' : 'The file could not be opened. Try another copy, or paste the text instead.';
@@ -277,7 +299,13 @@ async function readFile(f) {
   }
   throw new Error('unsupported file type (use PDF, .docx, .txt or .htm)');
 }
-async function addFiles(files) { for (const f of files) { try { $('#status').textContent = 'Reading ' + f.name + '…'; await stage(1, f.name); await addDoc(f.name, await readFile(f)); } catch (err) { dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + f.name + ': ' + plainErr(err.message || ''); } } }
+async function addFiles(files) {
+  const many = files.length > 1; let added = 0; const failed = [];
+  for (let k = 0; k < files.length; k++) { const f = files[k]; if (many) bulk = { i: k + 1, n: files.length };
+    try { $('#status').textContent = (many ? `File ${k + 1} of ${files.length}: ` : '') + 'Reading ' + f.name + '…'; await stage(1, f.name); if (await addDoc(f.name, await readFile(f))) added++; else failed.push(f.name); } catch (err) { failed.push(f.name); dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + f.name + ': ' + plainErr(err.message || ''); } }
+  bulk = null;
+  if (many) { busyDone(); $('#drop').classList.remove('err'); $('#status').textContent = `Read ${files.length} files: ${added} added${failed.length ? `, ${failed.length} not added (${failed.join(', ').slice(0, 160)})` : ''}. ${mine.length} contracts in the queue.`; }
+}
 $('#file').onchange = async e => { await addFiles([...e.target.files]); e.target.value = ''; };
 // The whole page is a drop target.
 ['dragenter', 'dragover'].forEach(ev => window.addEventListener(ev, e => { e.preventDefault(); document.body.classList.add('dragging'); }));
@@ -300,14 +328,32 @@ $('#fetchUrl').onclick = async () => {
 };
 // Opt-in local memory (localStorage). Off by default; unticking deletes what was saved.
 const remember = () => localStorage.getItem('cc-remember') === '1';
-const save = () => { try { localStorage.setItem('cc-docs', JSON.stringify(mine.map(({ x, ...m }) => m))); } catch { $('#status').textContent = 'Could not save on this device (storage full); your contracts are still on the page.'; } };
+const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(mine.map(({ x, ...m }) => m))); } catch { $('#status').textContent = 'Could not save on this device (storage full); your contracts are still on the page.'; } };
 $('#remember').checked = remember();
-$('#remember').onchange = e => { if (e.target.checked) { localStorage.setItem('cc-remember', '1'); save(); $('#status').textContent = 'Saved on this device. Untick to delete.'; } else { localStorage.removeItem('cc-remember'); localStorage.removeItem('cc-docs'); $('#status').textContent = 'Deleted from this device.'; } };
-if (remember()) { try { for (const m of JSON.parse(localStorage.getItem('cc-docs') || '[]')) mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch {} }
+$('#remember').onchange = e => { if (e.target.checked) { localStorage.setItem('cc-remember', '1'); save(); $('#status').textContent = 'Saved on this device. Untick to delete.'; } else { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); $('#status').textContent = 'Deleted from this device.'; } };
+let storeNote = '';
+try { if (remember()) { const { docs, error } = parseSaved(localStorage.getItem(STORE_KEY)); for (const m of docs) { try { mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch {} }
+  if (error === 'corrupt') { localStorage.removeItem(STORE_KEY); storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; } else if (error === 'partial') storeNote = 'Some saved contracts could not be read and were skipped.'; } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
+$('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
 // Demo mode: straight to the one-click state.
+// Portfolio view: ?demo=1 only, behind a button. Never on the plain URL.
+let pfSort = 'date', pfDir = 1, pfRows = null;
+function renderPf() {
+  const P = window.__pf; if (!P || !pfRows) return;
+  $('#pfCount').textContent = pfRows.length;
+  $('#pfSub').textContent = `Stand-ins for a company's own vendor, cloud, compute and data agreements: ${pfRows.length} public contracts filed with the SEC, each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
+  const pf = portfolio(pfRows); $('#pfStrip').innerHTML = [['Due in 30 days', pf.d30, 'u30'], ['Due in 90 days', pf.d90, 'u90'], ['Due in 365 days', pf.d365, 'u365'], ['Passed', pf.passed, 'p'], ['Needs review', pf.review, 'r']].map(([k, v, c], i) => `<div class="pf ${c}" style="--i:${i}"><span class="lab">${k}</span><span class="sv">${v}</span></div>`).join('');
+  $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);
+  $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf);
+  document.querySelectorAll('.pfsort [data-sort]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.sort === pfSort)); b.onclick = () => { pfDir = pfSort === b.dataset.sort ? -pfDir : 1; pfSort = b.dataset.sort; $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf); document.querySelectorAll('.pfsort [data-sort]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.sort === pfSort))); }; });
+}
+if (params.get('demo') === '1') { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
+  try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+  catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
 if (params.get('demo') === '1') { document.body.classList.add('demo'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
 new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 if (set === 'edgar') loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
 else if (set === 'holdout') $('#setHoldout').onclick();
 else render();
+if (storeNote) $('#status').textContent = storeNote;
 if ('serviceWorker' in navigator && location.protocol === 'https:' || location.hostname === 'localhost') navigator.serviceWorker?.register('/sw.js').catch(() => {});

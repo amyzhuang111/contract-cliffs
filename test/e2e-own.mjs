@@ -179,7 +179,7 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
 for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
   await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden); await p.click('#trySecond'); await waitStatus(p, /2 contracts/); await p.click('#trySecond'); await waitStatus(p, /3 contracts/); await sleep(500);
   const t = await p.evaluate(() => { const b = [...document.querySelectorAll('.lq-tools .tl')].map(x => x.getBoundingClientRect()); return { txt: [...document.querySelectorAll('.lq-tools .tl')].map(x => x.innerText.trim()), oneRow: b.every(r => Math.abs(r.top - b[0].top) < 2), meta: [...document.querySelectorAll('#answer .meta .d')].every(d => d.getBoundingClientRect().height < 30) }; });
-  ok(t.oneRow && t.txt.join('|') === 'EXPORT .ICS|EXPORT CSV|CLEAR ALL', `${w}: queue tools on one row: ${t.txt.join(' | ')}`);
+  ok(t.oneRow && t.txt.join('|') === 'EXPORT .ICS|EXPORT CSV|AUDIT CSV|CLEAR ALL', `${w}: queue tools on one row: ${t.txt.join(' | ')}`);
   ok(t.meta, `${w}: the filed date never splits`);
   const ab = await p.evaluate(() => { const a = document.querySelector('#about'); a.open = true; return { h: a.querySelector('h2').textContent, rem: !!document.querySelector('#remember').offsetParent, how: !!document.querySelector('#how').offsetParent, howLink: /\(\s*how\s*\)/i.test(a.innerText), ts: document.querySelector('#testset').textContent }; });
   ok(ab.h === 'How it works and how to trust it' && !ab.rem && !ab.how && !ab.howLink, `${w}: About panel: heading "How it works and how to trust it", no Remember, no "( how )", no empty How it works block`);

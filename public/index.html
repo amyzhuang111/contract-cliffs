@@ -44,7 +44,7 @@
     <div class="dz-busy" id="busy" hidden aria-live="polite">
       <p class="lab" id="busyName"></p>
       <p class="busy-step" id="busyStep"></p>
-      <div class="bar"><span id="busyBar"></span></div>
+      <div class="bar" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100"><span id="busyBar"></span></div>
     </div>
     <div class="dz-err" id="dzErr" hidden>
       <p class="dz-big">Couldn’t read this file</p>
@@ -68,8 +68,20 @@
 </section>
 <section class="answer" id="answer" hidden aria-live="polite"></section>
 <section class="prompt" id="prompt" hidden><p id="promptText">Add another contract to build a priority queue</p><div class="pr-r"><button id="trySecond" class="btn-secondary">Add a real SEC contract</button><p class="caption pr-cap">Real SEC filing</p></div></section>
+<div class="pfload" id="pfLoad" hidden><button class="btn-secondary" id="loadPf">Load 25 real public contracts</button><p class="caption pfnote">Public SEC filings, standing in for your own agreements.</p></div>
+<section class="pfv" id="pfView" hidden aria-labelledby="pfh">
+  <p class="lab">Portfolio · <span id="pfCount"></span> contracts</p>
+  <h2 id="pfh">Every renewal deadline, in one view</h2>
+  <p class="sub" id="pfSub"></p>
+  <div class="portfolio" id="pfStrip" aria-label="Portfolio summary"></div>
+  <div class="pftl" id="pfTimeline"></div>
+  <div class="row pfsort" role="group" aria-label="Sort the list"><span class="lab">Sort by</span><button data-sort="date" aria-pressed="true">Date</button><button data-sort="days" aria-pressed="false">Days left</button><button data-sort="name" aria-pressed="false">Parties</button><button data-sort="conf" aria-pressed="false">Confidence</button><button data-sort="status" aria-pressed="false">Status</button></div>
+  <div class="pfhead lab" aria-hidden="true"><span>Parties</span><span>Send by</span><span>Days left</span><span>Confidence</span><span>Status</span><span>Source</span></div>
+  <ol class="pflist" id="pfList"></ol>
+</section>
 <section class="liveq" id="liveQ" hidden aria-labelledby="lqh">
-  <div class="lq-head"><h2 class="lab" id="lqh"></h2><div class="lq-tools"><button class="tl" id="lqIcs">Export .ics</button><button class="tl" id="lqCsv">Export CSV</button><button class="tl mute" id="clearAll">Clear all</button></div></div>
+  <div class="lq-head"><h2 class="lab" id="lqh"></h2><div class="lq-tools"><button class="tl" id="lqIcs">Export .ics</button><button class="tl" id="lqCsv">Export CSV</button><button class="tl" id="lqAudit">Audit CSV</button><button class="tl mute" id="clearAll">Clear all</button></div></div>
+  <div class="portfolio" id="portfolio" aria-label="Portfolio summary"></div>
   <p class="lab lqsum" id="lqSum"></p>
   <ol class="lq" id="lq"></ol>
   <div id="lqExpired"></div>
@@ -99,6 +111,7 @@
     <span class="lab" style="margin-top:18px">Privacy</span>
     <p class="status" id="privacy">Files are read in your browser. Nothing is uploaded or stored. SEC links are fetched from sec.gov through a small proxy that keeps nothing.</p>
     <label class="remember"><input type="checkbox" id="remember"> Remember my contracts on this device (saved in this browser only; untick to delete)</label>
+    <button class="tl mute" id="resetStore">Delete saved data and reset</button>
   </div>
   <div>
     <label class="lab" for="asof">As of</label>
@@ -109,6 +122,7 @@
       <button id="exCsv" class="tl">Export CSV</button>
       <button id="exIcs" class="tl">Export calendar (.ics)</button>
       <button id="exPack" class="tl">Export audit pack (HTML)</button>
+      <button id="exAudit" class="tl">Export audit pack (CSV)</button>
     </div></div>
   </div>
 </section>
