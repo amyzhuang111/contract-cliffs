@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test test/unit.test.mjs test/features.test.mjs",
-    "e2e": "node test/e2e.mjs && node test/e2e-own.mjs && node test/e2e-features.mjs",
+    "test": "node --test test/unit.test.mjs test/features.test.mjs test/portfolio.test.mjs",
+    "e2e": "node test/e2e.mjs && node test/e2e-own.mjs && node test/e2e-features.mjs && node test/e2e-portfolio.mjs",
     "serve": "node test/serve.mjs"
   },
   "devDependencies": {

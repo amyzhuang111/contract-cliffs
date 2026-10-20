@@ -336,6 +336,20 @@ try { if (remember()) { const { docs, error } = parseSaved(localStorage.getItem(
   if (error === 'corrupt') { localStorage.removeItem(STORE_KEY); storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; } else if (error === 'partial') storeNote = 'Some saved contracts could not be read and were skipped.'; } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
 $('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
 // Demo mode: straight to the one-click state.
+// Portfolio view: ?demo=1 only, behind a button. Never on the plain URL.
+let pfSort = 'date', pfDir = 1, pfRows = null;
+function renderPf() {
+  const P = window.__pf; if (!P || !pfRows) return;
+  $('#pfCount').textContent = pfRows.length;
+  $('#pfSub').textContent = `Stand-ins for a company's own vendor, cloud, compute and data agreements: ${pfRows.length} public contracts filed with the SEC, each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
+  const pf = portfolio(pfRows); $('#pfStrip').innerHTML = [['Due in 30 days', pf.d30, 'u30'], ['Due in 90 days', pf.d90, 'u90'], ['Due in 365 days', pf.d365, 'u365'], ['Passed', pf.passed, 'p'], ['Needs review', pf.review, 'r']].map(([k, v, c], i) => `<div class="pf ${c}" style="--i:${i}"><span class="lab">${k}</span><span class="sv">${v}</span></div>`).join('');
+  $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);
+  $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf);
+  document.querySelectorAll('.pfsort [data-sort]').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.sort === pfSort)); b.onclick = () => { pfDir = pfSort === b.dataset.sort ? -pfDir : 1; pfSort = b.dataset.sort; $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf); document.querySelectorAll('.pfsort [data-sort]').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.sort === pfSort))); }; });
+}
+if (params.get('demo') === '1') { $('#pfLoad').hidden = false; $('#loadPf').onclick = async () => { const b = $('#loadPf'); b.disabled = true; b.textContent = 'Loading…';
+  try { const P = window.__pf = await import('/portfolio.js'); const cs = await P.loadPortfolio(); pfRows = P.rowsFor(cs, asOf); b.textContent = `Load ${cs.length} real public contracts`; $('#pfView').hidden = false; renderPf(); $('#pfView').scrollIntoView({ block: 'start', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+  catch { b.textContent = 'Could not load. Try again'; } b.disabled = false; }; }
 if (params.get('demo') === '1') { document.body.classList.add('demo'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
 new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 if (set === 'edgar') loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
