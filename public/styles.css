@@ -729,4 +729,4 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 /* Desktop keeps the 14/20 labels; 13px is the floor below 1200 */
 @media (min-width:1200px){#answer .lab,#liveQ .lab,.pfv > .lab,.pflist .tag,#answer .tag,#liveQ .tag{font-size:14px;line-height:20px}}
 /* Needs review reads in sentence case at 14px, like the rest of the key */
-.rv,.pflegend .rv,.tl-foot .rv{font-family:var(--font-sans);font-size:14px;text-transform:none;letter-spacing:0}
+.pflegend .rv,.tl-foot .rv{font-family:var(--font-sans);font-size:14px;text-transform:none;letter-spacing:0}
