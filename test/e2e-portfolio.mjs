@@ -12,6 +12,7 @@ async function fresh(q, w = 1440, reduce = false) { const ctx = await browser.cr
   await p.goto(BASE + q, { waitUntil: 'networkidle0' }); return p; }
 const load = async p => { await p.click('#loadPf'); await p.waitForSelector('#pfView:not([hidden]) #pfList li'); await sleep(1800); };
 
+const noJargon = p => p.evaluate(() => { const d = document.querySelector('#drawer'); return [...document.body.querySelectorAll('*')].filter(e => e.offsetParent && !d.contains(e) && [...e.childNodes].some(n => n.nodeType === 3 && /edgar|confidence|calibrat/i.test(n.textContent))).map(e => e.textContent.trim().slice(0, 60)).concat([...document.querySelectorAll('[aria-label]')].filter(e => !d.contains(e) && /edgar|confidence|calibrat/i.test(e.getAttribute('aria-label'))).map(e => e.getAttribute('aria-label'))); });
 for (const w of [1440, 375]) {
   { const p = await fresh('/?asof=2026-10-19', w); await sleep(800);
     ok(await p.evaluate(() => document.querySelector('#pfView').hidden) && !p.reqs.some(u => /portfolio\.json/.test(u)), `${w}: plain URL: portfolio closed, no portfolio data fetched on load`);
@@ -23,6 +24,7 @@ for (const w of [1440, 375]) {
     ok(top.h === 'Act on these 2 this month. 1 more is next.' && JSON.stringify(top.t3) === JSON.stringify([['Glacier Bancorp / Glacier Bank', 'Send notice by 22 Oct 2026', '3 days left'], ['urban-gro / Richard Akright', 'Send notice by 17 Nov 2026', '29 days left'], ['Entravision / Univision Network', 'Send notice by 1 Mar 2027', '133 days left']]), `${w}: opening view lists the 3 to act on first with action and days left`);
     ok(top.caps.length === 3 && top.caps.every(Boolean) && (w === 375 || top.t3b <= top.H) && top.wkb <= top.H && top.sb <= top.H && top.eb <= top.H && top.timelineTop >= top.eb && !top.stan, `${w}: This week, ${w === 375 ? '' : 'top 3, '}the three numbers and export are above the fold (${Math.round(top.eb)} of ${top.H}px); the rest is below; no names of the interviewer`);
     ok(/^This week \(19 Oct to 25 Oct 2026\): 1 contract needs notice sent\s+Glacier Bancorp \/ Glacier Bank\s+Send non-renewal notice by Thu 22 Oct 2026 · 3 days left · Needs review\s+Add to calendar\s+Draft notice$/.test(top.wk.trim()) && /text=Send non-renewal notice: Glacier Bancorp/.test(top.wkg) && /dates=20261022\//.test(top.wkg), `${w}: This week names the contract, the action, the date and one button each (${JSON.stringify(top.wk)})`);
+    { const j = await noJargon(p); ok(!j.length, `${w}: portfolio main view has no EDGAR, confidence or calibration (${JSON.stringify(j)})`); }
     await p.click('#pfWeek [data-letter]'); await new Promise(r => setTimeout(r, 300)); ok(await p.evaluate(() => /Non-renewal notice \(draft\)/.test(document.querySelector('#dbody').textContent) && /22 October 2026/.test(document.querySelector('#letterText').textContent)), `${w}: Draft notice opens the letter for that contract`);
     await p.evaluate(() => document.querySelector('#close').click()); await new Promise(r => setTimeout(r, 200));
     const files = await p.evaluate(async () => { const got = []; const orig = URL.createObjectURL; URL.createObjectURL = b => { got.push(b); return orig(b); };
