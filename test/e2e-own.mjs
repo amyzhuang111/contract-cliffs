@@ -16,7 +16,7 @@ const DF = /^Send-notice date passed \| Passed19 Sep 2026 \| It renews on 19 Nov
 for (const w of [1440, 375]) {
   const p = await fresh('/?asof=2026-10-19', w);
   const s = await p.evaluate(() => ({ lede: document.querySelector('#lede').textContent.trim(), dz: [...document.querySelectorAll('#dzTitle span')].find(x => x.offsetParent)?.textContent.trim(), sub: document.querySelector('.subline').textContent.trim(), eb: document.querySelector('.eyebrow').innerText.trim(), cap: document.querySelector('.caption').innerText.trim(), hint: document.querySelector('#dzHint').textContent.trim(), cta: document.querySelector('#tryOne').textContent.trim(), ans: document.querySelector('#answer').hidden, q: document.querySelector('#queueSec').hidden, cards: document.querySelector('#ch').closest('section').hidden, addTop: document.querySelector('#about').getBoundingClientRect().top, ctaBottom: document.querySelector('#tryOne').getBoundingClientRect().bottom, sw: document.documentElement.scrollWidth }));
-  ok(s.eb === 'CONTRACT RENEWAL DEADLINES' && s.lede === 'Know the last day to stop a contract renewing.' && s.sub === 'Drop in a contract. Get the notice deadline and the sentence it comes from, then add it to Google Calendar or a Sheets file.' && s.dz === (w === 375 ? 'Choose a contract' : 'Drop a contract or paste text') && s.hint === 'PDF, Word or plain text · stays in your browser' && s.cta === 'Try a real SEC contract →' && s.cap === 'STAR BRANDS / SCHWAZZE LICENSE · EX-10.21 · SEC EDGAR', `${w}: first screen copy exactly as specced: ` + JSON.stringify([s.eb, s.lede, s.dz, s.cta, s.cap]));
+  ok(s.eb === 'CONTRACT RENEWAL DEADLINES' && s.lede === 'Know the last day to stop a contract renewing.' && s.sub === 'Drop in a contract. Get the notice deadline and the sentence it comes from, then add it to Google Calendar or a Sheets file.' && s.dz === (w === 375 ? 'Choose a contract' : 'Drop a contract PDF') && s.hint === 'PDF, Word or plain text · stays in your browser' && s.cta === 'Try a real SEC contract →' && s.cap === 'STAR BRANDS / SCHWAZZE LICENSE · EX-10.21 · SEC EDGAR', `${w}: first screen copy exactly as specced: ` + JSON.stringify([s.eb, s.lede, s.dz, s.cta, s.cap]));
   ok(s.ans && s.q && s.cards, `${w}: no answer, list or cards before input`);
   ok(s.addTop >= (w === 1440 ? 900 : 812) && s.ctaBottom <= (w === 1440 ? 900 : 812), `${w}: one-click button above the fold, examples/exports/method below it (more at ${Math.round(s.addTop)}px)`);
   ok(s.sw <= w, `${w}: no sideways scroll`);
@@ -27,8 +27,8 @@ for (const w of [1440, 375]) {
 // 2. demo: ?demo=1 -> one-click state -> deadline in < 2 s
 { const p = await fresh('/?demo=1&asof=2026-10-19');
   ok(await p.evaluate(() => document.activeElement?.id === 'tryOne' && getComputedStyle(document.querySelector('#about')).display === 'none'), '?demo=1 focuses the one-click button and hides the extras');
-  const t0 = Date.now(); await p.keyboard.press('Enter'); await p.waitForFunction(() => !document.querySelector('#answer').hidden, { timeout: 2000 }).catch(() => {}); const dt = Date.now() - t0;
-  const b = await big(p); ok(/^Send notice by \| 16 Dec 2026 \| Wednesday \| or it renews for 24 more months\. \| 58 days left$/.test(b) && dt < 2000, `one click shows Star Brands/Schwazze's deadline in ${dt} ms: ${b}`);
+  const t0 = Date.now(); await p.waitForFunction(() => !document.querySelector('#answer').hidden, { timeout: 2500 }).catch(() => {}); const dt = Date.now() - t0; await sleep(1200); // U1: ?demo=1 runs the real SEC sample by itself
+  const b = await big(p); ok(/^Send notice by \| 16 Dec 2026 \| Wednesday \| or it renews for 24 more months\. \| 58 days left$/.test(b) && dt < 2000, `?demo=1 auto-runs and shows Star Brands/Schwazze's deadline in ${dt} ms: ${b}`);
   ok(await p.$eval('#answer', e => /“.{40,}/.test(e.querySelector('blockquote.aq')?.textContent || '') && !!e.querySelector('a[href*="sec.gov"]') && /lines 24–29/.test(e.textContent) && !!e.querySelector('.aq mark')), 'answer card: clause quoted beside the date with operative words marked, line ref and EDGAR link');
   ok(await p.$eval('#liveQ', e => e.hidden) && await p.$eval('#prompt', e => !e.hidden && e.getBoundingClientRect().height >= 72 && /Add StableX \/ Kopin/.test(e.textContent)), 'no queue with one contract, just the add-another prompt');
   ok(p.reqs.filter(u => /edgar\.json/.test(u)).length === 1, 'SEC data fetched only after the click');
@@ -94,7 +94,7 @@ for (const f of ['c3-dragonfly.edgar.txt', 'c3-dragonfly.generated.pdf']) {
   await p.$eval('#remember', e => e.click()); ok(await p.evaluate(() => localStorage.length === 0), 'untick deletes it');
   await p.close(); }
 // 10. offline once loaded (service worker)
-{ const p = await fresh('/?demo=1&asof=2026-10-19'); await p.evaluate(() => navigator.serviceWorker.ready); await sleep(800); await p.reload({ waitUntil: 'networkidle0' });
+{ const p = await fresh('/?demo=1&auto=0&asof=2026-10-19'); await p.evaluate(() => navigator.serviceWorker.ready); await sleep(800); await p.reload({ waitUntil: 'networkidle0' });
   await p.setOfflineMode(true); await p.reload({ waitUntil: 'load' }); await sleep(300);
   const t0 = Date.now(); await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden, { timeout: 2000 }).catch(() => {});
   ok(/16 Dec 2026/.test(await big(p)) && Date.now() - t0 < 2000, 'offline after first load: demo still works in under 2 s');
@@ -119,7 +119,7 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w); co
   ok(await p.evaluate(() => !document.querySelector('#about').open && !document.querySelector('#setEdgar').offsetParent && [...document.querySelectorAll('#exCsv,#exIcs,#exPack')].every(b => b.classList.contains('tl'))), `${w}: About is one closed link; no visible "Try with 10" button; exports are text links`);
   await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden); await sleep(300);
   const f = await p.evaluate(() => ({ bar: Math.round(document.querySelector('#drop').getBoundingClientRect().height), bs: getComputedStyle(document.querySelector('#drop')).borderTopStyle, txt: document.querySelector('#dzTitle').innerText.trim(), date: document.querySelector('.hero-date').getBoundingClientRect().bottom }));
-  ok(f.bar === 56 && f.bs === 'dashed' && f.txt === 'Drop another contract' && f.date <= H, `${w}: once loaded, input is one 56px dashed "Drop another contract" bar and the hero date is above the fold (${JSON.stringify(f)})`);
+  ok(f.bar === 56 && f.bs === 'solid' && f.txt === 'Drop another contract' && f.date <= H, `${w}: once loaded, input is one 56px solid (E3) "Drop another contract" bar and the hero date is above the fold (${JSON.stringify(f)})`);
   await p.click('#trySecond'); await waitStatus(p, /2 contracts/); await p.click('#trySecond'); await waitStatus(p, /3 contracts/); await sleep(700);
   ok(/16 Dec 2026/.test(await big(p)) && await p.$eval('#lqSum', e => e.textContent) === '1 passed · 1 due in 57 days · 1 later', `${w}: Star Brands stays open; summary "1 PASSED · 1 DUE IN 57 DAYS · 1 LATER"`);
   // countdown counts to the exact date shown; weekend dates also show the safe business day

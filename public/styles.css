@@ -90,7 +90,7 @@ blockquote{margin:0;padding:2px 0 2px 20px;border-left:1px solid rgba(255,255,25
 .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:24px;padding:48px 0;border-top:1px solid var(--rule)}
 .stats .lab{display:block;font-size:12px;margin-bottom:6px}
 .stats .sv{font-family:var(--sans);font-weight:500;font-size:28px;color:var(--ink);font-variant-numeric:tabular-nums lining-nums}
-.stats div:last-child .sv{color:var(--highlight)}
+.stats div:last-child .sv{color:var(--fg)}
 footer{padding:80px 0 60px;color:var(--mute);font-size:13px}
 footer p{max-width:640px}
 footer a{color:var(--ink);font-weight:700}
@@ -211,8 +211,8 @@ header{padding:28px 0 12px}
 .q li{padding:10px 0}
 }
 
-.safe{font-size:13px;color:var(--highlight);margin-top:2px}
-.card .a.safe{color:var(--highlight)}
+.safe{font-size:13px;color:var(--accent);margin-top:2px}
+.card .a.safe{color:var(--accent)}
 @media (max-width:820px){.how > summary .lab::after{content:' ▸';font-size:13px}.how[open] > summary .lab::after{content:' ▾'}}
 /* ===== Design pass (Taste+Design, 19 Oct 2026): tokens ===== */
 :root {
@@ -443,3 +443,79 @@ footer .foot{margin-top:0}
 .about:not([open]) ~ footer{margin-top:24px}
 @media (min-width:481px){.samples{display:flex;gap:8px;flex-wrap:nowrap;align-items:center}.samples .chips{display:inline-flex;gap:8px;align-items:center;white-space:nowrap}}
 @media (max-width:480px){.about .samples{display:block}}
+
+/* ===== first-5s 20 Oct ===== */
+/* U2 countdown as a hero number */
+.acard:not(.passed):not(.expired) .chips{margin:var(--s-3) 0 0}
+.acard:not(.passed):not(.expired) .chips .chip{font:500 32px/40px var(--font-mono);font-variant-numeric:tabular-nums;padding:8px 16px;min-height:56px;letter-spacing:0}
+.acard .chips .chip.u90{color:var(--accent);border-color:var(--accent);background:var(--accent-tint)}
+@media (max-width:480px){.acard:not(.passed):not(.expired) .chips .chip{font-size:24px;line-height:32px;min-height:48px}}
+/* U3 type scale */
+@media (min-width:1200px){.hero-date{font-size:128px;line-height:120px}}
+.hero-date,.rdate,.stats .sv,.chip,.math{font-variant-numeric:tabular-nums lining-nums}
+/* U4 cliff timeline */
+.cliff{position:relative;height:28px;margin:var(--s-3) 0 0;max-width:520px;font:400 var(--t-label) var(--font-mono);text-transform:uppercase;color:var(--muted)}
+.cliff::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:var(--rule)}
+.cliff::after{content:"";position:absolute;left:0;top:0;height:1px;width:var(--p);background:var(--accent);transform-origin:left;animation:cc-grow 900ms var(--ease) 600ms both}
+.cliff i{position:absolute;left:var(--p);top:-6px;width:1px;height:13px;background:#fff}
+.cliff .cl-t{position:absolute;left:0;top:8px}.cliff .cl-d{position:absolute;left:var(--p);top:8px;transform:translateX(-100%);white-space:nowrap;color:#fff}
+@keyframes cc-grow{from{transform:scaleX(0)}}
+/* U5 staggered card entrance */
+@media (prefers-reduced-motion:no-preference){
+  body.has-one .acard .aleft>*,body.has-one .acard .aright>*{animation:cc-in 500ms var(--ease) both}
+  body.has-one .acard .aleft>:nth-child(2){animation-delay:150ms}body.has-one .acard .aleft>:nth-child(3){animation-delay:300ms}
+  body.has-one .acard .aleft>:nth-child(4){animation-delay:450ms}body.has-one .acard .aleft>:nth-child(5){animation-delay:600ms}
+  body.has-one .acard .aleft>:nth-child(n+6){animation-delay:750ms}
+  body.has-one .acard .aright>*{animation-delay:900ms}
+}
+@keyframes cc-in{from{opacity:0;transform:translateY(8px)}}
+/* U6: #EBFF0A is for needs-review only; fixed in place at lines 93 and 214-215 */
+/* E1 headline */
+.hero{padding-top:clamp(72px,12vh,140px)}
+.hero .lede{font:500 clamp(44px,6.2vw,88px)/.98 var(--font-sans);letter-spacing:-0.035em;max-width:13ch;color:#fff;margin:0 0 var(--s-2)}
+.hero .lede .ld{color:#86A1B6}
+.hero .subline{margin:0}
+/* E2 calendar strip */
+.cliff-strip{position:relative;display:grid;grid-template-columns:repeat(12,1fr);border-top:1px solid rgba(134,161,182,.3);font:11px/1 'Geist Mono',ui-monospace,monospace;letter-spacing:.08em;color:rgba(255,255,255,.45);padding-top:10px;margin:40px 0 48px}
+.cliff-strip span{position:relative}
+.cliff-strip span::before{content:"";position:absolute;left:0;top:-10px;width:1px;height:6px;background:rgba(134,161,182,.5)}
+.cliff-mark{position:absolute;top:-18px;left:72%;border-left:1px dashed #86A1B6;height:36px}
+.cliff-mark b{position:absolute;left:8px;top:-2px;font-weight:400;white-space:nowrap;color:#86A1B6;text-transform:uppercase}
+@media (prefers-reduced-motion:no-preference){.cliff-mark{animation:cc-slide 1.2s ease-out both}}
+@keyframes cc-slide{from{left:0;opacity:0}}
+/* E3 drop zone as an instrument */
+.drop{border:1px solid rgba(134,161,182,.35);border-radius:0;background:transparent;transition:border-color 150ms,background-color 150ms}
+.drop:hover,body.dragging .drop{border:1px solid #86A1B6;background:rgba(134,161,182,.06)}
+.drop .tk{position:absolute;width:12px;height:12px;border:0 solid #86A1B6;pointer-events:none}
+.drop .tk1{top:-1px;left:-1px;border-top-width:1px;border-left-width:1px}.drop .tk2{top:-1px;right:-1px;border-top-width:1px;border-right-width:1px}
+.drop .tk3{bottom:-1px;left:-1px;border-bottom-width:1px;border-left-width:1px}.drop .tk4{bottom:-1px;right:-1px;border-bottom-width:1px;border-right-width:1px}
+.hero .dz-big .dz-desk{font:400 13px/20px var(--font-mono);text-transform:uppercase;letter-spacing:.08em}
+.dz-sub{font:400 15px/22px var(--font-sans);color:rgba(255,255,255,.6);margin:0 0 var(--s-1)}
+/* E4 proof line */
+.proof{font:400 12px/18px var(--font-mono);color:rgba(255,255,255,.5);margin:var(--s-2) 0 0}
+body.has-any .cliff-strip,body.has-any .proof,body.has-any .dz-sub{display:none}
+/* E5 staggered entrance of the empty screen */
+@media (prefers-reduced-motion:no-preference){
+  body:not(.has-any) .hero>*{animation:cc-in 500ms var(--ease) both}
+  body:not(.has-any) .hero>:nth-child(2){animation-delay:120ms}body:not(.has-any) .hero>:nth-child(3){animation-delay:240ms}
+  body:not(.has-any) .hero>:nth-child(4){animation-delay:360ms}body:not(.has-any) .hero>:nth-child(5){animation-delay:480ms}
+  body:not(.has-any) .hero>:nth-child(n+6){animation-delay:600ms}
+}
+@media (max-width:820px){.cliff-strip{font-size:9px;letter-spacing:0;margin:24px 0 28px}.cliff-mark b{display:none}}
+/* E6 fit: everything above the fold at 1440x900 (three-line headline; tighter rhythm on short screens) */
+@media (min-width:821px){.hero .lede{max-width:16ch;font-size:clamp(44px,min(6.2vw,9vh),88px)}}
+@media (min-width:821px) and (max-height:960px){
+  body:not(.has-any):not(.legacy) .hero{padding-top:72px}
+  body:not(.has-any):not(.legacy) .hero .eyebrow{margin-bottom:8px}
+  .cliff-strip{margin:28px 0 32px}
+  .proof{margin-top:10px}
+  body:not(.has-any) .btnrow{margin-top:12px}
+}
+@media (min-width:821px){.hero .lede{max-width:20ch}.hero .subline{max-width:1000px}
+  .btnrow .edgar-url{align-self:center;margin:0 0 0 var(--s-1)}.btnrow .edgar-url[open]{flex-basis:100%;margin:0}.btnrow{flex-wrap:wrap}}
+@media (min-width:1200px){.hero .subline{max-width:none;font-size:19px}}
+@media (max-width:480px){.hero .lede{max-width:none;font-size:44px}.cliff-strip{display:none}.dz-sub{display:none}.proof{font-size:11px;line-height:16px;margin-top:8px}}
+@media (max-width:480px){body:not(.has-any):not(.legacy) .hero{padding-top:32px}.hero .lede{font-size:36px}.hero .subline{font-size:16px;line-height:24px}}
+@media (min-width:1200px){body.has-one .agrid{grid-template-columns:7fr 3fr}.hero-date{letter-spacing:-0.03em;white-space:nowrap}}
+@media (min-width:821px) and (max-height:960px){.proof{margin-top:6px}body:not(.has-any) .btnrow{margin-top:8px}.caption{margin-top:4px}}
+.cliff.near .cl-d{transform:translateX(8px)}

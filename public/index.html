@@ -25,12 +25,14 @@
 </div>
 <section class="hero" id="hero" aria-labelledby="lede">
   <p class="eyebrow">Contract renewal deadlines</p>
-  <h1 class="lede" id="lede">Know the last day to stop a contract renewing.</h1>
+  <h1 class="lede" id="lede">Know the <span class="ld">last day</span> to stop a contract renewing.</h1>
   <p class="subline">Drop in a contract. Get the notice deadline and the sentence it comes from, then add it to Google Calendar or a Sheets file.</p>
-  <hr class="gridline">
+  <div class="cliff-strip" aria-hidden="true"><span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AUG</span><span>SEP</span><span>OCT</span><span>NOV</span><span>DEC</span><i class="cliff-mark"><b>your notice date</b></i></div>
   <div class="drop" id="drop" role="button" tabindex="0" aria-label="Drop a contract or paste text. Press Enter to choose a file.">
+    <i class="tk tk1" aria-hidden="true"></i><i class="tk tk2" aria-hidden="true"></i><i class="tk tk3" aria-hidden="true"></i><i class="tk tk4" aria-hidden="true"></i>
     <div class="dz-idle">
-      <p class="dz-big" id="dzTitle"><span class="dz-desk">Drop a contract or paste text</span><span class="dz-phone">Choose a contract</span><span class="dz-more">Drop another contract</span></p>
+      <p class="dz-big" id="dzTitle"><span class="dz-desk">Drop a contract PDF</span><span class="dz-phone">Choose a contract</span><span class="dz-more">Drop another contract</span></p>
+      <p class="dz-sub">We quote the clause and give you the date.</p>
       <p class="dz-hint" id="dzHint">PDF, Word or plain text · stays in your browser</p>
       <button class="tl dz-pastelink" id="pasteLink" type="button">Paste text</button>
       <button class="btn-secondary sm dz-add" id="addBar" type="button">Add a contract</button>
@@ -51,16 +53,17 @@
     </div>
     <input id="file" type="file" multiple hidden accept=".pdf,.docx,.txt,.htm,.html,text/plain,text/html,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" aria-label="Upload contracts (PDF, Word, text or HTML)">
   </div>
+  <p class="proof">Reads the term, the renewal and the notice period · quotes the exact clause · your files stay in your browser</p>
   <div class="btnrow">
     <button id="tryOne" class="btn-primary">Try a real SEC contract →</button>
     <span class="or">or</span>
     <button id="pasteBtn" class="btn-secondary" type="button">Paste text</button>
+    <details class="edgar-url" id="edgarUrl"><summary class="tl">Or fetch an SEC EDGAR link</summary>
+      <div class="row"><input id="url" type="url" placeholder="https://www.sec.gov/Archives/edgar/data/…" aria-label="SEC EDGAR filing or exhibit URL"><button id="fetchUrl" class="btn-secondary sm">Fetch</button></div>
+      <p class="dz-hint">Our server fetches the page from sec.gov only (declared User-Agent) and keeps nothing; the text is then read in your browser.</p>
+    </details>
   </div>
   <p class="caption">Star Brands / Schwazze license · EX-10.21 · SEC EDGAR</p>
-  <details class="edgar-url" id="edgarUrl"><summary class="tl">Or fetch an SEC EDGAR link</summary>
-    <div class="row"><input id="url" type="url" placeholder="https://www.sec.gov/Archives/edgar/data/…" aria-label="SEC EDGAR filing or exhibit URL"><button id="fetchUrl" class="btn-secondary sm">Fetch</button></div>
-    <p class="dz-hint">Our server fetches the page from sec.gov only (declared User-Agent) and keeps nothing; the text is then read in your browser.</p>
-  </details>
   <p class="status" id="status" role="status" aria-live="polite"></p>
 </section>
 <section class="answer" id="answer" hidden aria-live="polite"></section>

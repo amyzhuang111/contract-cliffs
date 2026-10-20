@@ -183,7 +183,7 @@ function card(c, r) {
       ${r.actBy && !r.missed && cls !== 'expired' ? `<p class="lab wd">${weekday(r.actBy)}</p>` : ''}
       <p class="cons">${sub}</p>
       ${r.missed ? `<p class="next">Next: send notice by ${esc(sendBy(r))} · in ${dayWord(daysBetween(asOf, r.safe?.date || r.actBy))}</p>` : ''}
-      <div class="chips">${chip(r)}</div>
+      <div class="chips">${chip(r)}</div>${r.actBy && !r.missed && r.days >= 0 && cls !== 'expired' ? `<div class="cliff${r.days < 150 ? ' near' : ''}" style="--p:${Math.min(r.days, 365) / 365 * 100}%" aria-hidden="true"><span class="cl-t">Today</span><i></i><span class="cl-d">${esc(fmt(r.actBy))}</span></div>` : ''}
       ${r.safe && !r.missed ? `<p class="safe">${esc(r.safe.note.replace(/ · (\w)/, (m, c) => '. ' + c.toUpperCase()).replace(/ to be safe$/, ' to be safe.'))}</p>` : ''}
       <div class="ident"><p class="iname">${esc(c.name)}</p><p class="lab meta">${meta}</p></div>
     </div><div class="aright">
@@ -305,7 +305,7 @@ $('#remember').checked = remember();
 $('#remember').onchange = e => { if (e.target.checked) { localStorage.setItem('cc-remember', '1'); save(); $('#status').textContent = 'Saved on this device. Untick to delete.'; } else { localStorage.removeItem('cc-remember'); localStorage.removeItem('cc-docs'); $('#status').textContent = 'Deleted from this device.'; } };
 if (remember()) { try { for (const m of JSON.parse(localStorage.getItem('cc-docs') || '[]')) mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch {} }
 // Demo mode: straight to the one-click state.
-if (params.get('demo') === '1') { document.body.classList.add('demo'); setTimeout(() => $('#tryOne').focus(), 0); }
+if (params.get('demo') === '1') { document.body.classList.add('demo'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
 new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 if (set === 'edgar') loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
 else if (set === 'holdout') $('#setHoldout').onclick();
