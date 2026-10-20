@@ -122,40 +122,42 @@ export function obligations(c) {
 }
 
 // ---------- F2: draft non-renewal letter ----------
-export const FILL = '[NOT FOUND, FILL IN]';
-const fmtLong = d => { if (!d) return FILL; const [y, m, dd] = d.split('-'); return `${+dd} ${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][+m - 1]} ${y}`; };
+export const FILL = '[FILL IN]';
+// Every placeholder names what to fill in, the same way as the date line.
+export const fill = what => `[${what.toUpperCase()}, FILL IN]`;
+const fmtLong = d => { if (!d) return fill('date'); const [y, m, dd] = d.split('-'); return `${+dd} ${['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][+m - 1]} ${y}`; };
 export function letter(c, r, asOf) {
   const parties = String(c.name || '').includes(' / ') ? c.name.split(' / ').map(s => s.trim()) : [];
   const nc = noticeClause(c.lines); const q = r?.item?.source;
-  const addr = nc?.addresses?.length ? nc.addresses.map(a => `${a.to}: ${a.text} (notices clause, ${a.location})`) : [`${FILL} (no notice address found in the notices clause${nc?.ref ? `; it points to the "${nc.ref}"` : ''})`];
-  const sendBy = r?.actBy ? fmtLong(r.actBy) : FILL; const ex = exitNote(c);
+  const addr = nc?.addresses?.length ? nc.addresses.map(a => `${a.to}: ${a.text} (notices clause, ${a.location})`) : [`${fill('notice address')} (no notice address found in the notices clause${nc?.ref ? `; it points to the "${nc.ref}"` : ''})`];
+  const sendBy = r?.actBy ? fmtLong(r.actBy) : fill('last day to give notice'); const ex = exitNote(c);
   const L = [
     'DRAFT. NOT SENT. CHECK EVERY LINE AGAINST THE CONTRACT BEFORE USE. NOT LEGAL ADVICE.',
     '',
     `Date: [YOUR SEND DATE, FILL IN] (the day you send it; today is ${fmtLong(asOf)})`,
-    `Parties to the agreement: ${parties.length ? parties.join(' and ') : FILL}`,
-    `From: ${FILL} (your company, name, title and address)`,
-    `To: ${FILL} (the other party${parties.length ? ': ' + parties.join(' or ') : ''})`,
+    `Parties to the agreement: ${parties.length ? parties.join(' and ') : fill('parties')}`,
+    `From: ${fill('your company, name, title and address')}`,
+    `To: ${fill('other party')}${parties.length ? ` (${parties.join(' or ')})` : ''}`,
     'Notice address from the contract (pick the other party\'s):',
     ...addr.map(a => '  ' + a),
-    nc?.methods?.length ? `Send by: ${nc.methods.join(', ')} (as allowed by the notices clause, ${nc.location}).` : `Send by: ${FILL} (no delivery method found in a notices clause).`,
+    nc?.methods?.length ? `Send by: ${nc.methods.join(', ')} (as allowed by the notices clause, ${nc.location}).` : `Send by: ${fill('delivery method')} (no delivery method found in a notices clause).`,
     '',
-    `Re: Notice of non-renewal of the ${c.title || 'agreement'} between ${parties.length ? parties.join(' and ') : FILL}`,
+    `Re: Notice of non-renewal of the ${c.title || 'agreement'} between ${parties.length ? parties.join(' and ') : fill('parties')}`,
     '',
     'To whom it may concern,',
     '',
     `Under the renewal clause of the agreement, quoted below, we give notice that we do not wish to renew the agreement and that it will end at the close of its current term${r?.item?.termEnd ? `, ${fmtLong(r.item.termEnd)}` : ''}.`,
     '',
-    q?.quote ? `Renewal clause (${q.location}): "${norm(q.quote)}"` : `Renewal clause: ${FILL} (no renewal clause found)`,
+    q?.quote ? `Renewal clause (${q.location}): "${norm(q.quote)}"` : `Renewal clause: ${fill('renewal clause')} (no renewal clause found)`,
     '',
     ...(ex ? [`Note: ${ex.text} If that option fits better, it may be quicker than waiting for the term to end. Termination clause (${ex.location}): "${ex.quote}"`, ''] : []),
-    r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${FILL} (no date could be worked out from the contract).`,
+    r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${fill('last day to give notice')} (no date could be worked out from the contract).`,
     '',
     'Please confirm receipt of this notice in writing.',
     '',
     'Sincerely,',
     '',
-    `${FILL}: name, title, company`,
+    fill('your name, title and company'),
   ];
   return L.join('\n');
 }

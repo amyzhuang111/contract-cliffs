@@ -61,7 +61,7 @@ for (const w of [1440, 375]) {
   { const p = await fresh('/?demo=1&asof=2026-10-19', w); await p.ctx.overridePermissions(BASE, ['clipboard-read', 'clipboard-write']);
     await auto(p); await p.click('#answerLetter'); await sleep(300);
     const t = await p.$eval('#letterText', e => e.textContent);
-    ok(/^DRAFT\. NOT SENT\./.test(t) && /Star Brands and Schwazze/.test(t) && /Renewal clause \(lines 24–29\): "If not otherwise terminated/.test(t) && /16 December 2026/.test(t) && /\[NOT FOUND, FILL IN\] \(no notice address/.test(t), `${w}: letter has DRAFT, parties, quoted clause, send-by date, missing address marker`);
+    ok(/^DRAFT\. NOT SENT\./.test(t) && /Star Brands and Schwazze/.test(t) && /Renewal clause \(lines 24–29\): "If not otherwise terminated/.test(t) && /16 December 2026/.test(t) && /\[NOTICE ADDRESS, FILL IN\] \(no notice address/.test(t), `${w}: letter has DRAFT, parties, quoted clause, send-by date, missing address marker`);
     await p.click('#letterCopy'); await sleep(300); const clip = await p.evaluate(() => navigator.clipboard.readText().catch(() => ''));
     ok(clip === t && await p.$eval('#letterCopy', e => e.textContent) === 'Copied', `${w}: Copy puts the exact letter on the clipboard`);
     await p.click('#letterDocx'); const d = await lastDl(p); const f = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'ccl-')), 'l.docx'); fs.writeFileSync(f, d.buf);

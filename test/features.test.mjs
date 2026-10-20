@@ -80,12 +80,12 @@ test('F2: draft letter quotes the clause and date, marks DRAFT, and leaves missi
   assert.match(t, /Parties to the agreement: Star Brands and Schwazze/);
   assert.match(t, /Renewal clause \(lines 24–29\): "If not otherwise terminated/);
   assert.match(t, /on or before 16 December 2026/);
-  assert.match(t, /\[NOT FOUND, FILL IN\] \(no notice address found in the notices clause\)/);
+  assert.match(t, /\[NOTICE ADDRESS, FILL IN\] \(no notice address found in the notices clause\)/);
   assert.ok(!/[\u200b\u2014]/.test(t), 'no zero-width characters or em dashes');
   const c1 = letter(E.c1, buildQueue([E.c1], AS)[0], AS);
   assert.match(c1, /Cerus: Chief Executive Officer · Cerus Corporation · 2550 Stanwell Drive/); assert.match(c1, /Purolite: Ted Begg/);
   const blank = letter({ name: 'Unnamed contract (x.txt)', lines: ['nothing here'], x: extract(['nothing here']) }, undefined, AS);
-  assert.ok(blank.split(FILL).length > 5);
+  assert.ok(blank.split(', FILL IN]').length > 5);
 });
 test('F2: .docx is a valid zip that Word can open (unzip and XML check)', () => {
   const t = letter(E.c5, buildQueue([E.c5], AS)[0], AS); const b = docx(t);
@@ -170,4 +170,10 @@ test('CSV guard: numbers stay numbers in both exports; formulas and dash-text ar
   const neg = csv.split('\r\n')[1]?.split(',').find(v => /^"?'?-\d+"?$/.test(v)); assert.ok(neg && /^-\d+$/.test(neg), String(neg));
   assert.ok(!/"'-\d+"/.test(csv));
   const main = toCSV([missed], '2027-10-01'); assert.ok(!/"'-\d+"/.test(main));
+});
+test('letter placeholders all name what to fill in; no NOT FOUND in the letter or .docx', () => {
+  for (const c of Object.values(E)) { const r = buildQueue([c], AS)[0]; const t = letter(c, r, AS);
+    assert.ok(!/NOT FOUND/.test(t), c.id); assert.match(t, /^From: \[YOUR COMPANY, NAME, TITLE AND ADDRESS, FILL IN\]$/m); assert.match(t, /^To: \[OTHER PARTY, FILL IN\]/m); assert.match(t, /^\[YOUR NAME, TITLE AND COMPANY, FILL IN\]$/m);
+    for (const m of t.match(/\[[^\]]*FILL IN\]/g)) assert.match(m, /^\[[A-Z][A-Z ,]+, FILL IN\]$/, m);
+    assert.ok(!/NOT FOUND/.test(new TextDecoder().decode(docx(t))), c.id); }
 });
