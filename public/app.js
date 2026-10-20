@@ -341,7 +341,7 @@ let pfSort = 'date', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
   $('#pfCount').textContent = pfRows.length;
-  $('#pfSub').textContent = `Stand-ins for a company's own vendor, cloud, compute and data agreements: ${pfRows.length} public contracts filed with the SEC, each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
+  $('#pfSub').textContent = `Stand-ins for a company's own agreements: ${pfRows.length} public contracts filed with the SEC (licence, supply, services and network deals, plus some executive and consulting agreements), each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;
   const pf = portfolio(pfRows); $('#pfStrip').innerHTML = [['Due in 30 days', pf.d30, 'u30'], ['Due in 90 days', pf.d90, 'u90'], ['Due in 365 days', pf.d365, 'u365'], ['Passed', pf.passed, 'p'], ['Needs review', pf.review, 'r']].map(([k, v, c], i) => `<div class="pf ${c}" style="--i:${i}"><span class="lab">${k}</span><span class="sv">${v}</span></div>`).join('');
   $('#pfTimeline').innerHTML = P.timelineHtml(pfRows, asOf);
   $('#pfList').innerHTML = P.listHtml(P.sortRows(pfRows, pfSort, pfDir), asOf);
