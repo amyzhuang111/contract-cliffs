@@ -14,19 +14,21 @@ const SUFFIX = /,?\s+(?:Inc|Corp|Corporation|LLC|L\.L\.C|Ltd|Limited|Co|Company|
 const shortParty = t => { let x = t.replace(/^\s*(?:the\s+)?/i, '').replace(/\s+/g, ' ').trim(); for (let i = 0; i < 2; i++) x = x.replace(SUFFIX, '').trim(); return x.replace(/[,.;:]+$/, '').slice(0, 40); };
 export function partiesFromPreamble(lines) {
   const text = lines.slice(0, 80).map(l => typeof l === 'string' ? l : l.text).join(' ').replace(/\s+/g, ' ').slice(0, 6000);
-  const m = /\b(?:by\s+and\s+between|(?:made|entered\s+into|dated)[^.]{0,160}?\bbetween):?\s+(.{4,700})/i.exec(text); if (!m) return '';
+  const m = /\b(?:by\s+and\s+(?:between|among)|(?:made|entered\s+into|dated)[^.]{0,160}?\b(?:between|among)|\bis\s+between):?\s+(.{4,700})/i.exec(text); if (!m) return '';
   const seg = m[1]; let a = '', b = '';
-  for (const re of [/[)”"]\s*[;,]?\s+and\s+/i, /;\s*and\s+/i, /,\s+and\s+/i, /\s+and\s+/i]) { const k = seg.search(re); if (k > 1 && k < 400) { a = seg.slice(0, k + 1); b = seg.slice(k).replace(re, ''); break; } }
+  for (const re of [/[)”"]\s*[;,]?\s+and\s+/i, /;\s*and\s+/i, /,\s+and\s+/i, /\s+and\s+/i]) { const k = seg.search(re); if (k > 1 && k < 400) { const bb = seg.slice(k).replace(re, ''); if (/^(?:together|each|any|its|whereas|collectively|individually|shall|will|is|are)\b/i.test(bb)) continue; a = seg.slice(0, k + 1); b = bb; break; } }
   if (!a) return '';
   const KEEP = /^(?:USA|US|UK|EU|NA|II|III|IV)$/;
   const tc = x => /[a-z]/.test(x) ? x : x.replace(/\b([A-Z])([A-Z]+)\b/g, (w, f, r) => w.length <= 2 || KEEP.test(w) ? w : f + r.toLowerCase());
   // cut at the first comma, bracket, quote, semicolon, dba, "dated", "exhibit", "a <State> ...", or just after an entity suffix
-  const cut = x => { let y = x.split(/\s*[(“"\[]|,|;|\s+(?:dba|d\/b\/a)\s|\s+(?:dated|exhibit)\b|\s+an?\s+(?:[A-Z][a-z]+\s+){1,2}(?:corporation|company|limited|partnership)/i)[0]; const sfx = y.match(/^(.*?\b(?:L\.L\.C\.|LLC|Inc\.?|Ltd\.?|Limited|Corp\.?|Corporation|plc))(?=\s|$)/i); return sfx ? sfx[1] : y; };
+  const cut = x => { let y = x.split(/\s+\.(?:\s|$)|\.\s+(?=WHEREAS|RECITALS|W\s?I\s?T|NOW|The\s|Capitalized|\d)|\s+(?:existing|organized|incorporated)\s+under\b|\s*[(“"\[]|,|;|\s+(?:dba|d\/b\/a)\s|\s+(?:dated|exhibit)\b|\s+an?\s+(?:[A-Z][a-z]+\s+){1,2}(?:corporation|company|limited|partnership)/i)[0]; const sfx = y.match(/^(.*?\b(?:L\.L\.C\.|LLC|Inc\.?|Ltd\.?|Limited|Corp\.?|Corporation|plc))(?=\s|$)/i); return sfx ? sfx[1] : y; };
   const withheld = x => /^\W*\(?\s*(?:omitted|redacted|\[\*+\]|\*{3})/i.test(x);
   const one = x => withheld(x) ? 'party withheld in filing' : tc(shortParty(cut(x)));
   // a defined short name that starts the full name ("Nanochem Solutions, Inc. ... (“Nanochem”)") is preferred
   const short = (x, full) => { const d = [...x.matchAll(/[“"]([^”"]{2,30})[”"]/g)].map(q => q[1]).find(q => full.toLowerCase().startsWith(q.toLowerCase() + ' ')); return d || full; };
+  const recase = n => { if (!n || /[a-z][A-Z]/.test(n)) return n; const esc = n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); const hit = (text.match(new RegExp('\\b' + esc + '\\b', 'gi')) || []).find(h => /[a-z]/.test(h) && /[a-z][A-Z]/.test(h)); return hit || n; };
   let A = one(a), B = one(b); if (A !== 'party withheld in filing') A = short(a, A); if (B !== 'party withheld in filing') B = short(b, B);
+  A = recase(A); B = recase(B);
   return A.length > 1 && B.length > 1 && !/^(?:the\s+)?(?:parties|undersigned)/i.test(A + ' ' + B) && !/undersigned/i.test(B) && A !== 'party withheld in filing' ? `${A} / ${B}` : '';
 }
 // The one thing to check when a date is projected past a renewal: was notice sent in the previous cycle?
@@ -115,7 +117,7 @@ export function parseDate(text) {
 
 // ---------- document model ----------
 // doc = { lines: [{text, page?}] } -> sentences with source locations
-const ABBR = /\b(?:Inc|Corp|Co|Ltd|LLC|No|Nos|Sec|St|Mr|Ms|Dr|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec|U\.S|e\.g|i\.e|etc|vs)\.$/i;
+const ABBR = /\b(?:[ap]\.m|Inc|Corp|Co|Ltd|LLC|No|Nos|Sec|St|Mr|Ms|Dr|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec|U\.S|e\.g|i\.e|etc|vs)\.$/i;
 // EDGAR HTML often leaves spaces inside curly quotes: (“ Agreement ”) -> (“Agreement”).
 export const norm = t => String(t ?? '').replace(/\s+/g, ' ').replace(/“\s+/g, '“').replace(/\s+”/g, '”').replace(/\(\s+/g, '(').replace(/\s+\)/g, ')').replace(/\s+([,;])(?=\s|$)/g, '$1').trim();
 export function toSentences(lines) {
@@ -153,16 +155,29 @@ export function locLabel(s) {
   const L = a === b ? `line ${a}` : `lines ${a}–${b}`;
   return s.page ? `p. ${s.page}${s.pageEnd && s.pageEnd !== s.page ? '–' + s.pageEnd : ''}, ${L}` : L;
 }
-const src = (s) => s ? { quote: s.text, lineStart: s.lineStart, lineEnd: s.lineEnd, page: s.page, location: locLabel(s) } : null;
+// Stop a quote at a numbered sub-clause boundary ("... Term). 2In the event ...", "... 2 In the event ...").
+export const trimQuote = t => { const re = /\s\d{1,2}\s*(?=In\s+the\s+event\b)|\s\d{1,2}(?=[A-Z][a-z]{2,}\s)/g; let m; while ((m = re.exec(t))) if (m.index > 40) return t.slice(0, m.index).trim(); return t; };
+const src = (s) => s ? { quote: trimQuote(s.text), lineStart: s.lineStart, lineEnd: s.lineEnd, page: s.page, location: locLabel(s) } : null;
 
 // ---------- extraction ----------
 export function extract(lines) {
   const S = toSentences(lines);
   const res = { effective: null, term: null, renewal: null, notice: null, payments: [], other: [], reviewNotes: [] };
 
+  for (const s of S) s.text = s.text.replace(/\b([Tt])e1m/g, '$1erm');
   // 1. Effective date
+  // A date immediately followed by its definition, anywhere in the first ~2,000 characters: "as of 27 January 2025 (the “Effective Date”)".
+  { let seen = 0;
+    for (const s of S) { if (seen > 2400 || res.effective) break; seen += s.text.length;
+      const dm = s.text.match(/\(\s*(?:the\s+|this\s+)?[“"]\s*(Effective|Agreement|Commencement|Transition)\s+Date\s*[”"]\s*\)/i); if (!dm) continue;
+      const before = s.text.slice(Math.max(0, dm.index - 60), dm.index);
+      let last = null; for (let i = 0; i < before.length; i++) { const d = parseDate(before.slice(i)); if (d && /^\W{0,6}$/.test(before.slice(i + d.index + d.text.length))) { last = d; break; } }
+      if (!last) continue;
+      const label = dm[1][0].toUpperCase() + dm[1].slice(1).toLowerCase() + ' Date';
+      res.effective = { date: ymd(last.date), confidence: 'high', needsReview: false, label, why: `Date is expressly defined as the "${label}".`, source: src(s) };
+    } }
   const effRe = /(?:made\s+(?:and\s+is\s+)?effective\s+as\s+of|entered\s+into\s+(?:effective\s+)?as\s+of|is\s+effective\s+as\s+of|is\s+made\s+on|dated\s+as\s+of|dated\s+and\s+effective\s+as\s+of|effective\s+as\s+of|dated|made\s+and\s+entered\s+into\s+as\s+of|made\s+as\s+of)\s+(?:this\s+|the\s+)?/i;
-  for (const pass of [true, false]) { if (res.effective) break;
+  for (const pass of (res.effective ? [] : [true, false])) { if (res.effective) break;
   outer: for (const s of S.slice(0, pass ? 250 : 80)) {
     if (/^\W{0,3}Master\s+Agreement\s*:/i.test(s.text)) continue; // the parent agreement's date, not this document's
     for (const m of s.text.matchAll(new RegExp(effRe.source, 'gi'))) {
@@ -181,7 +196,7 @@ export function extract(lines) {
   } } }
 
   // 2. Term / expiry
-  const termCands = S.filter(s => /\b(initial\s+(term|license\s+period|period)|the\s+term\s+of\s+this|remain\s+in\s+effect|agreement\s+shall\s+have\s+an?\s+[\w()-]+\s+term|have\s+a\s+term|shall\s+commence|shall\s+begin\s+on)/i.test(s.text) && !/automatically\s+(renew|extend)/i.test(s.text.slice(0, 40)) && !/^\W{0,3}[“"][^”"]{1,60}[”"]\s+(?:means|has\s+the\s+meaning|shall\s+mean)/i.test(s.text) && !/following\s+(?:the\s+)?(?:termination|expiration)|surviv/i.test(s.text));
+  const termCands = S.filter(s => /\b(initial\s+(term|license\s+period|period)|the\s+term\s+of\s+this|remain\s+in\s+effect|agreement\s+shall\s+have\s+an?\s+[\w()-]+\s+term|have\s+a\s+term|shall\s+commence|will\s+commence|shall\s+begin\s+on|(?:this\s+agreement|the\s+term(?:\s+of\s+this\s+agreement)?)\s+(?:shall|will)\s+(?:continue|extend|remain)|is\s+(?:hereby\s+)?extended\s+through|^\W{0,6}term\s*:)/i.test(s.text) && !/automatically\s+(renew|extend)/i.test(s.text.slice(0, 40)) && !/^\W{0,3}[“"][^”"]{1,60}[”"]\s+(?:means|has\s+the\s+meaning|shall\s+mean)/i.test(s.text) && !/following\s+(?:the\s+)?(?:termination|expiration)|surviv/i.test(s.text) && !/^\W*WHEREAS\b/.test(s.text) && (s.text.match(/[a-z]/g) || []).length > (s.text.match(/[A-Z]/g) || []).length);
   // A clearly-worded initial-term sentence beats an earlier passing mention of "the term" (e.g. a redacted forecast clause).
   const decFirst = termCands.find(s => /\buntil\s+December\s+31(?:st)?\s+of\s+the\s+(?!\d)/i.test(s.text) && /Initial\s+Term/.test(s.text));
   for (const s of decFirst ? [decFirst, ...termCands.filter(x => x !== decFirst)] : termCands) {
@@ -204,19 +219,19 @@ export function extract(lines) {
       res.term = { start: res.effective.date, end: ymd(end), confidence: 'high', needsReview: false, why: `"${nextMo[0]}": the last day of the month after the Effective Date.`, source: src(s), rule: 'explicit' };
       break;
     }
-    const ann = t.match(/\b(?:through|until)\s+(?:the\s+)?(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+anniversary\s+of\s+the\s+Effective\s+Date/i);
+    const ann = t.match(/\b(?:through|until)\s+(?:the\s+)?(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+anniversary\s+(?:of\s+the\s+(?:Effective|Agreement|Commencement)\s+Date|thereof)/i);
     if (ann && res.effective) {
       const n = ['first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth'].indexOf(ann[1].toLowerCase()) + 1;
       res.term = { start: res.effective.date, end: ymd(addMonths(new Date(res.effective.date + 'T00:00:00Z'), 12 * n)), duration: { n, unit: 'year', text: ann[0] }, confidence: res.effective.needsReview ? 'medium' : 'high', needsReview: !!res.effective.needsReview, why: `"${ann[0]}": the term runs through the anniversary date itself.`, source: src(s), rule: 'anniversary' };
       break;
     }
-    const thr = t.match(/\b(?:through(?:\s+and\s+including)?|until|shall\s+end(?:\s+on)?)\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*(?:\d\s+)?\d{4})/i);
+    const thr = t.match(/\b(?:through(?:\s+and\s+including)?|until|extend\s+to|ending(?:\s+on)?|expires?\s+on|shall\s+end(?:\s+on)?)\s+(?:\d{1,2}:\d{2}\s*[ap]\.?m\.?,?\s+(?:[A-Z][a-z]+\s+)?Time,?\s+on\s+)?((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*(?:\d\s+)?\d{4})/i);
     if (thr) {
       const b = parseDate(thr[1]); const st = t.match(/\b(?:begin|commence)s?\s+on\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*\d{4})/i);
       res.term = { start: st ? ymd(parseDate(st[1]).date) : (res.effective?.date || ''), end: ymd(b.date), confidence: 'high', needsReview: false, why: 'Explicit end date.', source: src(s), rule: 'explicit' };
       break;
     }
-    const m = t.match(/\buntil\s+the\s+date\s+that\s+is\s+(.{0,60})/i) || t.match(/\bterm\s+of\s+this\s+(?:agreement|contract)\s+(?:shall\s+be|is)\s+(.{0,60})/i) || t.match(/\binitial\s+term(?:\s+of\s+[\w’']+){0,2}\s+(?:shall\s+be|is)\s+(.{0,60})/i) || t.match(/\bagreement\s+shall\s+have\s+an?\s+((?:[\w]+[\s-])?(?:\(\d+\)[\s-])?(?:year|month)s?[\s-]term.{0,40})/i) || t.match(/\b(?:for|run\s+for|continues?\s+for|period\s+of|shall\s+expire|remain\s+in\s+effect\s+(?:for|until))\s+(?:a\s+period\s+of\s+|an?\s+initial\s+(?:term|period)\s+of\s+|an?\s+initial\s+|an?\s+)?(.{0,60})/i);
+    const m = t.match(/\buntil\s+the\s+date\s+that\s+is\s+(.{0,60})/i) || t.match(/\bterm\s+of\s+this\s+(?:agreement|contract)\s+(?:shall\s+be|is)\s+(.{0,60})/i) || t.match(/\binitial\s+term(?:\s+of\s+[\w’']+){0,2}\s+(?:shall\s+be|is)\s+(.{0,60})/i) || t.match(/\bagreement\s+shall\s+have\s+an?\s+((?:[\w]+[\s-])?(?:\(\d+\)[\s-])?(?:year|month)s?[\s-]term.{0,40})/i) || t.match(/\b(?:for|run\s+for|continues?\s+for|period\s+of|shall\s+expire|shall\s+terminate|remain\s+in\s+effect\s+(?:for|until))\s+(?:a\s+period\s+of\s+|an?\s+initial\s+(?:term|period)\s+of\s+|an?\s+initial\s+|an?\s+)?(.{0,60})/i);
     if (!m) continue;
     const dur = parseDuration(m[1]);
     if (!dur || dur.index > 3) {
@@ -227,8 +242,8 @@ export function extract(lines) {
       continue;
     }
     if (dur.redacted) { res.term = { start: res.effective?.date || '', end: '', confidence: 'none', needsReview: true, why: 'Term length is blacked out in the public copy.', source: src(s) }; break; }
-    const evt = /(?:years?|months?)\)?\s+(?:from|after|following)\s+(?!the\s+Effective\s+Date|Effective\s+Date)(?:the\s+)?(?:date\s+(?:of\s+|on\s+which\s+|that\s+)?)?(?:the\s+)?[A-Z“"]/.test(t);
-    const fromEff = /effective\s+date/i.test(t) && !evt;
+    const evt = /(?:years?|months?)\)?\s+(?:from|after|following)\s+(?!(?:the\s+)?(?:Effective|Agreement|Commencement|Transition)\s+Date)(?:the\s+)?(?:date\s+(?:of\s+|on\s+which\s+|that\s+)?)?(?:the\s+)?[A-Z“"]/.test(t);
+    const fromEff = /(?:effective|agreement|commencement|transition)\s+date/i.test(t) && !evt;
     const until = /\buntil\b[^.]{0,40}following|\buntil\s+the\s+date\s+that\s+is\s+[^.]{0,40}\b(?:from|after)\s+the\s+effective\s+date/i.test(t);
     const start = res.effective ? new Date(res.effective.date + 'T00:00:00Z') : null;
     let end = '', why, conf = 'high', review = false;
@@ -259,7 +274,7 @@ export function extract(lines) {
     let dur = null;
     const tries = [];
     const rt = t.slice(t.search(/automatically|renew/i));
-    for (const re of [/successive\s+(?:periods?|terms?)\s+of\s+(.{0,50})/i, /(?:successive|consecutive)\s+(.{0,50})/i, /additional\s+(?:successive\s+)?(?:term\s*\(.*?\)\s*of\s+)?(.{0,60})/i, /periods?\s+of\s+(.{0,50})/i, /\bterm\s*\([^)]*\)\s*of\s+(.{0,60})/i, /\bterms?\s+of\s+(.{0,50})/i]) {
+    for (const re of [/successive\s+(?:periods?|terms?)\s+of\s+(.{0,50})/i, /(?:successive|consecutive)\s+(.{0,50})/i, /additional\s+(?:successive\s+)?(?:term\s*\(.*?\)\s*of\s+)?(.{0,60})/i, /periods?\s+of\s+(.{0,50})/i, /renew\s+for\s+(.{0,30}?)\s+intervals/i, /\bterm\s*\([^)]*\)\s*of\s+(.{0,60})/i, /\bterms?\s+of\s+(.{0,50})/i]) {
       const mm = rt.match(re); if (mm) { const d = parseDuration(mm[1]); if (d && d.index <= 2) { dur = d; break; } tries.push(mm[1]); }
     }
     if ((!dur || dur.index > 2) && /year\s+to\s+year/i.test(t) && !/successive\s+one\s*\(1\)\s*year/i.test(t)) dur = { n: 1, unit: 'year', text: 'year to year' };
@@ -278,7 +293,7 @@ export function extract(lines) {
       if (!/notice|notif/i.test(ct)) continue;
       const stated = !redactedBeforeCheck(ct) && ct.match(/\b(?:no\s+later\s+than|by|on\s+or\s+before)\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:st|nd|rd|th)?,?\s*(?:\d\s+)?\d{4})/i);
       if (stated && parseDate(stated[1])) { res.notice = { period: null, date: ymd(parseDate(stated[1]).date), confidence: 'high', needsReview: false, why: `The clause states the send-notice date outright ("${stated[0]}").`, source: src(cand) }; break; }
-      const nm = ct.match(new RegExp(`(?:at\\s+least|not\\s+less\\s+than|no\\s+less\\s+than|no\\s+later\\s+than|on\\s+or\\s+before\\s+the\\s+day\\s+that\\s+is|within)?\\s*((?:${NUMWORD_RE})?\\s*(?:\\(\\s*\\d+\\s*\\))?|\\d+|${REDACT_RE})\\s*(?:calendar\\s+|business\\s+)?(days?|months?|years?)['’]?s?\\s+(?:prior|before|in\\s+advance)`, 'i'));
+      const nm = ct.match(new RegExp(`(?:at\\s+least|not\\s+less\\s+than|no\\s+less\\s+than|no\\s+later\\s+than|on\\s+or\\s+before\\s+the\\s+day\\s+that\\s+is|within)?\\s*((?:${NUMWORD_RE})?\\s*(?:\\(\\s*\\d+\\s*\\))?|\\d+|${REDACT_RE})\\s*-?\\s*(?:calendar\\s+|business\\s+)?(days?|months?|years?)['’]?s?\\s+(?:(?:advance\\s+|prior\\s+)?written\\s+notice\\s+(?:of\\s+non-?\\s?renewal\\s+)?)?(?:prior|before|in\\s+advance)`, 'i'));
       const bare = !nm && ct.match(new RegExp(`((?:${NUMWORD_RE})?\\s*(?:\\(\\s*\\d+\\s*\\)|\\d+)?)\\s*(days?|months?)['’]?s?\\s+(?:prior\\s+)?(?:written\\s+)?notice\\s+of\\s+(?:non-?renewal|its\\s+intent)`, 'i'));
       const redactedBefore = ct.match(new RegExp(`${REDACT_RE}\\s+(?:prior|before)`, 'i'));
       const byDate = !nm && !redactedBefore && ct.match(/\b(?:by|on\s+or\s+before)\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*\d{4})/i);
@@ -503,7 +518,7 @@ export function buildQueue(contracts, asOf) {
     else if (act) why = `Deadline in ${d} day${d === 1 ? '' : 's'} · miss it and it renews for ${lockText(rp) || 'another term'}${noticeLong ? ' · notice is longer than the renewal, so this decides two cycles out' : ''}`;
     else why = `Expires in ${d} days · no auto-renewal, so plan the replacement`;
     const tfc = (c.x.other || []).find(o => /convenience/.test(o.kind) && o.notice?.n);
-    const tag = item?.needsReview && act && tfc ? `a separate ${tfc.notice.n}-${tfc.notice.unit} early-exit clause exists; confirm which applies` : shortReason(!key && /No end date could be worked out/.test(item?.why || '') && exp ? exp.why : item?.why);
+    const tag = item?.needsReview && act && key && tfc ? `a separate ${tfc.notice.n}-${tfc.notice.unit} early-exit clause exists; confirm which applies` : shortReason(!key && /No end date could be worked out/.test(item?.why || '') && exp ? exp.why : item?.why);
     const sb = act && key && d != null && d >= 0 ? safeSendBy(key) : null;
     const safe = sb?.changed ? (sb.date < asOf ? { date: sb.date, reason: sb.reason, passed: true, note: `${sb.reason}. The last business day before it (${fmtW(sb.date)}) has passed. Send today and confirm delivery.` } : { date: sb.date, reason: sb.reason, note: `${sb.reason} · send by ${fmtW(sb.date)} to be safe` }) : null;
     rows.push({ safe, tag, id: c.id, name: c.name, actBy: key, days: d, missed: mw || null, item, section, window: win, lockMonths: lockM, noticeLong, why, label: mw ? 'Next send-notice deadline' : act ? 'Send-notice deadline' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || !!item?.needsReview, confidence: key ? (item?.confidence === 'none' ? 'low' : item?.confidence || 'low') : 'none' });

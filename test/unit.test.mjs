@@ -493,10 +493,15 @@ test('B2 SunCoke: stated "no later than December 31, 2027" used, high; "December
   assert.equal(r.safe.date, '2027-12-30'); assert.match(r.safe.reason || JSON.stringify(r.safe), /New Year/);
 });
 test('DMY dates parse ("10 November 2025")', () => assert.equal(ymd(parseDate('effective as of 10 November 2025').date), '2025-11-10'));
-test('B3 Ethena: tag names the separate early-exit clause, no formula leak', () => {
+test('B3 Ethena: date kept; Effective Date now found in the body, so no review needed', () => {
   const { r } = fx('ethena-stablecoinx-ex10-12.edgar.htm');
-  assert.equal(r.actBy, '2027-02-12'); assert.equal(r.tag, 'a separate 60-day early-exit clause exists; confirm which applies');
+  assert.equal(r.actBy, '2027-02-12'); assert.equal(r.confidence, 'high');
   assert.doesNotMatch(shortReason('The send-notice deadline is the end of the term minus 60 days. x'), /end of the term minus/);
+});
+test('B3 early-exit tag when a reviewed date coexists with a convenience exit; date never dropped', () => {
+  const t = ['This Services Agreement is dated April 14, 2026, by and between Alpha Corp and Beta LLC.', 'The initial term of this Agreement shall be one (1) year commencing on the Effective Date.', 'Upon expiration of the Initial Term, this Agreement shall automatically renew for successive one (1) year periods unless either Party provides written notice of non-renewal at least sixty (60) days prior to the expiration of the then-current Term.', 'Either Party may terminate this Agreement at any time, for any reason or no reason, by providing at least thirty (30) days\u2019 prior written notice to the other Party.'];
+  const x = extract(t); const r = buildQueue([{ id: 's', name: 's', lines: t, x }], '2026-10-19')[0];
+  assert.equal(r.actBy, '2027-02-12'); assert.equal(r.needsReview, true); assert.equal(r.tag, 'a separate 30-day early-exit clause exists; confirm which applies');
 });
 test('B3 no fixture tag says "end of the term minus"', () => {
   for (const f of fs.readdirSync(new URL('./fixtures/', import.meta.url)).filter(f => f.endsWith('.edgar.htm'))) assert.doesNotMatch(fx(f).r.tag || '', /end of the term minus/i, f);
@@ -504,5 +509,28 @@ test('B3 no fixture tag says "end of the term minus"', () => {
 test('B4 party names cut and case-normalised', () => {
   assert.equal(partiesFromPreamble(fx('parhealth-endo-ex10-4.edgar.htm').L), 'Par Health USA / Endo Biologics');
   assert.equal(partiesFromPreamble(fx('suncoke-haverhill-ex10-1.edgar.htm').L), 'Haverhill Coke / Cleveland-Cliffs Steel');
-  assert.equal(partiesFromPreamble(fx('ethena-stablecoinx-ex10-12.edgar.htm').L), 'Ethena Opco / Stablecoinx');
+  assert.equal(partiesFromPreamble(fx('ethena-stablecoinx-ex10-12.edgar.htm').L), 'Ethena OpCo / StablecoinX');
+});
+
+// ---- review of 5d1eaa4 (B1–B5) + 15-exhibit blind batch; sources in test/fixtures/SOURCES.txt; dates worked out by hand, as of 2026-10-19 ----
+const EXPECT = {
+  'waterbridge-dbr-ex10-8': ['2027-07-04', '2027-07-02'], 'reshape-stankovich-ex10-8': ['2027-07-30'], 'amtd-worldmedia-ex10-8': ['2044-07-26'], 'urbangro-akright-ex10-1': ['2026-11-17'],
+  'cokeconsol-consulting-ex10-1': ['2026-12-01'], 'cyclerion-ex10-1': ['2027-07-04', '2027-07-02'], 'entravision-ex10-1': ['2027-03-01'], 'natvision-ex10-1': ['2028-05-01'],
+  'nextplat-ex10-1': ['2028-10-02'], 'nuvera-ex10-1': ['2027-10-02', '2027-10-01'], 'orion-ex10-1': ['2026-11-01', '2026-10-30'], 'purple-ex10-8': ['2027-10-02', '2027-10-01'],
+  'redviolet-ex10-1': ['2029-12-01', '2029-11-30'], 'streamline-ex10-2': ['2027-09-30'], 'trex-ex10-1': ['2028-08-01'],
+  // flagged, no date: notice/term not in this document, redacted, or no notice period stated
+  'nfg-ex10-1': [''], 'spar-ex10-6': [''], 'astrotech-ex10-9': [''], 'grainger-ex10-4': [''], 'marqeta-ex10-1': [''], 'csg-ex10-28j': [''], 'belfuse-ex10-3': [''], 'veeva-ex10-10': [''], 'tucows-ex10-1': [''],
+};
+for (const [f, [act, safe]] of Object.entries(EXPECT)) test(`fixture ${f} → ${act || 'flagged, no date'}`, () => {
+  const { r } = fx(f + '.edgar.htm'); assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); if (!act) assert.equal(r.needsReview, true);
+});
+test('B4 "This Agreement shall continue through and including <date>" → term end', () => {
+  const t = ['This Supply Agreement is made effective as of November 1, 2025 (the “Effective Date”) by and between Acme Inc. and Beta LLC.', 'This Agreement shall continue in full force and effect through and including November 1, 2030, unless terminated earlier.'];
+  assert.equal(extract(t).term.end, '2030-11-01');
+});
+test('B2 "Te1m" typo read as Term', () => { const t = ['This Agreement is effective as of March 1, 2025 (the “Effective Date”) between Acme Inc. and Beta LLC.', 'The initial te1m of this Agreement shall be two (2) years commencing on the Effective Date.']; assert.equal(extract(t).term.end, '2027-02-28'); });
+test('B5 quotes stop at a numbered sub-clause; "by and among"', async () => {
+  const { trimQuote } = await import('../public/extract.js');
+  assert.equal(trimQuote('This Agreement shall commence on the Transition Date and last for three months (the Term). 2In the event of a termination, fees are due.'), 'This Agreement shall commence on the Transition Date and last for three months (the Term).');
+  assert.equal(partiesFromPreamble(fx('urbangro-akright-ex10-1.edgar.htm').L), 'urban-gro / Richard Akright');
 });

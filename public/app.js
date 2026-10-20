@@ -215,7 +215,7 @@ function live(cs) {
   $('#answerMore').onclick = () => openDrawer(top.id);
   $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(top.item.source.quote).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
   const rest = rows.filter(r => r !== top); const exp = rest.filter(r => r.section === 'lapsed'), act = rest.filter(r => r.section !== 'lapsed');
-  $('#lqh').textContent = `Queue · ${cs.length} contracts · by send-notice date · 1 open above`;
+  $('#lqh').textContent = (matchMedia('(max-width:480px)').matches ? `Queue · ${cs.length} contracts · 1 open above` : `Queue · ${cs.length} contracts · by send-notice date · 1 open above`);
   const sum = []; const pas = rows.filter(r => r.missed || (r.days != null && r.days < 0 && r.section !== 'lapsed')).length; if (pas) sum.push(`<span class="p">${pas} passed</span>`);
   rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days != null && r.days >= 0 && r.days <= 90).sort((a, b) => a.days - b.days).forEach(r => sum.push(`1 due ${r.days === 0 ? 'today' : 'in ' + dayWord(r.days)}`));
   const later = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days > 90).length; if (later) sum.push(`${later} later`);
