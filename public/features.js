@@ -132,7 +132,7 @@ export function letter(c, r, asOf) {
   const L = [
     'DRAFT. NOT SENT. CHECK EVERY LINE AGAINST THE CONTRACT BEFORE USE. NOT LEGAL ADVICE.',
     '',
-    `Date: ${FILL} (the day you send it; today is ${fmtLong(asOf)})`,
+    `Date: [YOUR SEND DATE, FILL IN] (the day you send it; today is ${fmtLong(asOf)})`,
     `Parties to the agreement: ${parties.length ? parties.join(' and ') : FILL}`,
     `From: ${FILL} (your company, name, title and address)`,
     `To: ${FILL} (the other party${parties.length ? ': ' + parties.join(' or ') : ''})`,

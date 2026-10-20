@@ -150,7 +150,7 @@ test('.ics from withAlarms: every line at most 75 octets, alarms included, no ze
   const un = ics.replace(/\r\n[ \t]/g, ''); assert.match(un, /DESCRIPTION:30 days to the send-notice deadline: Star Brands é+/);
 });
 test('letter: date line says it is the send date and gives today; docx timestamps are valid', () => {
-  const r = buildQueue([E.c5], AS)[0]; assert.match(letter(E.c5, r, AS), /^Date: \[NOT FOUND, FILL IN\] \(the day you send it; today is 19 October 2026\)$/m);
+  const r = buildQueue([E.c5], AS)[0]; assert.match(letter(E.c5, r, AS), /^Date: \[YOUR SEND DATE, FILL IN\] \(the day you send it; today is 19 October 2026\)$/m);
   const z = docx('a\nb'); const v = new DataView(z.buffer); assert.equal(v.getUint16(12, true), 0x21);
 });
 test('shipped files carry no "demo" wording (only the ?demo=1 URL parameter); footer says independent, not a General Intuition product', () => {
