@@ -51,17 +51,19 @@ export async function loadPortfolio() { if (!cache) { const d = await (await fet
 
 // Urgency order (past due, then due within 30 days, then the rest by date; no date last) and the sentence that goes with it.
 export const byUrgency = rows => sortRows(rows, 'status', 1);
-export function firstSentence(rows) {
+export function firstSentence(rows, skip = []) {
+  const also = skip.length > 0; rows = rows.filter(r => !skip.includes(r.id));
   const a = rows.filter(r => ['passed', 'd30'].includes(r.st.bucket)).length, shown = Math.min(3, byUrgency(rows).filter(r => r.actBy).length), rest = shown - Math.min(a, shown);
   if (!shown) return 'No send-notice dates found.';
+  if (also) return a ? `After this week, act on ${a} more this month.${rest ? ` Then ${rest} ${rest === 1 ? 'is' : 'are'} next.` : ''}` : `Nothing else is due this month. ${shown === 1 ? 'This one is' : `These ${shown} are`} next.`;
   if (!a) return `Nothing is due this month. ${shown === 1 ? 'This one is' : `These ${shown} are`} next.`;
   if (a >= shown) return a === shown ? `Act on ${a === 1 ? 'this one' : `these ${a}`} this month.` : `Act on these ${shown} first. ${a} are due this month.`;
   return `Act on ${a === 1 ? 'this one' : `these ${a}`} this month. ${rest} more ${rest === 1 ? 'is' : 'are'} next.`;
 }
 
 // Opening view: the 3 contracts to act on first, each with company, action and days left.
-export function top3Html(rows) {
-  return byUrgency(rows).slice(0, 3).map(r => { const now = ['passed', 'd30'].includes(r.st.bucket);
+export function top3Html(rows, skip = []) {
+  return byUrgency(rows).filter(r => !skip.includes(r.id)).slice(0, 3).map(r => { const now = ['passed', 'd30'].includes(r.st.bucket);
     const note = [r.actBy && (r.item?.within ? '' : sendByNote(r.actBy, r.asOf)) && esc((r.item?.within ? '' : sendByNote(r.actBy, r.asOf))), windowNote(r) && esc(windowNote(r)), r.missed && `Missed ${esc(fmt(r.missed.actBy))}`, r.st.flags.includes('review') && '<span class="rvnote">Needs review</span>'].filter(Boolean).join(' · ');
     return `<li class="t3${now ? ' now' : ''}"><a href="#pf-${esc(r.id)}"><span class="t3n">${esc(r.c.name)}</span><span class="t3a">${r.item?.within ? 'Send notice on or after' : 'Send notice by'} ${esc(fmt(r.actBy))}</span><span class="t3d">${r.days === 0 ? 'Today' : `${dayWord(r.days)} left`}</span>${note ? `<span class="t3x">${note}</span>` : ''}</a></li>`; }).join('');
 }

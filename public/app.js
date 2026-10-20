@@ -352,7 +352,7 @@ $('#delSaved').onclick = () => { $('#savedAsk').hidden = true; $('#resetStore').
 let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {
   const P = window.__pf; if (!P || !pfRows) return;
-  $('#pfCount').textContent = pfRows.length; $('#pfFirst').textContent = P.firstSentence(pfRows); $('#pfTop3').innerHTML = P.top3Html(pfRows);
+  $('#pfCount').textContent = pfRows.length; const wkIds = P.thisWeek(pfRows, asOf).due.map(r => r.id); $('#pfFirst').textContent = P.firstSentence(pfRows, wkIds); $('#pfTop3').innerHTML = P.top3Html(pfRows, wkIds);
   $('#pfWeek').innerHTML = P.weekHtml(pfRows, asOf, r => gcalLink({ name: r.c.name, actBy: r.actBy, asOf, quote: r.item?.source?.quote, location: r.item?.source?.location, url: r.c.url, note: exitNote(r.c)?.text, within: windowOf(r), windowNote: windowNote(r) }));
   document.querySelectorAll('#pfWeek [data-letter]').forEach(b => { b.onclick = () => { const r = pfRows.find(x => x.id === b.dataset.letter); if (r) openLetter(r.id, r.c); }; });
   $('#pfSub').textContent = `Stand-ins for a company's own agreements: ${pfRows.length} public contracts filed with the SEC (supply, manufacturing, licence, services, colocation and network deals, plus a few executive and consulting agreements), each linked to its filing as proof. Dates are this tool's reading as of ${fmt(asOf)}.`;

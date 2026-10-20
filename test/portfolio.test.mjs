@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { htmlToLines, extract, buildQueue } from '../public/extract.js';
-import { rowsFor, pfStatus, sortRows, byUrgency, firstSentence, timelineHtml, listHtml, pos, confWord, END } from '../public/portfolio.js';
+import { thisWeek, top3Html, rowsFor, pfStatus, sortRows, byUrgency, firstSentence, timelineHtml, listHtml, pos, confWord, END } from '../public/portfolio.js';
 import { portfolio, BUCKETS, FLAGS, stripHtml, summaryOf } from '../public/features.js';
 const AS = '2026-10-19';
 const P = JSON.parse(fs.readFileSync(new URL('../public/data/portfolio.json', import.meta.url)));
@@ -65,6 +65,7 @@ test('portfolio: default order is by urgency and the opening sentence count matc
   assert.deepEqual(u.slice(0, 3).map(r => r.c.name), ['Glacier Bancorp / Glacier Bank', 'urban-gro / Richard Akright', 'Entravision / Univision Network']);
   const n = rows.filter(r => ['passed', 'd30'].includes(r.st.bucket)).length; assert.equal(n, 2);
   assert.equal(firstSentence(rows), 'Act on these 2 this month. 1 more is next.');
+  { const k = thisWeek(rows, AS).due.map(r => r.id); assert.equal(k.length, 1); assert.equal(firstSentence(rows, k), 'After this week, act on 1 more this month. Then 2 are next.'); const t = top3Html(rows, k); assert.ok(!/Glacier/.test(t) && /urban-gro/.test(t) && /Entravision/.test(t) && /TaoWeave/.test(t)); }
   assert.ok(u.slice(0, n).every(r => ['passed', 'd30'].includes(r.st.bucket)) && u.slice(-4).every(r => !r.actBy));
   assert.equal(firstSentence(rows.filter(r => r.st.bucket !== 'd30')), 'Nothing is due this month. These 3 are next.');
 });
