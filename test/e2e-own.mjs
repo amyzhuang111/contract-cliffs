@@ -41,7 +41,7 @@ for (const w of [1440, 375]) {
   await drop('nda.txt', 'MUTUAL NONDISCLOSURE AGREEMENT\nThis Agreement is entered into as of November 2, 2026 (the "Effective Date").\nThe term of this Agreement is one (1) year from the Effective Date. This Agreement shall automatically renew for successive one (1) year periods unless either party gives written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
   await waitStatus(p, /Added nda\.txt: 3 contracts/);
   rows = await p.$$eval('#lq li[data-id]', ls => ls.map(l => l.textContent.replace(/\s+/g, ' ')));
-  ok(rows.length === 2 && /dragonfly/i.test(rows[0]) && /nda/i.test(rows[1]) && /^1 passed · 1 due in 58 days · 1 later$/i.test(await p.$eval('#lqSum', e => e.textContent)) && await p.$eval('#prompt', e => e.hidden) && /16 Dec 2026/.test(await big(p)) && /Queue · 3 contracts · sorted by send-notice date/i.test(await p.$eval('#lqh', e => e.textContent)), 'a 3rd file slots into sorted order live: ' + rows.map(r => r.slice(0, 40)).join(' / '));
+  ok(rows.length === 2 && /dragonfly/i.test(rows[0]) && /nda/i.test(rows[1]) && /^1 passed · 1 due in 58 days · 1 later$/i.test(await p.$eval('#lqSum', e => e.textContent)) && await p.$eval('#prompt', e => e.hidden) && /16 Dec 2026/.test(await big(p)) && /^Queue · 3 contracts · by send-notice date · 1 open above$/i.test(await p.$eval('#lqh', e => e.textContent)), 'a 3rd file slots into sorted order live: ' + rows.map(r => r.slice(0, 40)).join(' / '));
   await p.click('#lq li[data-id]'); ok(/19 Sep 2026/.test(await big(p)) && /Star Brands/.test(await p.$eval('#lq', e => e.textContent)), 'clicking a row opens it as the card; Star Brands becomes a row');
   await p.click('#clearAll'); ok(await p.$eval('#answer', e => e.hidden) && await p.$eval('#liveQ', e => e.hidden), 'Clear all resets for the next demo run');
   await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden); await p.click('#trySecond'); await waitStatus(p, /2 contracts/); await p.click('#trySecond'); await waitStatus(p, /3 contracts/);
@@ -167,11 +167,21 @@ for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
   ok(df === 'Renews 19 Nov 2026. Next: send notice by Fri 17 Sep 2027.', `${w}: Dragonfly row leads with the safe date: ${df}`);
   ok(await p.$$eval('#lq .rdate', ds => ds.every(d => d.getBoundingClientRect().height <= parseFloat(getComputedStyle(d).fontSize) * 1.6)), `${w}: queue dates never wrap`);
   const ab = await p.evaluate(() => { const a = document.querySelector('#about'); const f = document.querySelector('footer .foot'); const gap = f.getBoundingClientRect().top - a.getBoundingClientRect().bottom; a.open = true; const ex = document.querySelector('#exCsv').offsetParent; const sm = [...a.querySelectorAll('a, button, input:not(label input), label:not([for]), summary')].filter(e => e.offsetParent && e.getBoundingClientRect().height < 44).map(e => e.id || e.textContent.trim().slice(0, 20)); return { gap: Math.round(gap), ex: !!ex, sm }; });
-  ok(ab.gap <= 48, `${w}: no dead gap under About (${ab.gap}px to the footer line)`);
+  ok(ab.gap >= 20 && ab.gap <= 28, `${w}: 24px under the closed About (${ab.gap}px to the footer line)`);
   ok(!ab.ex && !ab.sm.length, `${w}: About panel has no export blocks and every control is 44px` + (ab.sm.length ? ': ' + ab.sm.join(' | ') : ''));
-  const ft = await p.$eval('footer details.method summary', e => ({ t: e.innerText.replace(/\s+/g, ' ').trim(), h: e.getBoundingClientRect().height }));
-  ok(/^METHOD AND ACCURACY · How dates are worked out and how often they are right$/.test(ft.t) && ft.h >= 44, `${w}: footer link "${ft.t}" ${Math.round(ft.h)}px`);
+  const ft = await p.$eval('footer details.method summary', e => ({ t: e.innerText.replace(/\s+/g, ' ').trim(), h: e.getBoundingClientRect().height, dot: getComputedStyle(e.querySelector('.gn'), '::before').content, gap: getComputedStyle(e).columnGap }));
+  ok(/^METHOD AND ACCURACY ?How dates are worked out and how often they are right$/.test(ft.t) && ft.dot === '"·"' && ft.gap === '8px' && ft.h >= 44, `${w}: footer link with a ::before separator and 8px gap, ${Math.round(ft.h)}px: ` + JSON.stringify(ft));
   if (w === 375) ok(await p.$eval('#answer .conf', e => { const t = e.querySelector('.tag').getBoundingClientRect(), s = e.querySelector('.seg').getBoundingClientRect(); return Math.abs(t.top + t.height / 2 - (s.top + s.height / 2)) < 8; }), '375: confidence meter inline with the chip');
+  await p.close(); }
+// 16. re-review 08408a1
+for (const w of [1440, 375]) { const p = await fresh('/?asof=2026-10-20', w);
+  await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden); await p.click('#trySecond'); await waitStatus(p, /2 contracts/); await p.click('#trySecond'); await waitStatus(p, /3 contracts/); await sleep(500);
+  const t = await p.evaluate(() => { const b = [...document.querySelectorAll('.lq-tools .tl')].map(x => x.getBoundingClientRect()); return { txt: [...document.querySelectorAll('.lq-tools .tl')].map(x => x.innerText.trim()), oneRow: b.every(r => Math.abs(r.top - b[0].top) < 2), meta: [...document.querySelectorAll('#answer .meta .d')].every(d => d.getBoundingClientRect().height < 30) }; });
+  ok(t.oneRow && t.txt.join('|') === 'EXPORT .ICS|EXPORT CSV|CLEAR ALL', `${w}: queue tools on one row: ${t.txt.join(' | ')}`);
+  ok(t.meta, `${w}: the filed date never splits`);
+  const ab = await p.evaluate(() => { const a = document.querySelector('#about'); a.open = true; return { h: a.querySelector('h2').textContent, rem: !!document.querySelector('#remember').offsetParent, how: !!document.querySelector('#how').offsetParent, howLink: /\(\s*how\s*\)/i.test(a.innerText), ts: document.querySelector('#testset').textContent }; });
+  ok(ab.h === 'About this tool' && !ab.rem && !ab.how && !ab.howLink, `${w}: About panel: heading "About this tool", no Remember, no "( how )", no empty How it works block`);
+  ok(ab.ts === 'Test set: 10 unseen SEC contracts. First blind pass: 3 dates right, 6 correctly left blank for review, 1 missed, 0 wrong. Rules adjusted after.', `${w}: test-set line adds up to 10 (3 + 6 + 1 + 0)`);
   await p.close(); }
 ok(errors.length === 0, 'no page errors' + (errors.length ? ': ' + errors.join(' | ') : ''));
 await browser.close(); console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

@@ -2,6 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { partiesFromPreamble, shortReason } from '../public/extract.js';
 import { safeSendBy, usHolidays, usHoliday, extract, schedule, buildQueue, parseDuration, parseDate, wordsToNumber, toCSV, toICS, toPacket, PRIORITY_RULE, toSentences, addMonths, ymd, norm, nextFixed } from '../public/extract.js';
 
 const D = JSON.parse(fs.readFileSync(new URL('../public/data/edgar.json', import.meta.url)));
@@ -475,4 +476,33 @@ test('party names: "between:" with a colon (Argent / Splash) and an omitted part
 test('holidays by rule for any year (2045, 2099)', () => {
   const h45 = usHolidays(2045); assert.equal(h45.size, 11); assert.equal(h45.get('2045-07-04'), 'Independence Day'); assert.equal(h45.get('2045-11-23'), 'Thanksgiving Day');
   assert.equal(usHoliday('2099-01-19'), 'Martin Luther King Jr. Day'); assert.equal(safeSendBy('2045-12-25').changed, true);
+});
+
+// ---- independent review of 08408a1: B1–B4, fixtures fetched from sec.gov ----
+const fx = f => { const L = htmlToLines(fs.readFileSync(new URL('./fixtures/' + f, import.meta.url), 'utf8')); const x = extract(L); return { L, x, r: buildQueue([{ id: 'f', name: 'f', lines: L, x }], '2026-10-19')[0] }; };
+test('B1 Par Health: "until the date that is five (5) years from the Effective Date"', () => {
+  const { x, r } = fx('parhealth-endo-ex10-4.edgar.htm');
+  assert.equal(x.effective.date, '2025-11-10'); assert.equal(x.term.end, '2030-11-10'); assert.equal(x.term.rule, 'until');
+  assert.equal(r.actBy, '2029-11-10'); assert.equal(r.safe.date, '2029-11-09'); assert.equal(r.confidence, 'high');
+});
+test('B2 SunCoke: stated "no later than December 31, 2027" used, high; "December 31, 2 2028" tolerated', () => {
+  const { x, r } = fx('suncoke-haverhill-ex10-1.edgar.htm');
+  assert.equal(ymd(parseDate('December 31, 2 2028').date), '2028-12-31');
+  assert.equal(x.term.end, '2028-12-31'); assert.equal(x.notice.date, '2027-12-31');
+  assert.equal(r.actBy, '2027-12-31'); assert.equal(r.confidence, 'high'); assert.equal(r.needsReview, false);
+  assert.equal(r.safe.date, '2027-12-30'); assert.match(r.safe.reason || JSON.stringify(r.safe), /New Year/);
+});
+test('DMY dates parse ("10 November 2025")', () => assert.equal(ymd(parseDate('effective as of 10 November 2025').date), '2025-11-10'));
+test('B3 Ethena: tag names the separate early-exit clause, no formula leak', () => {
+  const { r } = fx('ethena-stablecoinx-ex10-12.edgar.htm');
+  assert.equal(r.actBy, '2027-02-12'); assert.equal(r.tag, 'a separate 60-day early-exit clause exists; confirm which applies');
+  assert.doesNotMatch(shortReason('The send-notice deadline is the end of the term minus 60 days. x'), /end of the term minus/);
+});
+test('B3 no fixture tag says "end of the term minus"', () => {
+  for (const f of fs.readdirSync(new URL('./fixtures/', import.meta.url)).filter(f => f.endsWith('.edgar.htm'))) assert.doesNotMatch(fx(f).r.tag || '', /end of the term minus/i, f);
+});
+test('B4 party names cut and case-normalised', () => {
+  assert.equal(partiesFromPreamble(fx('parhealth-endo-ex10-4.edgar.htm').L), 'Par Health USA / Endo Biologics');
+  assert.equal(partiesFromPreamble(fx('suncoke-haverhill-ex10-1.edgar.htm').L), 'Haverhill Coke / Cleveland-Cliffs Steel');
+  assert.equal(partiesFromPreamble(fx('ethena-stablecoinx-ex10-12.edgar.htm').L), 'Ethena Opco / Stablecoinx');
 });

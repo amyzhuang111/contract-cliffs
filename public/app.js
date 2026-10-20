@@ -173,7 +173,7 @@ function card(c, r) {
   const it = r.item || {};
   const math = it.termEnd && it.notice && r.actBy ? `Term ends ${fmt(it.termEnd)}${it.renewed ? ` (assumes it renewed ${it.renewed === 1 ? 'once' : it.renewed + ' times'} and was never amended)` : ''}. Minus ${days(it.notice.n, it.notice.unit)} = ${fmt(r.actBy)}.` : '';
   const quoteHtml = src?.quote ? mark(esc(showQuote(src.quote)), [c.x.notice?.period?.text, c.x.renewal?.period?.text, (showQuote(src.quote).match(/automatically renew\w*/i) || [])[0]]) : '';
-  const meta = [c.kind && c.kind !== 'Your contract' ? c.title || c.kind : c.fileName ? 'Uploaded · ' + c.fileName : 'Your contract', c.exhibit || '', c.filed ? 'Filed ' + fmt(c.filed) : ''].filter(Boolean).join(' · ');
+  const meta = [c.kind && c.kind !== 'Your contract' ? esc(c.title || c.kind) : c.fileName ? 'Uploaded · ' + esc(c.fileName) : 'Your contract', esc(c.exhibit || ''), c.filed ? `<span class="d">Filed ${esc(fmt(c.filed))}</span>` : ''].filter(Boolean).join(' · ');
   return `<article class="acard ${cls}" data-id="${esc(c.id)}">
     ${r.needsReview ? `<div class="rvbar">Needs review · ${esc(r.tag || 'check the clause')}</div>` : ''}
     <div class="agrid"><div class="aleft">
@@ -184,7 +184,7 @@ function card(c, r) {
       ${r.missed ? `<p class="next">Next: send notice by ${esc(sendBy(r))} · in ${dayWord(daysBetween(asOf, r.safe?.date || r.actBy))}</p>` : ''}
       <div class="chips">${chip(r)}</div>
       ${r.safe && !r.missed ? `<p class="safe">${esc(r.safe.note.replace(/ · (\w)/, (m, c) => '. ' + c.toUpperCase()).replace(/ to be safe$/, ' to be safe.'))}</p>` : ''}
-      <div class="ident"><p class="iname">${esc(c.name)}</p><p class="lab">${esc(meta)}</p></div>
+      <div class="ident"><p class="iname">${esc(c.name)}</p><p class="lab meta">${meta}</p></div>
     </div><div class="aright">
       <p class="lab">From the contract</p>
       ${quoteHtml ? `<blockquote class="aq">“${quoteHtml}”</blockquote>` : '<p class="cons">No clause with a date was found.</p>'}
@@ -215,7 +215,7 @@ function live(cs) {
   $('#answerMore').onclick = () => openDrawer(top.id);
   $('#answer .copyq')?.addEventListener('click', e => { navigator.clipboard?.writeText(top.item.source.quote).then(() => { e.target.textContent = 'Copied'; }, () => {}); });
   const rest = rows.filter(r => r !== top); const exp = rest.filter(r => r.section === 'lapsed'), act = rest.filter(r => r.section !== 'lapsed');
-  $('#lqh').textContent = `Queue · ${cs.length} contracts · sorted by send-notice date`;
+  $('#lqh').textContent = `Queue · ${cs.length} contracts · by send-notice date · 1 open above`;
   const sum = []; const pas = rows.filter(r => r.missed || (r.days != null && r.days < 0 && r.section !== 'lapsed')).length; if (pas) sum.push(`<span class="p">${pas} passed</span>`);
   rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days != null && r.days >= 0 && r.days <= 90).sort((a, b) => a.days - b.days).forEach(r => sum.push(`1 due ${r.days === 0 ? 'today' : 'in ' + dayWord(r.days)}`));
   const later = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days > 90).length; if (later) sum.push(`${later} later`);
