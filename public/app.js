@@ -86,7 +86,7 @@ function openDrawer(id) {
    <p class="why" style="color:var(--mute);font-size:13px">${esc(c.title || c.fileName || '')}${c.filer ? ` · filed by ${esc(c.filer)}` : ''}${c.filed ? ` on ${esc(fmt(c.filed))}` : ''}${c.counterparty && c.counterparty !== c.fileName?.replace(/\.[a-z0-9]+$/i, '') ? ` · other company ${esc(c.counterparty)}` : ''}</p>
    ${c.url ? `<p style="font-size:13px"><a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">Open the filing on SEC Filing ↗</a></p>` : ''}
    ${c.x.reviewNotes.map(n => `<p class="note">${esc(n)}</p>`).join('')}
-   ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(reason(i.why))}</div>` : ''}
+   ${[...items, ...extra].map(i => `<div class="it"><div class="top">${windowOf(i) ? '<span class="wtitle">Notice window opens</span>' : `<span class="lab">${esc(TYPE(i.type))}</span>`}${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? (windowOf(i) ? `<div class="rvline"><span class="rvs">Needs review: ${windowOf(i).shifted ? 'two readings' : 'check the clause'}</span></div>` : `<div class="rvline">${rv(reason(i.why))}</div>`) : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? dayWord(-d) + ' ago' : 'in ' + dayWord(d))(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
      <p class="why">${esc(i.why)}${i.who ? ` Who acts: ${esc(i.who)}.` : ''} ${esc(sure(i.confidence))}.</p>${windowOf(i) && i.status !== 'past' ? `<p class="safe win">${esc(windowOf(i).label)} ${esc(windowOf(i).dayW)}. ${esc(windowNote(i))}.</p>` : ''}
      ${i.via ? `<p class="why">Referenced from the renewal clause (${esc(i.via.location)}): “${esc(showQuote(i.via.quote).slice(0, 220))}${showQuote(i.via.quote).length > 220 ? '…' : ''}”</p>` : ''}${i.source ? `<blockquote class="clause">${esc(i.source.quote)}</blockquote>${srcLinks(i.source)}` : '<p class="why">No source clause found.</p>'}</div>`).join('')}<div class="lettr"><button class="btn-secondary sm" id="drawerLetter">Draft notice letter</button></div>${obligationsHtml(c)}`;
@@ -162,7 +162,8 @@ function chip(r) {
   if (r.missed) { const ago = daysBetween(r.missed.actBy, asOf); return `<span class="chip passed">Passed ${dayWord(ago)} ago</span>`; }
   if (r.section === 'lapsed' || r.days == null) return '';
   if (r.days < 0) return `<span class="chip passed">Passed ${dayWord(-r.days)} ago</span>`;
-  const cls = r.days <= 30 ? 'u30' : r.days <= 90 ? 'u90' : 'u365';
+  const cls = r.days <= 30 ? 'u30' : r.days <= 90 ? 'u90' : 'u365'; const w = windowOf(r);
+  if (w) { const n = daysBetween(asOf, w.day); return `<span class="chip ${cls}">${n <= 0 ? 'Window opens today' : `Window opens in ${dayWord(n)}`}</span>`; }
   return `<span class="chip ${cls}">${r.days === 0 ? 'Due today' : dayWord(r.days) + ' left'}</span>`;
 }
 const confWord = c => c === 'high' ? ['Clear', 3] : c === 'medium' ? ['Check one thing', 2] : c === 'low' ? ['Can’t tell', 1] : ['Can’t tell', 0];
@@ -204,7 +205,7 @@ function card(c, r) {
       ${r.actBy && !r.missed && cls !== 'expired' ? `<p class="lab wd">${weekday(windowOf(r)?.day || r.actBy)}</p>` : ''}${windowNote(r) && !r.missed ? `<p class="safe win">${esc(windowNote(r))}.</p>` : ''}
       <p class="cons">${sub}</p>
       ${r.missed ? `<p class="next">Next: send notice by ${esc(sendBy(r))} · in ${dayWord(daysBetween(asOf, r.safe?.date || r.actBy))}</p>` : ''}
-      <div class="chips">${chip(r)}</div>${r.actBy && !r.missed && r.days >= 0 && cls !== 'expired' ? `<div class="cliff${r.days < 150 ? ' near' : ''}" style="--p:${Math.min(r.days, 365) / 365 * 100}%" aria-hidden="true"><span class="cl-t">Today</span><i></i><span class="cl-d">${esc(fmt(r.actBy))}</span></div>` : ''}
+      <div class="chips">${chip(r)}</div>${r.actBy && !r.missed && r.days >= 0 && cls !== 'expired' ? `<div class="cliff${r.days < 150 ? ' near' : ''}" style="--p:${Math.min(windowOf(r) ? daysBetween(asOf, windowOf(r).day) : r.days, 365) / 365 * 100}%" aria-hidden="true"><span class="cl-t">Today</span><i></i><span class="cl-d">${windowOf(r) ? 'Window opens ' + esc(fmt(windowOf(r).day)) : esc(fmt(r.actBy))}</span></div>` : ''}
       ${r.safe && !r.missed ? `<p class="safe">${esc(r.safe.note.replace(/ · (\w)/, (m, c) => '. ' + c.toUpperCase()).replace(/ to be safe$/, ' to be safe.'))}</p>` : ''}
       <div class="ident"><p class="iname">${esc(c.name)}</p><p class="lab meta">${meta}</p></div>
     </div><div class="aright">

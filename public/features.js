@@ -165,7 +165,7 @@ export function letter(c, r, asOf) {
     q?.quote ? `Renewal clause (${q.location}): "${norm(q.quote)}"` : `Renewal clause: ${fill('renewal clause')} (no renewal clause found)`,
     '',
     ...(ex ? [`Note: ${ex.text} If that option fits better, it may be quicker than waiting for the term to end. Termination clause (${ex.location}): "${ex.quote}"`, ''] : []),
-    windowOf(r) ? `This notice is given within the ${windowOf(r).n} ${windowOf(r).unit}${windowOf(r).n === 1 ? '' : 's'} before the end of the current term, ${windowOf(r).shifted ? 'on' : 'on or after'} ${fmtLong(windowOf(r).day)}, as the clause above requires (${windowNote(r)}).` : r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${fill('last day to give notice')} (no date could be worked out from the contract).`,
+    windowOf(r) ? `This notice is given within the ${windowOf(r).n} ${windowOf(r).unit}${windowOf(r).n === 1 ? '' : 's'} before the end of the current term, ${windowOf(r).shifted ? 'on' : 'on or after'} ${fmtLong(windowOf(r).day)}, as the clause above requires.` : r?.actBy ? `This notice is given on or before ${sendBy}, the last day to give notice under the clause above.` : `Last day to give notice: ${fill('last day to give notice')} (no date could be worked out from the contract).`,
     '',
     'Please confirm receipt of this notice in writing.',
     '',

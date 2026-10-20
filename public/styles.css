@@ -730,3 +730,4 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 @media (min-width:1200px){#answer .lab,#liveQ .lab,.pfv > .lab,.pflist .tag,#answer .tag,#liveQ .tag{font-size:14px;line-height:20px}}
 /* Needs review reads in sentence case at 14px, like the rest of the key */
 .pflegend .rv,.tl-foot .rv{font-family:var(--font-sans);font-size:14px;text-transform:none;letter-spacing:0}
+.it .wtitle{font:500 14px/20px var(--font-sans);color:var(--fg);text-transform:none}.rvline .rvs{font:400 14px/20px var(--font-sans);color:var(--fg);text-transform:none}
