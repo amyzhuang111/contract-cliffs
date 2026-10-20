@@ -339,7 +339,7 @@ export function usHolidays(y) {
   if (_hol.has(y)) return _hol.get(y);
   const D = (m, d) => new Date(Date.UTC(y, m - 1, d));
   const obs = d => d.getUTCDay() === 6 ? addDays(d, -1) : d.getUTCDay() === 0 ? addDays(d, 1) : d;
-  const list = [[obs(D(1, 1)), "New Year's Day"], [D(1, nthWd(y, 1, 1, 3)), 'Martin Luther King Jr. Day'], [D(2, nthWd(y, 2, 1, 3)), "Washington's Birthday"], [D(5, lastWd(y, 5, 1)), 'Memorial Day'], [obs(D(6, 19)), 'Juneteenth'], [obs(D(7, 4)), 'Independence Day'], [D(9, nthWd(y, 9, 1, 1)), 'Labor Day'], [D(10, nthWd(y, 10, 1, 2)), 'Columbus Day'], [obs(D(11, 11)), 'Veterans Day'], [D(11, nthWd(y, 11, 4, 4)), 'Thanksgiving Day'], [obs(D(12, 25)), 'Christmas Day']];
+  const list = [[obs(D(1, 1)), "New Year's Day"], [D(1, nthWd(y, 1, 1, 3)), 'Martin Luther King Jr. Day'], [D(2, nthWd(y, 2, 1, 3)), "Washington's Birthday"], [D(5, lastWd(y, 5, 1)), 'Memorial Day'], ...(y >= 2021 ? [[obs(D(6, 19)), 'Juneteenth']] : []), [obs(D(7, 4)), 'Independence Day'], [D(9, nthWd(y, 9, 1, 1)), 'Labor Day'], [D(10, nthWd(y, 10, 1, 2)), 'Columbus Day'], [obs(D(11, 11)), 'Veterans Day'], [D(11, nthWd(y, 11, 4, 4)), 'Thanksgiving Day'], [obs(D(12, 25)), 'Christmas Day']];
   const m = new Map(list.map(([d, n]) => [ymd(d), n])); _hol.set(y, m); return m;
 }
 // Name of the US federal holiday observed on this day, or ''. Checks the next year too (New Year's Day on a Saturday is observed on 31 Dec).
@@ -348,12 +348,21 @@ const WD = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'S
 // Last safe business day on or before a contract deadline: steps back over Saturdays, Sundays and US federal holidays.
 // Returns { date, changed, reason } where reason names why the contract date is not a business day.
 export function safeSendBy(day) {
-  if (!day) return { date: '', changed: false, reason: '' };
+  if (typeof day !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(day) || isNaN(new Date(day + 'T00:00:00Z')) || ymd(new Date(day + 'T00:00:00Z')) !== day) return { date: '', changed: false, reason: '' };
   const wd = new Date(day + 'T00:00:00Z').getUTCDay();
   const reason = wd === 0 || wd === 6 ? `Falls on a ${WD[wd]}` : usHoliday(day) ? `Falls on ${usHoliday(day)} (US federal holiday)` : '';
   let d = new Date(day + 'T00:00:00Z');
   while ([0, 6].includes(d.getUTCDay()) || usHoliday(ymd(d))) d = addDays(d, -1);
   return { date: ymd(d), changed: ymd(d) !== day, reason };
+}
+export const dayWord = n => `${n} day${Math.abs(n) === 1 ? '' : 's'}`;
+// HTML to lines, same method as edgar/holdout/totext.py: block tags become line breaks, script/style dropped, whitespace collapsed, empty lines removed.
+const ENT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', ldquo: '“', rdquo: '”', lsquo: '‘', rsquo: '’', mdash: '—', ndash: '–', sect: '§', hellip: '…' };
+export function htmlToLines(html) {
+  const t = String(html).replace(/<(script|style)\b[\s\S]*?<\/\1\s*>/gi, '').replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/<\/?(p|div|br|tr|li|h[1-6]|table|td)\b[^>]*>/gi, '\n').replace(/<[^>]+>/g, '')
+    .replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, e) => e[0] === '#' ? String.fromCodePoint(e[1].toLowerCase() === 'x' ? parseInt(e.slice(2), 16) : +e.slice(1)) : ENT[e.toLowerCase()] ?? m);
+  return t.split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean);
 }
 // ---------- schedule: send-notice deadline queue ----------
 // Returns the dated items for one contract given an as-of date (YYYY-MM-DD).
@@ -495,7 +504,7 @@ export function toICS(contracts, asOf, stamp = '20261019T000000Z') {
   for (const c of contracts) for (const i of schedule(c.x, asOf)) {
     if (i.missed) { const r = schedule(c.x, asOf).find(t => t.missedWindow)?.missedWindow; if (r) { const d = r.renews.replace(/-/g, ''); const n = ymd(addDays(new Date(r.renews + 'T00:00:00Z'), 1)).replace(/-/g, ''); L.push('BEGIN:VEVENT', `UID:${c.id}-renews-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`, fold(`SUMMARY:${icsEsc('MISSED: ' + c.name + ' renews today (send-notice deadline missed)')}`), fold(`DESCRIPTION:${icsEsc(i.why)}`), ...(c.url ? [fold(`URL:${c.url}`)] : []), 'END:VEVENT'); } continue; }
     if (!i.actBy || !i.date || i.status === 'past') continue;
-    const sb0 = safeSendBy(i.date); const late = sb0.changed && sb0.date < asOf; const sb = late ? { ...sb0, date: i.date } : sb0; const d = sb.date.replace(/-/g, ''); const n = ymd(addDays(new Date(sb.date + 'T00:00:00Z'), 1)).replace(/-/g, '');
+    const sb0 = safeSendBy(i.date); const late = sb0.changed && sb0.date < asOf; const sb = late ? { ...sb0, date: asOf } : sb0; const d = sb.date.replace(/-/g, ''); const n = ymd(addDays(new Date(sb.date + 'T00:00:00Z'), 1)).replace(/-/g, '');
     const sbNote = late ? `Contract date: ${i.date}, which ${sb0.reason.replace(/^Falls/, 'falls')}. The last business day before it (${sb0.date}) has passed. Send today and confirm delivery. ` : sb.changed ? `Contract date: ${i.date}, which ${sb.reason.replace(/^Falls/, 'falls')}; this event is on the last business day before it (${sb.date}). ` : `Contract date: ${i.date}. `;
     L.push('BEGIN:VEVENT', `UID:${c.id}-${d}@contract-cliffs`, `DTSTAMP:${stamp}`, `DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${n}`,
       fold(`SUMMARY:${icsEsc('Send-notice deadline: ' + c.name)}`),

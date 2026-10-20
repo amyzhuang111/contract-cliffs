@@ -406,6 +406,21 @@ test('safe date already passed but contract date not: send today, never "to be s
   assert.equal(r.safe.note, 'Falls on a Sunday. The last business day before it (Fri 17 Sep 2027) has passed. Send today and confirm delivery.');
   assert.doesNotMatch(r.safe.note, /to be safe/);
   const csv = toCSV([C.c3], '2027-09-18'); assert.match(csv, /2027-09-17 \(passed; send today and confirm delivery\)/);
-  const ics = toICS([C.c3], '2027-09-18').replace(/\r\n /g, ''); assert.match(ics, /DTSTART;VALUE=DATE:20270919/); assert.match(ics, /has passed. Send today and confirm delivery/); assert.doesNotMatch(ics, /to be safe/);
+  const ics = toICS([C.c3], '2027-09-18').replace(/\r\n /g, ''); assert.match(ics, /DTSTART;VALUE=DATE:20270918/); assert.match(ics, /has passed. Send today and confirm delivery/); assert.doesNotMatch(ics, /to be safe/);
   const p = toPacket([C.c3], '2027-09-18'); assert.match(p, /has passed. Send today and confirm delivery/); assert.doesNotMatch(p, /to be safe/);
+});
+
+// ---- F&P nits + own-contracts helpers ----
+import { dayWord, htmlToLines, usHolidays as _uh, safeSendBy as _ssb } from '../public/extract.js';
+test('plural: 1 day, 2 days, 0 days', () => { assert.equal(dayWord(1), '1 day'); assert.equal(dayWord(-1), '-1 day'); assert.equal(dayWord(2), '2 days'); assert.equal(dayWord(0), '0 days'); });
+test('app.js never builds "N days" without dayWord', async () => { const s = (await import('node:fs')).readFileSync(new URL('../public/app.js', import.meta.url), 'utf8'); assert.doesNotMatch(s, /\+ ' days|\} days`|d \+ ' days'/); });
+test('late .ics reminder lands on the as-of date, not the contract date', () => {
+  const ics = toICS([C.c3], '2027-09-18').replace(/\r\n /g, ''); assert.match(ics, /DTSTART;VALUE=DATE:20270918/); assert.doesNotMatch(ics, /DTSTART;VALUE=DATE:20270919/);
+  const ok = toICS([C.c3], '2027-09-01').replace(/\r\n /g, ''); assert.match(ok, /DTSTART;VALUE=DATE:20270917/);
+});
+test('README lists only the fonts actually used', async () => { const r = (await import('node:fs')).readFileSync(new URL('../README.md', import.meta.url), 'utf8'); assert.doesNotMatch(r, /Bodoni|Source Serif|JSZip/); assert.match(r, /Geist/); });
+test('Juneteenth only from 2021', () => { assert.equal([..._uh(2020).values()].includes('Juneteenth'), false); assert.equal([..._uh(2021).values()].includes('Juneteenth'), true); assert.equal(_ssb('2020-06-19').changed, false); assert.equal(_ssb('2026-06-19').changed, true); });
+test('malformed dates do not crash safeSendBy', () => { for (const d of ['2026-02-30', 'junk', '', null, undefined, 42, '2026-13-01', '26-1-1', {}]) assert.deepEqual(_ssb(d), { date: '', changed: false, reason: '' }); });
+test('htmlToLines matches the totext.py method', () => {
+  assert.deepEqual(htmlToLines('<html><style>p{}</style><script>x</script><p>A&nbsp; <b>b</b></p><div>C&amp;D</div><br><table><tr><td>e</td><td>f&#8217;s</td></tr></table>'), ['A b', 'C&D', 'e', 'f’s']);
 });

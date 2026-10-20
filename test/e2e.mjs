@@ -15,11 +15,16 @@ page.on('pageerror', e => errors.push(String(e)));
 page.on('requestfailed', r => errors.push('requestfailed ' + r.url()));
 await page.setViewport({ width: 1440, height: 1000 });
 const cdp = await page.createCDPSession(); await cdp.send('Browser.setDownloadBehavior', { behavior: 'allow', downloadPath: dl });
-await page.goto(BASE + '/?asof=2026-10-19', { waitUntil: 'networkidle0' });
+await page.goto(BASE + '/?set=sec&asof=2026-10-19', { waitUntil: 'networkidle0' });
 const edgar = await (await fetch(BASE + '/data/edgar.json')).json();
+// Adding a contract no longer opens the drawer (the answer card is the result); open the newest one explicitly.
+const openLatest = async (re, p = page) => { await p.waitForFunction(r => new RegExp(r).test(document.querySelector('#status').textContent), { timeout: 20000 }, re.source);
+  await p.evaluate(() => { const els = [...document.querySelectorAll('#answer .acard[data-id], #liveQ li[data-id]')]; const newest = els.sort((a, b) => +b.dataset.id.slice(1) - +a.dataset.id.slice(1))[0]; if (newest.tagName === 'LI') newest.click(); document.querySelector('#answerMore').click(); });
+  await p.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450)); };
+
 ok(edgar.length >= 8 && edgar.length <= 12, `real set has ${edgar.length} contracts (8-12)`);
 await page.waitForSelector('#queue li');
-ok(await page.$eval('#setEdgar', b => b.textContent.trim() === '10 real public contracts (SEC)' && b.getAttribute('aria-pressed') === 'true'), 'real set is loaded and labelled');
+ok(await page.$eval('#setEdgar', b => b.textContent.trim() === 'Try with 10 real SEC contracts' && b.getAttribute('aria-pressed') === 'true'), 'real set is loaded and labelled');
 ok((await page.$$('#queue li[data-id]')).length === 10, 'queue has 10 rows');
 ok((await page.$$('#cards .card')).length === 10, '10 contract cards');
 const st = await page.$eval('#status', e => e.textContent); ok(/10 contracts · 8 with a computed date · 4 need review · 1 missed deadline/.test(st), 'counts: ' + st);
@@ -35,22 +40,21 @@ ok(/1\) Missed/.test(await page.$eval('#rule', e => e.textContent)) && /Priority
 ok((await page.$eval('#queue li[data-id="c12"] .safe', e => e.textContent)) === 'Falls on a Saturday · send by Fri 9 Jun 2028 to be safe' && /10 Jun 2028/.test(await page.$eval('#queue li[data-id="c12"] .d', e => e.textContent)), 'weekend deadline: Reborn row keeps 10 Jun 2028 and says send by Fri 9 Jun 2028');
 ok(/send by Fri 28 May 2027 to be safe/.test(await page.$eval('#cards .card[data-id="c6"]', e => e.textContent)) && /Memorial Day/.test(await page.$eval('#cards .card[data-id="c6"]', e => e.textContent)), 'holiday deadline: Vivos card flags Memorial Day');
 ok(/weekends and US federal holidays flagged; local holidays not modelled/.test(await page.$eval('footer', e => e.textContent)), 'footer states the business-day rule');
-{ const p4 = await browser.newPage(); await p4.goto(BASE + '/?asof=2027-09-18', { waitUntil: 'networkidle0' }); await p4.waitForSelector('#queue li[data-id="c3"]');
+{ const p4 = await browser.newPage(); await p4.goto(BASE + '/?set=sec&asof=2027-09-18', { waitUntil: 'networkidle0' }); await p4.waitForSelector('#queue li[data-id="c3"]');
   const t = await p4.$eval('#queue li[data-id="c3"]', e => e.textContent.replace(/\s+/g, ' '));
   ok(/The last business day before it \(Fri 17 Sep 2027\) has passed\. Send today and confirm delivery\./.test(t) && !/to be safe/.test(t), 'as-of 2027-09-18: Dragonfly says send today, not "to be safe"'); await p4.close(); }
-for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setViewport({ width: w, height: w === 1440 ? 900 : 812 }); await pf.goto(BASE + '/', { waitUntil: 'networkidle0' }); await pf.waitForSelector('#queue li[data-id]');
+for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setViewport({ width: w, height: w === 1440 ? 900 : 812 }); await pf.goto(BASE + '/?set=sec', { waitUntil: 'networkidle0' }); await pf.waitForSelector('#queue li[data-id]');
   const m = await pf.evaluate(() => { const r = document.querySelector('#queue li[data-id]').getBoundingClientRect(); return { top: r.top, bottom: r.bottom, rowsTop: [...document.querySelectorAll('#queue li[data-id]')].filter(x => x.offsetParent && x.getBoundingClientRect().top < innerHeight).length, sw: document.documentElement.scrollWidth, lede: !!document.querySelector('.lede').offsetHeight, steps: document.querySelectorAll('.steps li').length, over: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1 && getComputedStyle(e).position !== 'fixed' && !e.closest('.drawer')).length }; });
   if (w === 1440) { ok(m.top < 900, `first screen: first queue row top at ${Math.round(m.top)}px < 900 at 1440x900`); ok(m.bottom <= 900, `first screen: first queue row fully visible (bottom ${Math.round(m.bottom)}px)`); ok(m.rowsTop >= 3, `first screen: ${m.rowsTop} queue rows start within 1440x900`); }
   else { ok(m.bottom < 812, `phone: whole first queue row (name + date) fits above 812px (top ${Math.round(m.top)}, bottom ${Math.round(m.bottom)})`); ok(await pf.$eval('#how', e => !e.open), 'phone: How it works is collapsed'); ok(await pf.$eval('#how > summary .lab', e => getComputedStyle(e, '::after').content.includes('▸')), 'phone: How it works shows an arrow'); }
   if (w === 375) ok(m.sw <= 375 && m.over === 0 && m.lede && m.steps === 3 && true, `375: nothing breaks (scrollWidth ${m.sw}, ${m.over} overflowing elements, hero + 3 steps shown)`);
   await pf.close(); }
 { const lede = await page.$eval('.lede', e => e.textContent.replace(/\s+/g, ' ').trim());
-  ok(lede === 'Many contracts renew automatically unless you send notice by a deadline. Contract Cliffs reads your contracts and tells you the date you must act by, most urgent first, quoting the exact sentence each date comes from.', 'clarity: plain-words hero');
+  ok(lede === 'Find the date you must send notice, before it renews.', 'clarity: plain-words hero');
   const steps = await page.$$eval('.steps li .lab', l => l.map(x => x.textContent));
-  ok(steps.join('|') === '1 · Load contracts|2 · Read the list|3 · Check and export', 'clarity: 3-step how to use');
+  ok(steps.join('|') === '1 · Add contracts|2 · Read the answer|3 · Check and export', 'clarity: 3-step how to use (in About)');
   const ex = await page.$eval('#example', e => e.textContent.replace(/\s+/g, ' '));
   ok(/Star Brands \/ Schwazze: send notice by 16 Dec 2026, or the licence renews automatically for another 24 months/.test(ex), 'N6: worked example uses Star Brands / Schwazze: ' + ex.slice(0, 90));
-  ok(/For ops and legal teams tracking vendor and customer contracts\./.test(await page.$eval('.who', e => e.textContent)), 'N7: audience line');
   const card3 = await page.$eval('#cards .card[data-id="c3"]', e => e.textContent.replace(/\s+/g, ' ')); ok(/Renews 19 Nov 2026 · send-notice deadline missed/.test(card3) && !/Renews 19 Sep 2027/.test(card3), 'N1: Dragonfly card says Renews 19 Nov 2026');
   ok(!/EX-10/.test(await page.$eval('#cards', e => e.textContent)) && !/(high|medium|low|none) confidence/.test(await page.$eval('#queue', e => e.textContent)) && /Sure/.test(await page.$eval('#queue', e => e.textContent)) && /Check this/.test(await page.$eval('#queue', e => e.textContent)), 'N5: plain confidence words, no exhibit codes on cards');
   ok(await page.$eval('#qh abbr', e => /last day to send notice/.test(e.title)), 'clarity: "Send-notice deadlines" has a plain tooltip');
@@ -64,23 +68,23 @@ for (const w of [1440, 375]) { const pf = await browser.newPage(); await pf.setV
   await page.$eval('.revlist .lnk', b => b.click()); await new Promise(r => setTimeout(r, 400)); ok(await page.$eval('#drawer', e => e.classList.contains('on')), 'need-review name opens its drawer'); await page.keyboard.press('Escape'); await new Promise(r => setTimeout(r, 300));
   const tops = await page.$$eval('#stats > div', ds => ds.map(d => Math.round(d.getBoundingClientRect().top))); ok(tops.length === 6 && new Set(tops).size === 1, `stats strip: all 6 figures on one line at desktop (${tops.length})`);
 }
-{ const p2 = await browser.newPage(); await p2.setViewport({ width: 1440, height: 900 }); await p2.goto(BASE + '/?asof=2026-12-16', { waitUntil: 'networkidle0' }); await p2.waitForSelector('#queue li[data-id]');
+{ const p2 = await browser.newPage(); await p2.setViewport({ width: 1440, height: 900 }); await p2.goto(BASE + '/?set=sec&asof=2026-12-16', { waitUntil: 'networkidle0' }); await p2.waitForSelector('#queue li[data-id]');
   const o = await p2.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('sh') ? 'H:' + l.textContent.trim() : '')).filter(Boolean));
   const iDue = o.indexOf('H:Due within 30 days'), iRes = o.indexOf('H:Resolve first · needs review, no date');
   ok(iDue >= 0 && o[iDue + 1] === 'c5' && iDue < iRes, 'R1: on the deadline day (as-of 2026-12-16) Star Brands sits in "Due within 30 days" above "Resolve first"');
   ok(/^Why it’s here Due today · send notice now/.test(await p2.$eval('#queue li[data-id="c5"] .why-here', e => e.textContent.replace(/\s+/g, ' ').trim())), 'R1: due-now reason says "Due today"'); await p2.close(); }
-{ const p3 = await browser.newPage(); await p3.setViewport({ width: 1440, height: 900 }); await p3.goto(BASE + '/?asof=2026-11-25', { waitUntil: 'networkidle0' }); await p3.waitForSelector('#queue li[data-id]');
+{ const p3 = await browser.newPage(); await p3.setViewport({ width: 1440, height: 900 }); await p3.goto(BASE + '/?set=sec&asof=2026-11-25', { waitUntil: 'networkidle0' }); await p3.waitForSelector('#queue li[data-id]');
   const o = await p3.$$eval('#queue > li', ls => ls.map(l => l.dataset.id || (l.classList.contains('sh') ? 'H:' + l.textContent.trim() : '')).filter(Boolean));
   ok(o[0] === 'H:Due within 30 days' && o[1] === 'c5' && o.indexOf('H:Due within 30 days') < o.indexOf('H:Resolve first · needs review, no date'), 'N3: as-of 25 Nov 2026, Star Brands (21 days) ranks above "No date found": ' + o.slice(0, 4).join(','));
   await p3.close(); }
 ok(/two cycles out/.test(await page.$eval('#queue li[data-id="c1"]', e => e.textContent)), 'Cerus reason calls out notice longer than renewal');
 const fonts = await page.evaluate(async () => { await document.fonts.ready; return [document.fonts.check('16px "Geist Mono"'), document.fonts.check('16px Geist'), [...document.fonts].map(f => f.family).join(',')]; });
 ok(fonts[0] && fonts[1] && !/Bodoni|Serif/i.test(fonts[2]), 'self-hosted Geist and Geist Mono loaded; no Bodoni or serif faces');
-const brand = await page.evaluate(() => { const cs = e => getComputedStyle(document.querySelector(e)); return { bg: cs('body').backgroundColor, h1: document.querySelector('h1').textContent, h1w: cs('h1').fontWeight, h1f: cs('h1').fontFamily, lab: cs('.lab').fontFamily, labT: cs('.lab').textTransform, labLs: cs('.lab').letterSpacing, labC: cs('.lab').color, card: cs('.card').backgroundColor, cardB: cs('.card').borderTopWidth, cardR: cs('.card').borderTopLeftRadius, btn: cs('#exCsv').backgroundColor, btnR: cs('#exCsv').borderTopLeftRadius, drawerBg: cs('#drawer').backgroundColor, blur: cs('#drawer').backdropFilter, lede: cs('.lede').backgroundColor }; });
+const brand = await page.evaluate(() => { const cs = e => getComputedStyle(document.querySelector(e)); return { bg: cs('body').backgroundColor, h1: document.querySelector('.mark').textContent, h1w: cs('.mark').fontWeight, h1f: cs('.mark').fontFamily, lab: cs('.lab').fontFamily, labT: cs('.lab').textTransform, labLs: cs('.lab').letterSpacing, labC: cs('.lab').color, card: cs('.card').backgroundColor, cardB: cs('.card').borderTopWidth, cardR: cs('.card').borderTopLeftRadius, btn: cs('#exCsv').backgroundColor, btnR: cs('#exCsv').borderTopLeftRadius, drawerBg: cs('#drawer').backgroundColor, blur: cs('#drawer').backdropFilter, lede: cs('.lede').color, ledeBg: cs('.lede').backgroundColor }; });
 ok(brand.bg === 'rgb(0, 0, 0)' && brand.h1 === 'contract cliffs' && brand.h1w === '500' && /^"?Geist"?,/.test(brand.h1f), `GI skin: black page, lowercase Geist 500 wordmark (${brand.h1})`);
 ok(/Geist Mono/.test(brand.lab) && brand.labT === 'uppercase' && brand.labLs === 'normal' && brand.labC === 'rgb(136, 136, 136)', 'labels: Geist Mono, uppercase, #888, no tracking');
 ok(brand.card === 'rgba(255, 255, 255, 0.1)' && parseFloat(brand.cardB) <= 1 && parseFloat(brand.cardR) <= 2 && brand.btn === 'rgb(255, 255, 255)' && brand.btnR === '0px', `cards rgba(255,255,255,.1) with hairline border, radius ${brand.cardR}; square white primary buttons`);
-ok(brand.drawerBg === 'rgba(12, 14, 22, 0.95)' && /blur\(20px\)/.test(brand.blur) && brand.lede === 'rgb(255, 255, 255)', 'drawer #0C0E16 with 20px blur; white hero copy box');
+ok(brand.drawerBg === 'rgba(12, 14, 22, 0.95)' && /blur\(20px\)/.test(brand.blur) && brand.lede === 'rgb(255, 255, 255)' && brand.ledeBg === 'rgba(0, 0, 0, 0)', 'drawer #0C0E16 with 20px blur; white headline on black (design pass: no white callout box)');
 // drawers: every clause link goes to the exact EDGAR filing URL
 for (const c of edgar) {
   await page.click(`#cards .card[data-id="${c.id}"]`); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));
@@ -110,8 +114,8 @@ await page.$eval('#asof', e => { e.value = '2027-01-01'; e.dispatchEvent(new Eve
 ok(/Cerus/.test(await page.$eval('#queue li[data-id]:not(.missed):not([data-id="c7"]):not([data-id="c13"]):not([data-id="c8"])', e => e.textContent)), 'as-of 2027-01-01 moves Cerus / Purolite to the top of the upcoming rows');
 await page.$eval('#asof', e => { e.value = '2026-10-19'; e.dispatchEvent(new Event('change')); });
 // paste path
-await page.type('#paste', 'This Agreement is entered into as of January 5, 2026 (the "Effective Date"). The Initial Term shall commence on the Effective Date and continue for one (1) year. This Agreement shall automatically renew for successive one (1) year terms unless either party provides written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
-await page.click('#addPaste'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));
+await page.click('#pasteBtn'); await page.type('#paste', 'This Agreement is entered into as of January 5, 2026 (the "Effective Date"). The Initial Term shall commence on the Effective Date and continue for one (1) year. This Agreement shall automatically renew for successive one (1) year terms unless either party provides written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
+await page.click('#addPaste'); await openLatest(/^(Read|Added) Pasted text/);
 ok((await page.$eval('#drawer', e => e.textContent)).includes('5 Dec 2026'), 'pasted contract: act-by 5 Dec 2026 (term ends 4 Jan 2027 minus 30 days)');
 await page.click('#close'); await new Promise(r => setTimeout(r, 350)); await page.click('#setEdgar');
 const TOK = await page.evaluate(() => { const p = document.createElement('div'); document.body.append(p); const g = v => { p.style.color = `var(${v})`; return getComputedStyle(p).color; }; const o = { ink: g('--ink'), mute: g('--mute') }; p.remove(); return o; }); // brand tokens, so a palette swap doesn't break the checks
@@ -141,20 +145,20 @@ ok(await page.$eval('#drawer blockquote.clause', e => { const cs = getComputedSt
 await page.click('#close'); await new Promise(r => setTimeout(r, 350));
 // upload paths: generated PDF and DOCX conversions of real EDGAR filings (test/fixtures/README.md)
 const fx = n => new URL('./fixtures/' + n, import.meta.url).pathname;
-await (await page.$('#file')).uploadFile(fx('c6-vivos-msa.generated.pdf')); await page.waitForSelector('#drawer.on', { timeout: 20000 }); await new Promise(r => setTimeout(r, 500));
+await (await page.$('#file')).uploadFile(fx('c6-vivos-msa.generated.pdf')); await openLatest(/^(Read|Added) c6-vivos-msa/);
 let dt = await page.$eval('#drawer', e => e.textContent);
 ok(dt.includes('31 May 2027') && dt.includes('p. 2, lines 25–26') && dt.includes('at least sixty (60) days prior'), 'PDF upload: act-by 31 May 2027 cited "p. 2, lines 25–26"');
 await page.click('#close'); await new Promise(r => setTimeout(r, 350));
-await (await page.$('#file')).uploadFile(fx('c12-reborn-supply.generated.docx')); await page.waitForFunction(() => document.querySelector('#drawer.on h3')?.textContent.includes('reborn'), { timeout: 20000 }); await new Promise(r => setTimeout(r, 400));
+await (await page.$('#file')).uploadFile(fx('c12-reborn-supply.generated.docx')); await openLatest(/^(Read|Added) c12-reborn/);
 dt = await page.$eval('#drawer', e => e.textContent);
 ok(dt.includes('10 Jun 2028') && /¶ \d+/.test(dt), 'DOCX upload: act-by 10 Jun 2028 cited by paragraph');
 await page.click('#close'); await new Promise(r => setTimeout(r, 350));
-const n0 = (await page.$$('#cards .card')).length; await page.$eval('[data-sample$=".pdf"]', b => b.click()); await page.waitForFunction(n => document.querySelectorAll('#cards .card').length === n + 1 && document.querySelector('#drawer.on h3')?.textContent.includes('c6-vivos'), { timeout: 20000 }, n0); await new Promise(r => setTimeout(r, 400));
+const n0 = (await page.$$('#answer .acard, #liveQ li[data-id]')).length; await page.$eval('[data-sample$=".pdf"]', b => b.click()); await page.waitForFunction(n => document.querySelectorAll('#answer .acard, #liveQ li[data-id]').length === n + 1, { timeout: 20000 }, n0); await openLatest(/c6-vivos/);
 { const sd = await page.$eval('#drawer', e => [e.className, e.querySelector('h3')?.textContent, [...e.querySelectorAll('.loc span')].map(x => x.textContent).slice(0, 4).join('|')].join(' / ')); ok(sd.includes('p. 2, lines 25–26'), 'sample PDF link runs the same upload path from the live site' + (sd.includes('p. 2, lines 25–26') ? '' : ': ' + sd)); }
 await page.keyboard.press('Escape'); await page.waitForFunction(() => !document.querySelector('#drawer.on')); await new Promise(r => setTimeout(r, 400)); await page.$eval('#setEdgar', b => b.click()); await page.waitForSelector('#queue li[data-id="c2"]');
 // live NDA paste (typical SaaS/NDA wording)
-await page.$eval('#paste', (e, v) => { e.value = v; }, 'MUTUAL NONDISCLOSURE AGREEMENT\nThis Mutual Nondisclosure Agreement is entered into as of November 2, 2026 (the "Effective Date") by and between Acme Corp. and Beta LLC.\nThe term of this Agreement is one (1) year from the Effective Date. This Agreement shall automatically renew for successive one (1) year periods unless either party gives written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
-await page.click('#addPaste'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));
+await page.$eval('#pasteBox', e => { e.hidden = false; }); await page.$eval('#paste', (e, v) => { e.value = v; }, 'MUTUAL NONDISCLOSURE AGREEMENT\nThis Mutual Nondisclosure Agreement is entered into as of November 2, 2026 (the "Effective Date") by and between Acme Corp. and Beta LLC.\nThe term of this Agreement is one (1) year from the Effective Date. This Agreement shall automatically renew for successive one (1) year periods unless either party gives written notice of non-renewal at least thirty (30) days prior to the end of the then-current term.');
+await page.click('#addPaste'); await openLatest(/^(Read|Added) Pasted text/);
 dt = await page.$eval('#drawer', e => e.textContent);
 ok(dt.includes('1 Nov 2027') && dt.includes('2 Oct 2027') && dt.includes('Who acts: Either party'), 'NDA paste ("term ... is one (1) year from"): term ends 1 Nov 2027, act by 2 Oct 2027, either party acts');
 await page.keyboard.press('Escape'); await page.waitForFunction(() => !document.querySelector('#drawer.on')); await new Promise(r => setTimeout(r, 350));
@@ -175,8 +179,8 @@ await page.$eval('#setHoldout', b => b.click()); await page.waitForFunction(() =
 { const t = await page.$eval('#queue', e => e.textContent); ok(/Blockfusion \/ Thunderra/.test(t) && (await page.$$('#queue li[data-id]')).length === 10, 'holdout set is live: 10 blind EDGAR contracts in the queue'); }
 await page.$eval('#setEdgar', b => b.click()); await new Promise(r => setTimeout(r, 200));
 // cross-referenced notice period (paste)
-await page.$eval('#paste', (e, v) => { e.value = v; }, 'This Services Agreement is entered into as of January 1, 2026 (the "Effective Date").\n7.1 Term. The term of this Agreement shall begin on January 1, 2026 and shall end January 1, 2029. Upon expiration of the Initial Term, this Agreement will automatically renew for successive one (1) year terms, unless either party provides the other with notice of its intent to terminate pursuant to Section 7.4.\n7.4 Termination for Convenience. Customer may terminate this Agreement for any or no reason upon three hundred sixty-five (365) days’ advance written notice.');
-await page.click('#addPaste'); await page.waitForSelector('#drawer.on'); await new Promise(r => setTimeout(r, 450));
+await page.$eval('#pasteBox', e => { e.hidden = false; }); await page.$eval('#paste', (e, v) => { e.value = v; }, 'This Services Agreement is entered into as of January 1, 2026 (the "Effective Date").\n7.1 Term. The term of this Agreement shall begin on January 1, 2026 and shall end January 1, 2029. Upon expiration of the Initial Term, this Agreement will automatically renew for successive one (1) year terms, unless either party provides the other with notice of its intent to terminate pursuant to Section 7.4.\n7.4 Termination for Convenience. Customer may terminate this Agreement for any or no reason upon three hundred sixty-five (365) days’ advance written notice.');
+await page.click('#addPaste'); await openLatest(/^(Read|Added) Pasted text/);
 dt = await page.$eval('#drawer', e => e.textContent);
 ok(dt.includes('2 Jan 2028') && /Section 7\.4/.test(dt) && /Referenced from the renewal clause/.test(dt) && /NEEDS REVIEW|Needs review/i.test(dt), 'cross-referenced notice: reads Section 7.4 (365 days) -> act by 2 Jan 2028, flagged, both clauses quoted');
 await page.keyboard.press('Escape'); await page.waitForFunction(() => !document.querySelector('#drawer.on')); await new Promise(r => setTimeout(r, 350));
@@ -193,17 +197,17 @@ ok((await src.$eval('#L353', e => e.className)) === 'hl', 'saved-text viewer hig
 if (SHOTS) { await page.reload({ waitUntil: 'networkidle0' }); await page.screenshot({ path: path.join(SHOTS, 'contract-cliffs-1440.png'), fullPage: true }); await page.click('#cards .card[data-id="c5"]'); await new Promise(r => setTimeout(r, 400)); await page.screenshot({ path: path.join(SHOTS, 'contract-cliffs-1440-drawer.png') }); await page.click('#close'); }
 // invalid ?asof falls back to today with a notice
 for (const bad of ['2026-13-45', '2026-02-30', 'banana']) {
-  await page.goto(BASE + '/?asof=' + bad, { waitUntil: 'networkidle0' }); await page.waitForSelector('#queue li');
+  await page.goto(BASE + '/?set=sec&asof=' + bad, { waitUntil: 'networkidle0' }); await page.waitForSelector('#queue li');
   const t = await page.evaluate(() => ({ st: document.querySelector('#status').textContent, q: document.querySelector('#queue').textContent, v: document.querySelector('#asof').value }));
   const today = new Date(); const td = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
   ok(/Invalid as-of date/.test(t.st) && t.v === td && !/NaN|25\d\d/.test(t.q), `?asof=${bad} -> "Invalid as-of date, using today", no NaN or far-future dates`);
 }
-await page.goto(BASE + '/?asof=2026-10-19', { waitUntil: 'networkidle0' }); await page.waitForSelector('#queue li');
+await page.goto(BASE + '/?set=sec&asof=2026-10-19', { waitUntil: 'networkidle0' }); await page.waitForSelector('#queue li');
 await page.$eval('#setMine', b => b.click()); await page.$eval('#exCsv', b => b.click()); await new Promise(r => setTimeout(r, 300));
 ok(/Nothing to export yet/.test(await page.$eval('#status', e => e.textContent)), 'empty export says so instead of downloading a header-only file');
 // 375px
 await page.setViewport({ width: 375, height: 812, isMobile: true, hasTouch: true });
-await page.goto(BASE + '/?asof=2026-10-19', { waitUntil: 'networkidle0' });
+await page.goto(BASE + '/?set=sec&asof=2026-10-19', { waitUntil: 'networkidle0' });
 const ov = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth); ok(ov <= 0, `no sideways scroll at 375 (overflow ${ov}px)`);
 if (SHOTS) await page.screenshot({ path: path.join(SHOTS, 'contract-cliffs-375.png'), fullPage: true });
 const tiles = await page.$$eval('#cards .tile', ts => ts.slice(0, 4).map(t => { const r = t.getBoundingClientRect(); return [Math.round(r.left), Math.round(r.width), Math.round(r.height)]; }));
