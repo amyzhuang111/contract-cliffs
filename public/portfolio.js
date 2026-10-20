@@ -40,7 +40,7 @@ export function timelineHtml(rows, asOf, nLabels = 4) {
 export function listHtml(rows, asOf) {
   return rows.map((r, k) => `<li id="pf-${esc(r.id)}" class="pr ${r.st.bucket} ${r.st.flags.join(' ')}" style="--i:${k}">
     <span class="pn">${esc(r.c.name)}</span>
-    <span class="pd">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}${r.actBy && sendByNote(r.actBy, r.asOf, !!r.item?.within) ? `<span class="psafe">${esc(sendByNote(r.actBy, r.asOf, !!r.item?.within))}</span>` : ''}${windowNote(r) ? `<span class="psafe">${esc(windowNote(r))}</span>` : ''}</span>
+    <span class="pd">${r.actBy ? esc(fmt(r.actBy)) : '<span class="nd">No date found</span>'}${r.actBy && (r.item?.within ? '' : sendByNote(r.actBy, r.asOf)) ? `<span class="psafe">${esc((r.item?.within ? '' : sendByNote(r.actBy, r.asOf)))}</span>` : ''}${windowNote(r) ? `<span class="psafe">${esc(windowNote(r))}</span>` : ''}</span>
     <span class="pl">${r.days == null ? '' : r.days < 0 ? `${dayWord(-r.days)} ago` : r.days === 0 ? 'today' : `${dayWord(r.days)} left`}</span>
     <span class="pc"><span class="tag ${r.conf === 'Clear' ? 'clear' : r.conf === 'Check' ? 'check' : 'cttag'}">${esc(r.conf)}</span></span>
     <span class="ps">${esc(r.st.label)}</span>
@@ -62,6 +62,6 @@ export function firstSentence(rows) {
 // Opening view: the 3 contracts to act on first, each with company, action and days left.
 export function top3Html(rows) {
   return byUrgency(rows).slice(0, 3).map(r => { const now = ['passed', 'd30'].includes(r.st.bucket);
-    const note = [r.actBy && sendByNote(r.actBy, r.asOf, !!r.item?.within) && esc(sendByNote(r.actBy, r.asOf, !!r.item?.within)), windowNote(r) && esc(windowNote(r)), r.missed && `Missed ${esc(fmt(r.missed.actBy))}`, r.st.flags.includes('review') && '<span class="rvnote">Needs review</span>'].filter(Boolean).join(' · ');
+    const note = [r.actBy && (r.item?.within ? '' : sendByNote(r.actBy, r.asOf)) && esc((r.item?.within ? '' : sendByNote(r.actBy, r.asOf))), windowNote(r) && esc(windowNote(r)), r.missed && `Missed ${esc(fmt(r.missed.actBy))}`, r.st.flags.includes('review') && '<span class="rvnote">Needs review</span>'].filter(Boolean).join(' · ');
     return `<li class="t3${now ? ' now' : ''}"><a href="#pf-${esc(r.id)}"><span class="t3n">${esc(r.c.name)}</span><span class="t3a">${r.item?.within ? 'Send notice on or after' : 'Send notice by'} ${esc(fmt(r.actBy))}</span><span class="t3d">${r.days === 0 ? 'Today' : `${dayWord(r.days)} left`}</span>${note ? `<span class="t3x">${note}</span>` : ''}</a></li>`; }).join('');
 }

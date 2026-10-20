@@ -124,19 +124,19 @@ for (const w of [1440, 375]) {
     ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${w}: no sideways scroll`);
     await p.ctx.close(); }
   // "within N days prior": earliest safe date shown with the on-or-after label on every surface
-  { const p = await fresh('/?asof=2026-10-20', w); const W = 'The clause says "within sixty (60) days prior": send between 2 Nov and 31 Dec 2026. 2 Nov 2026 is the earliest safe date';
+  { const p = await fresh('/?asof=2026-10-20', w); const W = 'Needs review: two readings. The clause says "within sixty (60) days prior". If that opens a window, send between Mon 2 Nov 2026 and 31 Dec 2026. If it means at least 60 days before, the cutoff is Sun 1 Nov 2026. Notice delivered on Sun 1 Nov 2026 satisfies both, if the notices clause allows a delivery method that works that day';
     const T = 'MASTER SUPPLY AGREEMENT\nThis Agreement is effective as of January 1, 2026 (the "Effective Date").\n2. Term. The initial term of this Agreement shall commence on the Effective Date and end on December 31, 2026. Thereafter this Agreement shall automatically renew for successive one (1) year terms unless either party gives written notice of non-renewal within sixty (60) days prior to the end of the then-current term.';
     await p.click('#pasteBtn'); await p.$eval('#paste', (e, v) => { e.value = v; }, T); await p.click('#addPaste'); await waitStatus(p, /^Read/);
     const a = await p.evaluate(() => ({ k: document.querySelector('#answer .aleft > .lab').textContent, h: document.querySelector('#answerBig').textContent, t: document.querySelector('#answer').innerText, g: decodeURIComponent(document.querySelector('#answer a.gcal')?.href || '') }));
-    ok(a.k === 'Send notice on or after' && a.h === '2 Nov 2026' && a.t.includes(W) && !/Send by Fri 30 Oct/.test(a.t), `${w}: answer card says Send notice on or after 2 Nov 2026 and states the window (${a.k} ${a.h})`);
-    ok(/text=Window opens: send notice from 2 Nov 2026: /.test(a.g) && /dates=20261102\/20261103/.test(a.g) && a.g.includes('Send notice on or after Mon 2 Nov 2026. ' + W), `${w}: Google Calendar link opens on 2 Nov with the window note`);
+    ok(a.k === 'Send notice on' && a.h === '1 Nov 2026' && a.t.includes(W) && !/Send by Fri 30 Oct|earliest safe/.test(a.t) && /Needs review · two readings/.test(a.t), `${w}: answer card gives both readings and the day that satisfies both (${a.k} ${a.h})`);
+    ok(/text=Window opens: send notice from 1 Nov 2026 \(two readings\): /.test(a.g) && /dates=20261101\/20261102/.test(a.g) && a.g.includes('Send notice on Sun 1 Nov 2026. ' + W), `${w}: Google Calendar link is on 1 Nov with both readings`);
     await p.click('#answerMore'); await sleep(300); const dr = await p.$eval('#dbody', e => e.innerText);
-    ok(dr.includes('Send notice on or after Mon 2 Nov 2026. ' + W), `${w}: drawer shows the window note`); await p.evaluate(() => document.querySelector('#close').click()); await sleep(200);
+    ok(dr.includes('Send notice on Sun 1 Nov 2026. ' + W), `${w}: drawer shows the window note`); await p.evaluate(() => document.querySelector('#close').click()); await sleep(200);
     await p.evaluate(() => document.querySelector('#answerLetter').click()); await sleep(300); const lt = await p.$eval('#letterText', e => e.textContent);
-    ok(lt.includes('on or after 2 November 2026, as the clause above requires (' + W + ')') && !/on or before 1 November/.test(lt), `${w}: letter gives notice on or after the window opens`); await p.evaluate(() => document.querySelector('#close').click()); await sleep(200);
+    ok(lt.includes('before the end of the current term, on 1 November 2026, as the clause above requires (' + W + ')') && !/on or before 1 November/.test(lt), `${w}: letter gives notice on or after the window opens`); await p.evaluate(() => document.querySelector('#close').click()); await sleep(200);
     await p.evaluate(() => document.querySelector('#pasteBtn').click()); await p.$eval('#paste', (e, v) => { e.value = v; }, fs.readFileSync(fx('c3-dragonfly.edgar.txt'), 'utf8')); await p.click('#addPaste'); await waitStatus(p, /2 contracts/);
     const q = await p.evaluate(() => [...document.querySelectorAll('#lq .lrow, #queue li[data-id]')].map(l => l.textContent).find(t => /within sixty \(60\) days prior/.test(t)) || '');
-    ok(q.includes('Send notice on or after') && q.includes(W), `${w}: queue card shows the on-or-after label and window note`);
+    ok(q.includes('Send notice on') && q.includes(W), `${w}: queue card shows the on-or-after label and window note`);
     await p.ctx.close(); }
 }
 ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
