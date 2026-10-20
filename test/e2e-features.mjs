@@ -81,6 +81,18 @@ for (const w of [1440, 375]) {
     const v = await p.$eval('.obl .ob-esc', e => e.innerText.replace(/\s+/g, ' '));
     ok(/shall not exceed 8%/.test(v) && /lines 193–194/.test(v), `${w}: Vivos price escalator quoted (lines 193–194)`);
     await p.ctx.close(); }
+  // F4 bulk + portfolio
+  { const p = await fresh('/?asof=2026-10-19', w);
+    await p.evaluate(() => { window.__steps = []; new MutationObserver(() => window.__steps.push(document.querySelector('#busyName').textContent)).observe(document.querySelector('#busyName'), { childList: true, characterData: true, subtree: true }); });
+    await drop(p, [['dragonfly.txt', f64('c3-dragonfly.edgar.txt'), 'text/plain'], ['vivos.pdf', f64('c6-vivos-msa.generated.pdf'), 'application/pdf'], ['reborn.docx', f64('c12-reborn-supply.generated.docx'), 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'], ['notes.txt', Buffer.from('shopping list: eggs, milk').toString('base64'), 'text/plain']]);
+    await waitStatus(p, /^Read 4 files/, 40000);
+    const st = await status(p), steps = await p.evaluate(() => [...new Set(window.__steps)]);
+    ok(/^Read 4 files: 3 added, 1 not added \(notes\.txt\)\. 3 contracts in the queue\.$/.test(st), `${w}: bulk drop reports the result: ${st}`);
+    ok(['File 1 of 4', 'File 2 of 4', 'File 3 of 4', 'File 4 of 4'].every(k => steps.some(s => s.startsWith(k))), `${w}: progress shows File n of 4 for each file`);
+    const pf = await p.$$eval('#portfolio .pf', ds => ds.map(d => d.innerText.replace(/\s+/g, ' ').trim()));
+    ok(pf.join('|') === 'DUE IN 30 DAYS 0|DUE IN 90 DAYS 0|DUE IN 365 DAYS 1|PASSED 1|NEEDS REVIEW 1', `${w}: portfolio summary ${pf.join(', ')}`);
+    await p.evaluate(() => document.querySelector('#portfolio').scrollIntoView({ block: 'start' })); await sleep(300); await shot(p, 'f4-portfolio', w);
+    await p.ctx.close(); }
 
 }
 ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));

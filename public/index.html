@@ -44,7 +44,7 @@
     <div class="dz-busy" id="busy" hidden aria-live="polite">
       <p class="lab" id="busyName"></p>
       <p class="busy-step" id="busyStep"></p>
-      <div class="bar"><span id="busyBar"></span></div>
+      <div class="bar" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100"><span id="busyBar"></span></div>
     </div>
     <div class="dz-err" id="dzErr" hidden>
       <p class="dz-big">Couldn’t read this file</p>
@@ -70,6 +70,7 @@
 <section class="prompt" id="prompt" hidden><p id="promptText">Add another contract to build a priority queue</p><div class="pr-r"><button id="trySecond" class="btn-secondary">Add a real SEC contract</button><p class="caption pr-cap">Real SEC filing</p></div></section>
 <section class="liveq" id="liveQ" hidden aria-labelledby="lqh">
   <div class="lq-head"><h2 class="lab" id="lqh"></h2><div class="lq-tools"><button class="tl" id="lqIcs">Export .ics</button><button class="tl" id="lqCsv">Export CSV</button><button class="tl mute" id="clearAll">Clear all</button></div></div>
+  <div class="portfolio" id="portfolio" aria-label="Portfolio summary"></div>
   <p class="lab lqsum" id="lqSum"></p>
   <ol class="lq" id="lq"></ol>
   <div id="lqExpired"></div>

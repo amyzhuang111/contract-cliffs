@@ -169,3 +169,9 @@ export function docx(text) {
   ]);
 }
 
+// ---------- F4: portfolio summary ----------
+export function portfolio(rows) {
+  const live = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days != null && r.days >= 0);
+  return { total: rows.length, d30: live.filter(r => r.days <= 30).length, d90: live.filter(r => r.days <= 90).length, d365: live.filter(r => r.days <= 365).length, passed: rows.filter(r => r.missed || (r.days != null && r.days < 0 && r.section !== 'lapsed')).length, review: rows.filter(r => r.needsReview).length, expired: rows.filter(r => r.section === 'lapsed').length };
+}
+

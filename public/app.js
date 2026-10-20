@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { withAlarms, gcalLink, letter, docx, obligations } from '/features.js';
+import { withAlarms, gcalLink, letter, docx, obligations, portfolio } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -242,6 +242,7 @@ function live(cs) {
   const later = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days > 90).length; if (later) sum.push(`${later} later`);
   const nod = rows.filter(r => !r.actBy).length; if (nod) sum.push(`${nod} no date`); const ex = rows.filter(r => r.section === 'lapsed').length; if (ex) sum.push(`${ex} expired`);
   $('#lqSum').innerHTML = sum.join(' · ');
+  const pf = portfolio(rows); $('#portfolio').innerHTML = [['Due in 30 days', pf.d30, 'u30'], ['Due in 90 days', pf.d90, 'u90'], ['Due in 365 days', pf.d365, 'u365'], ['Passed', pf.passed, 'p'], ['Needs review', pf.review, 'r']].map(([k, v, c]) => `<div class="pf ${c}"><span class="lab">${k}</span><span class="sv">${v}</span></div>`).join('');
   $('#lq').innerHTML = act.map(r => row(byId.get(r.id), r)).join('');
   $('#lqExpired').innerHTML = exp.length ? `<button class="tl" id="showExp">${exp.length} expired · ${shownExpired ? 'Hide' : 'Show'}</button>${shownExpired ? `<ol class="lq">${exp.map(r => row(byId.get(r.id), r)).join('')}</ol>` : ''}` : '';
   $('#showExp')?.addEventListener('click', () => { shownExpired = !shownExpired; render(); });
@@ -255,7 +256,8 @@ function live(cs) {
 // ---------- drop zone states: parsing steps tied to the real stages, errors in plain words ----------
 const STEPS = ['Reading 1 of 3: extracting text', '2 of 3: finding term and renewal clauses', '3 of 3: computing the send-notice date'];
 const show = id => ['pasteBox', 'busy', 'dzErr'].forEach(k => { $('#' + k).hidden = k !== id; }) || ($('.dz-idle').hidden = !!id);
-async function stage(i, name) { show('busy'); $('#drop').classList.remove('err'); $('#busyName').textContent = 'Reading ' + name.replace(/\.[a-z0-9]+$/i, ''); $('#busyStep').textContent = STEPS[i - 1]; $('#busyBar').style.width = Math.round(i / 3 * 100) + '%'; await new Promise(r => setTimeout(r, 250)); }
+let bulk = null; // { i, n } while several files are read
+async function stage(i, name) { show('busy'); $('#drop').classList.remove('err'); $('#busyName').textContent = (bulk ? `File ${bulk.i} of ${bulk.n} · ` : '') + 'Reading ' + name.replace(/\.[a-z0-9]+$/i, ''); $('#busyStep').textContent = STEPS[i - 1]; const f = bulk ? (bulk.i - 1 + i / 3) / bulk.n : i / 3; $('#busyBar').style.width = Math.round(f * 100) + '%'; $('#busy .bar').setAttribute('aria-valuenow', String(Math.round(f * 100))); await new Promise(r => setTimeout(r, 250)); }
 const busyDone = () => { show(null); };
 function dzError(msg) { show('dzErr'); $('#drop').classList.add('err'); $('#dzErrHint').textContent = msg; }
 const plainErr = m => /no text layer/.test(m) ? 'This PDF is a scanned image. Paste the text instead.' : /unsupported/.test(m) ? 'File type not supported. Use PDF, Word or text.' : 'The file could not be opened. Try another copy, or paste the text instead.';
@@ -296,7 +298,13 @@ async function readFile(f) {
   }
   throw new Error('unsupported file type (use PDF, .docx, .txt or .htm)');
 }
-async function addFiles(files) { for (const f of files) { try { $('#status').textContent = 'Reading ' + f.name + '…'; await stage(1, f.name); await addDoc(f.name, await readFile(f)); } catch (err) { dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + f.name + ': ' + plainErr(err.message || ''); } } }
+async function addFiles(files) {
+  const many = files.length > 1; let added = 0; const failed = [];
+  for (let k = 0; k < files.length; k++) { const f = files[k]; if (many) bulk = { i: k + 1, n: files.length };
+    try { $('#status').textContent = (many ? `File ${k + 1} of ${files.length}: ` : '') + 'Reading ' + f.name + '…'; await stage(1, f.name); if (await addDoc(f.name, await readFile(f))) added++; else failed.push(f.name); } catch (err) { failed.push(f.name); dzError(plainErr(err.message)); $('#status').textContent = 'Could not read ' + f.name + ': ' + plainErr(err.message || ''); } }
+  bulk = null;
+  if (many) { busyDone(); $('#drop').classList.remove('err'); $('#status').textContent = `Read ${files.length} files: ${added} added${failed.length ? `, ${failed.length} not added (${failed.join(', ').slice(0, 160)})` : ''}. ${mine.length} contracts in the queue.`; }
+}
 $('#file').onchange = async e => { await addFiles([...e.target.files]); e.target.value = ''; };
 // The whole page is a drop target.
 ['dragenter', 'dragover'].forEach(ev => window.addEventListener(ev, e => { e.preventDefault(); document.body.classList.add('dragging'); }));

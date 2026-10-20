@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
 import { extract, toICS, buildQueue } from '../public/extract.js';
-import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, FILL } from '../public/features.js';
+import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, portfolio, FILL } from '../public/features.js';
 const load = f => JSON.parse(fs.readFileSync(new URL('../public/data/' + f + '.json', import.meta.url))).map(c => ({ ...c, x: extract(c.lines) }));
 const E = Object.fromEntries(load('edgar').map(c => [c.id, c])), H = Object.fromEntries(load('holdout').map(c => [c.id, c]));
 const AS = '2026-10-19';
@@ -95,4 +95,16 @@ test('F2: .docx is a valid zip that Word can open (unzip and XML check)', () => 
   const xml = execFileSync('unzip', ['-p', f, 'word/document.xml']).toString();
   assert.match(xml, /DRAFT\. NOT SENT/); assert.match(xml, /16 December 2026/); assert.match(xml, /&quot;If not otherwise terminated/);
   assert.match(execFileSync('unzip', ['-p', f, '\\[Content_Types].xml']).toString(), /wordprocessingml\.document\.main\+xml/);
+});
+
+// F4
+test('F4: portfolio counts on the 10 SEC contracts', () => {
+  const rows = buildQueue(Object.values(E), AS); const p = portfolio(rows);
+  const live = rows.filter(r => !r.missed && r.section !== 'lapsed' && r.days != null && r.days >= 0);
+  assert.equal(p.total, 10);
+  assert.equal(p.d30, live.filter(r => r.days <= 30).length); assert.ok(p.d30 <= p.d90 && p.d90 <= p.d365);
+  assert.equal(p.review, rows.filter(r => r.needsReview).length);
+  const demo = portfolio(buildQueue([E.c5, E.c2, E.c3], AS));
+  assert.deepEqual([demo.d30, demo.d90, demo.d365, demo.passed], [0, 1, 1, 1]); // Star Brands in 58 days; Dragonfly passed; StableX 2030
+  assert.deepEqual(portfolio([]), { total: 0, d30: 0, d90: 0, d365: 0, passed: 0, review: 0, expired: 0 });
 });
