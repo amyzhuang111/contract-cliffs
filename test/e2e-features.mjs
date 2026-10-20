@@ -97,7 +97,22 @@ for (const w of [1440, 375]) {
     ok(csv.length === 4 && /^contract,counterparty,deadline,send_by_business_day,days_from_as_of,as_of,status,needs_review,review_reason,confidence,evidence_location,evidence_quote,source$/.test(csv[0]) && csv.some(l => /Missed: send-notice deadline passed/.test(l)) && csv.slice(1).every(l => /,2026-10-19,/.test(l)), `${w}: audit CSV: header + one row per contract with status and evidence`);
     await p.evaluate(() => document.querySelector('#lqAudit').scrollIntoView({ block: 'center' })); await shot(p, 'f5-audit', w);
     await p.ctx.close(); }
-
+  // F6 storage
+  { const p = await fresh('/?asof=2026-10-19', w); await p.click('#tryOne'); await p.waitForFunction(() => !document.querySelector('#answer').hidden);
+    await p.evaluate(() => { document.querySelector('#about').open = true; document.querySelector('#remember').click(); });
+    await p.click('#trySecond'); await waitStatus(p, /2 contracts/);
+    await p.reload({ waitUntil: 'networkidle0' }); await sleep(300);
+    ok(await p.evaluate(() => document.querySelector('#answer .iname')?.textContent === 'Star Brands / Schwazze' && document.querySelectorAll('#lq li[data-id]').length === 1), `${w}: with Remember ticked, the queue comes back after reload`);
+    await p.evaluate(() => localStorage.setItem('cc-docs', '{broken')); await p.reload({ waitUntil: 'networkidle0' }); await sleep(300);
+    ok(/could not be read and were cleared/.test(await status(p)) && await p.evaluate(() => document.querySelector('#answer').hidden && !/broken/.test(localStorage.getItem('cc-docs') || '')), `${w}: corrupt storage is cleared with a plain message, no crash`);
+    await p.evaluate(() => localStorage.setItem('cc-docs', JSON.stringify([{ name: 'ok', fileName: 'a.txt', lines: ['MASTER AGREEMENT', 'The initial term is one (1) year from January 1, 2026 and renews automatically for successive one (1) year terms unless either party gives sixty (60) days notice of non-renewal.'] }, 42]))); await p.reload({ waitUntil: 'networkidle0' }); await sleep(300);
+    ok(/Some saved contracts could not be read/.test(await status(p)) && await p.evaluate(() => !document.querySelector('#answer').hidden), `${w}: partly bad storage keeps the good entries`);
+    await p.evaluate(() => { document.querySelector('#about').open = true; document.querySelector('#resetStore').scrollIntoView({ block: 'center' }); }); await shot(p, 'f6-storage', w);
+    await p.click('#resetStore'); await sleep(200);
+    ok(await p.evaluate(() => document.querySelector('#answer').hidden && localStorage.getItem('cc-docs') === null && localStorage.getItem('cc-remember') === null && !document.querySelector('#remember').checked) && /Saved data deleted/.test(await status(p)), `${w}: reset deletes saved data and empties the queue`);
+    await p.reload({ waitUntil: 'networkidle0' }); ok(await p.evaluate(() => document.querySelector('#answer').hidden), `${w}: nothing comes back after reset`);
+    ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${w}: no sideways scroll`);
+    await p.ctx.close(); }
 }
 ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
 console.log(`\n${pass} passed, ${fail} failed`); await browser.close(); process.exit(fail ? 1 : 0);

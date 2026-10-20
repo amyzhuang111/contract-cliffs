@@ -187,3 +187,13 @@ export function auditCSV(contracts, asOf) {
   return out.join('\r\n') + '\r\n';
 }
 
+// ---------- F6: safe local storage ----------
+export const STORE_KEY = 'cc-docs';
+// Returns { docs, error }. Never throws; drops entries that are not well-formed.
+export function parseSaved(raw) {
+  if (raw == null || raw === '') return { docs: [], error: '' };
+  let v; try { v = JSON.parse(raw); } catch { return { docs: [], error: 'corrupt' }; }
+  if (!Array.isArray(v)) return { docs: [], error: 'corrupt' };
+  const docs = v.filter(m => m && typeof m === 'object' && typeof m.name === 'string' && Array.isArray(m.lines) && m.lines.length && m.lines.every(l => typeof l === 'string' || (l && typeof l.text === 'string')));
+  return { docs, error: docs.length < v.length ? 'partial' : '' };
+}

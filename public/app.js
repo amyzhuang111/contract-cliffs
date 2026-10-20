@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { withAlarms, gcalLink, letter, docx, obligations, portfolio, auditCSV } from '/features.js';
+import { withAlarms, gcalLink, letter, docx, obligations, portfolio, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const today = new Date(); const pad = n => String(n).padStart(2, '0');
@@ -328,14 +328,18 @@ $('#fetchUrl').onclick = async () => {
 };
 // Opt-in local memory (localStorage). Off by default; unticking deletes what was saved.
 const remember = () => localStorage.getItem('cc-remember') === '1';
-const save = () => { try { localStorage.setItem('cc-docs', JSON.stringify(mine.map(({ x, ...m }) => m))); } catch { $('#status').textContent = 'Could not save on this device (storage full); your contracts are still on the page.'; } };
+const save = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(mine.map(({ x, ...m }) => m))); } catch { $('#status').textContent = 'Could not save on this device (storage full); your contracts are still on the page.'; } };
 $('#remember').checked = remember();
-$('#remember').onchange = e => { if (e.target.checked) { localStorage.setItem('cc-remember', '1'); save(); $('#status').textContent = 'Saved on this device. Untick to delete.'; } else { localStorage.removeItem('cc-remember'); localStorage.removeItem('cc-docs'); $('#status').textContent = 'Deleted from this device.'; } };
-if (remember()) { try { for (const m of JSON.parse(localStorage.getItem('cc-docs') || '[]')) mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch {} }
+$('#remember').onchange = e => { if (e.target.checked) { localStorage.setItem('cc-remember', '1'); save(); $('#status').textContent = 'Saved on this device. Untick to delete.'; } else { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); $('#status').textContent = 'Deleted from this device.'; } };
+let storeNote = '';
+try { if (remember()) { const { docs, error } = parseSaved(localStorage.getItem(STORE_KEY)); for (const m of docs) { try { mine.push({ ...m, id: 'u' + (++n), x: extract(m.lines) }); } catch {} }
+  if (error === 'corrupt') { localStorage.removeItem(STORE_KEY); storeNote = 'Saved contracts on this device could not be read and were cleared. Add them again.'; } else if (error === 'partial') storeNote = 'Some saved contracts could not be read and were skipped.'; } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
+$('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
 // Demo mode: straight to the one-click state.
 if (params.get('demo') === '1') { document.body.classList.add('demo'); setTimeout(() => $('#tryOne').focus(), 0); if (params.get('auto') !== '0') setTimeout(() => { if (!mine.length) $('#tryOne').click(); }, 350); }
 new MutationObserver(() => $('#status').classList.toggle('err', /^(Invalid|Could not|Nothing to export|As-of cleared)/.test($('#status').textContent))).observe($('#status'), { childList: true, characterData: true, subtree: true });
 if (set === 'edgar') loadEdgar().catch(err => { $('#status').textContent = 'Could not load the SEC set: ' + err.message; });
 else if (set === 'holdout') $('#setHoldout').onclick();
 else render();
+if (storeNote) $('#status').textContent = storeNote;
 if ('serviceWorker' in navigator && location.protocol === 'https:' || location.hostname === 'localhost') navigator.serviceWorker?.register('/sw.js').catch(() => {});

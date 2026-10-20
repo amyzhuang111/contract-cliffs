@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs'; import os from 'node:os'; import path from 'node:path'; import { execFileSync } from 'node:child_process';
 import { extract, toICS, buildQueue } from '../public/extract.js';
-import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, portfolio, auditCSV, statusOf, FILL } from '../public/features.js';
+import { withAlarms, gcalLink, sendDay, noticeClause, escalators, obligations, letter, docx, crc32, portfolio, auditCSV, statusOf, parseSaved, FILL } from '../public/features.js';
 const load = f => JSON.parse(fs.readFileSync(new URL('../public/data/' + f + '.json', import.meta.url))).map(c => ({ ...c, x: extract(c.lines) }));
 const E = Object.fromEntries(load('edgar').map(c => [c.id, c])), H = Object.fromEntries(load('holdout').map(c => [c.id, c]));
 const AS = '2026-10-19';
@@ -118,4 +118,14 @@ test('F5: audit CSV has one row per contract with deadline, quote, confidence an
   assert.match(csv.find(l => l.startsWith('Dragonfly')), /,2026-09-19,.*Missed: send-notice deadline passed/);
   const evil = auditCSV([{ ...E.c5, id: 'z', name: '=HYPERLINK("x")' }], AS); assert.match(evil, /^contract[^\n]*\r\n"'=HYPERLINK\(""x""\)"/);
   assert.equal(statusOf({ actBy: '', days: null }), 'Needs review: no date found');
+});
+
+// F6
+test('F6: saved data is parsed safely', () => {
+  assert.deepEqual(parseSaved(null), { docs: [], error: '' });
+  assert.deepEqual(parseSaved('{not json'), { docs: [], error: 'corrupt' });
+  assert.deepEqual(parseSaved('{"a":1}'), { docs: [], error: 'corrupt' });
+  const ok = { name: 'A', lines: ['x', { text: 'y' }] };
+  assert.deepEqual(parseSaved(JSON.stringify([ok, null, { name: 2 }, { name: 'B', lines: [5] }])), { docs: [ok], error: 'partial' });
+  assert.deepEqual(parseSaved(JSON.stringify([ok])), { docs: [ok], error: '' });
 });
