@@ -718,10 +718,10 @@ test('within N days prior: weekend and holiday shift moves FORWARD and the windo
   const L = t.split('\n'); const x = extract(L); const r = buildQueue([{ id: 'p', name: 'p', lines: L, x }], '2026-10-20')[0];
   assert.equal(r.actBy, '2026-11-01'); assert.equal(r.safe.date, '2026-11-02'); assert.equal(r.safe.note, 'Falls on a Sunday · send notice on or after Mon 2 Nov 2026');
   assert.equal(windowOf(r).label, 'Send notice on or after'); assert.equal(windowOf(r).fromW, 'Mon 2 Nov 2026');
-  assert.equal(windowNote(r), '"Within 60 days prior": send between 2 Nov and 31 Dec 2026. 2 Nov 2026 is the earliest safe date');
+  assert.equal(windowNote(r), 'The clause says "within sixty (60) days prior": send between 2 Nov and 31 Dec 2026. 2 Nov 2026 is the earliest safe date');
   assert.equal(sendByNote('2026-11-01', '2026-10-20', true), 'Falls on a Sunday. Send notice on or after Mon 2 Nov');
   const a = fx('armlogi-goldensee-ex10-11.edgar.htm').r; assert.equal(a.actBy, '2027-06-20'); assert.equal(a.safe.date, '2027-06-21');
-  assert.equal(windowNote(a), '"Within 1 month prior": send between 21 Jun and 20 Jul 2027. 21 Jun 2027 is the earliest safe date');
+  assert.equal(windowNote(a), 'The clause says "within one month before": send between 21 Jun and 20 Jul 2027. 21 Jun 2027 is the earliest safe date');
   // other clause types still move back
   assert.equal(fx('taoweave-manako-license-ex10-1.edgar.htm').r.safe.date, '2027-03-26');
 });
@@ -729,7 +729,7 @@ test('within N days prior is Check, not Clear, with the earliest safe date', asy
   const { windowNote } = await import('../public/features.js');
   const { r } = fx('usantimony-supply-ex10-1.edgar.htm');
   assert.equal(r.confidence, 'medium'); assert.equal(r.needsReview, true); assert.equal(r.item.within, true);
-  assert.equal(windowNote(r), '"Within 60 days prior": send between 1 Oct and 30 Nov 2030. 1 Oct 2030 is the earliest safe date');
+  assert.equal(windowNote(r), 'The clause says "within 60 days prior": send between 1 Oct and 30 Nov 2030. 1 Oct 2030 is the earliest safe date');
   assert.equal(fx('mallinckrodt-par-supply-ex10-4.edgar.htm').r.item.within, false);
 });
 test('sweep ab9a38e missed windows: Strattec and Z Squared', () => {
@@ -925,4 +925,14 @@ test('ics: within-window events are titled Window opens and remind only on or af
   // other clause types keep the deadline title and 30/14/7-day reminders
   const tw = withAlarms(toICS([fxc('taoweave-manako-license-ex10-1.edgar.htm')], '2026-10-19')).replace(/\r\n[ \t]/g, '');
   assert.match(tw, /SUMMARY:Send-notice deadline: X/); assert.deepEqual([...tw.matchAll(/TRIGGER:(\S+)/g)].map(m => m[1]), ['-P30D', '-P14D', '-P7D']);
+});
+
+test('within note: anything in quotation marks is the clause\'s exact words, on every surface', async () => {
+  const { windowNote, gcalLink, windowOf, letter } = await import('../public/features.js');
+  for (const f of ['armlogi-goldensee-ex10-11.edgar.htm', 'usantimony-supply-ex10-1.edgar.htm']) {
+    const { r, x, L } = fx(f); const q = norm(r.item.source.quote); const c = { id: 'x', name: 'X', lines: L, x };
+    const texts = [windowNote(r), r.item.why, x.notice.why, letter(c, r, '2026-10-19'), decodeURIComponent(gcalLink({ name: 'X', actBy: r.actBy, asOf: '2026-10-19', within: windowOf(r), windowNote: windowNote(r) })), toICS([c], '2026-10-19').replace(/\r\n[ \t]/g, '').replace(/\\([,;])/g, '$1')];
+    for (const t of texts) for (const [, w] of t.matchAll(/"([^"]*within[^"]*)"/gi)) assert.ok(q.toLowerCase().includes(w.toLowerCase()) && q.includes(w), `${f}: "${w}" is not in the clause`);
+  }
+  assert.match(windowNote(fx('armlogi-goldensee-ex10-11.edgar.htm').r), /^The clause says "within one month before": /);
 });

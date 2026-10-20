@@ -261,6 +261,6 @@ const dShort = (d, y) => { const [yy, m, dd] = d.split('-'); return `${+dd} ${MO
 export function windowOf(r) {
   const i = r?.item || r; const at = typeof r?.actBy === 'string' && r.actBy ? r.actBy : i?.date; if (!i?.within || !at || !i.termEnd) return null;
   const from = safeSendBy(at, true).date || at, to = i.termEnd, dt = new Date(from + 'T00:00:00Z');
-  return { from, to, label: 'Send notice on or after', fromW: `${WD3[dt.getUTCDay()]} ${dShort(from, true)}`, range: `send between ${dShort(from, from.slice(0, 4) !== to.slice(0, 4))} and ${dShort(to, true)}`, n: i.notice?.n, unit: i.notice?.unit };
+  return { from, to, label: 'Send notice on or after', fromW: `${WD3[dt.getUTCDay()]} ${dShort(from, true)}`, range: `send between ${dShort(from, from.slice(0, 4) !== to.slice(0, 4))} and ${dShort(to, true)}`, n: i.notice?.n, unit: i.notice?.unit, quote: i.withinText || '' };
 }
-export const windowNote = r => { const w = windowOf(r); return w ? `"Within ${w.n} ${w.unit}${w.n === 1 ? '' : 's'} prior": ${w.range}. ${dShort(w.from, true)} is the earliest safe date` : ''; };
+export const windowNote = r => { const w = windowOf(r); return w ? `${w.quote ? `The clause says "${w.quote}"` : `Notice must fall within ${w.n} ${w.unit}${w.n === 1 ? '' : 's'} of the term end`}: ${w.range}. ${dShort(w.from, true)} is the earliest safe date` : ''; };
