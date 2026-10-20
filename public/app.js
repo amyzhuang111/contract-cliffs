@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, clampWarn, ctxOf, setCtx, ctxLine, planAction, splitFiles, isDrive, driveId, driveDownload, DRIVE_BLOCKED, sheetsTSV, mailtoList } from '/team.js';
+import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, clampWarn, ctxOf, setCtx, ctxLine, planAction, splitFiles, isDrive, DRIVE_BLOCKED, sheetsTSV, mailtoList } from '/team.js';
 import { windowOf, windowNote, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -374,15 +374,8 @@ $('#tryOne').onclick = async () => {
 };
 $('#fetchUrl').onclick = async () => {
   const u = $('#url').value.trim();
-  if (isDrive(u)) { // try the browser fetch; Drive almost always refuses it (CORS or sign-in), and we say so
-    const id = driveId(u); $('#status').textContent = 'Asking Google Drive…';
-    try { if (!id) throw new Error('no file id'); const r = await fetch(driveDownload(id), { credentials: 'omit' }); const b = await r.blob(); const ct = r.headers.get('content-type') || b.type;
-      if (!r.ok || !b.size || /html/i.test(ct)) throw new Error('blocked');
-      const cd = (r.headers.get('content-disposition') || '').match(/filename="?([^";]+)/); const name = cd ? decodeURIComponent(cd[1]) : `drive-${id}.pdf`;
-      await stage(1, name); await addDoc(name, await readFile(new File([b], /\.(pdf|docx|txt|html?)$/i.test(name) ? name : name + '.pdf')), { url: u, kind: 'Google Drive file' });
-    } catch { busyDone(); $('#status').textContent = DRIVE_BLOCKED; }
-    return;
-  }
+  // Drive refuses browser downloads (CORS and sign-in), so say so at once instead of making a request that is sure to fail.
+  if (isDrive(u)) { $('#status').textContent = DRIVE_BLOCKED; return; }
   if (!/^https:\/\/(www\.)?sec\.gov\//i.test(u)) { $('#status').textContent = 'Could not fetch: only https://www.sec.gov and Google Drive links are accepted.'; return; }
   $('#status').textContent = 'Fetching from sec.gov…'; const name = decodeURIComponent(u.split('/').pop() || 'SEC document');
   try { await stage(1, name); const r = await fetch('/api/edgar?url=' + encodeURIComponent(u)); const t = await r.text(); if (!r.ok) throw Object.assign(new Error(String(t || 'sec.gov answered ' + r.status).replace(/<[^>]*>/g, '').slice(0, 160)), { fromServer: true });

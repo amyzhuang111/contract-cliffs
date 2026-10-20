@@ -128,13 +128,14 @@ for (const w of [1440, 375]) {
     await drop(p, [['c3-dragonfly.edgar.txt', f64('c3-dragonfly.edgar.txt'), 'text/plain'], ['armlogi.htm', f64('armlogi-goldensee-ex10-11.edgar.htm'), 'text/html']]);
     await waitStatus(p, /^Read 2 contracts/, 30000); ok(/^Read 2 contracts\./.test(await status(p)), `${w}: many files dropped at once are all read`);
     await p.ctx.close(); }
-  // Drive link: the browser is refused (CORS or sign-in); say so and never pretend
-  for (const how of ['abort', 'signin']) { const p = await fresh('/?asof=2026-10-19', w);
-    await p.setRequestInterception(true); p.on('request', r => { if (/google\.com/.test(r.url())) { if (how === 'abort') r.abort('blockedbyclient'); else r.respond({ status: 200, contentType: 'text/html', body: '<html>Sign in</html>' }); } else r.continue(); });
-    await p.evaluate(() => { document.querySelector('#edgarUrl').open = true; document.querySelector('#url').value = 'https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing'; document.querySelector('#fetchUrl').click(); });
-    await waitStatus(p, /Drive blocks/);
-    ok(await status(p) === 'Drive blocks this from the browser; download the PDF and drop it here.' && await p.evaluate(() => document.querySelector('#answer').hidden && !document.querySelector('#lq .lrow')), `${w}: Drive link (${how}) says plainly that Drive blocks it and adds nothing`);
-    if (how === 'abort') await shot(p, 'drive', w);
+  // Drive link: spotted and refused at once, with no request to Google (so no console noise)
+  for (const link of ['https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing', 'https://docs.google.com/document/d/1AbCdEfGhIjKlMnOp/edit']) { const p = await fresh('/?asof=2026-10-19', w);
+    const asked = []; p.on('request', r => { if (/google\.com/.test(r.url())) asked.push(r.url()); }); const before = errors.length;
+    await p.evaluate(l => { document.querySelector('#edgarUrl').open = true; document.querySelector('#url').value = l; document.querySelector('#fetchUrl').click(); }, link);
+    await waitStatus(p, /Drive blocks/); await sleep(300);
+    ok(await status(p) === 'Drive blocks this from the browser; download the PDF and drop it here.' && await p.evaluate(() => document.querySelector('#answer').hidden && !document.querySelector('#lq .lrow')), `${w}: Drive link says plainly that Drive blocks it and adds nothing`);
+    ok(!asked.length && errors.length === before, `${w}: no request to Google and nothing in the console`);
+    await shot(p, 'drive', w);
     await p.ctx.close(); }
   // renew plan reaches the .ics, Sheets and email (Armlogi)
   { const p = await fresh('/?asof=2026-10-20', w);
@@ -157,7 +158,5 @@ for (const w of [1440, 375]) {
     ok(/Renews 21 Jul 2027; reminder only, nothing to send \(plan: renew\)\t2027-07-21/.test(row) && !/Send notice/.test(row), `${w}: renew plan: Sheets row says renewal reminder`);
     await p.ctx.close(); }
 }
-// the Drive test makes the browser log its own CORS refusal; that is the expected result, not a page error
-const real = errors.filter(e => !/drive\.google\.com|ERR_BLOCKED_BY_CLIENT|net::ERR_FAILED/.test(e));
-ok(!real.length, 'no page errors' + (real.length ? ': ' + real.slice(0, 3).join(' | ') : ''));
+ok(!errors.length, 'no page errors' + (errors.length ? ': ' + errors.slice(0, 3).join(' | ') : ''));
 console.log(`\n${pass} passed, ${fail} failed`); await browser.close(); process.exit(fail ? 1 : 0);

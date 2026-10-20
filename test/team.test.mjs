@@ -65,7 +65,7 @@ test('context: CSV, audit pack and .ics carry owner, plan and note; notes keep t
   const ics = withAlarms(toICS([E.c5], AS), { [E.c5.id]: ctxLine({ owner: 'Ana', plan: 'cancel', note: 'Switch' }) }).replace(/\r\n /g, '');
   assert.match(ics, /DESCRIPTION:[^\r\n]*Owner: Ana\. Plan: cancel\. Note: Switch/);
 });
-import { splitFiles, isDrive, driveId, driveDownload, DRIVE_BLOCKED, sheetsTSV, tsvCell, mailtoList, MAILTO_MAX } from '../public/team.js';
+import { splitFiles, isDrive, driveId, DRIVE_BLOCKED, sheetsTSV, tsvCell, mailtoList, MAILTO_MAX } from '../public/team.js';
 test('plug in: folder files are filtered to what we can read', () => {
   const { ok, skipped } = splitFiles(['a.pdf', 'b.DOCX', 'c.txt', 'd.htm', 'e.html', 'logo.png', '.DS_Store', 'x.xlsx'].map(name => ({ name })));
   assert.deepEqual(ok.map(f => f.name), ['a.pdf', 'b.DOCX', 'c.txt', 'd.htm', 'e.html']); assert.equal(skipped.length, 3);
@@ -73,7 +73,7 @@ test('plug in: folder files are filtered to what we can read', () => {
 test('plug in: Drive links are spotted and the blocked message is plain', () => {
   assert.ok(isDrive('https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing') && isDrive('https://docs.google.com/document/d/1AbCdEfGhIjKlMnOp/edit') && !isDrive('https://www.sec.gov/x'));
   assert.equal(driveId('https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQrStUv/view?usp=sharing'), '1AbCdEfGhIjKlMnOpQrStUv'); assert.equal(driveId('https://drive.google.com/open?id=1AbCdEfGhIjKlMnOp'), '1AbCdEfGhIjKlMnOp'); assert.equal(driveId('https://drive.google.com/drive/my-drive'), '');
-  assert.equal(driveDownload('abc_DEF-123'), 'https://drive.google.com/uc?export=download&id=abc_DEF-123');
+
   assert.equal(DRIVE_BLOCKED, 'Drive blocks this from the browser; download the PDF and drop it here.');
 });
 const IT = n => Array.from({ length: n }, (_, i) => ({ name: `Vendor ${i + 1} / Acme Supply Company`, action: `Send notice by ${i + 1} Dec 2026`, date: '2026-12-01', days: 43, review: i % 2 === 0, owner: 'Ana', plan: 'cancel', note: 'line one\nline\ttwo', source: 'https://www.sec.gov/x' }));

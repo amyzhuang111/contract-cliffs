@@ -54,7 +54,6 @@ export function splitFiles(files) { const ok = [], skipped = []; for (const f of
 export const DRIVE_BLOCKED = 'Drive blocks this from the browser; download the PDF and drop it here.';
 export const isDrive = u => /^https:\/\/(drive|docs)\.google\.com\//i.test(String(u || '').trim());
 export function driveId(u) { const s = String(u || ''); const m = s.match(/\/(?:file|document)\/d\/([A-Za-z0-9_-]{10,})/) || s.match(/[?&]id=([A-Za-z0-9_-]{10,})/); return m ? m[1] : ''; }
-export const driveDownload = id => `https://drive.google.com/uc?export=download&id=${encodeURIComponent(id)}`;
 // Tab-separated text for Google Sheets: one row per contract, no tabs or line breaks inside a cell,
 // and a leading = + - @ is made plain text so Sheets never runs it as a formula.
 export const tsvCell = v => { const s = String(v ?? '').replace(/[\t\r\n]+/g, ' ').trim(); return /^[=+\-@]/.test(s) && !/^-?\d+(\.\d+)?$/.test(s) ? "'" + s : s; };
