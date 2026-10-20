@@ -754,3 +754,4 @@ body.has-any .weekstrip{display:none}
 @media (max-width:480px){#pfTop3{display:none}} /* on phones the This week box is the act-now answer */
 .pfweek .wk-also{display:none;font:400 14px/20px var(--font-sans);color:var(--body);margin:8px 0 0}
 @media (max-width:480px){.pfweek .wk-also{display:block}}
+@media (max-width:480px){#pfh{display:none}} /* the headline counts the top-3 cards, which phones do not show; This week and the Also line carry it there */
