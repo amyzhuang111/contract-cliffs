@@ -119,6 +119,7 @@
   <fieldset class="tset"><legend class="lab">Who signs notices</legend>
     <label class="tf">Name<input id="tName" maxlength="200"></label><label class="tf">Title<input id="tTitle" maxlength="200"></label><label class="tf">Email<input id="tEmail" type="email" maxlength="200"></label></fieldset>
   <label class="tf">Days of warning before each deadline<input id="tWarn" type="number" min="1" max="365" value="30"></label>
+  <p class="status err" id="tWarnMsg" role="alert" hidden></p>
   <label class="tf">Reminder calendar name<input id="tCal" maxlength="80"></label>
   <label class="tf">Calendar timezone (passed to your calendar app)<select id="tTz"></select></label>
   <fieldset class="tset"><legend class="lab">Contracts you care about most</legend><ul class="tpins" id="tPins"></ul></fieldset>

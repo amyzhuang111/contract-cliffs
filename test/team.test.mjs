@@ -8,10 +8,10 @@ const T = normTeam({ company: 'General Intuition', signer: { name: 'Stan Yushenk
 
 test('team: defaults and cleaning', () => {
   assert.equal(blankTeam().warnDays, 30); assert.equal(normTeam(null).warnDays, 30);
-  const t = normTeam({ warnDays: '0', tz: 'Mars/Base', signer: { email: 'not an email' }, pins: ['a', 'a', 3, ''], ctx: { k: { plan: 'sell', note: ' hi ', owner: 'Ana' }, e: {} } });
+  const t = normTeam({ warnDays: 'abc', tz: 'Mars/Base', signer: { email: 'not an email' }, pins: ['a', 'a', 3, ''], ctx: { k: { plan: 'sell', note: ' hi ', owner: 'Ana' }, e: {} } });
   assert.equal(t.warnDays, 30); assert.equal(t.tz, 'America/New_York'); assert.equal(t.signer.email, ''); assert.deepEqual(t.pins, ['a']);
   assert.deepEqual(t.ctx, { k: { note: 'hi', owner: 'Ana', plan: '' } });
-  assert.equal(normTeam({ warnDays: 400 }).warnDays, 30); assert.equal(normTeam({ warnDays: '60' }).warnDays, 60);
+  assert.equal(normTeam({ warnDays: 400 }).warnDays, 365); assert.equal(normTeam({ warnDays: 0 }).warnDays, 1); assert.equal(normTeam({ warnDays: 'x' }).warnDays, 30); assert.equal(normTeam({ warnDays: '' }).warnDays, 30); assert.equal(normTeam({ warnDays: '60' }).warnDays, 60);
   assert.ok(okEmail('a@b.co') && !okEmail('a@b') && !okEmail('a b@c.com'));
 });
 test('team: parse never throws', () => { assert.equal(parseTeam('{bad').error, 'corrupt'); assert.equal(parseTeam(null).team, null); assert.equal(parseTeam(JSON.stringify(T)).team.company, 'General Intuition'); });

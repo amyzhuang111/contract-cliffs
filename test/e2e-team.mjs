@@ -56,6 +56,15 @@ for (const w of [1440, 375]) {
     await p.evaluate(() => { document.querySelector('#teamBox').open = true; document.querySelector('#tSave').click(); });
     ok(await p.evaluate(() => localStorage.getItem('cc-team') === null && localStorage.getItem('cc-team-ok') === null), `${w}: unticking Save deletes the setup`);
     await p.ctx.close(); }
+  // warning days out of range: clamped visibly; field, status and .ics agree
+  { const p = await fresh('/?asof=2026-10-19', w); await p.click('#tryOne'); await auto(p); await openTeam(p);
+    for (const [raw, v] of [['999', 365], ['0', 1]]) {
+      await type(p, '#tWarn', raw); await p.evaluate(() => document.querySelector('#tWarn').dispatchEvent(new Event('change')));
+      const st = await p.evaluate(() => ({ f: document.querySelector('#tWarn').value, m: document.querySelector('#tWarnMsg').hidden ? '' : document.querySelector('#tWarnMsg').textContent, s: document.querySelector('#tStatus').textContent }));
+      await p.evaluate(() => document.querySelector('#exIcs').click()); const ics = await dl(p);
+      ok(st.f === String(v) && st.m === `Days of warning must be 1 to 365, so it is set to ${v}.` && new RegExp(`go off ${v}[ ,]`).test(st.s) && ics.includes(`TRIGGER:-P${v}D`), `${w}: warning days ${raw} is clamped to ${v} in the field, the message, the status and the .ics`); }
+    await type(p, '#tWarn', '20'); ok(await p.evaluate(() => document.querySelector('#tWarnMsg').hidden), `${w}: the message goes away for a valid number`);
+    await p.ctx.close(); }
   // corrupt saved setup: cleared with a plain message
   { const p = await fresh('/?asof=2026-10-19', w); await p.evaluate(() => { localStorage.setItem('cc-team', '{bad json'); localStorage.setItem('cc-team-ok', '1'); }); await p.reload({ waitUntil: 'networkidle0' });
     ok(await p.evaluate(() => document.querySelector('#teamBox').open && /^Your saved setup could not be read and was cleared\./.test(document.querySelector('#tStatus').textContent) && localStorage.getItem('cc-team') === null && localStorage.getItem('cc-team-ok') === null), `${w}: corrupt saved setup is cleared with a plain message`);

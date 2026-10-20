@@ -1,5 +1,5 @@
 import { checkLine, htmlToLines, docxLines, partiesFromPreamble, definedRoles, ymd, addDays, dayWord, extract, schedule, buildQueue, toCSV, toICS, toPacket, daysBetween, mkDate, nextFixed, shortReason, WINDOWS, PRIORITY_RULE } from '/extract.js';
-import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, ctxOf, setCtx, ctxLine, planAction, splitFiles, isDrive, driveId, driveDownload, DRIVE_BLOCKED, sheetsTSV, mailtoList } from '/team.js';
+import { TEAM_KEY, TEAM_OK, TZS, normTeam, parseTeam, ckey, isPinned, togglePin, pinFirst, alarmDays, clampWarn, ctxOf, setCtx, ctxLine, planAction, splitFiles, isDrive, driveId, driveDownload, DRIVE_BLOCKED, sheetsTSV, mailtoList } from '/team.js';
 import { windowOf, windowNote, withAlarms, gcalLink, letter, docx, obligations, portfolio, stripHtml, exitNote, auditCSV, parseSaved, STORE_KEY } from '/features.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
@@ -443,6 +443,10 @@ function teamStatus() {
 function teamChanged() { saveTeam(); render(); renderPf(); teamStatus(); }
 const readTeam = () => { teamNote = ''; team = normTeam({ ...team, company: tf.company.value, signer: { name: tf.name.value, title: tf.title.value, email: tf.email.value }, warnDays: tf.warn.value, calName: tf.cal.value, tz: tf.tz.value }); saveTeam(); render(); renderPf(); teamStatus(); };
 Object.values(tf).forEach(i => i.addEventListener(i.tagName === 'SELECT' ? 'change' : 'input', readTeam));
+// Out-of-range warning days: say so, use the clamped number, and put it in the field when you leave it.
+const warnCheck = () => { const raw = tf.warn.value.trim(); const v = clampWarn(raw); const bad = raw !== '' && Number(raw) !== v; $('#tWarnMsg').hidden = !bad; $('#tWarnMsg').textContent = bad ? `Days of warning must be 1 to 365, so it is set to ${v}.` : ''; return v; };
+tf.warn.addEventListener('input', warnCheck);
+tf.warn.addEventListener('change', () => { tf.warn.value = warnCheck(); });
 $('#tSave').onchange = e => { try { if (e.target.checked) { localStorage.setItem(TEAM_OK, '1'); saveTeam(); } else { localStorage.removeItem(TEAM_OK); localStorage.removeItem(TEAM_KEY); } } catch {} teamStatus(); };
 $('#teamBox').addEventListener('toggle', teamStatus);
 fillTeam(); teamStatus();

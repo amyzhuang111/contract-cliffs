@@ -6,6 +6,8 @@ export const PLANS = ['renew', 'cancel', 'renegotiate'];
 export const blankTeam = () => ({ company: '', signer: { name: '', title: '', email: '' }, warnDays: 30, calName: 'Contract notice deadlines', tz: 'America/New_York', pins: [], ctx: {} });
 const str = (v, n = 200) => typeof v === 'string' ? v.replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, n) : '';
 const okTz = tz => { try { new Intl.DateTimeFormat('en-US', { timeZone: tz }); return true; } catch { return false; } };
+// Warning days: 1 to 365. Out of range is clamped to the nearest end; blank or not a number means the default 30.
+export const clampWarn = v => { const w = Math.round(Number(v)); return v === '' || v == null || !Number.isFinite(w) ? 30 : Math.min(365, Math.max(1, w)); };
 export const okEmail = e => /^[^\s@<>(),;:"]+@[^\s@<>(),;:"]+\.[A-Za-z]{2,}$/.test(e);
 // Clean anything (form values or a stored blob) into a valid setup. Never throws.
 export function normTeam(o) {
@@ -13,7 +15,7 @@ export function normTeam(o) {
   t.company = str(o.company);
   const s = o.signer && typeof o.signer === 'object' ? o.signer : {};
   t.signer = { name: str(s.name), title: str(s.title), email: okEmail(str(s.email)) ? str(s.email) : '' };
-  const w = Math.round(Number(o.warnDays)); t.warnDays = Number.isFinite(w) && w >= 1 && w <= 365 ? w : 30;
+  t.warnDays = clampWarn(o.warnDays);
   t.calName = str(o.calName, 80) || t.calName;
   t.tz = typeof o.tz === 'string' && okTz(o.tz) ? o.tz : t.tz;
   t.pins = Array.isArray(o.pins) ? [...new Set(o.pins.filter(p => typeof p === 'string' && p).map(p => p.slice(0, 300)))].slice(0, 500) : [];
