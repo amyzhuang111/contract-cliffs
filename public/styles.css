@@ -713,3 +713,8 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 @media (max-width:480px){.top3 .t3 a{padding:6px 12px}.portfolio .big{padding:6px 12px}}
 .pflist .d30 .pl,.pflist .passed .pl{color:var(--danger)}
 .pflegend{font:400 14px/20px var(--font-sans);color:var(--mute);margin:0 0 8px}.pflegend .red{color:var(--danger)}.pflegend .rv{color:#EBFF0A}
+/* Plain words in the queue too: no all-caps statuses, labels or buttons (the page eyebrow stays as is) */
+#answer .lab,#answer .chip,#answer .pchip,#answer .tag,#answer button,#answer a,#answer .kick,
+#liveQ .lab,#liveQ .chip,#liveQ .pchip,#liveQ .tag,#liveQ button,#liveQ a,#liveQ h2,
+#drawer .lab,#drawer .tag,#drawer button,#drawer a,.prompt button,.pfload button,.pfexport button{text-transform:none;letter-spacing:0}
+#answer *,#liveQ *{text-transform:none !important}

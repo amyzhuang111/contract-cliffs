@@ -84,7 +84,7 @@ function openDrawer(id) {
   const srcLinks = s => !s ? '' : `<div class="loc"><span>${esc(s.location)}</span>${c.url ? `<a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR filing ↗</a><a href="/source/?id=${esc(c.id)}&from=${s.lineStart}&to=${s.lineEnd}#L${s.lineStart}" target="_blank" rel="noopener">Saved text, ${esc(s.location)}</a>` : ''}</div>`;
   $('#dbody').innerHTML = `<div class="lab">${esc(c.kind || 'Uploaded document')}${c.exhibit ? ' · ' + esc(c.exhibit) : ''}</div><h3>${esc(c.name)}</h3>
    <p class="why" style="color:var(--mute);font-size:13px">${esc(c.title || c.fileName || '')}${c.filer ? ` · filed by ${esc(c.filer)}` : ''}${c.filed ? ` on ${esc(fmt(c.filed))}` : ''}${c.counterparty && c.counterparty !== c.fileName?.replace(/\.[a-z0-9]+$/i, '') ? ` · other company ${esc(c.counterparty)}` : ''}</p>
-   ${c.url ? `<p style="font-size:13px"><a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">Open the filing on SEC EDGAR ↗</a></p>` : ''}
+   ${c.url ? `<p style="font-size:13px"><a class="edgar" href="${esc(c.url)}" target="_blank" rel="noopener">Open the filing on SEC Filing ↗</a></p>` : ''}
    ${c.x.reviewNotes.map(n => `<p class="note">${esc(n)}</p>`).join('')}
    ${[...items, ...extra].map(i => `<div class="it"><div class="top"><span class="lab">${esc(TYPE(i.type))}</span>${i.status === 'past' ? '<span class="lapsed">Passed</span>' : ''}</div>${i.needsReview ? `<div class="rvline">${rv(reason(i.why))}</div>` : ''}
      <div class="v">${i.date ? esc(fmt(i.date)) + (i.date ? ` <span style="font-size:13px;color:var(--mute);font-family:var(--sans)">${(d => d < 0 ? dayWord(-d) + ' ago' : 'in ' + dayWord(d))(daysBetween(asOf, i.date))}</span>` : '') : (i.event ? '<span style="font-size:14px;font-family:var(--sans)">Event-driven</span>' : '<span class="nd" style="font-size:14px;font-family:var(--sans)">No date found</span>')}</div>
@@ -210,7 +210,7 @@ function card(c, r) {
       <p class="lab">From the contract</p>
       ${c.x.renewalNote ? `<p class="cons rnote">${esc(c.x.renewalNote)}</p>` : ''}${r.item?.initialOnlyPassed ? `<p class="cons rnote">${esc('Renews (no later notice window): ' + r.item.why)}</p>` : ''}${c.x.extension ? `<p class="cons rnote">${esc(c.x.extension.note)}</p>` : ''}
       ${quoteHtml ? `<blockquote class="aq">“${quoteHtml}”</blockquote>` : '<p class="cons">No clause with a date was found.</p>'}
-      <p class="prov lab">${src?.location ? `<span>${esc(src.location)}</span><span class="dot">·</span>` : ''}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">Open on SEC EDGAR ↗</a><span class="dot">·</span>` : ''}${src?.quote ? `<button class="tl copyq" type="button">Copy clause</button>` : ''}</p>
+      <p class="prov lab">${src?.location ? `<span>${esc(src.location)}</span><span class="dot">·</span>` : ''}${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">Open on SEC Filing ↗</a><span class="dot">·</span>` : ''}${src?.quote ? `<button class="tl copyq" type="button">Copy clause</button>` : ''}</p>
       <p class="conf"><span class="lab">Confidence:</span> ${confTag(r)[1] === 'rvtag' ? `<span class="cw">${esc(cw)}</span>` : `<span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span>`} <span class="seg" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= seg ? 'on' : ''}"></i>`).join('')}</span></p>
       ${confTag(r)[1] !== 'clear' && r.actBy ? `<p class="one">${esc(oneThing(r))}</p>` : ''}
       ${math ? `<p class="math">${esc(math)}</p>` : ''}
@@ -225,7 +225,7 @@ function row(c, r) {
     <div class="ld"><span class="rdate${passed ? ' strike' : ''}">${d ? esc(fmt(d)) : 'No date found'}</span><span class="lab">${r.missed || (r.days != null && r.days < 0) ? 'Passed' : r.section === 'lapsed' ? 'Expired' : r.actBy ? 'Send notice by' : 'Needs a person'}${d && !passed ? ' · ' + weekday(d) : ''}</span>${r.safe && !passed ? `<span class="rsafe">Send by ${esc(r.safe.note.replace(/^.*send by /, '').replace(/ to be safe$/, ''))} to be safe</span>` : ''}</div>
     <div class="lc">${chip(r)}</div>
     <div class="ln"><span class="rname">${esc(c.name)}${newIds.has(c.id) ? ' <span class="newtag">New</span>' : ''}</span><span class="rcons">${esc(cons)}</span></div>
-    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">EDGAR ↗</a>` : ''}</span>${gcal(c, r)}</div>
+    <div class="lt"><span class="tag ${confTag(r)[1]}">${esc(confTag(r)[0])}</span><span class="lab">${esc(r.item?.source?.location || '')}${c.url ? ` · <a href="${esc(c.url)}" target="_blank" rel="noopener">Filing ↗</a>` : ''}</span>${gcal(c, r)}</div>
   </li>`;
 }
 function live(cs) {
