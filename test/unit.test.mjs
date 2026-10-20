@@ -708,7 +708,14 @@ const EXPECT_VENDOR = {
   'perceptive-neb-supply-ex10-25': ['2028-08-15'],                  // supply, 16 Feb 2022, five years → 15 Feb 2027; ≥6 months: 15 Aug 2026 passed → renews two years to 15 Feb 2029.
 };
 for (const [f, [act, safe]] of Object.entries(EXPECT_VENDOR)) test(`vendor ${f} → ${act}`, () => {
-  const { r } = fx(f + '.edgar.htm'); assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); assert.equal(r.needsReview, false);
+  const { r } = fx(f + '.edgar.htm'); assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); assert.equal(r.needsReview, f === 'usantimony-supply-ex10-1');
+});
+test('within N days prior is Check, not Clear, with the earliest safe date', async () => {
+  const { windowNote } = await import('../public/features.js');
+  const { r } = fx('usantimony-supply-ex10-1.edgar.htm');
+  assert.equal(r.confidence, 'medium'); assert.equal(r.needsReview, true); assert.equal(r.item.within, true);
+  assert.equal(windowNote(r), '"Within 60 days prior": 1 Oct 2030 is the earliest safe date');
+  assert.equal(fx('mallinckrodt-par-supply-ex10-4.edgar.htm').r.item.within, false);
 });
 test('sweep ab9a38e missed windows: Strattec and Z Squared', () => {
   assert.deepEqual(fx('strattec-becker-ex10-7.edgar.htm').r.missed, { actBy: '2026-09-11', renews: '2026-11-11' });

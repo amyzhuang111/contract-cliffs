@@ -252,3 +252,6 @@ export function parseSaved(raw) {
   const docs = v.filter(m => m && typeof m === 'object' && typeof m.name === 'string' && Array.isArray(m.lines) && m.lines.length && m.lines.every(l => typeof l === 'string' || (l && typeof l.text === 'string')));
   return { docs, error: docs.length < v.length ? 'partial' : '', bad: v.length - docs.length };
 }
+
+// "Within N days prior" clauses: the send-notice date opens the window, so it is the earliest safe day, not the latest.
+export const windowNote = r => r?.item?.within && r.actBy ? `"Within ${r.item.notice?.n} ${r.item.notice?.unit}s prior": ${fmtLong(r.actBy).replace(/(\w{3})\w* /, "$1 ")} is the earliest safe date` : '';
