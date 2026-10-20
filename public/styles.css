@@ -679,7 +679,7 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 .tl-track .tlt[data-right]{left:auto;right:6px}
 .tl-track .tlab.now .tlt{color:var(--fg);font-weight:500}
 .tl-foot{margin:40px 0 0;font:400 14px/20px var(--font-sans);text-transform:none}
-@media (max-width:480px){.tl-track .tlt{font-size:13px}.tl-track .tk .lab{font-size:12px;left:-16px}}
+@media (max-width:480px){.tl-track .tlt{font-size:14px}.tl-track .tk .lab{font-size:12px;left:-16px}}
 @media (max-width:480px){.tl-track .tlt{max-width:230px;overflow:hidden;text-overflow:ellipsis}}
 
 /* Plain words, no all-caps in the portfolio table and controls */
@@ -707,6 +707,6 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 .pfall{font:500 22px/28px var(--font-sans);margin:0 0 8px;border-top:1px solid var(--rule);padding-top:24px}
 @media (max-width:720px){.top3{grid-template-columns:1fr}.top3 .t3 a{display:grid;grid-template-columns:1fr auto;gap:0 12px;padding:10px 12px}.t3n{grid-column:1/-1;font-size:17px}.t3a{font-size:15px}.t3d{font-size:15px}.t3x{grid-column:1/-1}
   .pfv #pfh{font-size:20px;line-height:26px;margin:4px 0 8px}
-  .portfolio .big{padding:8px 12px;gap:0 10px}.portfolio .big .sv{font-size:28px;line-height:32px}.portfolio .big .bl{font-size:16px}.portfolio .big .bc{font-size:13px;line-height:18px}
+  .portfolio .big{padding:8px 12px;gap:0 10px}.portfolio .big .sv{font-size:28px;line-height:32px}.portfolio .big .bl{font-size:16px}.portfolio .big .bc{font-size:14px;line-height:18px}
   .pfexport .btn-secondary{flex:1 1 100%}}
-@media (max-width:480px){.portfolio .big.act .bc,.portfolio .big.year .bc{display:none}.top3 .t3 a{padding:8px 12px}.pfv .portfolio .pfflags{font-size:13px;line-height:18px;padding:6px 12px}.pfv .lab:first-child{margin:0}}
+@media (max-width:480px){.portfolio .big.act .bc,.portfolio .big.year .bc{display:none}.top3 .t3 a{padding:8px 12px}.pfv .portfolio .pfflags{font-size:14px;line-height:18px;padding:6px 12px}.pfv .lab:first-child{margin:0}}
