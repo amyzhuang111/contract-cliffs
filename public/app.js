@@ -344,8 +344,8 @@ try { const raw = localStorage.getItem(STORE_KEY); if (raw != null) { const { do
     else if (dropped) { save(); storeNote = `${dropped} saved ${dropped === 1 ? 'entry' : 'entries'} could not be read and ${dropped === 1 ? 'was' : 'were'} removed. ${kept} saved ${kept === 1 ? 'contract' : 'contracts'} kept.`; } } } } catch { storeNote = 'This browser blocks local storage, so nothing is remembered.'; }
 $('#resetStore').onclick = () => { try { localStorage.removeItem('cc-remember'); localStorage.removeItem(STORE_KEY); } catch {} pendingSaved = null; $('#remember').checked = false; mine = []; expanded = null; newIds.clear(); set = 'mine'; render(); $('#status').textContent = 'Saved data deleted from this device and the queue was reset.'; };
 // The ask has its own buttons. Load saved turns Remember on (your choice, never automatic); Delete removes it all.
-$('#loadSaved').onclick = () => { $('#savedAsk').hidden = true; $('#remember').checked = true; $('#remember').onchange({ target: $('#remember') }); $('#status').textContent = 'Loaded your saved contracts. Remember is on; untick it to delete them from this device.'; };
-$('#delSaved').onclick = () => { $('#savedAsk').hidden = true; $('#resetStore').onclick(); };
+$('#loadSaved').onclick = () => { $('#savedAsk').hidden = true; $('#remember').checked = true; $('#remember').onchange({ target: $('#remember') }); $('#status').textContent = 'Loaded your saved contracts. Remember is on; untick it to delete them from this device.'; setTimeout(() => { const h = $('#liveQ').hidden ? $('#answer') : $('#lqh'); h.tabIndex = -1; h.focus(); }, 60); };
+$('#delSaved').onclick = () => { $('#savedAsk').hidden = true; $('#resetStore').onclick(); $('#drop').focus(); };
 // Portfolio view: behind a button on every URL. Nothing loads until it is clicked.
 let pfSort = 'status', pfDir = 1, pfRows = null;
 function renderPf() {

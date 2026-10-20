@@ -28,6 +28,7 @@
   <h1 class="lede" id="lede">Know the <span class="ld">last day</span> to stop a contract renewing.</h1>
   <p class="subline">Drop in a contract. Get the notice deadline and the sentence it comes from, then add it to Google Calendar or a Sheets file.</p>
   <div class="cliff-strip" aria-hidden="true"><span>JAN</span><span>FEB</span><span>MAR</span><span>APR</span><span>MAY</span><span>JUN</span><span>JUL</span><span>AUG</span><span>SEP</span><span>OCT</span><span>NOV</span><span>DEC</span><i class="cliff-mark"><b>your notice date</b></i></div>
+  <div class="savedask" id="savedAsk" hidden role="region" aria-label="Saved contracts"><p id="savedAskText" role="status" aria-live="polite"></p><div class="row"><button class="btn-secondary" id="loadSaved">Load saved</button><button class="btn-secondary" id="delSaved">Delete saved data</button></div></div>
   <div class="drop" id="drop" role="button" tabindex="0" aria-label="Drop a contract or paste text. Press Enter to choose a file.">
     <i class="tk tk1" aria-hidden="true"></i><i class="tk tk2" aria-hidden="true"></i><i class="tk tk3" aria-hidden="true"></i><i class="tk tk4" aria-hidden="true"></i>
     <div class="dz-idle">
@@ -65,7 +66,6 @@
   </div>
   <p class="caption">Star Brands / Schwazze license · EX-10.21 · SEC EDGAR</p>
   <p class="status" id="status" role="status" aria-live="polite"></p>
-  <div class="savedask" id="savedAsk" hidden role="group" aria-labelledby="savedAskText"><p id="savedAskText"></p><div class="row"><button class="btn-secondary" id="loadSaved">Load saved</button><button class="btn-secondary" id="delSaved">Delete saved data</button></div></div>
 </section>
 <section class="answer" id="answer" hidden aria-live="polite"></section>
 <section class="prompt" id="prompt" hidden><p id="promptText">Add another contract to build a priority queue</p><div class="pr-r"><button id="trySecond" class="btn-secondary">Add a real SEC contract</button><p class="caption pr-cap">Real SEC filing</p></div></section>
