@@ -731,3 +731,14 @@ body:not(.has-any):not(.legacy) .hero .status:not(.err){display:none}
 /* Needs review reads in sentence case at 14px, like the rest of the key */
 .pflegend .rv,.tl-foot .rv{font-family:var(--font-sans);font-size:14px;text-transform:none;letter-spacing:0}
 .it .wtitle{font:500 14px/20px var(--font-sans);color:var(--fg);text-transform:none}.rvline .rvs{font:400 14px/20px var(--font-sans);color:var(--fg);text-transform:none}
+/* How it fits the week: 3 steps, honest about what is built */
+body:not(.has-any) .cliff-strip{display:none}
+.weekstrip{list-style:none;margin:20px 0 24px;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;font:400 14px/20px var(--font-sans);color:var(--body);text-transform:none}
+.weekstrip li{border-top:1px solid rgba(134,161,182,.4);padding-top:8px}
+.weekstrip .wn{font:500 14px/20px var(--font-mono);color:var(--mute);margin-right:8px}
+.weekstrip b{font-weight:500;color:var(--fg)}
+.weekstrip .wt{display:block;color:var(--mute)}
+.weekstrip .plan{font-style:italic}
+body.has-any .weekstrip{display:none}
+.weekstrip .wm{display:none}
+@media (max-width:480px){.weekstrip{grid-template-columns:1fr;gap:0;margin:12px 0 16px}.weekstrip li{border:0;padding:0}.weekstrip .wt{display:none}.weekstrip .wm{display:inline;color:var(--mute)}}
