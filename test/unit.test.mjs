@@ -88,8 +88,10 @@ test('c7 Synacor/Qwest: through 31 May 2022, max two 1-yr renewals used -> Expir
   assert.equal(e.date, '2024-05-31'); assert.equal(e.status, 'past');
   assert.ok(!s.some(i => i.type.startsWith('Send-notice') || i.type.startsWith('Auto-renewal')));
   assert.equal(get('c7', 'Send-notice'), undefined);
-  // before the last cycle ran out, the notice line still exists
-  assert.equal(schedule(C.c7.x, '2024-01-01').find(i => i.type.startsWith('Send-notice')).date, '2024-03-02');
+  // during the last permitted renewal there is nothing left to stop: no live send-notice line, it just expires (reviewer 9eb15a9 B2)
+  const s24 = schedule(C.c7.x, '2024-01-01');
+  assert.equal(s24.find(i => i.finalTerm).date, '2024-05-31'); assert.equal(s24.find(i => i.type === 'Send-notice deadline (passed)').date, '2023-03-02');
+  assert.ok(!s24.some(i => i.actBy));
 });
 test('c8 Patheon/Vaxcyte: fifteen years; notice redacted -> blank act-by', () => {
   assert.equal(C.c8.x.term.end, '2040-09-24'); assert.equal(C.c8.x.renewal.period.n, 3);
@@ -517,7 +519,7 @@ const EXPECT = {
   'waterbridge-dbr-ex10-8': ['2027-07-04', '2027-07-02'], 'reshape-stankovich-ex10-8': ['2027-07-30'], 'amtd-worldmedia-ex10-8': ['2044-07-26'], 'urbangro-akright-ex10-1': ['2026-11-17'],
   'cokeconsol-consulting-ex10-1': ['2026-12-01'], 'cyclerion-ex10-1': ['2027-07-04', '2027-07-02'], 'entravision-ex10-1': ['2027-03-01'], 'natvision-ex10-1': ['2028-05-01'],
   'nextplat-ex10-1': ['2028-10-02'], 'nuvera-ex10-1': ['2027-10-02', '2027-10-01'], 'orion-ex10-1': ['2026-11-01', '2026-10-30'], 'purple-ex10-8': ['2027-10-02', '2027-10-01'],
-  'redviolet-ex10-1': ['2029-12-01', '2029-11-30'], 'streamline-ex10-2': ['2027-09-30'], 'trex-ex10-1': ['2028-08-01'],
+  'redviolet-ex10-1': ['2029-12-02', '2029-11-30'], 'streamline-ex10-2': ['2027-09-30'], 'trex-ex10-1': ['2028-08-01'],
   // flagged, no date: notice/term not in this document, redacted, or no notice period stated
   'nfg-ex10-1': [''], 'spar-ex10-6': [''], 'astrotech-ex10-9': [''], 'grainger-ex10-4': [''], 'marqeta-ex10-1': [''], 'csg-ex10-28j': [''], 'belfuse-ex10-3': [''], 'veeva-ex10-10': [''], 'tucows-ex10-1': [''],
 };
@@ -537,4 +539,35 @@ test('B5 quotes stop at a numbered sub-clause; "by and among"', async () => {
 test('party names: amendment title skipped, letters, "(i) … ; (ii)" lists', () => {
   const N = { 'purple-ex10-8': 'Purple / Mattress Firm', 'entravision-ex10-1': 'Entravision / Univision Network', 'belfuse-ex10-3': 'Bel Fuse / Daniel Bernstein', 'grainger-ex10-4': 'W.W. Grainger / Susan Slavik Williams', 'spar-ex10-6': 'SPAR Group / Ron Lutz', 'natvision-ex10-1': 'Essilor / National Vision', 'nfg-ex10-1': 'National Fuel Gas / Donna L. DeCarolis' };
   for (const [f, n] of Object.entries(N)) assert.equal(partiesFromPreamble(fx(f + '.edgar.htm').L), n, f);
+});
+
+// ---- reviewer 9eb15a9 B1–B4 (sec.gov fixtures; hand-worked, as of 2026-10-19) ----
+test('B1 FST: no fixed term, "deemed automatically extended" each anniversary; notice 30 days before the Renewal Date → 2027-03-30', () => { const { x, r } = fx('fst-huang-ex10-9.edgar.htm'); assert.equal(x.term.end, '2026-04-28'); assert.equal(x.notice.ref, 'start'); assert.equal(r.actBy, '2027-03-30'); });
+test('B1 NANO: "until the third (3rd) anniversary thereof", Renewal Date − 90 days → 2027-12-07', () => { const { x, r } = fx('nano-heidet-ex10-1.edgar.htm'); assert.equal(x.term.end, '2028-03-05'); assert.equal(r.actBy, '2027-12-07'); });
+test('B2 ONM: "for a period of five (5) years" + one additional two-year term → passed, extended to 8 Jul 2028, then expires', () => {
+  const { x, r } = fx('onm-ikigai-ex10-19.edgar.htm'); assert.equal(x.term.end, '2026-07-08'); assert.equal(x.renewal.max, 1);
+  assert.equal(r.label, 'Expires (no further renewal)'); assert.equal(r.actBy, '2028-07-08'); assert.equal(r.why, 'Send-notice date passed (9 Jan 2026) · extended to 8 Jul 2028, then it expires; no further renewal');
+});
+test('B3 names: word-boundary cut with ellipsis, acronyms kept', () => {
+  assert.equal(partiesFromPreamble(fx('fst-huang-ex10-9.edgar.htm').L), 'Warren Cheng-Teng Huang / FST');
+  const h = partiesFromPreamble(fx('hci-reins-ex10-13.edgar.htm').L); assert.ok(h.split(' / ').every(p => p.length <= 41), h);
+  assert.match(h, /^Condo Owners Reciprocal Exchange and…/);
+});
+test('B4 letter-of-credit renewal is not the agreement\'s clause', () => {
+  for (const f of ['douglas-lease-ex10-1', 'hci-reins-ex10-13']) { const { x, r } = fx(f + '.edgar.htm'); assert.equal(x.renewal, null, f); assert.ok(!r.label.startsWith('Send-notice'), f); }
+  assert.equal(fx('douglas-lease-ex10-1.edgar.htm').x.renewalNote, 'No renewal clause for the agreement itself (the only automatic renewal found is for a letter of credit).');
+});
+// ---- 20-exhibit "deemed extended" / anniversary batch (EDGAR full-text search, 2025–2026); hand-worked as of 2026-10-19 ----
+const EXPECT2 = {
+  'angiodynamics-ex10-1': '2027-09-03', 'arrow-demarco-ex10-1': ['2027-01-02', '2026-12-31'], 'atlasclear-ex10-3': '2028-07-21', 'cffi-ex10-40': '2027-01-15',
+  'dnow-ex10-2': '2027-09-07', 'fibk-lee-ex10-1': '2027-06-16', 'firstfoundation-ex10-1': '2027-09-17', 'glacier-ex10-l': '2026-10-22', 'gormanrupp-ex10-1': '2027-10-01',
+  'hornbeck-ex10-1': '2031-10-02', 'photronics-ex10-1': ['2027-07-10', '2027-07-09'], 'rekor-ex10-1': ['2028-04-01', '2028-03-31'], 'renasant-ex10-1': '2028-06-26',
+  'smenergy-ex10-1': ['2026-11-01', '2026-10-30'], 'xponential-ex10-1': ['2026-11-14', '2026-11-13'],
+  // flagged, no date: letter of credit; "date hereof" undated; merger "Effective Time" not dated; Effective Date not dated in the filing
+  'dirtt-ex10-1': '', 'idexx-ex10-56': '', 'psb-ex10-3': '', 'thirdcoast-ex10-1': '', 'westrock-ex10-15': '',
+};
+for (const [f, e] of Object.entries(EXPECT2)) test(`batch2 ${f} → ${(Array.isArray(e) ? e[0] : e) || 'flagged'}`, () => {
+  const [act, safe] = Array.isArray(e) ? e : [e]; const { r } = fx(f + '.edgar.htm');
+  assert.equal(r.actBy || '', act); if (safe) assert.equal(r.safe?.date, safe); if (!act) assert.equal(r.needsReview, true);
+  assert.doesNotMatch(r.tag || '', /minus|end of the term/i);
 });

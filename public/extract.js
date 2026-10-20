@@ -11,7 +11,7 @@ const REDACT_RE = '\\[\\s*(?:\\*+|\\.{3}|redacted)\\s*\\]';
 // "sixty (60) days", "Eighty-Four (84) months", "fifteen Years", "90 days", "one hundred and eighty (180) days", "[***] days"
 // "by and between X ... and Y" in the preamble -> "X / Y" (short names), or '' if not found.
 const SUFFIX = /,?\s+(?:Inc|Corp|Corporation|LLC|L\.L\.C|Ltd|Limited|Co|Company|plc|N\.A|L\.P|LP|S\.A|GmbH|B\.V)\.?$/i;
-const shortParty = t => { let x = t.replace(/^\s*(?:the\s+)?/i, '').replace(/\s+/g, ' ').trim(); for (let i = 0; i < 2; i++) x = x.replace(SUFFIX, '').trim(); return x.replace(/[,.;:]+$/, '').slice(0, 40); };
+const shortParty = t => { let x = t.replace(/^\s*(?:the\s+)?/i, '').replace(/\s+/g, ' ').trim(); for (let i = 0; i < 2; i++) x = x.replace(SUFFIX, '').trim(); x = x.replace(/[,.;:]+$/, ''); return x.length <= 40 ? x : x.slice(0, 41).replace(/\s+\S*$/, '') + '…'; };
 // Letter agreements have no "between": the addressee is named before the salutation, the company in the body.
 function letterParties(text) {
   if (!/\bDear\s/.test(text)) return '';
@@ -30,7 +30,7 @@ export function partiesFromPreamble(lines) {
     if (best) { a = seg.slice(0, best.index + 1); b = seg.slice(best.index + best[0].length); } }
   if (!a) return '';
   const KEEP = /^(?:USA|US|UK|EU|NA|II|III|IV)$/;
-  const tc = x => /[a-z]/.test(x) ? x : x.replace(/\b([A-Z])([A-Z]+)\b/g, (w, f, r) => w.length <= 2 || KEEP.test(w) ? w : f + r.toLowerCase());
+  const tc = x => /[a-z]/.test(x) ? x : x.replace(/\b([A-Z])([A-Z]+)\b/g, (w, f, r) => w.length <= 2 || KEEP.test(w) || (w.length <= 4 && (!/[AEIOUY]/.test(w) || /[^AEIOUY]{3}/.test(w))) || (w.length <= 4 && new RegExp(`\\b${w}\\s+[A-Z][a-z]`).test(text)) ? w : f + r.toLowerCase());
   // cut at the first comma, bracket, quote, semicolon, dba, "dated", "exhibit", "a <State> ...", or just after an entity suffix
   const cut = x => { let y = x.split(/\s+\.(?:\s|$)|\.\s+(?=WHEREAS|RECITALS|W\s?I\s?T|NOW|The\s|Capitalized|\d)|\s+(?:existing|organized|incorporated)\s+under\b|\s*[(“"\[]|,|;|\s+(?:dba|d\/b\/a)\s|\s+(?:dated|exhibit)\b|\s+an?\s+(?:[A-Z][a-z]+\s+){1,2}(?:corporation|company|limited|partnership)/i)[0]; const sfx = y.match(/^(.*?\b(?:L\.L\.C\.|LLC|Inc\.?|Ltd\.?|Limited|Corp\.?|Corporation|plc))(?=\s|$)/i); return sfx ? sfx[1] : y; };
   const withheld = x => /^\W*\(?\s*(?:omitted|redacted|\[\*+\]|\*{3})/i.test(x);
@@ -207,7 +207,7 @@ export function extract(lines) {
   } } }
 
   // 2. Term / expiry
-  const termCands = S.filter(s => /\b(initial\s+(term|license\s+period|period)|the\s+term\s+of\s+this|remain\s+in\s+effect|agreement\s+shall\s+have\s+an?\s+[\w()-]+\s+term|have\s+a\s+term|shall\s+commence|will\s+commence|shall\s+begin\s+on|(?:this\s+agreement|the\s+term(?:\s+of\s+this\s+agreement)?)\s+(?:shall|will)\s+(?:continue|extend|remain)|is\s+(?:hereby\s+)?extended\s+through|^\W{0,6}term\s*:)/i.test(s.text) && !/automatically\s+(renew|extend)/i.test(s.text.slice(0, 40)) && !/^\W{0,3}[“"][^”"]{1,60}[”"]\s+(?:means|has\s+the\s+meaning|shall\s+mean)/i.test(s.text) && !/following\s+(?:the\s+)?(?:termination|expiration)|surviv/i.test(s.text) && !/^\W*WHEREAS\b/.test(s.text) && (s.text.match(/[a-z]/g) || []).length > (s.text.match(/[A-Z]/g) || []).length);
+  const termCands = S.filter(s => /\b(initial\s+(term|license\s+period|period)|the\s+term\s+of\s+this|remain\s+in\s+effect|agreement\s+shall\s+have\s+an?\s+[\w()-]+\s+term|have\s+a\s+term|shall\s+commence|will\s+commence|shall\s+begin\s+on|(?:this\s+agreement|the\s+term(?:\s+of\s+this\s+agreement)?)\s+(?:shall|will)\s+(?:continue|extend|remain)|is\s+(?:hereby\s+)?extended\s+through|shall\s+continue\s+until\s+the\s+\w+\s+(?:\(\d+\w*\)\s+)?anniversary|remains?\s+in\s+full\s+force\s+and\s+effect[^.]{0,60}for\s+a\s+period\s+of|^\W{0,6}term\s*:)/i.test(s.text) && !/automatically\s+(renew|extend)/i.test(s.text.slice(0, 40)) && !/^\W{0,3}[“"][^”"]{1,60}[”"]\s+(?:means|has\s+the\s+meaning|shall\s+mean)/i.test(s.text) && !/following\s+(?:the\s+)?(?:termination|expiration)|surviv/i.test(s.text) && !/^\W*WHEREAS\b/.test(s.text) && (s.text.match(/[a-z]/g) || []).length > (s.text.match(/[A-Z]/g) || []).length);
   // A clearly-worded initial-term sentence beats an earlier passing mention of "the term" (e.g. a redacted forecast clause).
   const decFirst = termCands.find(s => /\buntil\s+December\s+31(?:st)?\s+of\s+the\s+(?!\d)/i.test(s.text) && /Initial\s+Term/.test(s.text));
   for (const s of decFirst ? [decFirst, ...termCands.filter(x => x !== decFirst)] : termCands) {
@@ -230,10 +230,11 @@ export function extract(lines) {
       res.term = { start: res.effective.date, end: ymd(end), confidence: 'high', needsReview: false, why: `"${nextMo[0]}": the last day of the month after the Effective Date.`, source: src(s), rule: 'explicit' };
       break;
     }
-    const ann = t.match(/\b(?:through|until)\s+(?:the\s+)?(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+anniversary\s+(?:of\s+the\s+(?:Effective|Agreement|Commencement)\s+Date|thereof)/i);
+    const ann = t.match(/\b(through|until|end(?:ing)?\s+on)\s+(?:the\s+)?(first|second|third|fourth|fifth|sixth|seventh|eighth|ninth|tenth)\s+(?:\(\d+(?:st|nd|rd|th)?\)\s+)?anniversary\s+(?:of\s+the\s+(?:Effective|Agreement|Commencement)\s+Date|thereof)/i);
     if (ann && res.effective) {
-      const n = ['first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth'].indexOf(ann[1].toLowerCase()) + 1;
-      res.term = { start: res.effective.date, end: ymd(addMonths(new Date(res.effective.date + 'T00:00:00Z'), 12 * n)), duration: { n, unit: 'year', text: ann[0] }, confidence: res.effective.needsReview ? 'medium' : 'high', needsReview: !!res.effective.needsReview, why: `"${ann[0]}": the term runs through the anniversary date itself.`, source: src(s), rule: 'anniversary' };
+      const n = ['first','second','third','fourth','fifth','sixth','seventh','eighth','ninth','tenth'].indexOf(ann[2].toLowerCase()) + 1;
+      const untilAnn = /^until$/i.test(ann[1]) && /Renewal\s+Date/.test(t);
+      res.term = { start: res.effective.date, end: ymd(addDays(addMonths(new Date(res.effective.date + 'T00:00:00Z'), 12 * n), untilAnn ? -1 : 0)), duration: { n, unit: 'year', text: ann[0] }, confidence: res.effective.needsReview ? 'medium' : 'high', needsReview: !!res.effective.needsReview, why: untilAnn ? `"${ann[0]}": the term runs until the anniversary, so its last day is the day before.` : `"${ann[0]}": the term runs through the anniversary date itself.`, source: src(s), rule: 'anniversary' };
       break;
     }
     const thr = t.match(/\b(?:through(?:\s+and\s+including)?|until|extend\s+to|ending(?:\s+on)?|expires?\s+on|shall\s+end(?:\s+on)?)\s+(?:\d{1,2}:\d{2}\s*[ap]\.?m\.?,?\s+(?:[A-Z][a-z]+\s+)?Time,?\s+on\s+)?((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*(?:\d\s+)?\d{4})/i);
@@ -242,7 +243,7 @@ export function extract(lines) {
       res.term = { start: st ? ymd(parseDate(st[1]).date) : (res.effective?.date || ''), end: ymd(b.date), confidence: 'high', needsReview: false, why: 'Explicit end date.', source: src(s), rule: 'explicit' };
       break;
     }
-    const m = t.match(/\buntil\s+the\s+date\s+that\s+is\s+(.{0,60})/i) || t.match(/\bterm\s+of\s+this\s+(?:agreement|contract)\s+(?:shall\s+be|is)\s+(.{0,60})/i) || t.match(/\binitial\s+term(?:\s+of\s+[\w’']+){0,2}\s+(?:shall\s+be|is)\s+(.{0,60})/i) || t.match(/\bagreement\s+shall\s+have\s+an?\s+((?:[\w]+[\s-])?(?:\(\d+\)[\s-])?(?:year|month)s?[\s-]term.{0,40})/i) || t.match(/\b(?:for|run\s+for|continues?\s+for|period\s+of|shall\s+expire|shall\s+terminate|remain\s+in\s+effect\s+(?:for|until))\s+(?:a\s+period\s+of\s+|an?\s+initial\s+(?:term|period)\s+of\s+|an?\s+initial\s+|an?\s+)?(.{0,60})/i);
+    const m = t.match(/\buntil\s+the\s+date\s+that\s+is\s+(.{0,60})/i) || (/remains?\s+in\s+full\s+force/i.test(t) && t.match(/\bfor\s+a\s+period\s+of\s+(.{0,60})/i)) || t.match(/\bterm\s+of\s+this\s+(?:agreement|contract)\s+(?:shall\s+be|is)\s+(.{0,60})/i) || t.match(/\binitial\s+term(?:\s+of\s+[\w’']+){0,2}\s+(?:shall\s+be|is)\s+(.{0,60})/i) || t.match(/\bagreement\s+shall\s+have\s+an?\s+((?:[\w]+[\s-])?(?:\(\d+\)[\s-])?(?:year|month)s?[\s-]term.{0,40})/i) || t.match(/\b(?:for|run\s+for|continues?\s+for|period\s+of|shall\s+expire|shall\s+terminate|remain\s+in\s+effect\s+(?:for|until))\s+(?:a\s+period\s+of\s+|an?\s+initial\s+(?:term|period)\s+of\s+|an?\s+initial\s+|an?\s+)?(.{0,60})/i);
     if (!m) continue;
     const dur = parseDuration(m[1]);
     if (!dur || dur.index > 3) {
@@ -272,20 +273,31 @@ export function extract(lines) {
   }
 
   if (!res.term && res._fallback) res.term = res._fallback; delete res._fallback;
+  // No fixed initial term, but renewal on "the first anniversary of the Effective Date and each annual anniversary thereafter" (a Renewal Date):
+  // the first term ends the day before that anniversary.
+  if ((!res.term || !res.term.end) && res.effective) for (const s of S) {
+    const fa = s.text.match(/\bon\s+(?:such\s+|the\s+)?(first|second|third|fourth|fifth)\s+(?:\(\d+\w*\)\s+)?anniversary\s+of\s+the\s+Effective\s+Date\s+and\s+each\s+(?:annual\s+|subsequent\s+)?anniversary/i);
+    if (!fa || !/continue\s+until\s+terminated|until\s+terminated/i.test(s.text)) continue;
+    const n = ['first','second','third','fourth','fifth'].indexOf(fa[1].toLowerCase()) + 1;
+    res.term = { start: res.effective.date, end: ymd(addDays(addMonths(new Date(res.effective.date + 'T00:00:00Z'), 12 * n), -1)), duration: { n, unit: 'year', text: fa[0] }, confidence: res.effective.needsReview ? 'medium' : 'high', needsReview: !!res.effective.needsReview, why: `No fixed term; it extends "${fa[0].replace(/^on\s+/i, '')}", so the first term ends the day before that anniversary.`, source: src(s), rule: 'anniversary' };
+    break;
+  }
   // 3. Renewal + 4. notice
-  const isRen = s => /automatically\s+(renew|extend)|renew\s+automatically|automatic(ally)?\s+renewal/i.test(s.text) && /renew|(?:term|agreement)[^.]{0,40}automatically\s+extend/i.test(s.text) && !/prevent\s+such/i.test(s.text.slice(0, 20));
+  const NOT_AGREEMENT = /letter\s+of\s+credit|insurance\s+polic|security\s+deposit|surety\s+bond|[“"](?:Letter\s+of\s+Credit|Security|L\/C)[^”"]{0,30}[”"]\s+(?:means|shall\s+mean)/i;
+  const isRen = s => !NOT_AGREEMENT.test(s.text) && !/at\s+the\s+option\s+of\s+\w+[^.]{0,40}automatically\s+extended|\bif\s+an?\s+[^.]{0,80}\boccurs\b[^.]{0,200}automatically\s+extended/i.test(s.text) && /automatically\s+(renew|extend)|renew\s+automatically|automatic(ally)?\s+renewal/i.test(s.text) && /renew|(?:term|agreement|period|employment|termination\s+date)[^.]{0,40}automatically\s+extend/i.test(s.text) && !/^\W*If\s+this\s+Agreement\s+has\s+been\s+automatically\s+extended/i.test(s.text) && !/prevent\s+such/i.test(s.text.slice(0, 20));
   let ri = S.findIndex(s => isRen(s) && /automatically\s+renew|renew\w*\s+automatically/i.test(s.text)); if (ri < 0) ri = S.findIndex(isRen);
   if (ri >= 0) {
     const s = S[ri], t = s.text;
     const upTo = t.match(/up\s+to\s+(\w+)\s+(?:\(\d+\)\s+)?(?:additional\s+)?(?:successive\s+)?(?:periods?|terms?|renewal)?/i);
     let max = null;
     if (upTo) { const n = /^\d+$/.test(upTo[1]) ? +upTo[1] : wordsToNumber(upTo[1]); if (n != null) max = n; }
+    if (max == null && /\b(?:one|a\s+single)\s+additional\b/i.test(t) && !/successive/i.test(t)) max = 1;
     const kT = max == null && t.match(/successive\s+(two|three|four|five|\d)\s+terms\s+of/i); if (kT) max = /^\d$/.test(kT[1]) ? +kT[1] : wordsToNumber(kT[1]);
     const rm = t.match(/(?:successive|additional|renewal)\s+(?:successive\s+)?(?:terms?\s+of\s+|periods?\s+of\s+)?(.{0,70})/i) || t.match(/periods?\s+of\s+(.{0,60})/i);
     let dur = null;
     const tries = [];
     const rt = t.slice(t.search(/automatically|renew/i));
-    for (const re of [/successive\s+(?:periods?|terms?)\s+of\s+(.{0,50})/i, /(?:successive|consecutive)\s+(.{0,50})/i, /additional\s+(?:successive\s+)?(?:term\s*\(.*?\)\s*of\s+)?(.{0,60})/i, /periods?\s+of\s+(.{0,50})/i, /renew\s+for\s+(.{0,30}?)\s+intervals/i, /\bterm\s*\([^)]*\)\s*of\s+(.{0,60})/i, /\bterms?\s+of\s+(.{0,50})/i]) {
+    for (const re of [/successive\s+(?:periods?|terms?)\s+of\s+(.{0,50})/i, /(?:successive|consecutive)\s+(.{0,50})/i, /additional\s+(?:successive\s+)?(?:term\s*\(.*?\)\s*of\s+)?(.{0,60})/i, /periods?\s+of\s+(.{0,50})/i, /renew\s+for\s+(.{0,30}?)\s+intervals/i, /extended\s+(?:for|by)\s+(?:an?\s+additional\s+)?(.{0,40})/i, /extended\s+so\s+as\s+to\s+terminate\s+(.{0,30})/i, /\bterm\s*\([^)]*\)\s*of\s+(.{0,60})/i, /\bterms?\s+of\s+(.{0,50})/i]) {
       const mm = rt.match(re); if (mm) { const d = parseDuration(mm[1]); if (d && d.index <= 2) { dur = d; break; } tries.push(mm[1]); }
     }
     if ((!dur || dur.index > 2) && /year\s+to\s+year/i.test(t) && !/successive\s+one\s*\(1\)\s*year/i.test(t)) dur = { n: 1, unit: 'year', text: 'year to year' };
@@ -298,7 +310,7 @@ export function extract(lines) {
     res.renewal = { auto: true, period: dur && !dur.redacted ? { n: dur.n, unit: dur.unit, text: dur.text } : null, max, confidence: conf, needsReview: review, why, source: src(s) };
 
     // notice: same sentence, else the next two sentences
-    const xrefFirst = /(?:notice|notif)[^.]{0,160}?(?:pursuant\s+to|in\s+accordance\s+with|as\s+(?:set\s+forth|provided|described)\s+in|under)\s+(?:Section|§)\s*\d/i.test(t) && !/\d+\s*\)?\s*(?:calendar\s+|business\s+)?(?:days?|months?)/i.test(t);
+    const xrefFirst = /(?:notice|notif)[^.]{0,160}?(?:pursuant\s+to|in\s+accordance\s+with|as\s+(?:set\s+forth|provided|described)\s+in|under)\s+(?:Section|§)\s*\d/i.test(t) && !/\d+\s*\)?\s*(?:calendar\s+|business\s+)?(?:days?|months?)|\b(?:one|two|three|four|five|six|nine|twelve|thirty|sixty|ninety)\s+(?:calendar\s+|business\s+)?(?:days?|months?)\s+(?:prior|before)/i.test(t);
     for (const cand of (xrefFirst ? [] : [S[ri], S[ri + 1], S[ri + 2], S[ri - 1]]).filter(Boolean)) {
       const ct = cand.text;
       if (!/notice|notif/i.test(ct)) continue;
@@ -349,6 +361,26 @@ export function extract(lines) {
     }
   }
 
+  // Rolling ("evergreen") term: on a first Renewal Date and every anniversary after it, the term extends unless notice is given N before that date.
+  if (res.renewal && ri >= 0) {
+    const t = S[ri].text; const eff = res.effective ? new Date(res.effective.date + 'T00:00:00Z') : null; const ORD = ['first','second','third','fourth','fifth'];
+    if (/each\s+(?:annual\s+|subsequent\s+)?anniversary|each\s+anniversary/i.test(t) && /Renewal\s+Date|Rollover\s+Date|anniversary/i.test(t)) {
+      let first = null, how = '';
+      const ord = t.match(/\b(?:on|commencing\s+on|beginning\s+on)\s+(?:such\s+|the\s+)?(first|second|third|fourth|fifth)\s+(?:\(\d+\w*\)\s+)?(?:annual\s+)?anniversary\s+of\s+(?:the\s+)?(?:Agreement\s+)?(?:Effective\s+Date|Start\s+Date|date\s+hereof|such\s+date)/i);
+      const yr = t.match(/\b(?:commencing\s+)?on\s+(?:a|the)\s+date\s+one\s+(?:\(1\)\s+)?year\s+after\s+the\s+date\s+hereof/i);
+      const each = t.match(/\bon\s+each\s+(?:annual\s+)?anniversary\s+of\s+(?:the\s+)?(?:Effective\s+Date|date\s+hereof)/i);
+      const dt = t.match(/\b(?:commencing\s+on|on)\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},?\s*\d{4})(?:\s*\([^)]*\))?,?\s+and\s+(?:then\s+)?on\s+each/i);
+      if (ord && eff) { first = addMonths(eff, 12 * (ORD.indexOf(ord[1].toLowerCase()) + 1)); how = ord[0].replace(/^(?:on|commencing\s+on|beginning\s+on)\s+/i, ''); }
+      else if (yr && eff) { first = addMonths(eff, 12); how = 'one year after the date of the agreement'; }
+      else if (dt) { first = parseDate(dt[1]).date; how = dt[1]; }
+      else if (each && eff) { first = addMonths(eff, 12); how = each[0].replace(/^on\s+/i, ''); }
+      if (first) res.rolling = { first: ymd(first), how, source: src(S[ri]) };
+    }
+  }
+  // Notice measured from the Renewal Date (the day the next term starts), not from the last day of the term.
+  if (res.notice?.period && !/\bon\s+(?:such\s+end\s+date|the\s+last\s+day\s+of\s+the\s+(?:Initial\s+)?Term|the\s+end\s+of\s+the\s+Initial\s+Term)|At\s+the\s+end\s+of\s+the\s+Initial\s+Term/i.test(res.renewal?.source?.quote || '') && /prior\s+to\s+(?:the\s+)?(?:applicable\s+|next\s+)?Renewal\s+Date|prior\s+to\s+the\s+commencement\s+of\s+(?:each|the|any)\s+(?:such\s+)?renewal/i.test(res.notice.source?.quote || '')) { res.notice.ref = 'start'; res.notice.why = res.notice.why.replace(/^The send-notice deadline is the end of the term minus/, 'The send-notice deadline is the Renewal Date (the day after the term ends) minus'); }
+  // An automatic renewal that belongs to a letter of credit, insurance or security deposit is not the agreement's own clause.
+  if (!res.renewal && S.some(s => NOT_AGREEMENT.test(s.text) && /automatic\w*\s+(?:renew|extend)|evergreen/i.test(s.text))) res.renewalNote = `No renewal clause for the agreement itself (the only automatic renewal found is for ${S.find(s => NOT_AGREEMENT.test(s.text) && /automatic\w*\s+(?:renew|extend)|evergreen/i.test(s.text)).text.match(/letter\s+of\s+credit|insurance\s+polic\w+|security\s+deposit|surety\s+bond/i)?.[0].toLowerCase().replace(/^insurance polic\w+$/, 'an insurance policy').replace(/^(letter|security|surety)/, 'a $1') || 'a defined term'}).`;
   // 5. Payment and other deadlines (event-driven: quoted, never given a guessed calendar date)
   const seen = new Set();
   for (const s of S) {
@@ -430,6 +462,14 @@ export function schedule(x, asOf) {
   const as = new Date(asOf + 'T00:00:00Z');
   const base = { confidence: 'none', needsReview: true };
   if (x.effective) items.push({ type: 'Effective date', date: x.effective.date, confidence: x.effective.confidence, needsReview: x.effective.needsReview, why: x.effective.why, source: x.effective.source });
+  if (x.rolling && x.notice?.period && !x.notice.period.redacted) {
+    const np = x.notice.period; let R = new Date(x.rolling.first + 'T00:00:00Z'), k = 0;
+    while (addDuration(R, np, -1) < as && k < 200) { R = addMonths(new Date(x.rolling.first + 'T00:00:00Z'), 12 * ++k); }
+    const act = addDuration(R, np, -1); const conf = x.effective?.needsReview && x.notice.confidence === 'high' ? 'medium' : x.notice.confidence;
+    items.push({ type: 'Renewal Date', date: ymd(R), confidence: conf, needsReview: !!x.effective?.needsReview, why: `Rolling term: it extends on each Renewal Date (first ${x.rolling.how}, then every anniversary) unless notice is given first.`, source: x.rolling.source });
+    items.push({ type: 'Send-notice deadline', date: ymd(act), actBy: true, confidence: conf, needsReview: !!(x.notice.needsReview || x.effective?.needsReview), why: `Renewal Date ${ymd(R)} minus ${plural(np.n, np.unit)}.${k > 0 ? ` Earlier Renewal Dates have passed, so it has extended ${k === 1 ? 'once' : k + ' times'}.` : ''}`, source: x.notice.source, rolling: true });
+    return items;
+  }
   if (!x.term) { items.push({ ...base, type: 'Term / expiry', date: '', why: 'No term clause found. Needs review.', source: null }); if (x.notice?.date) items.push({ type: 'Send-notice deadline', date: x.notice.date, actBy: true, confidence: 'medium', needsReview: true, why: x.notice.why + ' Term end not found, so the date is not cross-checked against the term.', source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' }); return items; }
   if (!x.term.end) { items.push({ type: 'Term / expiry', date: '', confidence: x.term.confidence, needsReview: true, why: x.term.why, source: x.term.source }); if (x.notice?.date) items.push({ type: 'Send-notice deadline', date: x.notice.date, actBy: true, confidence: 'medium', needsReview: true, why: x.notice.why + ' Term end not computable here, so the date is not cross-checked against the term.', source: x.notice.source, status: x.notice.date < asOf ? 'past' : '' }); else if (x.notice) items.push({ type: 'Send-notice deadline', date: '', confidence: 'none', needsReview: true, why: 'No end date could be worked out, so no send-notice deadline date. ' + (x.notice.why || ''), source: x.notice.source, noticeText: x.notice.period?.text || '' }); return items; }
   const end0 = new Date(x.term.end + 'T00:00:00Z');
@@ -442,11 +482,11 @@ export function schedule(x, asOf) {
   // cycle k end: computed from the start date (not re-added from a clamped end) so 29 Feb / month-end anchors don't drift
   const endOf = (k) => k === 0 ? end0 : anchored ? addDays(anniv(st, { n: mo(x.term.duration) + k * mo(rp), unit: 'month' }), x.term.rule === 'until' ? 0 : -1) : addDays(addDuration(addDays(end0, 1), { n: rp.n * k, unit: rp.unit }), -1);
   const np = x.notice?.period;
-  const actByOf = (e) => { if (!np) return null; if (!np.business) return addDuration(e, np, -1); let d = e, n = np.n; while (n > 0) { d = addDays(d, -1); const w = d.getUTCDay(); if (w !== 0 && w !== 6) n--; } return d; };
+  const actByOf = (e0) => { if (!np) return null; const e = x.notice?.ref === 'start' ? addDays(e0, 1) : e0; if (!np.business) return addDuration(e, np, -1); let d = e, n = np.n; while (n > 0) { d = addDays(d, -1); const w = d.getUTCDay(); if (w !== 0 && w !== 6) n--; } return d; };
   let k = 0, status = '';
   if (x.renewal && rp) {
     while (k < Math.min(maxR, 500)) { const a = actByOf(endOf(k)); if ((a || endOf(k)) >= as) break; k++; }
-    if (k >= maxR) { const a = actByOf(endOf(k)); if ((a || endOf(k)) < as) status = 'final'; }
+    if (k >= maxR && (k > 0 || (actByOf(endOf(k)) || endOf(k)) < as)) status = 'final';
   }
   const end = endOf(k), actBy = actByOf(end);
   const projected = k > 0;
@@ -455,6 +495,13 @@ export function schedule(x, asOf) {
   const expired = !x.renewal ? end < as : (status === 'final' && end < as);
   if (x.renewal && status === 'final' && end < as) {
     items.push({ type: 'Expired (all renewals used)', date: ymd(end), confidence: termConf === 'high' ? 'medium' : termConf, needsReview: termRev, why: `All ${maxR} permitted renewal(s) have run; the agreement expired on ${ymd(end)} unless it was amended or extended. No notice is due.`, source: x.renewal.source || x.term.source, status: 'past' });
+    return items;
+  }
+  // Last permitted renewal already locked in: nothing left to send, the agreement simply expires.
+  if (x.renewal && rp && status === 'final' && k > 0 && end >= as) {
+    const prev = actByOf(endOf(k - 1));
+    if (prev) items.push({ type: 'Send-notice deadline (passed)', date: ymd(prev), confidence: termConf === 'high' ? 'medium' : termConf, needsReview: false, why: `The send-notice date for the term ending ${ymd(endOf(k - 1))} passed on ${ymd(prev)}, so it took its last permitted renewal.`, source: x.notice?.source || x.renewal.source, status: 'past' });
+    items.push({ type: 'Final term ends (no further renewal)', date: ymd(end), finalTerm: true, prevActBy: prev ? ymd(prev) : '', confidence: termConf === 'high' ? 'medium' : termConf, needsReview: termRev, why: `Send-notice date passed (${fmtD2(ymd(prev || end))}). Extended to ${fmtD2(ymd(end))}, then it expires; no further renewal.`, source: x.renewal.source });
     return items;
   }
   // The term running on the as-of date can be earlier than the cycle the next decision applies to (notice already missed for it).
@@ -494,7 +541,7 @@ export function daysBetween(a, b) { return Math.round((new Date(b + 'T00:00:00Z'
 
 // Ranked send-notice deadline queue across contracts: upcoming send-notice deadline dates first (soonest), then needs-review, then past.
 // Short plain reason for a needs-review item.
-export const shortReason = (why = '') => /Renewal is conditional/.test(why) ? 'renewal depends on a condition; confirm it holds' : /^Evergreen/.test(why) ? 'renews monthly, no notice clause' : /Not a redaction/.test(why) ? (/Commencement/.test(why) ? 'term runs from an undated Commencement Date' : 'term start not dated in the document') : /redact|blacked out/i.test(why) ? 'blacked out in the public copy' : /No term clause/i.test(why) ? 'no term found' : /event \(e\.g/i.test(why) ? 'term runs from an event' : /cross-reference|defers the notice/i.test(why) ? 'notice set by another section' : /first Renewal Term/i.test(why) ? 'unclear which term the notice counts from' : /inclusive of the final day/i.test(why) ? 'could land one day later' : /without saying before what/i.test(why) ? 'notice reference point not stated' : /Effective Date that needs review|no Effective Date/i.test(why) ? 'effective date not defined' : /disagree/i.test(why) ? 'words and numerals disagree' : /no non-renewal notice|No notice period/i.test(why) ? 'no notice period found' : /not cross-checked/i.test(why) ? 'stated date, term not found' : /not tied/i.test(why) ? 'term start unclear' : (/[=−]|\d+\s*(?:day|month|year)\(s\)|end of the term minus/i.test(why.split('.')[0]) ? 'confirm against the clause' : (why.split('.')[0] || 'confirm against the clause').slice(0, 60).toLowerCase());
+export const shortReason = (why = '') => /Renewal is conditional/.test(why) ? 'renewal depends on a condition; confirm it holds' : /^Evergreen/.test(why) ? 'renews monthly, no notice clause' : /Not a redaction/.test(why) ? (/Commencement/.test(why) ? 'term runs from an undated Commencement Date' : 'term start not dated in the document') : /redact|blacked out/i.test(why) ? 'blacked out in the public copy' : /No term clause/i.test(why) ? 'no term found' : /event \(e\.g/i.test(why) ? 'term runs from an event' : /cross-reference|defers the notice/i.test(why) ? 'notice set by another section' : /first Renewal Term/i.test(why) ? 'unclear which term the notice counts from' : /inclusive of the final day/i.test(why) ? 'could land one day later' : /without saying before what/i.test(why) ? 'notice reference point not stated' : /Effective Date that needs review|no Effective Date/i.test(why) ? 'effective date not defined' : /disagree/i.test(why) ? 'words and numerals disagree' : /no non-renewal notice|No notice period/i.test(why) ? 'no notice period found' : /not cross-checked/i.test(why) ? 'stated date, term not found' : /not tied/i.test(why) ? 'term start unclear' : (/[=−]|\d+\s*(?:day|month|year)\(s\)|end of the term minus|\bminus\b/i.test(why.split('.')[0]) ? 'confirm against the clause' : (why.split('.')[0] || 'confirm against the clause').slice(0, 60).toLowerCase());
 
 const durMonths = p => !p ? 0 : p.unit === 'year' ? 12 * p.n : p.unit === 'month' ? p.n : p.unit === 'week' ? p.n / 4.35 : p.n / 30.44;
 const lockText = p => { if (!p) return ''; const m = durMonths(p); return m >= 12 && m % 12 === 0 ? `${m / 12} more year${m / 12 > 1 ? 's' : ''}` : m >= 1 && Number.isInteger(m) ? `${m} more month${m > 1 ? 's' : ''}` : `another ${p.n} ${p.unit}${p.n > 1 ? 's' : ''}`; };
@@ -509,8 +556,8 @@ export function buildQueue(contracts, asOf) {
   for (const c of contracts) {
     const items = schedule(c.x, asOf);
     const act = items.find(i => i.type === 'Send-notice deadline');
-    const exp = items.find(i => /term|Expired/i.test(i.type));
-    const isExp = exp?.type.startsWith('Expired');
+    const exp = items.find(i => i.finalTerm) || items.find(i => /term|Expired/i.test(i.type));
+    const isExp = exp?.type.startsWith('Expired') || !!exp?.finalTerm;
     const mw = items.find(i => i.missedWindow)?.missedWindow;
     const key = act?.date || (!c.x.renewal || isExp ? exp?.date : '') || '';
     const d = key ? daysBetween(asOf, key) : null;
@@ -527,12 +574,13 @@ export function buildQueue(contracts, asOf) {
     else if (section === 'resolve') why = `No date found · resolve first: ${shortReason(/No end date could be worked out/.test(item?.why || '') && exp ? exp.why : item?.why)}`;
     else if (section === 'due') why = `Due ${d === 0 ? 'today' : `in ${d} day${d === 1 ? '' : 's'}`} · send notice now or it renews for ${lockText(rp) || 'another term'}`;
     else if (act) why = `Deadline in ${d} day${d === 1 ? '' : 's'} · miss it and it renews for ${lockText(rp) || 'another term'}${noticeLong ? ' · notice is longer than the renewal, so this decides two cycles out' : ''}`;
+    else if (exp?.finalTerm) why = `Send-notice date passed (${fmtD2(exp.prevActBy || key)}) · extended to ${fmtD2(key)}, then it expires; no further renewal`;
     else why = `Expires in ${d} days · no auto-renewal, so plan the replacement`;
     const tfc = (c.x.other || []).find(o => /convenience/.test(o.kind) && o.notice?.n);
     const tag = item?.needsReview && act && key && tfc ? `a separate ${tfc.notice.n}-${tfc.notice.unit} early-exit clause exists; confirm which applies` : shortReason(!key && /No end date could be worked out/.test(item?.why || '') && exp ? exp.why : item?.why);
     const sb = act && key && d != null && d >= 0 ? safeSendBy(key) : null;
     const safe = sb?.changed ? (sb.date < asOf ? { date: sb.date, reason: sb.reason, passed: true, note: `${sb.reason}. The last business day before it (${fmtW(sb.date)}) has passed. Send today and confirm delivery.` } : { date: sb.date, reason: sb.reason, note: `${sb.reason} · send by ${fmtW(sb.date)} to be safe` }) : null;
-    rows.push({ safe, tag, id: c.id, name: c.name, actBy: key, days: d, missed: mw || null, item, section, window: win, lockMonths: lockM, noticeLong, why, label: mw ? 'Next send-notice deadline' : act ? 'Send-notice deadline' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || !!item?.needsReview, confidence: key ? (item?.confidence === 'none' ? 'low' : item?.confidence || 'low') : 'none' });
+    rows.push({ safe, tag: exp?.finalTerm && !act ? '' : tag, id: c.id, name: c.name, actBy: key, days: d, missed: mw || null, item, section, window: win, lockMonths: lockM, noticeLong, why, label: mw ? 'Next send-notice deadline' : act ? 'Send-notice deadline' : exp?.finalTerm ? 'Expires (no further renewal)' : isExp ? 'Expired (all renewals used)' : 'Expires', expired: !!isExp, needsReview: !key || !!item?.needsReview, confidence: key ? (item?.confidence === 'none' ? 'low' : item?.confidence || 'low') : 'none' });
   }
   const sec = { missed: 0, due: 1, resolve: 2, upcoming: 3, lapsed: 4 };
   rows.sort((a, b) => sec[a.section] - sec[b.section]
