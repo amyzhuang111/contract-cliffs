@@ -185,8 +185,9 @@ const order = rows => { // pinned first; then 1 passed but renewing, 2 dated soo
   return pinFirst(rows.slice().sort((a, b) => rank(a) - rank(b) || (a.actBy && b.actBy && rank(a) === 1 ? a.actBy.localeCompare(b.actBy) : 0) || a.name.localeCompare(b.name)), team, rowKey);
 };
 // Plan renew: lead with the renewal date; the notice date becomes the last day to change your mind.
-const renewView = (c, r) => { if (!c || ctxOf(team, c).plan !== 'renew' || !r?.item?.termEnd || r.missed || r.section === 'lapsed' || !r.actBy) return null; const on = ymd(addDays(new Date(r.item.termEnd + 'T00:00:00Z'), 1)); return { on, last: windowOf(r)?.day || r.actBy, days: daysBetween(asOf, on) }; };
-const lastLine = v => `Last day to change your mind: ${fmt(v.last)}`;
+const renewView = (c, r) => { if (!c || ctxOf(team, c).plan !== 'renew' || !r?.item?.termEnd || r.missed || r.section === 'lapsed' || !r.actBy) return null; const on = ymd(addDays(new Date(r.item.termEnd + 'T00:00:00Z'), 1)); const w = windowOf(r); return { on, last: w?.day || r.actBy, days: daysBetween(asOf, on), within: !!w, quote: w?.quote || '' }; };
+// 'within N before' clauses read two ways: this date satisfies both, so say that and quote the clause's own words.
+const lastLine = v => v.within ? `Last day to change your mind: ${fmt(v.last)}, the date that satisfies both readings of ${v.quote ? `"${v.quote}"` : 'the notice clause'}. Check with counsel which reading applies` : `Last day to change your mind: ${fmt(v.last)}`;
 function chip(r, rv) {
   if (rv) return `<span class="chip ${rv.days <= 30 ? 'u30' : rv.days <= 90 ? 'u90' : 'u365'}">${rv.days <= 0 ? 'Renews today' : `Renews in ${dayWord(rv.days)}`}</span>`;
   if (r.missed) { const ago = daysBetween(r.missed.actBy, asOf); return `<span class="chip passed">Passed ${dayWord(ago)} ago</span>`; }
@@ -216,7 +217,7 @@ function card(c, r) {
   const more = renewsFor(c); const ex = exitNote(c); const cons = (more ? `or it renews for ${more}.` : 'or it renews automatically.') + (ex ? ' ' + ex.text : '');
   const src = r.item?.source; const [cw, seg] = confWord(r.confidence);
   let kicker, hero, sub = '', cls = '';
-  if (rv) { kicker = 'Renews'; hero = esc(fmt(rv.on)); sub = esc(`${lastLine(rv)}, the last day to send a non-renewal notice.`); }
+  if (rv) { kicker = 'Renews'; hero = esc(fmt(rv.on)); sub = esc(rv.within ? `${lastLine(rv)}.` : `${lastLine(rv)}, the last day to send a non-renewal notice.`); }
   else if (r.missed) {
     kicker = 'Send-notice date passed'; cls = 'passed';
     hero = `<span class="pchip">Passed</span><span class="strike">${esc(fmt(r.missed.actBy))}</span>`;
